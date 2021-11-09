@@ -23,6 +23,10 @@
     {
       "id": 6,
       "amount": 10
+    },
+    {
+      "id": 12,
+      "amount": 10
     }
   ],
   "products": [
@@ -61,6 +65,12 @@
       "title": "Blusa",
       "price": 179.9,
       "image": "https://images.unsplash.com/photo-1590846406792-0adc7f938f1d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=385&q=80"
+    },
+    {
+      "id": 12,
+      "title": "Blusa",
+      "price": 179.9,
+      "image": "https://images.unsplash.com/photo-1626300006988-42a927fd80ee?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=471&q=80"
     }
   ]
 }

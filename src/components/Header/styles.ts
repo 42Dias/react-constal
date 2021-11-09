@@ -26,7 +26,7 @@ export const InputCenter = styled.div`
     height: 46px;
 
     background: white;
-    border-radius: 5px;
+    border-radius: 5px 0 0 5px;
     border: 0;
     padding: 0 8px;
   }
@@ -37,7 +37,7 @@ export const InputCenter = styled.div`
     left: 926px;
     top: 34px;
 
-    background: black;
+    background: #58A4B0;
     border-radius: 0px 5px 5px 0px;
 
     border: 0;

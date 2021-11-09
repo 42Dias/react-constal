@@ -120,3 +120,103 @@ export const BannerHome = styled.div`
     }
   }
 `; 
+
+export const BarHome = styled.div`
+  position: relative;
+  bottom: 40px;
+`
+
+export const FlexBar = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  background: #58A4B0;
+  width: 100%;
+  height: 204px;
+  border-radius: 10px;
+  color: white;
+  
+  h5 {
+    font-size: 16px;
+    font-weight: normal;  
+    margin-top: 10px;
+  }
+`
+
+export const SwiperStyles = styled.div`
+.swiper-container {
+  padding: 30px 0 !important;
+  z-index: 1 !important;
+}
+
+.swiper-slide {
+  z-index: 1 !important;
+  width: 263px !important;
+  height: 318px !important;
+  background: #EDEDED;
+  box-shadow: 0px 4px 33px -10px rgba(0, 0, 0, 0.15);
+  margin-right: 30px;
+  border-radius: 10px;
+
+  strong {
+    font-size: 20px;
+    padding: 15px 15px;
+  }
+
+  p { 
+    font-size: 24px;
+    padding: 15px 15px;
+  }
+
+  button {
+    background: #58A4B0;
+    color: #fff;
+    border: 0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: auto;
+    margin: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    &:hover {
+      background: ${darken(0.06, '#58A4B0')};
+    }
+
+    div {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      background: rgba(0, 0, 0, 0.1);
+
+      svg {
+        margin-right: 5px;
+      }
+    }
+
+    span {
+      flex: 1;
+      text-align: center;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  img {
+    width: 263px;
+    height: 146px;
+    border-radius: 5px 5px 0px 0px;
+    object-fit: cover;
+    margin: 0;
+  } 
+
+  li {
+    display: flex;
+    flex-direction: column;
+  }
+}
+`

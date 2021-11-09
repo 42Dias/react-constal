@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { MdAddShoppingCart } from "react-icons/md";
-
-import { ProductList, BannerHome } from "./styles";
+import { FiCheck } from "react-icons/fi";
+import { BannerHome, SwiperStyles, BarHome, FlexBar } from "./styles";
 import { api } from "../../services/api";
 import { formatPrice } from "../../util/format";
 import { useCart } from "../../hooks/useCart";
+import "swiper/swiper.scss";
 
 interface Product {
   id: number;
@@ -63,29 +65,100 @@ const Home = (): JSX.Element => {
         </section>
       </BannerHome>
 
-      <div className="container">
-        <ProductList>
-          {products.map((product) => (
-            <li key={product.id}>
-              <img src={product.image} alt={product.title} />
-              <strong>{product.title}</strong>
-              <span>{product.price}</span>
-              <button
-                type="button"
-                data-testid="add-product-button"
-                onClick={() => handleAddProduct(product.id)}
-              >
-                <div data-testid="cart-product-quantity">
-                  <MdAddShoppingCart size={16} color="#FFF" />
-                  {cartItemsAmount[product.id] || 0}
-                </div>
+      <BarHome>
+        <div className="container">
+          <FlexBar>
+            <div>
+              <FiCheck size={30} />
+              <h5>Pagamento seguro</h5>
+            </div>
+            <div>
+              <FiCheck size={30} />
+              <h5>Transações pix</h5>
+            </div>
+            <div>
+              <FiCheck size={30} />
+              <h5>Pague via boleto</h5>
+            </div>
+            <div>
+              <FiCheck size={30} />
+              <h5>Cartão de crédito</h5>
+            </div>
+            <div>
+              <FiCheck size={30} />
+              <h5>Atendimento ao cliente</h5>
+            </div>
+          </FlexBar>
+        </div>
+      </BarHome>
 
-                <span>ADICIONAR AO CARRINHO</span>
-              </button>
-            </li>
-          ))}
-        </ProductList>
-      </div>
+      <SwiperStyles>
+        <div className="container">
+          <h2>Ofertas e promoções</h2>
+          <Swiper
+            spaceBetween={50}
+            slidesPerView={3}
+            onSlideChange={() => console.log("slide change")}
+            onSwiper={(swiper) => console.log(swiper)}
+          >
+            {products.map((product) => (
+              <SwiperSlide>
+                <li key={product.id}>
+                  <img src={product.image} alt={product.title} />
+                  <strong>{product.title}</strong>
+                  <p>{product.price}</p>
+                  <button
+                    type="button"
+                    data-testid="add-product-button"
+                    onClick={() => handleAddProduct(product.id)}
+                  >
+                    <div data-testid="cart-product-quantity">
+                      <MdAddShoppingCart size={16} color="#FFF" />
+                      {cartItemsAmount[product.id] || 0}
+                    </div>
+
+                    <span>ADICIONAR AO CARRINHO</span>
+                  </button>
+                </li>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+      </SwiperStyles>
+
+      <SwiperStyles>
+        <div className="container">
+          <h2>Produtos em destaque</h2>
+          <Swiper
+            spaceBetween={50}
+            slidesPerView={3}
+            onSlideChange={() => console.log("slide change")}
+            onSwiper={(swiper) => console.log(swiper)}
+          >
+            {products.map((product) => (
+              <SwiperSlide>
+                <li key={product.id}>
+                  <img src={product.image} alt={product.title} />
+                  <strong>{product.title}</strong>
+                  <p>{product.price}</p>
+                  <button
+                    type="button"
+                    data-testid="add-product-button"
+                    onClick={() => handleAddProduct(product.id)}
+                  >
+                    <div data-testid="cart-product-quantity">
+                      <MdAddShoppingCart size={16} color="#FFF" />
+                      {cartItemsAmount[product.id] || 0}
+                    </div>
+
+                    <span>ADICIONAR AO CARRINHO</span>
+                  </button>
+                </li>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+      </SwiperStyles>
     </>
   );
 };
