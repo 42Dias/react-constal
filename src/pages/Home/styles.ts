@@ -86,7 +86,7 @@ export const BannerHome = styled.div`
     .bg-content-home {
       padding: 110px 0;
       position: relative; 
-      left: 20%;
+      left: 40%;
       transform: translateX(-100%);
 
       @media (max-width: 768px) {
@@ -95,26 +95,24 @@ export const BannerHome = styled.div`
       }
 
       h1 {
-        color: var(--white);
+        color: white;
         font-size: 48px;
         max-width: 470px;
       }
 
       p {
-        color: var(--white);
+        color: white;
         margin-top: 26px;
         max-width: 470px;
       }
 
       @media (max-width: 768px) {
         h1 {
-          color: var(--white);
           font-size: 22px;
           width: 100% !important;
         }
     
         p {
-          color: var(--white);
           margin-top: 26px;
           width: 100% !important;
         }
