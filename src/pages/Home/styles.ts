@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { darken } from 'polished';
+import banner from '../../assets/images/bgHome.png';
 
 export const ProductList = styled.ul`
   display: grid;
@@ -70,3 +71,54 @@ export const ProductList = styled.ul`
     }
   }
 `;
+
+export const BannerHome = styled.div`
+  .banner-home {
+    width: 100%;
+    display: flex;
+    // background-image: url(${banner});
+    min-height: 441px;
+    padding: 30px 0;
+    background-size: cover;
+    background-position: center;
+    object-fit: contain;
+    
+    .bg-content-home {
+      padding: 110px 0;
+      position: relative; 
+      left: 20%;
+      transform: translateX(-100%);
+
+      @media (max-width: 768px) {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      h1 {
+        color: var(--white);
+        font-size: 48px;
+        max-width: 470px;
+      }
+
+      p {
+        color: var(--white);
+        margin-top: 26px;
+        max-width: 470px;
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          color: var(--white);
+          font-size: 22px;
+          width: 100% !important;
+        }
+    
+        p {
+          color: var(--white);
+          margin-top: 26px;
+          width: 100% !important;
+        }
+      }
+    }
+  }
+`; 
