@@ -56,6 +56,7 @@ export const IconsContainer = styled.div`
   justify-content: center;  
   svg {
     margin: 0 20px;
+    cursor: pointer;
   }
 `
 
@@ -127,7 +128,7 @@ export const ModalContainer = styled.div`
 export const Form = styled.form`   
   display: flex;
   flex-direction: column;
-
+  z-index: 999 !important;
   label {
     margin-top: 20px;
   }
@@ -201,6 +202,7 @@ export const Form = styled.form`
 `;
 
 export const ModalEnter = styled.div`
+  z-index: 999 !important;
   display: flex;
   align-items: center;
   justify-content: space-between;

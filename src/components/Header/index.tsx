@@ -116,7 +116,7 @@ const Header = (): JSX.Element => {
               placeholder="Digite a sua senha"
             />
 
-            <Link to="" className="btn-enter" href="">
+            <Link to="/meu-perfil" className="btn-enter" href="">
               Entrar
             </Link>
 
