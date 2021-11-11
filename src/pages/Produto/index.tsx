@@ -17,7 +17,7 @@ export default function Produto() {
 
     const [repositories, setRepositories] = useState<Repository[]>([]);
     useEffect(() => {
-      fetch(`http://localhost:8000/prodSingle/`)
+      fetch('http://localhost:8000/prodSingle/')
         .then(response => response.json())
         .then(data => setRepositories(data))
     }, []);
