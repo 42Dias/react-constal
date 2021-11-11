@@ -16,7 +16,7 @@ interface Repository {
 export default function Produto() {
     const [repositories, setRepositories] = useState<Repository[]>([]);
     useEffect(() => {
-      fetch('http://localhost:8000/prodSingle/1')
+      fetch('http://localhost:8000/prodSingle/')
         .then(response => response.json())
         .then(data => setRepositories(data))
     }, []);
