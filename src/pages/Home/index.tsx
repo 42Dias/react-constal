@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { MdAddShoppingCart } from "react-icons/md";
 import { FiCheck } from "react-icons/fi";
@@ -37,12 +38,13 @@ const Home = (): JSX.Element => {
   useEffect(() => {
     async function loadProducts() {
       const response = await api.get("/products");
+      console.log(response.data);
       const productsFormated = response.data.map(function (product: Product) {
         return { ...product, price: formatPrice(product.price) };
       });
       setProducts(productsFormated);
     }
-
+    
     loadProducts();
   }, []);
 
@@ -107,7 +109,7 @@ const Home = (): JSX.Element => {
               {products.map((product) => (
                 <SwiperSlide>
                   <li key={product.id}>
-                    <img src={product.image} alt={product.title} />
+                    <Link to={`/produto/${product.id}`}><img src={product.image} alt={product.title} /></Link>
                     <strong>{product.title}</strong>
                     <p>{product.price}</p>
                     <button
@@ -141,7 +143,7 @@ const Home = (): JSX.Element => {
               {products.map((product) => (
                 <SwiperSlide>
                   <li key={product.id}>
-                    <img src={product.image} alt={product.title} />
+                    <Link to={`/produto/${product.id}`}><img src={product.image} alt={product.title} /></Link>
                     <strong>{product.title}</strong>
                     <p>{product.price}</p>
                     <button
