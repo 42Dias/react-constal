@@ -14,6 +14,7 @@ interface Repository {
 }
 
 export default function Produto() {
+
     const [repositories, setRepositories] = useState<Repository[]>([]);
     useEffect(() => {
       fetch('http://localhost:8000/prodSingle/')
@@ -27,7 +28,7 @@ export default function Produto() {
             {repositories.map(repository => {
               return (
                 <RepositoryItem key={repository.id} repository={repository} />
-              ) 
+              )
             })}
           </div>
         <Footer />

@@ -87,48 +87,6 @@
       "title": "Café",
       "price": 179.9,
       "image": "https://images.unsplash.com/photo-1635975206435-934b1ca3b421?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=388&q=80"
-    },
-    {
-      "id": 2,
-      "name": "oi",
-      "title": "Blá",
-      "price": 139.9,
-      "image": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=870&q=80"
-    },
-    {
-      "id": 3,
-      "name": "oi",
-      "title": "42 dias",
-      "price": 219.9,
-      "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=774&q=80"
-    },
-    {
-      "id": 5,
-      "name": "oi",
-      "title": "Cafezin",
-      "price": 139.9,
-      "image": "https://images.unsplash.com/photo-1636217707701-3b269167785e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=387&q=80"
-    },
-    {
-      "id": 6,
-      "name": "oi",
-      "title": "Lugar",
-      "price": 219.9,
-      "image": "https://images.unsplash.com/photo-1635957806770-b0c31d15bf2e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=387&q=80"
-    },
-    {
-      "id": 4,
-      "name": "oi",
-      "title": "Blusa",
-      "price": 179.9,
-      "image": "https://images.unsplash.com/photo-1590846406792-0adc7f938f1d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=385&q=80"
-    },
-    {
-      "id": 12,
-      "name": "oi",
-      "title": "Blusa",
-      "price": 179.9,
-      "image": "https://images.unsplash.com/photo-1626300006988-42a927fd80ee?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=471&q=80"
     }
   ]
 }
