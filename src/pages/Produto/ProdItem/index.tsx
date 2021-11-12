@@ -95,8 +95,12 @@ export function RepositoryItem(props: RepositoryItemProps) {
         </ContainerProd>
 
         <ProdSecond>
-          <h2>Nome do cliente</h2>
-          <span>Posso pedir para embrulhar para presente?</span>
+          <div>
+            <h2>Nome do cliente</h2>
+            <span>Posso pedir para embrulhar para presente?</span>
+          </div>
+
+          <Link to="#">Responder</Link>
         </ProdSecond>
       </div>
     </>

@@ -19,7 +19,7 @@ export const BoxProd = styled.div`
   background: white;
   border-radius: 5px;
   margin: 0 0 20px 0;
-  width: 50vw;
+  width: 600px;
   height: 230px;
   display: flex;
   align-items: center;
@@ -131,8 +131,26 @@ export const IconPlusMinus = styled.div`
 `;
 
 export const ProdSecond = styled.div`
-  width: 111%;
+  width: 960px;
   height: 168px;
   background: white;
   border-radius: 5px;
+  padding: 0 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  h2 {
+    margin: -5px 0 20px 0;  
+  }
+  a {
+    width: 165px;
+    height: 40px;
+    background: #101010;
+    border-radius: 5px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+  }
 `
