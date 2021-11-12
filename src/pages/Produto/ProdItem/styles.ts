@@ -9,6 +9,10 @@ export const DetailsProdFirts = styled.div`
 export const IconsContentStar = styled.div`
   display: flex;
   align-items: center;
+  svg {
+    color: #F1E532;
+    margin: 6px 0;
+  }
 `
 
 export const BoxProd = styled.div`
@@ -18,22 +22,29 @@ export const BoxProd = styled.div`
   width: 50vw;
   height: 230px;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
   padding: 0 20px;
-  svg {
-    color: yellow;
+  .oi {
+    display: flex;
+    flex-direction: column;
   }
-
-  svg:nth-child(8){
-    color: #A7A7A7;
-  }
-
   span {
     color: rgba(16, 16, 16, 0.69);
     font-size: 13px;
   }
+
+  strong {
+    font-size: 18px;
+    padding: 6px 0;
+  }
+`
+
+export const BoxProdFirts = styled.div`
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
 `
 
 export const ContainerProd = styled.div`
@@ -52,28 +63,76 @@ export const BoxColors = styled.div`
   display: flex; 
   align-items: center;
   justify-content: center;
+  margin: 5px 0;
 `
 
 export const ColorWhite = styled.div`
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   border: 1px solid black;
   border-radius: 5px;
   margin-right: 5px;
 `;
 
 export const ColorBlack = styled.div`
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   background: black;
   border-radius: 5px;
   margin-right: 5px;
 `;
 
 export const ColorRed = styled.div`
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px; 
   background: #DE4545;
   border-radius: 5px;
   margin-right: 5px;
 `;
+
+export const AddCartRight = styled.div`
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  justify-content: space-between;
+  a {
+    text-decoration: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 280px;
+    height: 45px;
+    background: black;
+    border-radius: 5px;
+  }
+`
+
+export const FlexBtnsProd = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 20px 0;
+  h3 {
+    padding: 0 10px;
+  }
+`;
+
+export const IconPlusMinus = styled.div`
+  background: black;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  svg {
+    color: white;
+  }
+`;
+
+export const ProdSecond = styled.div`
+  width: 111%;
+  height: 168px;
+  background: white;
+  border-radius: 5px;
+`
