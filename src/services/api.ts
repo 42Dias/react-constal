@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export const api = axios.create({
-  baseURL: 'https://react-constal-gnaezcvmk-jlsnjnr.vercel.app/8000',
+  baseURL: 'http://localhost:8000/',
 });
