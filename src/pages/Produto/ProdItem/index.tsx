@@ -12,10 +12,17 @@ import {
   FlexBtnsProd,
   IconPlusMinus,
   ProdSecond,
+  ModalContainerVendedor,
+  ModalFlex,
+  ModalContent,
+  SelectAdress,
 } from "./styles";
-import { AiFillStar } from "react-icons/ai";
+import { AiFillStar, AiOutlineClose } from "react-icons/ai";
 import { FiPlus, FiMinus } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import Modal from "react-modal";
+import React from "react";
+
 interface RepositoryItemProps {
   repository: {
     id: string;
@@ -27,6 +34,20 @@ interface RepositoryItemProps {
 }
 
 export function RepositoryItem(props: RepositoryItemProps) {
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
   return (
     <>
       <div className="container">
@@ -54,6 +75,9 @@ export function RepositoryItem(props: RepositoryItemProps) {
                   <ColorBlack />
                   <ColorRed />
                 </BoxColors>
+                <a className="vendedor" onClick={openModal}>
+                  Opções de frete
+                </a>
               </BoxProdFirts>
 
               <AddCartRight>
@@ -103,6 +127,43 @@ export function RepositoryItem(props: RepositoryItemProps) {
           <Link to="#">Responder</Link>
         </ProdSecond>
       </div>
+
+      <ModalContainerVendedor>
+        <Modal
+          isOpen={modalIsOpen}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+        >
+          <div>
+            <ModalFlex>
+              <AiOutlineClose onClick={closeModal} />
+            </ModalFlex>
+
+            <ModalContent>
+              <h3>Opções de frete e retirada</h3>
+              <p>Calculamos os custos e prazos para este endereço:</p>
+
+              <SelectAdress>
+                <div>
+                  <strong>Rua XXXXXX XXXX XX XXXX, 55</strong>
+                  <br />
+                  <span>CEP: XXXX - SP</span>
+                </div>
+                <div>
+                  <small>Selecione outro endereço</small>
+                </div>
+              </SelectAdress>
+
+              <h3>Receber compra</h3>
+              <p>Chegará Quarta em seu endereço</p>
+
+              <h3>Retirar compra</h3>
+
+              <p>Retire a partir de Quarta em uma agência dos correios</p>
+            </ModalContent>
+          </div>
+        </Modal>
+      </ModalContainerVendedor>
     </>
   );
 }

@@ -12,6 +12,7 @@ export default createGlobalStyle`
   body {
     -webkit-font-smoothing: antialiased;
     background: #F2F2F2;
+    position: relative;
   }
 
   .banner-home {

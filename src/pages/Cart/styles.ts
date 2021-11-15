@@ -12,8 +12,9 @@ export const Container = styled.div`
     justify-content: space-between;
     align-items: center;
 
-    button {
+    a {
       background: #58A4B0;
+      text-decoration: none;
       color: #fff;
       border: 0;
       border-radius: 4px;
@@ -121,6 +122,7 @@ export const Total = styled.div`
 
 export const FooterContainer = styled.div`
   position: relative;
+  left: 0;
   bottom: 0;
   width: 100%;
 `;

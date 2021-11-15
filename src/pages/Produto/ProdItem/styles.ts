@@ -29,14 +29,15 @@ export const BoxProd = styled.div`
     display: flex;
     flex-direction: column;
   }
+
   span {
     color: rgba(16, 16, 16, 0.69);
     font-size: 13px;
   }
 
   strong {
-    font-size: 18px;
-    padding: 6px 0;
+    font-size: 17px;
+    padding: 3px 0;
   }
 `
 
@@ -45,6 +46,11 @@ export const BoxProdFirts = styled.div`
   align-items: flex-start;
   justify-content: center;
   flex-direction: column;
+
+  .vendedor {
+    text-decoration: underline;
+    cursor: pointer;
+  }
 `
 
 export const ContainerProd = styled.div`
@@ -153,4 +159,48 @@ export const ProdSecond = styled.div`
     justify-content: center;
     text-decoration: none;
   }
-`
+`;
+
+export const ModalContainerVendedor = styled.div`
+  display: flex;
+`;
+
+export const ModalFlex = styled.div`
+  display: flex;
+`;
+
+export const ModalContent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+
+  h3 {
+    padding: 20px 0;
+    font-size: 24px;
+  }
+
+  p {
+    color: #4A4A4A;
+    max-width: 420px;
+    padding: 20px 0;
+  }
+`;
+
+export const SelectAdress = styled.div`
+  width: 420px;
+  height: 67px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  background: #FAFAFA;
+  border-radius: 5px;
+  padding: 0 5px;
+
+  small {
+    color: #58A4B0;
+    font-size: 14px;
+  }
+`;

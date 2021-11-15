@@ -59,7 +59,7 @@ const Header = (): JSX.Element => {
 
         <IconsContainer>
           <FiUser onClick={openModal} size={20} color="black" />
-          <FiHeart size={20} color="black" />
+          <Link to="/favoritos"><FiHeart size={20} color="black" /></Link>
           <Cart to="/cart">
             <div>
               <strong>Meu carrinho</strong>
@@ -74,22 +74,22 @@ const Header = (): JSX.Element => {
 
       <Container>
         <FlexLink>
-          <Link to="">
+          <Link to="/produtos">
             Madeira <FiChevronRight />
           </Link>
-          <Link to="">
+          <Link to="/produtos">
             Tinta <FiChevronRight />
           </Link>
-          <Link to="">
+          <Link to="/produtos">
             Portas e Janelas <FiChevronRight />
           </Link>
-          <Link to="">
+          <Link to="/produtos">
             Telha <FiChevronRight />
           </Link>
-          <Link to="">
+          <Link to="/produtos">
             Pisos <FiChevronRight />
           </Link>
-          <Link to="">
+          <Link to="/produtos">
             Ferramentas <FiChevronRight />
           </Link>
         </FlexLink>
@@ -126,7 +126,7 @@ const Header = (): JSX.Element => {
               <div className="border" />
             </div>
 
-            <Link to="" className="btn-register" href="">
+            <Link to="/cadastrar" className="btn-register">
               Cadastrar
             </Link>
           </Form>

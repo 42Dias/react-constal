@@ -10,6 +10,7 @@ import Footer from "../../components/Footer";
 import { useCart } from "../../hooks/useCart";
 import { formatPrice } from "../../util/format";
 import { Container, ProductTable, Total, FooterContainer } from "./styles";
+import { Link } from "react-router-dom";
 
 interface Product {
   id: number;
@@ -123,7 +124,7 @@ const Cart = (): JSX.Element => {
           </ProductTable>
 
           <footer>
-            <button type="button">Finalizar pedido</button>
+            <Link to="/pagar">Finalizar pedido</Link>
 
             <Total>
               <span>TOTAL</span>

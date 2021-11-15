@@ -51,6 +51,8 @@ export default function Profile() {
           </CardDatailsContent>
         </CardDatails>
 
+        <Link to="/historico-de-pedidos">Histórico de pedidos</Link>
+
         <CardDatails>
           <h2>Cartões</h2>
           <CardDatailsContent>
