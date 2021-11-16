@@ -10,7 +10,7 @@ export default function MenuAdm() {
           <Link to="/meus-produtos">
             Produtos <FiChevronRight />
           </Link>
-          <Link to="/produtos">
+          <Link to="/promocoes">
             Promoções <FiChevronRight />
           </Link>
           <Link to="/produtos">
@@ -21,6 +21,9 @@ export default function MenuAdm() {
           </Link>
           <Link to="/produtos">
             Planos <FiChevronRight />
+          </Link>
+          <Link to="/dados-pessoais">
+          Dados Pessoais <FiChevronRight />
           </Link>
         </FlexLink>
       </Container>
