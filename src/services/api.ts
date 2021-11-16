@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export const api = axios.create({
-  baseURL: 'http://localhost:8000',
+  baseURL: 'http://dev.42dias.com.br/Clientes/constal/APIS',
 });

@@ -17,7 +17,7 @@ export default function Produto() {
 
     const [repositories, setRepositories] = useState<Repository[]>([]);
     useEffect(() => {
-      fetch('http://localhost:8000/prodSingle/')
+      fetch('http://dev.42dias.com.br/Clientes/constal/APIS/APISincronizarSistema3.php')
         .then(response => response.json())
         .then(data => setRepositories(data))
     }, []);

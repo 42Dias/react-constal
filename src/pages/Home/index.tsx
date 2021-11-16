@@ -38,7 +38,7 @@ const Home = (): JSX.Element => {
 
   useEffect(() => {
     async function loadProducts() {
-      const response = await api.get("/products");
+      const response = await api.get("/APISincronizarSistema3.php");
       console.log(response.data);
       const productsFormated = response.data.map(function (product: Product) {
         return { ...product, price: formatPrice(product.price) };

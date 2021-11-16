@@ -35,6 +35,64 @@ export default function PersonalData() {
             <Link to="">Alterar</Link>
           </CardDatailsContent>
         </CardDatails>
+
+        <CardDatails>
+          <h2>Empresa</h2>
+          <CardDatailsContent>
+            <ContentDetails>
+              <span>Marca:</span>
+            </ContentDetails>
+          </CardDatailsContent>
+
+          <CardDatailsContent>
+            <ContentDetails>
+              <span>Razão Social:</span>
+            </ContentDetails>
+          </CardDatailsContent>
+
+          <CardDatailsContent>
+            <ContentDetails>
+              <span>CNPJ:</span>
+            </ContentDetails>
+          </CardDatailsContent>
+
+          <CardDatailsContent>
+            <ContentDetails>
+              <span>Telefone:</span>
+            </ContentDetails>
+          </CardDatailsContent>
+
+          <CardDatailsContent>
+            <ContentDetails>
+              <span>E-mail:</span>
+            </ContentDetails>
+          </CardDatailsContent>
+
+          <CardDatailsContent>
+            <ContentDetails>
+              <span>Website:</span>
+            </ContentDetails>
+          </CardDatailsContent>
+        </CardDatails>
+
+        <CardDatails>
+          <h2>Endereço</h2>
+          <CardDatailsContent>
+            <ContentDetails>
+              <small>
+                Av. xxxxxxxx <br />
+                Referência: XXXXXX <br />
+                CEP: 07355-620 <br />
+                Cidade: SP
+              </small>
+            </ContentDetails>
+            <div className="flex-btn">
+              <Link to="">Alterar</Link>
+              <Link to="">Excluir</Link>
+            </div>
+          </CardDatailsContent>
+          <Link to="">Novo endereço</Link>
+        </CardDatails>
       </div>
     </>
   );
