@@ -70,7 +70,7 @@ export default function PersonalData() {
 
           <CardDatailsContent>
             <ContentDetails>
-              <span>Website:</span>
+              <span>Websidte:</span>
             </ContentDetails>
           </CardDatailsContent>
         </CardDatails>
