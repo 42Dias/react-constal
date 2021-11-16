@@ -14,6 +14,7 @@ import {
 } from "./styles";
 import Modal from "react-modal";
 import React from "react";
+import MenuAdm from "../../components/MenuAdm";
 
 export default function Histoty() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -32,6 +33,7 @@ export default function Histoty() {
   return (
     <>
       <Header />
+      <MenuAdm />
       <div className="container">
         <CardDatails>
           <Title>Histórico</Title>

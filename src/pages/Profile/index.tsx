@@ -14,11 +14,13 @@ import {
   ContentDetails,
 } from "./styles";
 import { Link } from "react-router-dom";
+import MenuAdm from "../../components/MenuAdm";
 
 export default function Profile() {
   return (
     <>
       <Header />
+      <MenuAdm />
       <div className="container">
         <Title>Meus dados</Title>
 

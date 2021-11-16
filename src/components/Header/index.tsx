@@ -5,7 +5,6 @@ import {
   FiUser,
   FiHeart,
   FiSearch,
-  FiChevronRight,
   FiX,
 } from "react-icons/fi";
 
@@ -16,7 +15,6 @@ import {
   Cart,
   InputCenter,
   IconsContainer,
-  FlexLink,
   ModalEnter,
   Form,
 } from "./styles";
@@ -70,29 +68,6 @@ const Header = (): JSX.Element => {
             <FiShoppingBag size={20} color="black" />
           </Cart>
         </IconsContainer>
-      </Container>
-
-      <Container>
-        <FlexLink>
-          <Link to="/produtos">
-            Madeira <FiChevronRight />
-          </Link>
-          <Link to="/produtos">
-            Tinta <FiChevronRight />
-          </Link>
-          <Link to="/produtos">
-            Portas e Janelas <FiChevronRight />
-          </Link>
-          <Link to="/produtos">
-            Telha <FiChevronRight />
-          </Link>
-          <Link to="/produtos">
-            Pisos <FiChevronRight />
-          </Link>
-          <Link to="/produtos">
-            Ferramentas <FiChevronRight />
-          </Link>
-        </FlexLink>
       </Container>
 
       <Modal

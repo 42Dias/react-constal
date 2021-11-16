@@ -10,6 +10,7 @@ import { useCart } from "../../hooks/useCart";
 import "swiper/swiper.scss";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import MenuCliente from "../../components/MenuCliente";
 
 interface Product {
   id: number;
@@ -55,6 +56,7 @@ const Home = (): JSX.Element => {
   return (
     <>
       <Header />
+      <MenuCliente />
         <BannerHome>
           <section className="banner-home">
             <div className="container">
