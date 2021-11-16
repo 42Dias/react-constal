@@ -4,7 +4,7 @@ export const ContainerError = styled.div`
   height: 100%;
   padding: 40px 15px;
   h2 {
-    font-size: 24px;
+    font-size: 23px;
     padding: 15px 0;
   }
   display: flex;
