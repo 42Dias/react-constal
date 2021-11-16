@@ -16,7 +16,7 @@ export default function MenuAdm() {
           <Link to="/produtos">
             Vendas <FiChevronRight />
           </Link>
-          <Link to="/produtos">
+          <Link to="/perguntas">
             Perguntas <FiChevronRight />
           </Link>
           <Link to="/produtos">
