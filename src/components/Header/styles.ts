@@ -8,7 +8,7 @@ export const Container = styled.header`
   margin: 10px auto 10px auto;
   max-width: 1020px;
   a {
-    transition: opacity 0.2s;
+    transition: opacity 0.3s;
 
     &:hover {
       opacity: 0.7;
