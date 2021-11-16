@@ -10,6 +10,7 @@ import Register from './pages/Register';
 import Favorites from './pages/Favorites';
 import Histoty from './pages/History';
 import Products from './pages/Products';
+import NewProd from './pages/Dashboard/NewProd';
 
 const Routes = (): JSX.Element => {
   return (
@@ -24,6 +25,7 @@ const Routes = (): JSX.Element => {
       <Route exact path="/favoritos" component={Favorites} />
       <Route exact path="/historico-de-pedidos" component={Histoty} />
       <Route exact path="/produtos" component={Products} />
+      <Route exact path="/meus-produtos" component={NewProd} />
     </Switch>
   );
 };

@@ -7,23 +7,20 @@ export default function MenuAdm() {
     <>
       <Container>
         <FlexLink>
-          <Link to="/produtos">
-            Madeira <FiChevronRight />
+          <Link to="/meus-produtos">
+            Produtos <FiChevronRight />
           </Link>
           <Link to="/produtos">
-            Tinta <FiChevronRight />
+            Promoções <FiChevronRight />
           </Link>
           <Link to="/produtos">
-            Portas e Janelas <FiChevronRight />
+            Vendas <FiChevronRight />
           </Link>
           <Link to="/produtos">
-            Telha <FiChevronRight />
+            Perguntas <FiChevronRight />
           </Link>
           <Link to="/produtos">
-            Pisos <FiChevronRight />
-          </Link>
-          <Link to="/produtos">
-            Ferramentas <FiChevronRight />
+            Planos <FiChevronRight />
           </Link>
         </FlexLink>
       </Container>
