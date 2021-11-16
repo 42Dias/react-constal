@@ -26,7 +26,7 @@ export default function Promotions() {
   }
 
   function afterOpenModal() {
-    // references are now sync'd and can be accessed.
+    // references are now sync'd and can be accessed
   }
 
   function closeModal() {
