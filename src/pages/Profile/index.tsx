@@ -14,13 +14,13 @@ import {
   ContentDetails,
 } from "./styles";
 import { Link } from "react-router-dom";
-import MenuAdm from "../../components/MenuAdm";
+import MenuEmpresa from "../../components/MenuEmpresa";
 
 export default function Profile() {
   return (
     <>
       <Header />
-      <MenuAdm />
+      <MenuEmpresa />
       <div className="container">
         <Title>Meus dados</Title>
 
@@ -53,8 +53,10 @@ export default function Profile() {
           </CardDatailsContent>
         </CardDatails>
 
-        <Link to="/historico-de-pedidos">Histórico de pedidos</Link>
-        <Link to="/detalhes-da-venda">Detalhes da venda</Link>
+        <Link to="/historico-de-pedidos">Histórico de pedidos</Link><br />
+        <Link to="/detalhes-da-venda">Detalhes da venda</Link><br />
+        <Link to="/vendas">Vendas</Link><br />
+        <Link to="/aprovar-usuarios">Aprovar usuários</Link>
 
         <CardDatails>
           <h2>Cartões</h2>

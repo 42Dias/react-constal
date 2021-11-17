@@ -6,11 +6,13 @@ import prodthree from "../../assets/images/prodthree.png";
 import prodfour from "../../assets/images/prodfour.png";
 import { AiOutlinePlus } from "react-icons/ai";
 import { Recommended, GridProdsFour, ProdContainerSingle } from "./styles";
+import MenuEmpresa from "../../components/MenuEmpresa";
 
 export default function Products() {
   return (
     <>
       <Header />
+      <MenuEmpresa />
       <div className="container">
         <Recommended>
           <h4>Recomendados</h4>

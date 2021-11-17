@@ -17,6 +17,15 @@ import Questions from './pages/Dashboard/Questions';
 import SaleDetails from './pages/Dashboard/SaleDetails';
 import NewPlan from './pages/NewPlan'
 import ProductQuery from './pages/ProductQuery'
+import Vendas from './pages/Dashboard/Vendas';
+import Confirmed from './pages/Dashboard/Confirmed';
+import Returned from './pages/Dashboard/Returned';
+import Denounced from './pages/Dashboard/Denounced';
+import ApproveUsers from './pages/Dashboard/ApproveUsers';
+import Companies from './pages/Dashboard/Companies';
+import Historic from './pages/Dashboard/Historic';
+import Payments from './pages/Dashboard/Payments';
+import PaymentsCompanies from './pages/Dashboard/PaymentsCompanies';
 
 const Routes = (): JSX.Element => {
   return (
@@ -38,6 +47,15 @@ const Routes = (): JSX.Element => {
       <Route exact path="/detalhes-da-venda" component={SaleDetails} />
       <Route exact path="/novo-plano" component={NewPlan} />
       <Route exact path="/consultar-produtos" component={ProductQuery} />
+      <Route exact path="/vendas" component={Vendas} />
+      <Route exact path="/confirmadas" component={Confirmed} />
+      <Route exact path="/devolvidas" component={Returned} />
+      <Route exact path="/denunciadas" component={Denounced} />
+      <Route exact path="/aprovar-usuarios" component={ApproveUsers} />
+      <Route exact path="/empresas" component={Companies} />
+      <Route exact path="/historico" component={Historic} />
+      <Route exact path="/pagamentos" component={Payments} />
+      <Route exact path="/pagamentos-empresas" component={PaymentsCompanies} />
     </Switch>
   );
 };
