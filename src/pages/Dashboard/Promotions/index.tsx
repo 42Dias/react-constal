@@ -15,8 +15,8 @@ import prodtwo from "../../../assets/images/prodtwo.png";
 import prodthree from "../../../assets/images/prodthree.png";
 import prodfour from "../../../assets/images/prodfour.png";
 import Header from "../../../components/Header";
-import MenuAdm from "../../../components/MenuAdm";
 import { AiOutlinePlus, AiOutlineClose } from "react-icons/ai";
+import MenuEmpresa from "../../../components/MenuEmpresa";
 
 export default function Promotions() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -35,7 +35,7 @@ export default function Promotions() {
   return (
     <>
       <Header />
-      <MenuAdm />
+      <MenuEmpresa />
       <div className="container">
         <ContentNew>
           <h2>Promoções</h2>

@@ -15,6 +15,13 @@ import Promotions from './pages/Dashboard/Promotions';
 import PersonalData from './pages/Dashboard/PersonalData';
 import Questions from './pages/Dashboard/Questions';
 import SaleDetails from './pages/Dashboard/SaleDetails';
+import Vendas from './pages/Dashboard/Vendas';
+import Confirmed from './pages/Dashboard/Confirmed';
+import Returned from './pages/Dashboard/Returned';
+import Denounced from './pages/Dashboard/Denounced';
+import ApproveUsers from './pages/Dashboard/ApproveUsers';
+import Companies from './pages/Dashboard/Companies';
+import Historic from './pages/Dashboard/Historic';
 
 const Routes = (): JSX.Element => {
   return (
@@ -34,6 +41,13 @@ const Routes = (): JSX.Element => {
       <Route exact path="/dados-pessoais" component={PersonalData} />
       <Route exact path="/perguntas" component={Questions} />
       <Route exact path="/detalhes-da-venda" component={SaleDetails} />
+      <Route exact path="/vendas" component={Vendas} />
+      <Route exact path="/confirmadas" component={Confirmed} />
+      <Route exact path="/devolvidas" component={Returned} />
+      <Route exact path="/denunciadas" component={Denounced} />
+      <Route exact path="/aprovar-usuarios" component={ApproveUsers} />
+      <Route exact path="/empresas" component={Companies} />
+      <Route exact path="/historico" component={Historic} />
     </Switch>
   );
 };

@@ -1,14 +1,14 @@
 import { CardDatails, CardDatailsContent, ContentDetails } from "./styles";
 
 import Header from "../../../components/Header";
-import MenuAdm from "../../../components/MenuAdm";
 import { Link } from "react-router-dom";
+import MenuEmpresa from "../../../components/MenuEmpresa";
 
 export default function Questions() {
   return (
     <>
       <Header />
-      <MenuAdm />
+      <MenuEmpresa />
       <div className="container">
         <CardDatails>
           <h2>Perguntas(3)</h2>
