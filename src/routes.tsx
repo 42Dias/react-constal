@@ -15,6 +15,7 @@ import Promotions from './pages/Dashboard/Promotions';
 import PersonalData from './pages/Dashboard/PersonalData';
 import Questions from './pages/Dashboard/Questions';
 import SaleDetails from './pages/Dashboard/SaleDetails';
+import NewPlan from './pages/NewPlan'
 
 const Routes = (): JSX.Element => {
   return (
@@ -34,6 +35,7 @@ const Routes = (): JSX.Element => {
       <Route exact path="/dados-pessoais" component={PersonalData} />
       <Route exact path="/perguntas" component={Questions} />
       <Route exact path="/detalhes-da-venda" component={SaleDetails} />
+      <Route exact path="/novo-plano" component={NewPlan} />
     </Switch>
   );
 };
