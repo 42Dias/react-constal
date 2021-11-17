@@ -22,6 +22,8 @@ import Denounced from './pages/Dashboard/Denounced';
 import ApproveUsers from './pages/Dashboard/ApproveUsers';
 import Companies from './pages/Dashboard/Companies';
 import Historic from './pages/Dashboard/Historic';
+import Payments from './pages/Dashboard/Payments';
+import PaymentsCompanies from './pages/Dashboard/PaymentsCompanies';
 
 const Routes = (): JSX.Element => {
   return (
@@ -48,6 +50,8 @@ const Routes = (): JSX.Element => {
       <Route exact path="/aprovar-usuarios" component={ApproveUsers} />
       <Route exact path="/empresas" component={Companies} />
       <Route exact path="/historico" component={Historic} />
+      <Route exact path="/pagamentos" component={Payments} />
+      <Route exact path="/pagamentos-empresas" component={PaymentsCompanies} />
     </Switch>
   );
 };
