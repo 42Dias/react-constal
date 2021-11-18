@@ -17,8 +17,8 @@ import prodthree from "../../../assets/images/prodthree.png";
 import prodfour from "../../../assets/images/prodfour.png";
 import upload from "../../../assets/images/upload.svg";
 import Header from "../../../components/Header";
-import MenuAdm from "../../../components/MenuAdm";
 import { AiOutlinePlus, AiOutlineClose } from "react-icons/ai";
+import MenuEmpresa from "../../../components/MenuEmpresa";
 // import { Link } from "react-router-dom";
 
 export default function NewProd() {
@@ -38,7 +38,7 @@ export default function NewProd() {
   return (
     <>
       <Header />
-      <MenuAdm />
+      <MenuEmpresa />
       <div className="container">
         <ContentNew>
           <h2>Meus produtos</h2>
@@ -181,13 +181,13 @@ export default function NewProd() {
               </ContentFormNew>
 
               <ContentFormNew>
-                <label htmlFor="">Descrição</label>
-                <input type="text" placeholder="Descrição" />
+                <label htmlFor="">Código da empresa</label>
+                <input type="text" placeholder="Código da empresa" />
               </ContentFormNew>
 
               <ContentFormNew>
-                <label htmlFor="">Especificações técnicas</label>
-                <input type="text" placeholder="Especificações técnicas" />
+                <label htmlFor="">Descrição</label>
+                <input type="text" placeholder="Descrição" />
               </ContentFormNew>
 
               <ContentFormNew>
@@ -226,6 +226,22 @@ export default function NewProd() {
               <ContentFormNew>
                 <label htmlFor="">Prazo de entrega</label>
                 <input type="text" placeholder="Prazo de entrega" />
+              </ContentFormNew>
+
+              <ContentFormNew>
+                <label htmlFor="">Quantidade por embalagem</label>
+                <input type="text" placeholder="Quantidade por embalagem" />
+              </ContentFormNew>
+
+              <ContentFormNew>
+                <label htmlFor="">Peso líquido</label>
+                <input type="text" placeholder="Peso líquido" />
+              </ContentFormNew>
+
+
+              <ContentFormNew>
+                <label htmlFor="">Peso bruto</label>
+                <input type="text" placeholder="Peso bruto" />
               </ContentFormNew>
 
               <ContentFormNew>
