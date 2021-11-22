@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Modal from "react-modal";
 import {
   FiShoppingBag,
@@ -19,16 +19,19 @@ import {
   Form,
 } from "./styles";
 
-import React from "react";
+import React, { useState } from "react";
 
 import { useCart } from "../../hooks/useCart";
+import { toast } from "react-toastify";
 
 const Header = (): JSX.Element => {
   const { cart } = useCart();
   const cartSize = cart.length;
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
-
+  
+  const [email, setUser]=useState('');
+  const [password, setPassword]=useState('');
   function openModal() {
     setIsOpen(true);
   }
@@ -41,6 +44,35 @@ const Header = (): JSX.Element => {
     setIsOpen(false);
   }
 
+  async function Login(){
+    let response=await fetch('http://localhost:8157/api/auth/sign-in',{
+      method: 'POST',
+      headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          email: email,
+          password: password
+      })
+  });
+  let json=await response;
+  console.log(json);
+  if(response.statusText == "OK"){
+    toast.info('Opa, logado com sucesso :)')
+  
+    handleClickLogin();
+  }else if(response.statusText == "Forbidden"){
+    toast.info('Ops, sem permissão :(')
+  }else{
+    toast.info("Dados Incorretos!");
+  }
+  
+  }
+  let history = useHistory();
+  function handleClickLogin() {
+    history.push("/meu-perfil");
+  }
   return (
     <>
       <Container>
@@ -83,18 +115,20 @@ const Header = (): JSX.Element => {
           </ModalEnter>
           <Form>
             <label htmlFor="user">E-mail*</label>
-            <input type="text" id="user" placeholder="Digite o seu e-mail" />
+            <input type="text" id="user" placeholder="Digite o seu e-mail" required value={email} onChange={text=>setUser(text.target.value)}/>
             <label htmlFor="senha">Senha*</label>
             <input
               type="password"
               id="senha"
-              placeholder="Digite a sua senha"
+              placeholder="Digite a sua senha" required value={password} onChange={text=>setPassword(text.target.value)}
             />
 
-            <Link to="/meu-perfil" className="btn-enter" href="">
+            {/*<Link to="/meu-perfil" className="btn-enter" href="">
               Entrar
-            </Link>
-
+              </Link>*/}
+            <button className="btn-enter" onClick={Login}>
+            Entrar
+            </button>
             <div className="contentBorder">
               <div className="border" />
               <p>ou</p>

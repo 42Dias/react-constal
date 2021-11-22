@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import user from "../../assets/images/user-profile.png";
@@ -15,8 +15,22 @@ import {
 } from "./styles";
 import { Link } from "react-router-dom";
 import MenuEmpresa from "../../components/MenuEmpresa";
+import { api } from "../../services/api";
+import { Product } from "../../types";
+import { formatPrice } from "../../util/format";
 
 export default function Profile() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    async function loadUser() {
+      const response = await api.get("http://localhost:8157/api/auth/me");
+      console.log(response.data);
+      
+    }
+    
+    loadUser();
+  }, []);
   return (
     <>
       <Header />
