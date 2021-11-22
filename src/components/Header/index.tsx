@@ -67,12 +67,12 @@ const Header = (): JSX.Element => {
   });
   let json=await response;
   console.log(json);
-  if(response.statusText == "OK"){
+  if(response.statusText === "OK"){
     toast.info('Opa, logado com sucesso :)')//interessante pegar o **id**
     handleLocalStorage()
     
     handleClickLogin();
-  }else if(response.statusText == "Forbidden"){
+  }else if(response.statusText === "Forbidden"){
     toast.info('Ops, sem permissão :(')
   }else{
     toast.info("Dados Incorretos!");
