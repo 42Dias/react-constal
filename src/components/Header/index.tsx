@@ -60,7 +60,12 @@ const Header = (): JSX.Element => {
   console.log(json);
   if(response.statusText == "OK"){
     toast.info('Opa, logado com sucesso :)')//interessante pegar o **id**
-  
+    let clientData = [email, password];
+
+    localStorage.setItem("clientDataFromLocalStorage", JSON.stringify(clientData));//saves client's data into localStorage:
+    
+    console.log(clientData)
+    
     handleClickLogin();
   }else if(response.statusText == "Forbidden"){
     toast.info('Ops, sem permissão :(')
