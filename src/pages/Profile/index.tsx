@@ -16,8 +16,7 @@ import {
 import { Link } from "react-router-dom";
 import MenuEmpresa from "../../components/MenuEmpresa";
 import { api } from "../../services/api";
-import { Product } from "../../types";
-import { formatPrice } from "../../util/format";
+
 
 export default function Profile() {
 
