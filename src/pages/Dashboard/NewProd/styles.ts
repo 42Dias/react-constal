@@ -48,6 +48,10 @@ export const ProdContainerSingle = styled.div`
       }
     }
   }
+
+  &.prodAwait {
+    opacity: .6;
+  }
 `;
 
 export const ContentNew = styled.div`
@@ -101,7 +105,7 @@ export const ModalContent = styled.div`
     display: flex;
   }
 
-  .buttonsNew a {
+  .buttonsNew button {
     width: 165px;
     height: 40px;
 
@@ -116,7 +120,7 @@ export const ModalContent = styled.div`
     margin: 0 5px;
   }
 
-  .buttonsNew a:nth-child(2) {
+  .buttonsNew button:nth-child(2) {
     width: 165px;
     height: 40px;
 
@@ -129,6 +133,7 @@ export const ModalContent = styled.div`
     align-items: center;
     justify-content: center;
     margin: 0 5px;
+    border: 0;
   }
 `;
 

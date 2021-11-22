@@ -1,5 +1,3 @@
-// import { Link } from "react-router-dom";
-// import { FiChevronRight } from "react-icons/fi";
 import React from "react";
 import Modal from "react-modal";
 import {
@@ -19,7 +17,7 @@ import upload from "../../../assets/images/upload.svg";
 import Header from "../../../components/Header";
 import { AiOutlinePlus, AiOutlineClose } from "react-icons/ai";
 import MenuEmpresa from "../../../components/MenuEmpresa";
-// import { Link } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 export default function NewProd() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -35,6 +33,17 @@ export default function NewProd() {
   function closeModal() {
     setIsOpen(false);
   }
+
+  function messageCancel() {
+    toast.error('Ah, que pena. o seu produto não foi cadastrado na plataforma :(')
+    setIsOpen(false);
+  }
+
+  function messageApprove() {
+    toast.info('Eba, recebemos o seu pedido. Ele será revisado e logo estará na plataforma :)')
+    setIsOpen(false);
+  }
+
   return (
     <>
       <Header />
@@ -144,7 +153,7 @@ export default function NewProd() {
             </div>
           </ProdContainerSingle>
 
-          <ProdContainerSingle>
+          <ProdContainerSingle className="prodAwait">
             <img src={prodfour} alt="" />
             <h5>Nome do produto</h5>
             <p>Descrição do produto com especificações técnicas</p>
@@ -254,8 +263,8 @@ export default function NewProd() {
               </ContentFormNew>
 
               <div className="buttonsNew">
-                <a href="">Cancelar</a>
-                <a href="">Adicionar</a>
+                <button type="button" onClick={messageCancel}>Cancelar</button>
+                <button type="button" onClick={messageApprove}>Adicionar</button>
               </div>
             </ModalContent>
           </div>

@@ -33,6 +33,27 @@ export const GridRegister = styled.div`
       padding: 0 12px;
       margin: 10px 0;
     }
+
+    select {
+      width: 320px;
+      height: 46px;
+      border-radius: 5px;
+      border: 0;
+      background: #F2F2F2;
+      padding: 0 12px;
+      margin: 10px 0;
+    }
+
+    option {
+      display: block;
+      width: 320px;
+      height: 46px;
+      border-radius: 5px;
+      border: 0;
+      background: #F2F2F2;
+      padding: 0 12px;
+      margin: 10px 0;
+    }
   }
 `;
 
@@ -50,7 +71,7 @@ export const Terms = styled.div`
 `;
 
 export const LinkContent = styled.div`
-  a {
+  button {
     width: 215px;
     height: 45px;
 
@@ -63,5 +84,6 @@ export const LinkContent = styled.div`
     justify-content: center;
 
     text-decoration: none;
+    border: 0;
   }
 `;

@@ -1,8 +1,13 @@
 import Header from "../../components/Header";
 import { Link } from "react-router-dom";
 import { BoxRegister, GridRegister, LinkContent, Terms } from "./styles";
+import { toast } from 'react-toastify';
 
 export default function Register() {
+  function handleCustom() {
+    toast.info('Opa, recebemos o seu registro :)')
+  }
+
   return (
     <>
       <Header />
@@ -15,16 +20,19 @@ export default function Register() {
               <input type="text" id="nome" placeholder="Seu nome" />
             </div>
             <div>
-              <label htmlFor="cpf">Cpf</label>
-              <input type="text" id="cpf" placeholder="Seu cpf" />
-            </div>
-            <div>
               <label htmlFor="email">E-mail</label>
               <input type="email" id="email" placeholder="E-mail" />
             </div>
             <div>
               <label htmlFor="senha">Senha</label>
               <input type="password" id="senha" placeholder="*****" />
+            </div>
+            <div>
+              <label htmlFor="cadastrar">Cadastrar como:</label>
+              <select name="" id="cadastrar">
+                <option>Cliente</option>
+                <option>Empresa</option>
+              </select>
             </div>
           </GridRegister>
 
@@ -35,7 +43,7 @@ export default function Register() {
             </span>
           </Terms>
           <LinkContent>
-            <Link to="/meu-perfil">Cadastrar</Link>
+            <button type="button" onClick={handleCustom}>Cadastrar</button>
           </LinkContent>
         </BoxRegister>
       </div>
