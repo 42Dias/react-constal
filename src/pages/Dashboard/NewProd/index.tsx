@@ -35,12 +35,17 @@ export default function NewProd() {
   }
 
   function messageCancel() {
-    toast.error('Ah, que pena. o seu produto não foi cadastrado na plataforma :(')
+    toast.error('Ah, que pena. o seu produto não foi cadastrado na plataforma. Revise algumas informações :(')
     setIsOpen(false);
   }
 
   function messageApprove() {
     toast.info('Eba, recebemos o seu pedido. Ele será revisado e logo estará na plataforma :)')
+    setIsOpen(false);
+  }
+
+  function improvements() {
+    toast.info('Melhore a qualidade das fotos')
     setIsOpen(false);
   }
 
