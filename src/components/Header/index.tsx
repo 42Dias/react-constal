@@ -44,6 +44,15 @@ const Header = (): JSX.Element => {
     setIsOpen(false);
   }
 
+  function handleLocalStorage() {
+    let clientData = [email, password];
+    const setLocalStorage = (data: string[]) => {
+      localStorage.setItem("clientDataFromLocalStorage", JSON.stringify(data));//saves client's data into localStorage:
+      console.log(data);
+    }
+    setLocalStorage(clientData)
+  }
+
   async function Login(){
     let response=await fetch('http://localhost:8157/api/auth/sign-in',{
       method: 'POST',
@@ -60,11 +69,7 @@ const Header = (): JSX.Element => {
   console.log(json);
   if(response.statusText == "OK"){
     toast.info('Opa, logado com sucesso :)')//interessante pegar o **id**
-    let clientData = [email, password];
-
-    localStorage.setItem("clientDataFromLocalStorage", JSON.stringify(clientData));//saves client's data into localStorage:
-    
-    console.log(clientData)
+    handleLocalStorage()
     
     handleClickLogin();
   }else if(response.statusText == "Forbidden"){

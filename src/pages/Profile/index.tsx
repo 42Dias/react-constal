@@ -20,7 +20,6 @@ import { Product } from "../../types";
 import { formatPrice } from "../../util/format";
 
 export default function Profile() {
-  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     async function loadUser() {
@@ -31,6 +30,22 @@ export default function Profile() {
     
     loadUser();
   }, []);
+
+  function clientLocalStorage() {
+      // getting stored value
+
+      const savedData:string[] = JSON.parse(
+        localStorage.getItem("clientDataFromLocalStorage") || "{}"
+        );
+      
+      return savedData;
+  }
+
+  const [savedData] = useState([]);
+
+  console.log(savedData)
+
+  clientLocalStorage()  
   return (
     <>
       <Header />
@@ -114,3 +129,5 @@ export default function Profile() {
     </>
   );
 }
+
+
