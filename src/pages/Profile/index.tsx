@@ -34,8 +34,8 @@ export default function Profile() {
       // getting stored value
 
       const savedData:string[] = JSON.parse(
-        localStorage.getItem("clientDataFromLocalStorage") || "{}"
-        );
+        localStorage.getItem("clientDataFromLocalStorage") || "{}" );
+        console.log(savedData)
       
       return savedData;
   }
