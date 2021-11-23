@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   MdDelete,
   MdAddCircleOutline,
@@ -6,11 +6,14 @@ import {
 } from "react-icons/md";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import { api } from "../../services/api";
 
 import { useCart } from "../../hooks/useCart";
 import { formatPrice } from "../../util/format";
 import { Container, ProductTable, Total, FooterContainer } from "./styles";
 import { Link } from "react-router-dom";
+
+//CRIAR FUNÇÃO PARA PEGAR OS PRODUTOS DO CARRINHO DO BACKEND
 
 interface Product {
   id: number;
@@ -19,9 +22,17 @@ interface Product {
   image: string;
   amount: number;
 }
+  //Puxar os produtos do carrinho
+    //tenantId
 
 const Cart = (): JSX.Element => {
   const { cart, removeProduct, updateProductAmount } = useCart();
+
+  const [products, setProducts] = useState<ProductFormatted[]>([]);
+
+  interface ProductFormatted extends Product {
+  priceFormatted: string;
+  }
 
   const cartFormatted = cart.map((product) => ({
     ...product,
@@ -55,6 +66,28 @@ const Cart = (): JSX.Element => {
   function handleRemoveProduct(productId: number) {
     removeProduct(productId);
   }
+
+  useEffect(() => {
+    async function loadProducts() {
+      const response = await api.get(
+        "tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/carrinho/"
+        //  "tenant/:tenantId/carrinho/"
+        );
+      console.log(response.data);
+      const productsFormated = response.data.map(function (product: Product) {
+        console.log(product);
+        
+        return { ...product, price: formatPrice(product.price) };
+      });
+      setProducts(productsFormated);
+    }
+    
+    loadProducts();
+  }, []);
+
+  
+
+
 
   return (
     <>

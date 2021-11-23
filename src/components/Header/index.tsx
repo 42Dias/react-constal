@@ -7,6 +7,7 @@ import {
   FiSearch,
   FiX,
 } from "react-icons/fi";
+import Axios from 'axios';
 
 import logo from "../../assets/images/logo.png";
 import {
@@ -44,45 +45,61 @@ const Header = (): JSX.Element => {
     setIsOpen(false);
   }
 
-  function handleLocalStorage() {
-    let clientData = [email, password];
+  function handleLocalStorage(emailA: string, passwordB: string) {
+    let clientData = [emailA, passwordB];
     const setLocalStorage = (data: string[]) => {
       localStorage.setItem("clientDataFromLocalStorage", JSON.stringify(data));//saves client's data into localStorage:
       console.log(data);
     }
     setLocalStorage(clientData)
   }
+  function handleLocalStorageToken(token: string[]) {
+    const setLocalStorage = (data: string[]) => {
+      localStorage.setItem("token", JSON.stringify(data));//saves client's data into localStorage:
+      console.log("OK!!!");
+    }
+    setLocalStorage(token)
+  }
+
 
   async function Login(){
-    let response=await fetch('http://localhost:8157/api/auth/sign-in',{
-      method: 'POST',
-      headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
+  let response=Axios.post('http://localhost:8157/api/auth/sign-in', {   
           email: email,
-          password: password
-      })
-  });
-  let json=await response;
-  console.log(json);
-  if(response.statusText === "OK"){
-    toast.info('Opa, logado com sucesso :)')//interessante pegar o **id**
-    handleLocalStorage()
-    
-    handleClickLogin();
-  }else if(response.statusText === "Forbidden"){
-    toast.info('Ops, sem permissão :(')
-  }else{
-    toast.info("Dados Incorretos!");
+          password: password,
+      }).then((response) =>{
+          console.log(response);  
+          if(response.statusText == "OK"){
+            toast.info('Opa, recebemos o seu registro :)')
+            handleLocalStorage(email, password);
+            handleClickLogin();
+
+          }else if(response.statusText == "Forbidden"){
+            toast.info("Ops, Não tem permisão!");
+          }else{
+            toast.info("Ops, Dados Incorretos!");
+          }  
+          handleLocalStorageToken(response.data);
+    })
   }
-  
-  }
+
   let history = useHistory();
   function handleClickLogin() {
     history.push("/meu-perfil");
+
   }
+  function checkLocalStorage(){
+    let localStorageClietData = localStorage.getItem(clientDataFromLocalStorage);
+    let token = localStorage.getItem(token);
+    if (token){
+      console.log("TEM TOKEN!!!");
+      
+    }
+    if (clientDataFromLocalStorage){
+      console.log("TEM DADOS!!!");
+      
+    }
+  }
+  
   return (
     <>
       <Container>
