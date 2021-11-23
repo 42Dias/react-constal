@@ -14,9 +14,12 @@ import MenuCliente from "../../components/MenuCliente";
 
 interface Product {
   id: number;
-  title: string;
-  price: number;
-  image: string;
+  nome: string;
+  descricao: string;
+  preco: number;
+  publicUrl:string;
+  isOferta: number;
+  precoOferta: any;
 }
 
 interface ProductFormatted extends Product {
@@ -27,8 +30,10 @@ interface CartItemsAmount {
   [key: number]: number;
 }
 
+let productCounter:any[] = [];
+
 const Home = (): JSX.Element => {
-  const [products, setProducts] = useState<ProductFormatted[]>([]);
+  const [products = [], setProducts] = useState<ProductFormatted[]>([]);
   const { addProduct, cart } = useCart();
 
   const cartItemsAmount = cart.reduce((sumAmount, product) => {
@@ -38,15 +43,16 @@ const Home = (): JSX.Element => {
 
   useEffect(() => {
     async function loadProducts() {
-      const response = await api.get("/APISincronizarSistema3.php");
+      const response = await api.get("produtos");
       console.log(response.data);
-      const productsFormated = response.data.map(function (product: Product) {
-        return { ...product, price: formatPrice(product.price) };
+      const productsFormated = response.data.record.map(function (product: Product) {
+        return { ...product, preco: formatPrice(product.preco) };
       });
       setProducts(productsFormated);
     }
     
     loadProducts();
+    
   }, []);
 
   function handleAddProduct(id: number) {
@@ -102,34 +108,58 @@ const Home = (): JSX.Element => {
         <SwiperStyles>
           <div className="container">
             <h2>Ofertas e promoções</h2>
-            <Swiper
+            {
+              
+              products.forEach((p) => {
+                
+                if (p.isOferta === 1) {
+                  productCounter.push(p);
+                }
+                
+                console.log(productCounter)
+                console.log(products.length)
+              })
+              
+            }
+
+            {
+              productCounter.length === 0 ? <p>Nenhum produto em promoção</p> :
+
+              <Swiper
               spaceBetween={50}
               slidesPerView={3}
               onSlideChange={() => console.log("slide change")}
               onSwiper={(swiper) => console.log(swiper)}
-            >
-              {products.map((product) => (
-                <SwiperSlide>
-                  <li key={product.id}>
-                    <Link to={`/produto/${product.id}`}><img src={product.image} alt={product.title} /></Link>
-                    <strong>{product.title}</strong>
-                    <p>{product.price}</p>
-                    <button
-                      type="button"
-                      data-testid="add-product-button"
-                      onClick={() => handleAddProduct(product.id)}
-                    >
-                      <div data-testid="cart-product-quantity">
-                        <MdAddShoppingCart size={16} color="#FFF" />
-                        {cartItemsAmount[product.id] || 0}
-                      </div>
+              >
 
-                      <span>ADICIONAR AO CARRINHO</span>
-                    </button>
-                  </li>
+              {productCounter.map((product) => (
+                <SwiperSlide>
+                  {
+                    product.isOferta === 1 &&
+                    <li key={product.id}>
+                      <Link to={`/produto/${product.id}`}>
+                        <img src={product.publicUrl} alt={product.nome} />
+                      </Link>
+                      <strong>{product.nome}</strong>
+                      <p>{product.precoOferta}</p>
+                      <button
+                        type="button"
+                        data-testid="add-product-button"
+                        onClick={() => handleAddProduct(product.id)}
+                      >
+                        <div data-testid="cart-product-quantity">
+                          <MdAddShoppingCart size={16} color="#FFF" />
+                          {cartItemsAmount[product.id] || 0}
+                        </div>
+
+                        <span>ADICIONAR AO CARRINHO</span>
+                      </button>
+                    </li>
+                  }
                 </SwiperSlide>
               ))}
             </Swiper>
+            }
           </div>
         </SwiperStyles>
 
@@ -145,9 +175,11 @@ const Home = (): JSX.Element => {
               {products.map((product) => (
                 <SwiperSlide>
                   <li key={product.id}>
-                    <Link to={`/produto/${product.id}`}><img src={product.image} alt={product.title} /></Link>
-                    <strong>{product.title}</strong>
-                    <p>{product.price}</p>
+                    <Link to={`/produto/${product.id}`}>
+                      <img src={product.publicUrl} alt={product.nome} />
+                    </Link>
+                    <strong>{product.nome}</strong>
+                    <p>{product.preco}</p>
                     <button
                       type="button"
                       data-testid="add-product-button"
