@@ -9,7 +9,6 @@ import React from "react";
 export default function Register() {
   const [nome, setNome]=useState('');
   const [email, setEmail]=useState('');
-  const [role, setRole]=useState('');
   const [selectValue, setSelectValue] = React.useState('1'); 
   const list = [
     {id: 1, name: 'Cliente'},
@@ -29,9 +28,9 @@ export default function Register() {
             toast.info('Opa, recebemos o seu registro :)')
             handleClickLogin();
           }else if(response.statusText == "Forbidden"){
-            alert("Não tem permisão!");
+            toast.info("Ops, Não tem permisão!");
           }else{
-            alert("Dados Incorretos!");
+            toast.info("Ops, Dados Incorretos!");
           }
     })
     
