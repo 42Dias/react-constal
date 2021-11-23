@@ -63,43 +63,36 @@ const Header = (): JSX.Element => {
 
 
   async function Login(){
-  let response=Axios.post('http://localhost:8157/api/auth/sign-in', {   
-          email: email,
-          password: password,
-      }).then((response) =>{
-          console.log(response);  
-          if(response.statusText == "OK"){
-            toast.info('Opa, recebemos o seu registro :)')
-            handleLocalStorage(email, password);
-            handleClickLogin();
-
-          }else if(response.statusText == "Forbidden"){
-            toast.info("Ops, Não tem permisão!");
-          }else{
-            toast.info("Ops, Dados Incorretos!");
-          }  
-          handleLocalStorageToken(response.data);
-    })
-  }
-
-  let history = useHistory();
-  function handleClickLogin() {
-    history.push("/meu-perfil");
-
-  }
-  function checkLocalStorage(){
-    let localStorageClietData = localStorage.getItem(clientDataFromLocalStorage);
-    let token = localStorage.getItem(token);
-    if (token){
-      console.log("TEM TOKEN!!!");
-      
-    }
-    if (clientDataFromLocalStorage){
-      console.log("TEM DADOS!!!");
-      
-    }
-  }
+    let history = useHistory();
+    function handleClickLogin() {
+      history.push("/meu-perfil");
   
+    }
+    let localStorageClietData = localStorage.getItem("clientDataFromLocalStorage");
+    let token = localStorage.getItem("token");
+    if (token && localStorageClietData){
+      console.log("AAA");
+    }
+    else{
+    let response=Axios.post('http://localhost:8157/api/auth/sign-in', {   
+            email: email,
+            password: password,
+        }).then((response) =>{
+            console.log(response);  
+            if(response.statusText == "OK"){
+              toast.info('Opa, recebemos o seu registro :)')
+              handleLocalStorage(email, password);
+              handleClickLogin();
+
+            }else if(response.statusText == "Forbidden"){
+              toast.info("Ops, Não tem permisão!");
+            }else{
+              toast.info("Ops, Dados Incorretos!");
+            }  
+            handleLocalStorageToken(response.data);
+      })
+    }
+  }
   return (
     <>
       <Container>
