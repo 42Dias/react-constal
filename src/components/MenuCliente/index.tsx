@@ -8,22 +8,16 @@ export default function MenuCliente() {
       <Container>
         <FlexLink>
           <Link to="/produtos">
-            Madeira <FiChevronRight />
+            Moveis <FiChevronRight />
           </Link>
           <Link to="/produtos">
-            Tinta <FiChevronRight />
+            Eletrodoméstico <FiChevronRight />
           </Link>
           <Link to="/produtos">
-            Portas e Janelas <FiChevronRight />
+            Materiais de Decoração <FiChevronRight />
           </Link>
           <Link to="/produtos">
-            Telha <FiChevronRight />
-          </Link>
-          <Link to="/produtos">
-            Pisos <FiChevronRight />
-          </Link>
-          <Link to="/produtos">
-            Ferramentas <FiChevronRight />
+            Cama, Mesa e Banho <FiChevronRight />
           </Link>
         </FlexLink>
       </Container>
