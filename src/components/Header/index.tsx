@@ -33,8 +33,17 @@ const Header = (): JSX.Element => {
   
   const [email, setUser]=useState('');
   const [password, setPassword]=useState('');
+  
   function openModal() {
+    let localStorageClietData = localStorage.getItem("clientDataFromLocalStorage");
+    let token = localStorage.getItem("token");
+    if (localStorageClietData || token){
+      handleClickLogin()
+    }
+    else{
+
     setIsOpen(true);
+    }
   }
 
   function afterOpenModal() {
@@ -61,19 +70,11 @@ const Header = (): JSX.Element => {
     setLocalStorage(token)
   }
 
-
+  let history = useHistory();
+  function handleClickLogin() {
+    history.push("/meu-perfil");
+  }
   async function Login(){
-    let history = useHistory();
-    function handleClickLogin() {
-      history.push("/meu-perfil");
-  
-    }
-    let localStorageClietData = localStorage.getItem("clientDataFromLocalStorage");
-    let token = localStorage.getItem("token");
-    if (token && localStorageClietData){
-      console.log("AAA");
-    }
-    else{
     let response=Axios.post('http://localhost:8157/api/auth/sign-in', {   
             email: email,
             password: password,
@@ -91,7 +92,7 @@ const Header = (): JSX.Element => {
             }  
             handleLocalStorageToken(response.data);
       })
-    }
+    
   }
   return (
     <>
