@@ -35,9 +35,12 @@ const Header = (): JSX.Element => {
   const [password, setPassword]=useState('');
   
   function openModal() {
-    let localStorageClietData = localStorage.getItem("clientDataFromLocalStorage");
+    let email = localStorage.getItem("email");
+    let password = localStorage.getItem("password");
     let token = localStorage.getItem("token");
-    if (localStorageClietData || token){
+    console.log( email + " " + password );
+    
+    if (email && password && token){
       handleClickLogin()
     }
     else{
@@ -55,11 +58,12 @@ const Header = (): JSX.Element => {
 
   function handleLocalStorage(emailA: string, passwordB: string) {
     let clientData = [emailA, passwordB];
-    const setLocalStorage = (data: string[]) => {
-      localStorage.setItem("clientDataFromLocalStorage", JSON.stringify(data));//saves client's data into localStorage:
-      console.log(data);
+    const setLocalStorage = () => {
+      localStorage.setItem("email", JSON.stringify(emailA));//saves client's data into localStorage:
+      localStorage.setItem("password", JSON.stringify(passwordB));//saves client's data into localStorage:
+      console.log();
     }
-    setLocalStorage(clientData)
+
   }
   function handleLocalStorageToken(token: string[]) {
     const setLocalStorage = (data: string[]) => {
