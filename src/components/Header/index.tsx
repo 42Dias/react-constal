@@ -41,7 +41,6 @@ const Header = (): JSX.Element => {
       handleClickLogin()
     }
     else{
-
     setIsOpen(true);
     }
   }

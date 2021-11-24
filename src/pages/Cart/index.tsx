@@ -72,6 +72,7 @@ const Cart = (): JSX.Element => {
       const response = await api.get(
         "tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/carrinho/"
         //  "tenant/:tenantId/carrinho/"
+    
         );
       console.log(response.data);
       const productsFormated = response.data.map(function (product: Product) {
