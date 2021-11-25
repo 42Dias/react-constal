@@ -32,6 +32,6 @@ export const FlexLink = styled.div`
   text-decoration: none;
   color: black;
   font-size: 15px;
-  margin-right: 35px;
+  margin-right: 22px;
   }
 `;
