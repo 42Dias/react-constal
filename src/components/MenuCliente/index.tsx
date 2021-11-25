@@ -19,6 +19,15 @@ export default function MenuCliente() {
           <Link to="/produtos">
             Cama, Mesa e Banho <FiChevronRight />
           </Link>
+          <Link to="/produtos">
+            Moda infantil <FiChevronRight />
+          </Link>
+          <Link to="/produtos">
+            Moda Feminina <FiChevronRight />
+          </Link>
+          <Link to="/produtos">
+            Moda Masculina <FiChevronRight />
+          </Link>
         </FlexLink>
       </Container>
     </>
