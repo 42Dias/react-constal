@@ -12,7 +12,8 @@ import { useCart } from "../../hooks/useCart";
 import { formatPrice } from "../../util/format";
 import { Container, ProductTable, Total, FooterContainer } from "./styles";
 import { Link } from "react-router-dom";
-
+import axios from "axios";
+let token = localStorage.getItem("token");
 //CRIAR FUNÇÃO PARA PEGAR OS PRODUTOS DO CARRINHO DO BACKEND
 
 interface Product {
@@ -69,11 +70,24 @@ const Cart = (): JSX.Element => {
 
   useEffect(() => {
     async function loadProducts() {
-      const response = await api.get(
+      /*const response = await api.get(
         "tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/carrinho/"
         //  "tenant/:tenantId/carrinho/"
     
         );
+      */
+
+      const instance = axios.create({
+        baseURL: 'http://localhost:8157/api/',
+        timeout: 10000,
+        headers: {'Authorization': 'Bearer '+ token}
+      });
+      
+      const response = await instance.get('tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/carrinho/')
+      .then(response => {
+          return response.data;
+          
+      })
       console.log(response.data);
       const productsFormated = response.data.map(function (product: Product) {
         console.log(product);

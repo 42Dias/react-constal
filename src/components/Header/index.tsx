@@ -38,7 +38,7 @@ const Header = (): JSX.Element => {
     let email = localStorage.getItem("email");
     let password = localStorage.getItem("password");
     let token = localStorage.getItem("token");
-    console.log( email + " " + password );
+    console.log("email e senha: "+ email + " " + password );
     
     if (email && password && token){
       handleClickLogin()
