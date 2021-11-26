@@ -159,7 +159,7 @@ const Home = (): JSX.Element => {
                         <img src={product.publicUrl} alt={product.nome} />
                       </Link>
                       <strong>{product.nome}</strong>
-                      <p>{product.precoOferta}</p>
+                      <p>R$ {product.precoOferta}</p>
                       <button
                         type="button"
                         data-testid="add-product-button"
