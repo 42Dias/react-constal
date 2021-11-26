@@ -31,6 +31,12 @@ export const ProdContainerSingle = styled.div`
   background: white;
   margin: 20px auto;
   border-radius: 5px;
+
+  img {
+    max-width: 222px;
+    max-height: 106px;
+  }
+
   h5 {
     font-size: 14px;
     padding: 3px 7px;

@@ -73,6 +73,7 @@ export const ProductList = styled.ul`
 `;
 
 export const BannerHome = styled.div`
+
   .banner-home {
     width: 100%;
     display: flex;
@@ -82,7 +83,7 @@ export const BannerHome = styled.div`
     background-size: cover;
     background-position: center;
     object-fit: contain;
-    
+
     .bg-content-home {
       padding: 110px 0;
       position: relative; 
@@ -148,11 +149,11 @@ export const FlexBar = styled.div`
 export const SwiperStyles = styled.div`
 .swiper-container {
   padding: 30px 0 !important;
-  z-index: 0;
+  z-index: 1;
 }
 
 .swiper-slide {
-  z-index: 0;
+  z-index: 1 !;
   width: 263px !important;
   height: 318px !important;
   background: #EDEDED;
@@ -223,22 +224,24 @@ export const SwiperStyles = styled.div`
 `
 
 export const BannerSliderHome = styled.div`
+  z-index: 1 !important;
   .mySwiper img {
     width: 100%;
     height: 417px;
+    z-index: 1 !important;
   }
 
   .mySwiper .swiper-pagination-bullet {
-  width: 50px;
-  height: 50px;
-  text-align: center;
-  line-height: 20px;
-  font-size: 12px;
-  color: #000;
-  opacity: 1;
-  background: rgba(0, 0, 0, 0.2);
-  z-index: 999;
-}
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 12px;
+    color: #000;
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: 1 !important;
+  }
 
   .mySwiper .swiper-pagination-bullet-active {
     color: #fff;

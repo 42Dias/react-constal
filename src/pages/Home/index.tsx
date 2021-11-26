@@ -8,7 +8,7 @@ import SwiperCore, {
 } from 'swiper';
 import "swiper/swiper.scss";
 
-import { BannerHome, SwiperStyles, BarHome, FlexBar, BannerSliderHome } from "./styles";
+import { SwiperStyles, BarHome, FlexBar, BannerSliderHome } from "./styles";
 import { api } from "../../services/api";
 import { formatPrice } from "../../util/format";
 import { useCart } from "../../hooks/useCart";
