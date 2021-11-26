@@ -4,6 +4,9 @@ import Footer from "../../components/Footer";
 import user from "../../assets/images/user-profile.png";
 import mastercard from "../../assets/images/master-card.svg";
 import visa from "../../assets/images/visa.svg";
+import Modal from "react-modal";
+import { AiOutlineClose } from "react-icons/ai";
+import { toast } from 'react-toastify';
 
 import {
   CardProfile,
@@ -12,6 +15,10 @@ import {
   CardDatails,
   CardDatailsContent,
   ContentDetails,
+  ModalContainerVendedor,
+  ModalFlex,
+  ModalContent,
+  ContentFormNew,
 } from "./styles";
 import { Link } from "react-router-dom";
 import MenuEmpresa from "../../components/MenuEmpresa";
@@ -20,6 +27,29 @@ import axios from "axios";
 
 
 export default function Profile() {
+  function messageCancel() {
+    toast.error('Ah, que pena. Não conseguimos adicionar o seu endereço na plataforma :(')
+    setIsOpen(false);
+  }
+
+  function messageApprove() {
+    toast.info('Eba, recebemos o seu endereço. :)')
+    setIsOpen(false);
+  }
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
   let token = localStorage.getItem("token")?.replace(/"/g, "");
   const [email, setEmail]=useState('');
   const [password, setPassword]=useState('');
@@ -27,7 +57,6 @@ export default function Profile() {
   const [cpf, setCPF]=useState('');
   const [phone, setPhone]=useState('');
   const [logradouro, setLog]=useState('');
-
 
   useEffect(() => {
     async function loadUser() {
@@ -146,10 +175,68 @@ export default function Profile() {
               <Link to="">Excluir</Link>
             </div>
           </CardDatailsContent>
-          <Link to="">Novo endereço</Link>
+          <span onClick={openModal}>Novo endereço</span>
         </CardDatails>
       </div>
       <Footer />
+
+      <ModalContainerVendedor>
+        <Modal
+          isOpen={modalIsOpen}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+        >
+          <div>
+            <ModalFlex>
+              <AiOutlineClose onClick={closeModal} /> 
+            </ModalFlex>
+
+            <ModalContent>
+              <h3>Novo endereço</h3>
+
+              <ContentFormNew>
+                <label htmlFor="">CEP</label>
+                <input type="number" placeholder="CEP" />
+              </ContentFormNew>
+
+              <ContentFormNew>
+                <label htmlFor="">Rua</label>
+                <input type="text" placeholder="Rua" />
+              </ContentFormNew>
+
+              <ContentFormNew>
+                <label htmlFor="">Número</label>
+                <input type="number" placeholder="Número" />
+              </ContentFormNew>
+
+              <ContentFormNew>
+                <label htmlFor="">Complemento</label>
+                <input type="text" placeholder="Complemento" />
+              </ContentFormNew>
+
+              <ContentFormNew>
+                <label htmlFor="">Referência</label>
+                <input type="text" placeholder="Referência" />
+              </ContentFormNew> 
+
+              <ContentFormNew>
+                <label htmlFor="">Estado</label>
+                <input type="text" placeholder="Estado" />
+              </ContentFormNew>
+
+              <ContentFormNew>
+                <label htmlFor="">UF</label>
+                <input type="text" placeholder="Cidade" />
+              </ContentFormNew>
+
+              <div className="buttonsNew">
+                <button type="button" onClick={messageCancel}>Cancelar</button>
+                <button type="button" onClick={messageApprove}>Adicionar</button>
+              </div>
+            </ModalContent>
+          </div>
+        </Modal>
+      </ModalContainerVendedor>
     </>
   );
 }

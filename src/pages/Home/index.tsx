@@ -8,7 +8,7 @@ import SwiperCore, {
 } from 'swiper';
 import "swiper/swiper.scss";
 
-import { SwiperStyles, BarHome, FlexBar, BannerSliderHome } from "./styles";
+import { SwiperStyles, BarHome, FlexBar, BannerHomeImage } from "./styles";
 import { api } from "../../services/api";
 import { formatPrice } from "../../util/format";
 import { useCart } from "../../hooks/useCart";
@@ -51,7 +51,7 @@ const Home = (): JSX.Element => {
   const { addProduct, cart } = useCart();
 
   const cartItemsAmount = cart.reduce((sumAmount, product) => {
-    sumAmount[product.id] = product.amount;
+    sumAmount[product.id] = product.quantidade;
     return sumAmount;
   }, {} as CartItemsAmount);
 
@@ -78,7 +78,7 @@ const Home = (): JSX.Element => {
       <Header />
       <MenuCliente />
       
-      <BannerSliderHome>
+      <BannerHomeImage>
         <Swiper
           spaceBetween={30}
           centeredSlides={true}
@@ -91,7 +91,6 @@ const Home = (): JSX.Element => {
           }}
           loop={true}
           navigation={true}
-          className="mySwiper"
         >
           <SwiperSlide><img src={moveis} alt="moveis" /></SwiperSlide>
           <SwiperSlide><img src={materiais} alt="materiais" /></SwiperSlide>
@@ -101,7 +100,7 @@ const Home = (): JSX.Element => {
           <SwiperSlide><img src={modafeminina} alt="moda feminina" /></SwiperSlide>
           <SwiperSlide><img src={modamasculina} alt="moda masculina" /></SwiperSlide>
         </Swiper>
-      </BannerSliderHome>
+      </BannerHomeImage>
 
       <BarHome>
         <div className="container">

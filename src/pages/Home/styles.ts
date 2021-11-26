@@ -223,28 +223,17 @@ export const SwiperStyles = styled.div`
 }
 `
 
-export const BannerSliderHome = styled.div`
-  z-index: 1 !important;
-  .mySwiper img {
-    width: 100%;
-    height: 417px;
-    z-index: 1 !important;
+export const BannerHomeImage = styled.div`
+  .swiper-container {
+    z-index: 0;
   }
 
-  .mySwiper .swiper-pagination-bullet {
-    width: 50px;
-    height: 50px;
-    text-align: center;
-    line-height: 20px;
-    font-size: 12px;
-    color: #000;
-    opacity: 1;
-    background: rgba(0, 0, 0, 0.2);
-    z-index: 1 !important;
-  }
-
-  .mySwiper .swiper-pagination-bullet-active {
-    color: #fff;
-    background: #007aff;
+  .swiper-slide {
+    img {
+      width: 100%;
+      height: 417px !important;
+      object-fit: cover;
+      margin: 0;
+    } 
   }
 `;
