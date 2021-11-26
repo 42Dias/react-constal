@@ -16,15 +16,40 @@ import {
 import { Link } from "react-router-dom";
 import MenuEmpresa from "../../components/MenuEmpresa";
 import { api } from "../../services/api";
+import axios from "axios";
 
 
 export default function Profile() {
+  let token = localStorage.getItem("token")?.replace(/"/g, "");
+  const [email, setEmail]=useState('');
+  const [password, setPassword]=useState('');
+  const [fullName, setFullName]=useState('');
+  const [cpf, setCPF]=useState('');
+  const [phone, setPhone]=useState('');
+  const [logradouro, setLog]=useState('');
+
 
   useEffect(() => {
     async function loadUser() {
-      const response = await api.get("http://localhost:8157/api/auth/me");
-      console.log(response.data);
+      const instance = axios.create({
+        baseURL: 'http://localhost:8157/api',
+        timeout: 10000,
+        headers: {'Authorization': 'Bearer '+ token}
+      });
       
+      const response = await instance.get('/tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/pessoa-fisica-perfil')
+      .then(response => {
+         console.log("response"+ response.data);
+          return response.data;  
+          
+      })
+      //
+      setEmail(response.email);
+      setFullName(response.nome);
+      setCPF(response.cpf);
+      setPhone(response.telefone);
+      setLog(response.logradouro);
+      console.log("data: "+response.logradouro);
     }
     
     loadUser();
@@ -56,10 +81,10 @@ export default function Profile() {
           <img src={user} alt="profile" />
 
           <CardDatas>
-            <h3>Julia Souza</h3>
-            <span>497.168.718-92</span>
-            <p>(11) 97051-9704</p>
-            <p>eujulia@gmail.com</p>
+            <h3>{fullName}</h3>
+            <span>{cpf}</span>
+            <p>{phone}</p>
+            <p>{email}</p>
           </CardDatas>
         </CardProfile>
 
@@ -68,7 +93,7 @@ export default function Profile() {
           <CardDatailsContent>
             <ContentDetails>
               <span>Login:</span>
-              <p>Julia Souza</p>
+              <p>{email}</p>
             </ContentDetails>
           </CardDatailsContent>
 
@@ -98,7 +123,7 @@ export default function Profile() {
 
           <CardDatailsContent>
             <ContentDetails>
-              <img src={visa} alt="" />
+              <img src={visa} alt="" width = {10}/>
               <p>Final em XXXX <br /> Banco <br /> Vencimento </p>
             </ContentDetails>
             <Link to="">Excluir</Link>
@@ -110,7 +135,7 @@ export default function Profile() {
           <CardDatailsContent>
             <ContentDetails>
               <small>
-                Av. xxxxxxxx <br />
+                Av. '{logradouro}' <br />
                 Referência: XXXXXX <br />
                 CEP: 07355-620 <br />
                 Cidade: SP

@@ -63,7 +63,7 @@ const Header = (): JSX.Element => {
       localStorage.setItem("password", JSON.stringify(passwordB));//saves client's data into localStorage:
       console.log();
     }
-
+    
   }
   function handleLocalStorageToken(token: string[]) {
     const setLocalStorage = (data: string[]) => {
@@ -84,7 +84,7 @@ const Header = (): JSX.Element => {
         }).then((response) =>{
             console.log(response);  
             if(response.statusText == "OK"){
-              toast.info('Opa, recebemos o seu registro :)')
+              toast.info('Login efetuado com sucesso! :)')
               handleLocalStorage(email, password);
               handleClickLogin();
 

@@ -10,8 +10,8 @@ export default function Register() {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
-  const [category, setCategory] = useState('')
-  
+  const [category, setCategory] = useState('1');
+
   function handleCreateUser(event: FormEvent) {
     event.preventDefault();
     console.log({
@@ -20,7 +20,33 @@ export default function Register() {
       senha,
       category
     });
+    Cadastro();
   }
+
+  async function Cadastro() {
+    
+      Axios.post('http://localhost:8157/api/auth/sign-up', {   
+        fullName: nome,   
+        email: email,
+        password: senha,
+        role: parseInt(category)
+    }).then((response) =>{
+        console.log(response);  
+        if(response.statusText == "OK"){
+          toast.info('Opa, recebemos o seu registro :)')
+          handleClickLogin();
+        }else if(response.statusText == "Forbidden"){
+          toast.info("Ops, Não tem permisão!");
+        }else{
+          toast.info("Ops, Dados Incorretos!");
+        }
+  })
+    
+  }
+  let history = useHistory();
+    function handleClickLogin() {
+      history.push("/meu-perfil");
+    }
 
   return (
     <>
@@ -64,8 +90,8 @@ export default function Register() {
                 value={category}
                 onChange={event => setCategory(event.target.value)}
               >
-                  <option>Cliente</option>
-                  <option>Empresa</option>
+                  <option value={"1"}>Cliente</option>
+                  <option value={"2"}>Empresa</option>
               </select> 
             </div>
           </GridRegister>
