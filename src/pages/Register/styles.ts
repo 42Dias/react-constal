@@ -9,7 +9,7 @@ export const BoxRegister = styled.form`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  
+  z-index: 999;
   h2 {
     padding: 40px 0;
   }
