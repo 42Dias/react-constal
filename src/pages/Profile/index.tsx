@@ -44,7 +44,7 @@ export default function Profile() {
           
       })
       //
-      setEmail(response.email);
+      setEmail(response.user.email);
       setFullName(response.nome);
       setCPF(response.cpf);
       setPhone(response.telefone);

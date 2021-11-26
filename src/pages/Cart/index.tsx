@@ -13,7 +13,8 @@ import { formatPrice } from "../../util/format";
 import { Container, ProductTable, Total, FooterContainer } from "./styles";
 import { Link } from "react-router-dom";
 import axios from "axios";
-let token = localStorage.getItem("token");
+let token = localStorage.getItem("token")?.replace(/"/g, "");
+
 //CRIAR FUNÇÃO PARA PEGAR OS PRODUTOS DO CARRINHO DO BACKEND
 
 interface Product {
@@ -88,13 +89,13 @@ const Cart = (): JSX.Element => {
           return response.data;
           
       })
-      console.log(response.data);
-      const productsFormated = response.data.map(function (product: Product) {
+      console.log("res: "+response.data);
+      /*const productsFormated = response.data.map(function (product: Product) {
         console.log(product);
         
         return { ...product, price: formatPrice(product.price) };
       });
-      setProducts(productsFormated);
+      setProducts(productsFormated);*/
     }
     
     loadProducts();

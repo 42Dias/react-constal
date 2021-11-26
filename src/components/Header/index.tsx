@@ -58,11 +58,11 @@ const Header = (): JSX.Element => {
 
   function handleLocalStorage(emailA: string, passwordB: string) {
     let clientData = [emailA, passwordB];
-    const setLocalStorage = () => {
-      localStorage.setItem("email", JSON.stringify(emailA));//saves client's data into localStorage:
-      localStorage.setItem("password", JSON.stringify(passwordB));//saves client's data into localStorage:
-      console.log();
-    }
+    
+    localStorage.setItem("email", JSON.stringify(email));//saves client's data into localStorage:
+    localStorage.setItem("password", JSON.stringify(password));//saves client's data into localStorage:
+    console.log();
+    
     
   }
   function handleLocalStorageToken(token: string[]) {
@@ -86,7 +86,7 @@ const Header = (): JSX.Element => {
             if(response.statusText == "OK"){
               toast.info('Login efetuado com sucesso! :)')
               handleLocalStorage(email, password);
-              handleClickLogin();
+              closeModal();
 
             }else if(response.statusText == "Forbidden"){
               toast.info("Ops, Não tem permisão!");
