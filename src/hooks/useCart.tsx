@@ -9,14 +9,14 @@ interface CartProviderProps {
 
 interface UpdateProductAmount {
   productId: number;
-  amount: number;
+  quantidade: number;
 }
 
 interface CartContextData {
   cart: Product[];
   addProduct: (productId: number) => Promise<void>;
   removeProduct: (productId: number) => void;
-  updateProductAmount: ({ productId, amount }: UpdateProductAmount) => void;
+  updateProductAmount: ({ productId, quantidade }: UpdateProductAmount) => void;
 }
 
 const CartContext = createContext<CartContextData>({} as CartContextData);
@@ -40,9 +40,9 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
         const { data: product } = await api.get<Product>(`products/${productId}`)
         const { data: stock } = await api.get<Stock>(`stock/${productId}`)
 
-        if(stock.amount > 0) {
-          setCart([...cart, {...product, amount: 1}])
-          localStorage.setItem('@RocketShoes:cart', JSON.stringify([...cart, {...product, amount: 1}]))
+        if(stock.quantidade > 0) {
+          setCart([...cart, {...product, quantidade: 1}])
+          localStorage.setItem('@RocketShoes:cart', JSON.stringify([...cart, {...product, quantidade: 1}]))
           toast('Adicionado')
           return;
         }
@@ -51,10 +51,10 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
       if(productAlreadyInCart) {
         const { data: stock } = await api.get(`stock/${productId}`)
 
-        if (stock.amount > productAlreadyInCart.amount) {
+        if (stock.quantidade > productAlreadyInCart.quantidade) {
           const updatedCart = cart.map(cartItem => cartItem.id === productId ? {
             ...cartItem,
-            amount: Number(cartItem.amount) + 1
+            quantidade: Number(cartItem.quantidade) + 1
           } : cartItem)
   
           setCart(updatedCart)
@@ -87,17 +87,17 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
 
   const updateProductAmount = async ({
     productId,
-    amount,
+    quantidade,
   }: UpdateProductAmount) => {
     try {
-      if(amount < 1){
+      if(quantidade < 1){
         toast.error('Erro na alteração de quantidade do produto');
         return
       }
 
       const response = await api.get(`/stock/${productId}`);
       const productAmount = response.data.amount;
-      const stockIsFree = amount > productAmount
+      const stockIsFree = quantidade > productAmount
 
       if(stockIsFree) {
         toast.error('Quantidade solicitada fora de estoque')
@@ -112,7 +112,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
 
       const updatedCart = cart.map(cartItem => cartItem.id === productId ? {
         ...cartItem,
-        amount: amount
+        quantidade: quantidade
       } : cartItem)
       setCart(updatedCart)
       localStorage.setItem('@RocketShoes:cart', JSON.stringify(updatedCart))

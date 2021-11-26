@@ -1,12 +1,15 @@
 export interface Product {
   id: number;
-  title: string;
-  price: number;
-  image: string;
-  amount: number;
+  nome: string;
+  descricao: string;
+  preco: number;
+  publicUrl: string;
+  isOferta: number;
+  precoOferta: any;
+  quantidade: number;
 }
 
 export interface Stock {
   id: number;
-  amount: number;
+  quantidade: number;
 }
