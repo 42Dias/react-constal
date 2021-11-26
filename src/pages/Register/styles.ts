@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const BoxRegister = styled.div`
+export const BoxRegister = styled.form`
   width: 100%;
   height: 500px;
   background: white;
