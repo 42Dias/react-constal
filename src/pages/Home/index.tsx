@@ -8,7 +8,7 @@ import SwiperCore, {
 } from 'swiper';
 import "swiper/swiper.scss";
 
-import { BannerHome, SwiperStyles, BarHome, FlexBar, BannerSliderHome } from "./styles";
+import { SwiperStyles, BarHome, FlexBar, BannerHomeImage } from "./styles";
 import { api } from "../../services/api";
 import { formatPrice } from "../../util/format";
 import { useCart } from "../../hooks/useCart";
@@ -78,7 +78,7 @@ const Home = (): JSX.Element => {
       <Header />
       <MenuCliente />
       
-      <BannerSliderHome>
+      <BannerHomeImage>
         <Swiper
           spaceBetween={30}
           centeredSlides={true}
@@ -90,7 +90,6 @@ const Home = (): JSX.Element => {
             clickable: true,
           }}
           navigation={true}
-          className="mySwiper"
         >
           <SwiperSlide><img src={moveis} alt="moveis" /></SwiperSlide>
           <SwiperSlide><img src={materiais} alt="materiais" /></SwiperSlide>
@@ -100,22 +99,7 @@ const Home = (): JSX.Element => {
           <SwiperSlide><img src={modafeminina} alt="moda feminina" /></SwiperSlide>
           <SwiperSlide><img src={modamasculina} alt="moda masculina" /></SwiperSlide>
         </Swiper>
-      </BannerSliderHome>
-
-      {/* <BannerHome>
-        <section className="banner-home">
-          <div className="container">
-            <div className="bg-content-home">
-              <h1>Uma descrição sobre a visão da Constal</h1>
-              <p>
-                Morbi vitae lorem nisl. Sed lobortis non sapien sit amet
-                consectetur. Suspendisse libero magna, lobortis ac neque non,
-                porttitor ornare quam. Ut non pretium leo.
-              </p>
-            </div>
-          </div>
-        </section>
-      </BannerHome> */}
+      </BannerHomeImage>
 
       <BarHome>
         <div className="container">

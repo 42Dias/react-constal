@@ -222,26 +222,17 @@ export const SwiperStyles = styled.div`
 }
 `
 
-export const BannerSliderHome = styled.div`
-  .mySwiper img {
-    width: 100%;
-    height: 417px;
+export const BannerHomeImage = styled.div`
+  .swiper-container {
+    z-index: 0;
   }
 
-  .mySwiper .swiper-pagination-bullet {
-  width: 50px;
-  height: 50px;
-  text-align: center;
-  line-height: 20px;
-  font-size: 12px;
-  color: #000;
-  opacity: 1;
-  background: rgba(0, 0, 0, 0.2);
-  z-index: 999;
-}
-
-  .mySwiper .swiper-pagination-bullet-active {
-    color: #fff;
-    background: #007aff;
+  .swiper-slide {
+    img {
+      width: 100%;
+      height: 417px !important;
+      object-fit: cover;
+      margin: 0;
+    } 
   }
 `;

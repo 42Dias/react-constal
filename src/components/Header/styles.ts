@@ -97,6 +97,10 @@ export const FlexLink = styled.div`
   }
 `;
 
+export const Modal = styled.div`
+  z-index: 999 !important;
+`;
+
 export const ModalContainer = styled.div`
   z-index: 999 !important;
   padding: 80px 90px;
