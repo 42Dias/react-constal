@@ -30,6 +30,7 @@ import PaymentsCompanies from "./pages/Dashboard/PaymentsCompanies";
 const Routes = (): JSX.Element => {
   return (
     <HashRouter>
+      <HashRouter basename=''>
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/cart" component={Cart} />
@@ -62,6 +63,7 @@ const Routes = (): JSX.Element => {
           component={PaymentsCompanies}
         />
       </Switch>
+      </HashRouter>
     </HashRouter>
   );
 };
