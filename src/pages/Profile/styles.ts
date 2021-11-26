@@ -47,7 +47,7 @@ export const CardDatails = styled.div`
     padding: 40px 0 30px 0;
   }
 
-  a {
+  span {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -57,6 +57,12 @@ export const CardDatails = styled.div`
     background: black;
     color: white;
     border-radius: 5px;
+    cursor: pointer;
+    transition: .4s;
+
+    &:hover {
+      background: #171717;
+    }
   }
 `
 
@@ -127,3 +133,95 @@ export const ContentDetails = styled.div`
     font-size: 16px;
   }
 `;
+
+
+export const ModalContainerVendedor = styled.div`
+  display: flex;
+`;
+
+export const ModalFlex = styled.div`
+  display: flex;
+`;
+
+export const ModalContent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: left;
+
+  h3 {
+    padding: 20px 0;
+    font-size: 24px;
+  }
+
+  p {
+    color: #4A4A4A;
+    max-width: 420px;
+    padding: 20px 0;
+  }
+
+  .buttonsNew {
+    display: flex;
+  }
+
+  .buttonsNew button {
+    width: 165px;
+    height: 40px;
+
+    border-radius: 5px;
+    color: black;
+    border: 1px solid rgba(16, 16, 16, 1);
+    text-decoration: none;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 5px;
+  }
+
+  .buttonsNew button:nth-child(2) {
+    width: 165px;
+    height: 40px;
+
+    background: #101010;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 5px;
+    border: 0;
+  }
+`;
+
+export const ContentFormNew = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  input {
+    height: 48px;
+    width: 466px;
+    border-radius: 4px;
+    border: 0;
+    background: #F2F2F2 !important;
+    padding: 0 5px;
+    margin: 10px 0;
+  }
+
+  select {
+    height: 48px;
+    width: 466px;
+    border-radius: 4px;
+    border: 0;
+    background: #F2F2F2 !important;
+    padding: 0 5px;
+    margin: 10px 0;
+  }
+
+  label {
+    margin: 5px 0;
+  }
+` 
