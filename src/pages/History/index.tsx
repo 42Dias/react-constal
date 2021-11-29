@@ -82,7 +82,6 @@ export default function Histoty() {
         <CardDatails>
           <Title>Histórico</Title>
 
-          {}
 
 
           <CardDatailsContent>

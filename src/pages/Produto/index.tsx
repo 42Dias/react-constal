@@ -23,6 +23,8 @@ import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import React, { useState ,useEffect } from "react";
 import axios from "axios";
+import { api } from "../../services/api";
+
 let token = localStorage.getItem("token")?.replace(/"/g, "");
 
 
@@ -96,14 +98,21 @@ export default function Produto() {
   const [modelo, setModelo]=useState('');
   const [descricao, setDescricao]=useState('');
 
+
+  const [logradouro, setLogradouro]=useState('');
+  const [bairro, setBairro]=useState('');
+  const [cep, setCEP]=useState('');
+  const [cidade, setCidade]=useState('');
+  const [estado, setEstado]=useState('');
+
   useEffect(() => {
-  async function loadUser(){
+  async function loadProduct(){
     const response = await instance.get(selectedProduct)
     .then(response => {
         console.log(response.data)
-
         return response.data
     })
+
     setId(response.id)
     setNome(response.nome)
     setPreco(response.preco)
@@ -114,9 +123,23 @@ export default function Produto() {
     setModelo(response.modelo);
     setDescricao(response.descricao)
 
-}
     
-loadUser();
+}
+async function loadUser() {
+  const user = await api.get('/tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/pessoa-fisica-perfil')
+  .then(user => {
+      console.log(user.data);
+    
+      return user.data;            
+  })
+setLogradouro(user.logradouro+", "+user.numero);
+  setBairro(user.bairro);
+  setCEP(user.cep)
+  setCidade(user.cidade);
+  setEstado(user.estado);
+}
+  loadUser()  
+  loadProduct();
 
 }, []);
 
@@ -219,11 +242,10 @@ loadUser();
               <p>Calculamos os custos e prazos para este endereço:</p>
 
               <SelectAdress>
-              DADOS DO CLIENTE!!!!!! 
                 <div>
-                  <strong>Rua XXXXXX XXXX XX XXXX, 55</strong>
+                  <strong>{logradouro}</strong>
                   <br />
-                  <span>CEP: XXXX - SP</span>
+                  <span>CEP: {cep} - {estado}</span>
                 </div>
                 <div>
                   <small>Selecione outro endereço</small>
