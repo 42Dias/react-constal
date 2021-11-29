@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   DetailsProdFirts,
   ContainerProd,
@@ -16,11 +17,14 @@ import {
   ModalFlex,
   ModalContent,
   SelectAdress,
+  ProdCaracteristicas,
 } from "./styles";
+import prod from "../../assets/images/prodfav.png";
 import { AiFillStar, AiOutlineClose } from "react-icons/ai";
 import { FiPlus, FiMinus } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
+<<<<<<< HEAD
 import React, { useState ,useEffect } from "react";
 import axios from "axios";
 import { api } from "../../services/api";
@@ -48,12 +52,57 @@ export default function Produto() {
   // interface ProductFormatted extends Product {
   //   priceFormatted: string;
   // }
+=======
+import React from "react";
+import MenuCliente from "../../components/MenuCliente";
+import Header from "../../components/Header";
+import { toast } from "react-toastify";
+
+interface RepositoryItemProps {
+  repository: {
+    id: string;
+    name: string;
+    title: string;
+    price: string;
+    image: string;
+  };
+}
+>>>>>>> a7d79dfc4367481218e8e5e285de84212ad7be52
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
+<<<<<<< HEAD
 
 
 
+=======
+  const [counter, setCounter] = useState(0);
+
+  function error() {
+    toast("Não é possível adicionar menos que 0 ", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  }
+
+  function increment() {
+    setCounter(counter + 1);
+  }
+
+  function withdraw() {
+    if (counter < 1) {
+      setCounter(0);
+      error();
+    } else {
+      setCounter(counter - 1);
+    }
+  }
+>>>>>>> a7d79dfc4367481218e8e5e285de84212ad7be52
   function openModal() {
     setIsOpen(true);
   }
@@ -144,6 +193,7 @@ setLogradouro(user.logradouro+", "+user.numero);
 }, []);
 
   return (
+<<<<<<< HEAD
   <>
 
      <div className="container">
@@ -162,6 +212,21 @@ setLogradouro(user.logradouro+", "+user.numero);
                 <span>
                       {codigo}
                 </span><IconsContentStar>
+=======
+    <>
+      <Header />
+      <MenuCliente />
+      <div className="container">
+        <ContainerProd>
+          <img src={prod} alt="" />
+          <DetailsProdFirts>
+            <BoxProd>
+              <BoxProdFirts>
+                <span>Nome da marca</span>
+                <strong>Fone</strong>
+                <span>Código do produto</span>
+                <IconsContentStar>
+>>>>>>> a7d79dfc4367481218e8e5e285de84212ad7be52
                   <AiFillStar size={18} />
                   <AiFillStar size={18} />
                   <AiFillStar size={18} />
@@ -170,7 +235,11 @@ setLogradouro(user.logradouro+", "+user.numero);
                   <small>(1)</small>
                 </IconsContentStar>
                 <br />
+<<<<<<< HEAD
                 <strong>R$ {codigo}</strong>
+=======
+                <strong>R$ 89,99</strong>
+>>>>>>> a7d79dfc4367481218e8e5e285de84212ad7be52
                 <span>Variantes (ex: Cor)</span>
                 <BoxColors>
                   <ColorWhite />
@@ -184,11 +253,11 @@ setLogradouro(user.logradouro+", "+user.numero);
 
               <AddCartRight>
                 <FlexBtnsProd>
-                  <IconPlusMinus>
+                  <IconPlusMinus onClick={increment}>
                     <FiPlus />
                   </IconPlusMinus>
-                  <h3>4</h3>
-                  <IconPlusMinus>
+                  <h3>{counter}</h3>
+                  <IconPlusMinus onClick={withdraw}>
                     <FiMinus />
                   </IconPlusMinus>
                 </FlexBtnsProd>
@@ -198,9 +267,11 @@ setLogradouro(user.logradouro+", "+user.numero);
 
             <BoxProd>
               <div className="oi">
+                <strong>Descrição do produto</strong>
                 <span>
                   {descricao}
                 </span>
+<<<<<<< HEAD
 
                 <strong>Descrição técnica</strong>
 
@@ -211,10 +282,49 @@ setLogradouro(user.logradouro+", "+user.numero);
                   Características: <br />
                   Observações: <br />
                 </span>
+=======
+>>>>>>> a7d79dfc4367481218e8e5e285de84212ad7be52
               </div>
             </BoxProd>
           </DetailsProdFirts>
         </ContainerProd>
+
+        <ProdCaracteristicas>
+          <div>
+            <h2>Características Técnicas</h2>
+            <span>
+              <b>Peso do Produto:</b> 12 Kg
+            </span>
+            <span>
+              <b>Quantidade de Lugares:</b> 6 lugares
+            </span>
+            <span>
+              <b>Formato:</b> Retangular
+            </span>
+            <span>
+              <b>Material do Tampo da Mesa:</b> Plástico
+            </span>
+            <span>
+              <b>Tipo de Material do Tampo da Mesa:</b> Polipropileno
+            </span>
+
+            <span>
+              <b>Material da Estrutura da Mesa:</b> Plástico
+            </span>
+            <span>
+              <b>Tipo de Material da Estrutura da Mesa:</b> Polipropileno
+            </span>
+            <span>
+              <b>Mesa Dobrável:</b> Sim
+            </span>
+            <span>
+              <b>Furo para Ombrelone:</b> Não
+            </span>
+            <span>
+              <b>Dimensão da Mesa (AxLxC):</b> 74x75x180cm
+            </span>
+          </div>
+        </ProdCaracteristicas>
 
         <ProdSecond>
           <div>

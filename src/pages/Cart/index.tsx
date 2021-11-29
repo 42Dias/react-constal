@@ -12,9 +12,7 @@ import { useCart } from "../../hooks/useCart";
 import { formatPrice } from "../../util/format";
 import { Container, ProductTable, Total, FooterContainer } from "./styles";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { Product } from "../../types";
-let token = localStorage.getItem("token")?.replace(/"/g, "");
 
 //CRIAR FUNÇÃO PARA PEGAR OS PRODUTOS DO CARRINHO DO BACKEND
 
@@ -35,12 +33,12 @@ const Cart = (): JSX.Element => {
 
   const cartFormatted = cart.map((product) => ({
     ...product,
-    priceFormatted: formatPrice(product.preco),
-    subtotal: formatPrice(product.preco * product.quantidade),
+    priceFormatted: formatPrice(product.produto.preco),
+    subtotal: formatPrice(product.produto.preco * product.quantidade),
   }));
   const total = formatPrice(
     cartFormatted.reduce((sumTotal, product) => {
-      sumTotal += product.preco * product.quantidade;
+      sumTotal += product.produto.preco * product.quantidade;
 
       return sumTotal;
     }, 0)
@@ -48,7 +46,7 @@ const Cart = (): JSX.Element => {
 
   function handleProductIncrement(product: Product) {
     const IncrementArguments = {
-      productId: product.id,
+      productId: product.produto.id,
       quantidade: product.quantidade + 1,
     };
     updateProductAmount(IncrementArguments);
@@ -56,7 +54,7 @@ const Cart = (): JSX.Element => {
 
   function handleProductDecrement(product: Product) {
     const IncrementArguments = {
-      productId: product.id,
+      productId: product.produto.id,
       quantidade: product.quantidade - 1,
     };
     updateProductAmount(IncrementArguments);
@@ -70,22 +68,25 @@ const Cart = (): JSX.Element => {
     async function loadProducts() {
       const response = await api.get('tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/carrinho/')
       .then(response => {
-          return response.data;
-          
+          //console.log(response.data.count);
+          return response.data.rows;          
       })
+
+     console.log(response);
       
-      const productsFormated = response.rows.map(function (
+       /*const productsFormated = response.rows.map(function (
         product: Product
       ) {
+        console.log(productsFormated);
         return { ...product, preco: formatPrice(product.preco) };
       });
-      console.log(response);
-      /*const productsFormated = response.data.map(function (product: Product) {
-        console.log(product);
+     */
+     const productsFormated = response.map(function (product: Product) {
+        console.log(product.produto);
         
-        return { ...product, price: formatPrice(product.price) };
+        return { ...product, preco: formatPrice(product.produto.preco) };
       });
-      setProducts(productsFormated);*/
+      setProducts(productsFormated);
     }
     
     loadProducts();
@@ -112,12 +113,12 @@ const Cart = (): JSX.Element => {
             </thead>
             <tbody>
               {cartFormatted.map((product) => (
-                <tr data-testid="product" key={product.id}>
+                <tr data-testid="product" key={product.produto.id}>
                   <td>
-                    <img src={product.publicUrl} alt={product.nome} />
+                    <img src={product.produto.fotos} alt={product.produto.nome} />
                   </td>
                   <td>
-                    <strong>{product.nome}</strong>
+                    <strong>{product.produto.nome}</strong>
                     <span>{product.priceFormatted}</span>
                   </td>
                   <td>
