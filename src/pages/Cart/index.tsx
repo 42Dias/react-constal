@@ -93,7 +93,7 @@ const Cart = (): JSX.Element => {
   }, []);
 
   
-
+//Está puxando mas não mostrando
 
 
   return (
