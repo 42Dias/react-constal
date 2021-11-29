@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   DetailsProdFirts,
   ContainerProd,
@@ -24,39 +24,11 @@ import { AiFillStar, AiOutlineClose } from "react-icons/ai";
 import { FiPlus, FiMinus } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
-<<<<<<< HEAD
-import React, { useState ,useEffect } from "react";
-import axios from "axios";
-import { api } from "../../services/api";
-
-let token = localStorage.getItem("token")?.replace(/"/g, "");
-
-
-// interface Product {
-//   fotos: any;
-//   codigo: string;
-//   marca: string;
-//   modelo: string;
-//   id: number;
-//   nome: string;
-//   descricao: string;
-//   preco: number;
-//   publicUrl:string;
-//   isOferta: number;
-//   precoOferta: any;
-// }
-
-export default function Produto() {
-
-    
-  // interface ProductFormatted extends Product {
-  //   priceFormatted: string;
-  // }
-=======
 import React from "react";
 import MenuCliente from "../../components/MenuCliente";
 import Header from "../../components/Header";
 import { toast } from "react-toastify";
+import { api } from "../../services/api";
 
 interface RepositoryItemProps {
   repository: {
@@ -67,15 +39,9 @@ interface RepositoryItemProps {
     image: string;
   };
 }
->>>>>>> a7d79dfc4367481218e8e5e285de84212ad7be52
-
+export default function Produto() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
-<<<<<<< HEAD
-
-
-
-=======
   const [counter, setCounter] = useState(0);
 
   function error() {
@@ -102,7 +68,6 @@ interface RepositoryItemProps {
       setCounter(counter - 1);
     }
   }
->>>>>>> a7d79dfc4367481218e8e5e285de84212ad7be52
   function openModal() {
     setIsOpen(true);
   }
@@ -129,13 +94,7 @@ interface RepositoryItemProps {
   }
   
   const selectedProduct = buildUrl()
-  console.log(selectedProduct)
-
-  const instance = axios.create({
-    baseURL: 'http://localhost:8157/api/',
-    timeout: 10000,
-    headers: {'Authorization': 'Bearer '+ token}
-  });
+  console.log(selectedProduct);
   
   const [id, setId]=useState('');
   const [nome, setNome]=useState('');
@@ -156,7 +115,7 @@ interface RepositoryItemProps {
 
   useEffect(() => {
   async function loadProduct(){
-    const response = await instance.get(selectedProduct)
+    const response = await api.get(selectedProduct)
     .then(response => {
         console.log(response.data)
         return response.data
@@ -193,26 +152,6 @@ setLogradouro(user.logradouro+", "+user.numero);
 }, []);
 
   return (
-<<<<<<< HEAD
-  <>
-
-     <div className="container">
-        <ContainerProd>
-          <img src={fotos} alt="" />
-          <DetailsProdFirts>
-            <BoxProd>
-              <BoxProdFirts>
-                NOME DA MARCA
-                <span>
-                    {marca}
-                </span>
-                <strong>
-                  {nome}
-                </strong>
-                <span>
-                      {codigo}
-                </span><IconsContentStar>
-=======
     <>
       <Header />
       <MenuCliente />
@@ -223,10 +162,9 @@ setLogradouro(user.logradouro+", "+user.numero);
             <BoxProd>
               <BoxProdFirts>
                 <span>Nome da marca</span>
-                <strong>Fone</strong>
+                <strong>{nome}</strong>
                 <span>Código do produto</span>
                 <IconsContentStar>
->>>>>>> a7d79dfc4367481218e8e5e285de84212ad7be52
                   <AiFillStar size={18} />
                   <AiFillStar size={18} />
                   <AiFillStar size={18} />
@@ -235,11 +173,7 @@ setLogradouro(user.logradouro+", "+user.numero);
                   <small>(1)</small>
                 </IconsContentStar>
                 <br />
-<<<<<<< HEAD
-                <strong>R$ {codigo}</strong>
-=======
-                <strong>R$ 89,99</strong>
->>>>>>> a7d79dfc4367481218e8e5e285de84212ad7be52
+                <strong>R$ {preco}</strong>
                 <span>Variantes (ex: Cor)</span>
                 <BoxColors>
                   <ColorWhite />
@@ -271,19 +205,6 @@ setLogradouro(user.logradouro+", "+user.numero);
                 <span>
                   {descricao}
                 </span>
-<<<<<<< HEAD
-
-                <strong>Descrição técnica</strong>
-
-                <span>
-                  Marca: {marca} <br />
-                  Modelo: {modelo}<br />
-                  Material: <br />
-                  Características: <br />
-                  Observações: <br />
-                </span>
-=======
->>>>>>> a7d79dfc4367481218e8e5e285de84212ad7be52
               </div>
             </BoxProd>
           </DetailsProdFirts>
