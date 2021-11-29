@@ -68,20 +68,7 @@ const Cart = (): JSX.Element => {
 
   useEffect(() => {
     async function loadProducts() {
-      /*const response = await api.get(
-        "tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/carrinho/"
-        //  "tenant/:tenantId/carrinho/"
-    
-        );
-      */
-
-      const instance = axios.create({
-        baseURL: 'http://localhost:8157/api/',
-        timeout: 10000,
-        headers: {'Authorization': 'Bearer '+ token}
-      });
-      
-      const response = await instance.get('tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/carrinho/')
+      const response = await api.get('tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/carrinho/')
       .then(response => {
           return response.data;
           
@@ -92,7 +79,7 @@ const Cart = (): JSX.Element => {
       ) {
         return { ...product, preco: formatPrice(product.preco) };
       });
-      console.log(response.rows[0].produto.nome);
+      console.log(response);
       /*const productsFormated = response.data.map(function (product: Product) {
         console.log(product);
         

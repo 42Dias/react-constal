@@ -56,29 +56,29 @@ export default function Profile() {
   const [fullName, setFullName]=useState('');
   const [cpf, setCPF]=useState('');
   const [phone, setPhone]=useState('');
-  const [logradouro, setLog]=useState('');
+  const [logradouro, setLogradouro]=useState('');
+  const [bairro, setBairro]=useState('');
+  const [cep, setCEP]=useState('');
+  const [cidade, setCidade]=useState('');
+  const [estado, setEstado]=useState('');
 
   useEffect(() => {
     async function loadUser() {
-      const instance = axios.create({
-        baseURL: 'http://localhost:8157/api',
-        timeout: 10000,
-        headers: {'Authorization': 'Bearer '+ token}
-      });
-      
-      const response = await instance.get('/tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/pessoa-fisica-perfil')
+      const response = await api.get('/tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/pessoa-fisica-perfil')
       .then(response => {
-         console.log("response"+ response.data);
-          return response.data;  
-          
+          return response.data;            
       })
       //
       setEmail(response.user.email);
       setFullName(response.nome);
       setCPF(response.cpf);
       setPhone(response.telefone);
-      setLog(response.logradouro);
-      console.log("data: "+response.logradouro);
+      setLogradouro(response.logradouro+", "+response.numero);
+      setBairro(response.bairro);
+      setCEP(response.cep)
+      setCidade(response.cidade);
+      setEstado(response.estado);
+      console.log(response);
     }
     
     loadUser();
@@ -115,6 +115,7 @@ export default function Profile() {
             <p>{phone}</p>
             <p>{email}</p>
           </CardDatas>
+          
         </CardProfile>
 
         <CardDatails>
@@ -164,10 +165,10 @@ export default function Profile() {
           <CardDatailsContent>
             <ContentDetails>
               <small>
-                Av. '{logradouro}' <br />
-                Referência: XXXXXX <br />
-                CEP: 07355-620 <br />
-                Cidade: SP
+                Endereço: {logradouro} <br />
+                Bairro: {bairro} <br />
+                CEP: {cep} <br />
+                Cidade: {cidade+" - "+estado}
               </small>
             </ContentDetails>
             <div className="flex-btn">
