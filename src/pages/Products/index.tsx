@@ -7,6 +7,7 @@ import prodfour from "../../assets/images/prodfour.png";
 import { AiOutlinePlus } from "react-icons/ai";
 import { Recommended, GridProdsFour, ProdContainerSingle } from "./styles";
 import MenuCliente from "../../components/MenuCliente";
+import { Link } from "react-router-dom";
 
 export default function Products() {
   return (
@@ -20,7 +21,7 @@ export default function Products() {
 
         <GridProdsFour>
           <ProdContainerSingle>
-            <img src={prodone} alt="" />
+            <Link to="/"><img src={prodone} alt="" /></Link>
             <h5>Nome do produto</h5>
             <p>Descrição do produto com especificações técnicas</p>
             <div className="btn-group-add">
@@ -34,7 +35,7 @@ export default function Products() {
           </ProdContainerSingle>
 
           <ProdContainerSingle>
-            <img src={prodtwo} alt="" />
+            <Link to="/"><img src={prodtwo} alt="" /></Link>
             <h5>Nome do produto</h5>
             <p>Descrição do produto com especificações técnicas</p>
             <div className="btn-group-add">
@@ -48,7 +49,7 @@ export default function Products() {
           </ProdContainerSingle>
 
           <ProdContainerSingle>
-            <img src={prodthree} alt="" />
+            <Link to="/"><img src={prodthree} alt="" /></Link>
             <h5>Nome do produto</h5>
             <p>Descrição do produto com especificações técnicas</p>
             <div className="btn-group-add">
@@ -62,7 +63,7 @@ export default function Products() {
           </ProdContainerSingle>
 
           <ProdContainerSingle>
-            <img src={prodfour} alt="" />
+            <Link to="/"><img src={prodfour} alt="" /></Link>
             <h5>Nome do produto</h5>
             <p>Descrição do produto com especificações técnicas</p>
             <div className="btn-group-add">
@@ -76,7 +77,7 @@ export default function Products() {
           </ProdContainerSingle>
 
           <ProdContainerSingle>
-            <img src={prodone} alt="" />
+            <Link to="/"><img src={prodone} alt="" /></Link>
             <h5>Nome do produto</h5>
             <p>Descrição do produto com especificações técnicas</p>
             <div className="btn-group-add">
@@ -90,7 +91,7 @@ export default function Products() {
           </ProdContainerSingle>
 
           <ProdContainerSingle>
-            <img src={prodtwo} alt="" />
+            <Link to="/"><img src={prodtwo} alt="" /></Link>
             <h5>Nome do produto</h5>
             <p>Descrição do produto com especificações técnicas</p>
             <div className="btn-group-add">
@@ -104,7 +105,7 @@ export default function Products() {
           </ProdContainerSingle>
 
           <ProdContainerSingle>
-            <img src={prodthree} alt="" />
+            <Link to="/"><img src={prodthree} alt="" /></Link>
             <h5>Nome do produto</h5>
             <p>Descrição do produto com especificações técnicas</p>
             <div className="btn-group-add">
@@ -118,7 +119,7 @@ export default function Products() {
           </ProdContainerSingle>
 
           <ProdContainerSingle>
-            <img src={prodfour} alt="" />
+            <Link to="/"><img src={prodfour} alt="" /></Link>
             <h5>Nome do produto</h5>
             <p>Descrição do produto com especificações técnicas</p>
             <div className="btn-group-add">
