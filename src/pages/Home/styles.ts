@@ -153,16 +153,17 @@ export const SwiperStyles = styled.div`
 }
 
 .swiper-slide {
-  z-index: 1 !;
+  z-index: 1;
   width: 263px !important;
-  height: 318px !important;
+  height: 380px !important;
   background: #EDEDED;
   box-shadow: 0px 4px 33px -10px rgba(0, 0, 0, 0.15);
   margin-right: 30px;
   border-radius: 10px;
+  position: relative;
 
   strong {
-    font-size: 20px;
+    font-size: 18px;
     padding: 15px 15px;
   }
 
@@ -183,6 +184,10 @@ export const SwiperStyles = styled.div`
     align-items: center;
     justify-content: center;
     transition: background 0.2s;
+
+    position: absolute;
+    bottom: 40px;
+
     &:hover {
       background: ${darken(0.06, '#58A4B0')};
     }
