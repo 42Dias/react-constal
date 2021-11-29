@@ -149,7 +149,7 @@ export const FlexBar = styled.div`
 export const SwiperStyles = styled.div`
 .swiper-container {
   padding: 30px 0 !important;
-  z-index: 1;
+  z-index: 0;
 }
 
 .swiper-slide {
