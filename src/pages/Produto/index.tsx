@@ -21,20 +21,36 @@ import { AiFillStar, AiOutlineClose } from "react-icons/ai";
 import { FiPlus, FiMinus } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
-import React from "react";
+import React, { useState ,useEffect } from "react";
+import axios from "axios";
+let token = localStorage.getItem("token")?.replace(/"/g, "");
 
-interface RepositoryItemProps {
-  repository: {
-    id: string;
-    name: string;
-    title: string;
-    price: string;
-    image: string;
-  };
+
+interface Product {
+  fotos: any;
+  codigo: string;
+  marca: string;
+  modelo: string;
+  id: number;
+  nome: string;
+  descricao: string;
+  preco: number;
+  publicUrl:string;
+  isOferta: number;
+  precoOferta: any;
 }
 
-export default function Produto(props: RepositoryItemProps) {
+export default function Produto() {
+
+    
+  // interface ProductFormatted extends Product {
+  //   priceFormatted: string;
+  // }
+
   const [modalIsOpen, setIsOpen] = React.useState(false);
+
+
+
 
   function openModal() {
     setIsOpen(true);
@@ -48,18 +64,70 @@ export default function Produto(props: RepositoryItemProps) {
     setIsOpen(false);
   }
 
+  function getHash() {
+    const hash = window.location.hash.replace(/#\/produto\//g, '');    
+    return hash
+  }
+  
+  function buildUrl(){
+    const productId = getHash()
+    const tenantId = "fa22705e-cf27-41d0-bebf-9a6ab52948c4";
+//  `/tenant/:tenantId/produto/:id`
+    const requisition = `/tenant/${tenantId}/produto/${productId}`
+    return requisition
+  }
+  
+  const selectedProduct = buildUrl()
+  console.log(selectedProduct)
+
+  const instance = axios.create({
+    baseURL: 'http://localhost:8157/api/',
+    timeout: 10000,
+    headers: {'Authorization': 'Bearer '+ token}
+  });
+  
+  instance.get(selectedProduct)
+  .then(response => {
+      console.log(response.data)
+      let res: { fotos: any; codigo: any; marca: any; modelo: any; id: any; nome: any; descricao: any; preco: any; publicUrl: any; isOferta: any; precoOferta: any; };
+
+      res = response.data;
+
+      const product = {
+        fotos: res.fotos,
+        codigo: res.codigo,
+        marca: res.marca,
+        modelo: res.modelo,
+        id: res.id,
+        nome: res.nome,
+        descricao: res.descricao,
+        preco: res.preco,
+        publicUrl: res.publicUrl,
+        isOferta: res.isOferta,
+        precoOferta: res.precoOferta
+      }
+    return product
+  })
+
   return (
-    <>
-      <div className="container">
+  <>
+{/* PROBLEMA AO ENCONTRAR O product!!!!!!!!!!
+     <div className="container">
         <ContainerProd>
-          {/* <img src={} alt="" /> */}
+          <img src={product.fotos[0].downloadUrl} alt="" />
           <DetailsProdFirts>
             <BoxProd>
               <BoxProdFirts>
-                <span>Nome da marca</span>
-                <strong></strong>
-                <span>Código do produto</span>
-                <IconsContentStar>
+                {NOME DA MARCA}
+                <span>
+                    {product.marca}
+                </span>
+                <strong>
+                  {product.nome}
+                </strong>
+                <span>
+                      {product.codigo}
+                </span><IconsContentStar>
                   <AiFillStar size={18} />
                   <AiFillStar size={18} />
                   <AiFillStar size={18} />
@@ -68,7 +136,7 @@ export default function Produto(props: RepositoryItemProps) {
                   <small>(1)</small>
                 </IconsContentStar>
                 <br />
-                <strong>R$ {}</strong>
+                <strong>R$ {product.codigo}</strong>
                 <span>Variantes (ex: Cor)</span>
                 <BoxColors>
                   <ColorWhite />
@@ -97,19 +165,16 @@ export default function Produto(props: RepositoryItemProps) {
             <BoxProd>
               <div className="oi">
                 <span>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat.
+                  {product.descricao}
                 </span>
 
                 <strong>Descrição técnica</strong>
 
                 <span>
-                  Marca: <br />
-                  Modelo: <br />
+                  Marca: {product.marca} <br />
+                  Modelo: {product.modelo}<br />
                   Material: <br />
-                  Características: <br />
+                  Características: {product.descricao}<br />
                   Observações: <br />
                   Acabamento: <br />
                 </span>
@@ -144,6 +209,7 @@ export default function Produto(props: RepositoryItemProps) {
               <p>Calculamos os custos e prazos para este endereço:</p>
 
               <SelectAdress>
+              {DADOS DO CLIENTE!!!!!! }
                 <div>
                   <strong>Rua XXXXXX XXXX XX XXXX, 55</strong>
                   <br />
@@ -163,7 +229,15 @@ export default function Produto(props: RepositoryItemProps) {
             </ModalContent>
           </div>
         </Modal>
-      </ModalContainerVendedor>
+      </ModalContainerVendedor> */}
+   
+<h2>
+  TESTE MUITO REVOLTANTE
+</h2>
+     
     </>
   );
+
 }
+
+

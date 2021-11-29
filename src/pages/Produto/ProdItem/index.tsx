@@ -4,6 +4,8 @@ export default function ProdItem() {
   )
 }
 
+
+
 // import {
 //   DetailsProdFirts,
 //   ContainerProd,
@@ -27,7 +29,9 @@ export default function ProdItem() {
 // import { FiPlus, FiMinus } from "react-icons/fi";
 // import { Link } from "react-router-dom";
 // import Modal from "react-modal";
-// import React from "react";
+// import React, { useState ,useEffect } from "react";
+// import axios from "axios";
+// let token = localStorage.getItem("token")?.replace(/"/g, "");
 
 // interface RepositoryItemProps {
 //   repository: {
@@ -54,6 +58,39 @@ export default function ProdItem() {
 //     setIsOpen(false);
 //   }
 
+//   useEffect( () => {
+//     async function loadProducts() {
+
+//     function getHash() {
+//       const hash = window.location.hash.replace(/#\/produto\//g, '');    
+//       return hash
+//     }
+    
+//     function buildUrl(){
+//       const productId = getHash()
+//       const tenantId = "fa22705e-cf27-41d0-bebf-9a6ab52948c4";
+//   //  `/tenant/:tenantId/produto/:id`
+//       const requisition = `/tenant/${tenantId}/produto/${productId}`
+//       return requisition
+//     }
+//     const a= buildUrl()
+//     console.log(a);
+    
+//     const instance = axios.create({
+//       baseURL: 'http://localhost:8157/api/',
+//       timeout: 10000,
+//       headers: {'Authorization': 'Bearer '+ token}
+//     });
+    
+//     const response = await instance.get(`tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/produto/d5f60210-40b0-4a90-bc3d-04547a94bf0f`)
+//     .then(response => {        
+//         return response.data;
+//     })
+//     console.log(response.data)
+//     }
+
+//     loadProducts()
+//     }, [] )
 //   return (
 //     <>
 //       <div className="container">
@@ -62,7 +99,7 @@ export default function ProdItem() {
 //           <DetailsProdFirts>
 //             <BoxProd>
 //               <BoxProdFirts>
-//                 <span>Nome da marca</span>
+//                 <span>Nome da marca /*response.nome*/ </span>
 //                 <strong>{props.repository.title}</strong>
 //                 <span>Código do produto</span>
 //                 <IconsContentStar>
@@ -74,7 +111,7 @@ export default function ProdItem() {
 //                   <small>(1)</small>
 //                 </IconsContentStar>
 //                 <br />
-//                 <strong>R$ {props.repository.price}</strong>
+//                 <strong>R$ {props.repository.price /*response.preco*/}</strong>
 //                 <span>Variantes (ex: Cor)</span>
 //                 <BoxColors>
 //                   <ColorWhite />
@@ -103,6 +140,7 @@ export default function ProdItem() {
 //             <BoxProd>
 //               <div className="oi">
 //                 <span>
+//                   response.descricao
 //                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
 //                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 //                   Ut enim ad minim veniam, quis nostrud exercitation ullamco
@@ -112,10 +150,10 @@ export default function ProdItem() {
 //                 <strong>Descrição técnica</strong>
 
 //                 <span>
-//                   Marca: <br />
-//                   Modelo: <br />
+//                   Marca: response.marca<br />
+//                   Modelo: response.modelo<br />
 //                   Material: <br />
-//                   Características: <br />
+//                   Características: response.caracteristicas<br />
 //                   Observações: <br />
 //                   Acabamento: <br />
 //                 </span>
