@@ -82,6 +82,7 @@ export default function Profile() {
     }
     
     loadUser();
+
   }, []);
 
   function clientLocalStorage() {

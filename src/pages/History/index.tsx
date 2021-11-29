@@ -13,11 +13,25 @@ import {
   ModalContent,
 } from "./styles";
 import Modal from "react-modal";
-import React from "react";
 import MenuEmpresa from "../../components/MenuEmpresa";
+
+import React, { useState, useEffect } from "react";
+import { api } from "../../services/api";
+
+interface Product {
+  product: any;
+  id: number;
+  nome: string;
+  descricao: string;
+  preco: number;
+  publicUrl: string;
+  isOferta: number;
+  precoOferta: any;
+}
 
 export default function Histoty() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [products = [], setProducts] = useState<Product[]>([]); 
 
   function openModal() {
     setIsOpen(true);
@@ -30,6 +44,36 @@ export default function Histoty() {
   function closeModal() {
     setIsOpen(false);
   }
+
+  // const [preco, setpreco]=useState('');
+  // const [nome, setnome]=useState('');
+  // const [img, setimg]=useState('');
+  // const [localizacao, setlocalizacao]=useState('');
+  // const [estado, setestado]=useState('');
+
+  useEffect(() => {
+
+    async function loadHistory() {
+      const res = await api.get('/tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/pedido')
+          console.log(res.data.rows)
+          const productsFormated = res.data.rows.map(function (
+            product: Product
+          ) {
+            console.log(product);
+            
+            return { product};
+        });
+        setProducts(productsFormated);
+        products.map((product) => (
+          
+          console.log(product)
+           
+            
+            ))
+    }
+    loadHistory()
+  }, []);
+
   return (
     <>
       <Header />
@@ -38,6 +82,9 @@ export default function Histoty() {
         <CardDatails>
           <Title>Histórico</Title>
 
+          {}
+
+
           <CardDatailsContent>
             <ContentDetails>
               <img src={item} alt="" />
@@ -45,24 +92,6 @@ export default function Histoty() {
               <p>R$ 999,99</p>
             </ContentDetails>
             <strong onClick={openModal} >Ver detalhes</strong>
-          </CardDatailsContent>
-
-          <CardDatailsContent>
-            <ContentDetails>
-              <img src={item} alt="" />
-              <span>Headset Preto</span>
-              <p>R$ 999,99</p>
-            </ContentDetails>
-            <strong onClick={openModal}>Ver detalhes</strong>
-          </CardDatailsContent>
-
-          <CardDatailsContent>
-            <ContentDetails>
-              <img src={item} alt="" />
-              <span>Headset Preto</span>
-              <p>R$ 999,99</p>
-            </ContentDetails>
-            <strong onClick={openModal}>Ver detalhes</strong>
           </CardDatailsContent>
         </CardDatails>
       </div>

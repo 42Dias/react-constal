@@ -86,6 +86,7 @@ const Header = (): JSX.Element => {
             if(response.statusText == "OK"){
               toast.info('Login efetuado com sucesso! :)')
               handleLocalStorage(email, password);
+              // handleLocalStorageToken(response.data);
               closeModal();
 
             }else if(response.statusText == "Forbidden"){
@@ -93,7 +94,7 @@ const Header = (): JSX.Element => {
             }else{
               toast.info("Ops, Dados Incorretos!");
             }  
-            handleLocalStorageToken(response.data);
+            
       })
     
   }

@@ -26,19 +26,19 @@ import axios from "axios";
 let token = localStorage.getItem("token")?.replace(/"/g, "");
 
 
-interface Product {
-  fotos: any;
-  codigo: string;
-  marca: string;
-  modelo: string;
-  id: number;
-  nome: string;
-  descricao: string;
-  preco: number;
-  publicUrl:string;
-  isOferta: number;
-  precoOferta: any;
-}
+// interface Product {
+//   fotos: any;
+//   codigo: string;
+//   marca: string;
+//   modelo: string;
+//   id: number;
+//   nome: string;
+//   descricao: string;
+//   preco: number;
+//   publicUrl:string;
+//   isOferta: number;
+//   precoOferta: any;
+// }
 
 export default function Produto() {
 
@@ -86,47 +86,58 @@ export default function Produto() {
     headers: {'Authorization': 'Bearer '+ token}
   });
   
-  instance.get(selectedProduct)
-  .then(response => {
-      console.log(response.data)
-      let res: { fotos: any; codigo: any; marca: any; modelo: any; id: any; nome: any; descricao: any; preco: any; publicUrl: any; isOferta: any; precoOferta: any; };
+  const [id, setId]=useState('');
+  const [nome, setNome]=useState('');
+  const [preco, setPreco]=useState('');
+  const [publicUrl, setPublicUrl]=useState(''); 
+  const [codigo, setCodigo]=useState('');
+  const [marca, setMarca]=useState('');
+  const [fotos, setFotos]=useState('');
+  const [modelo, setModelo]=useState('');
+  const [descricao, setDescricao]=useState('');
 
-      res = response.data;
+  useEffect(() => {
+  async function loadUser(){
+    const response = await instance.get(selectedProduct)
+    .then(response => {
+        console.log(response.data)
 
-      const product = {
-        fotos: res.fotos,
-        codigo: res.codigo,
-        marca: res.marca,
-        modelo: res.modelo,
-        id: res.id,
-        nome: res.nome,
-        descricao: res.descricao,
-        preco: res.preco,
-        publicUrl: res.publicUrl,
-        isOferta: res.isOferta,
-        precoOferta: res.precoOferta
-      }
-    return product
-  })
+        return response.data
+    })
+    setId(response.id)
+    setNome(response.nome)
+    setPreco(response.preco)
+    setPublicUrl(response.publicUrl)
+    setCodigo(response.codigo)
+    setMarca(response.marca)
+    setFotos(response.fotos[0].downloadUrl)
+    setModelo(response.modelo);
+    setDescricao(response.descricao)
+
+}
+    
+loadUser();
+
+}, []);
 
   return (
   <>
-{/* PROBLEMA AO ENCONTRAR O product!!!!!!!!!!
+
      <div className="container">
         <ContainerProd>
-          <img src={product.fotos[0].downloadUrl} alt="" />
+          <img src={fotos} alt="" />
           <DetailsProdFirts>
             <BoxProd>
               <BoxProdFirts>
-                {NOME DA MARCA}
+                NOME DA MARCA
                 <span>
-                    {product.marca}
+                    {marca}
                 </span>
                 <strong>
-                  {product.nome}
+                  {nome}
                 </strong>
                 <span>
-                      {product.codigo}
+                      {codigo}
                 </span><IconsContentStar>
                   <AiFillStar size={18} />
                   <AiFillStar size={18} />
@@ -136,7 +147,7 @@ export default function Produto() {
                   <small>(1)</small>
                 </IconsContentStar>
                 <br />
-                <strong>R$ {product.codigo}</strong>
+                <strong>R$ {codigo}</strong>
                 <span>Variantes (ex: Cor)</span>
                 <BoxColors>
                   <ColorWhite />
@@ -165,18 +176,17 @@ export default function Produto() {
             <BoxProd>
               <div className="oi">
                 <span>
-                  {product.descricao}
+                  {descricao}
                 </span>
 
                 <strong>Descrição técnica</strong>
 
                 <span>
-                  Marca: {product.marca} <br />
-                  Modelo: {product.modelo}<br />
+                  Marca: {marca} <br />
+                  Modelo: {modelo}<br />
                   Material: <br />
-                  Características: {product.descricao}<br />
+                  Características: <br />
                   Observações: <br />
-                  Acabamento: <br />
                 </span>
               </div>
             </BoxProd>
@@ -209,7 +219,7 @@ export default function Produto() {
               <p>Calculamos os custos e prazos para este endereço:</p>
 
               <SelectAdress>
-              {DADOS DO CLIENTE!!!!!! }
+              DADOS DO CLIENTE!!!!!! 
                 <div>
                   <strong>Rua XXXXXX XXXX XX XXXX, 55</strong>
                   <br />
@@ -229,12 +239,8 @@ export default function Produto() {
             </ModalContent>
           </div>
         </Modal>
-      </ModalContainerVendedor> */}
-   
-<h2>
-  TESTE MUITO REVOLTANTE
-</h2>
-     
+      </ModalContainerVendedor>
+
     </>
   );
 
