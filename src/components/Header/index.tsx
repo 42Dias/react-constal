@@ -149,7 +149,7 @@ const Header = (): JSX.Element => {
 
             {/*<Link to="/meu-perfil" className="btn-enter" href="">
               Entrar
-              </Link>*/}
+            </Link>*/}
             <button className="btn-enter" onClick={Login}>
             Entrar
             </button>
