@@ -86,7 +86,7 @@ const Header = (): JSX.Element => {
             if(response.statusText == "OK"){
               toast.info('Login efetuado com sucesso! :)')
               handleLocalStorage(email, password);
-              // handleLocalStorageToken(response.data);
+              handleLocalStorageToken(response.data);
               closeModal();
 
             }else if(response.statusText == "Forbidden"){
