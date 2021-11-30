@@ -6,8 +6,9 @@ import {
   FiHeart,
   FiSearch,
   FiX,
+  FiMenu,
 } from "react-icons/fi";
-import Axios from 'axios';
+import Axios from "axios";
 
 import logo from "../../assets/images/logo.png";
 import {
@@ -18,6 +19,7 @@ import {
   IconsContainer,
   ModalEnter,
   Form,
+  IconsContainerMenu,
 } from "./styles";
 
 import React, { useState } from "react";
@@ -26,26 +28,29 @@ import { useCart } from "../../hooks/useCart";
 import { toast } from "react-toastify";
 
 const Header = (): JSX.Element => {
+  const [click, setClick] = useState(false);
+  const handleClick = () => setClick(!click);
+
   const { cart } = useCart();
   const cartSize = cart.length;
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
-  
-  const [email, setUser]=useState('');
-  const [password, setPassword]=useState('');
-  
+
+  const [email, setUser] = useState("");
+  const [password, setPassword] = useState("");
+
   function openModal() {
     let email = localStorage.getItem("email");
     let password = localStorage.getItem("password");
     let token = localStorage.getItem("token");
-    console.log("email e senha: "+ email + " " + password );
-    
-    if (email && password && token){
-      handleClickLogin()
+    console.log("email e senha: " + email + " " + password);
+
+    if (email && password && token) {
+      handleClickLogin();
+    } else {
+      setIsOpen(true);
     }
-    else{
-    setIsOpen(true);
-    }
+    setClick(false);
   }
 
   function afterOpenModal() {
@@ -56,74 +61,137 @@ const Header = (): JSX.Element => {
     setIsOpen(false);
   }
 
+  function closeMobileMenu() {
+    setIsOpen(false);
+  }
+
   function handleLocalStorage(emailA: string, passwordB: string) {
     let clientData = [emailA, passwordB];
-    
-    localStorage.setItem("email", JSON.stringify(email));//saves client's data into localStorage:
-    localStorage.setItem("password", JSON.stringify(password));//saves client's data into localStorage:
+
+    localStorage.setItem("email", JSON.stringify(email)); //saves client's data into localStorage:
+    localStorage.setItem("password", JSON.stringify(password)); //saves client's data into localStorage:
     console.log();
-    
-    
   }
   function handleLocalStorageToken(token: string[]) {
     const setLocalStorage = (data: string[]) => {
-      localStorage.setItem("token", JSON.stringify(data));//saves client's data into localStorage:
+      localStorage.setItem("token", JSON.stringify(data)); //saves client's data into localStorage:
       console.log("OK!!!");
-    }
-    setLocalStorage(token)
+    };
+    setLocalStorage(token);
   }
 
   let history = useHistory();
   function handleClickLogin() {
     history.push("/meu-perfil");
   }
-  async function Login(){
-    let response=Axios.post('http://localhost:8157/api/auth/sign-in', {   
-            email: email,
-            password: password,
-        }).then((response) =>{
-            console.log(response);  
-            if(response.statusText == "OK"){
-              toast.info('Login efetuado com sucesso! :)')
-              handleLocalStorage(email, password);
-              closeModal();
-
-            }else if(response.statusText == "Forbidden"){
-              toast.info("Ops, Não tem permisão!");
-            }else{
-              toast.info("Ops, Dados Incorretos!");
-            }  
-            handleLocalStorageToken(response.data);
-      })
-    
+  async function Login() {
+    let response = Axios.post("http://localhost:8157/api/auth/sign-in", {
+      email: email,
+      password: password,
+    }).then((response) => {
+      console.log(response);
+      if (response.statusText == "OK") {
+        toast.info("Login efetuado com sucesso! :)");
+        handleLocalStorage(email, password);
+        closeModal();
+      } else if (response.statusText == "Forbidden") {
+        toast.info("Ops, Não tem permisão!");
+      } else {
+        toast.info("Ops, Dados Incorretos!");
+      }
+      handleLocalStorageToken(response.data);
+    });
   }
   return (
     <>
       <Container>
-        <Link to="/">
-          <img src={logo} alt="Constal" />
-        </Link>
+        {/* 
+        <header>
+          <nav>
+            <ul className={click ? "nav-options active" : "nav-options"}>
+            </ul>
+          </nav>
+
+          <div className="mobile-menu" onClick={handleClick}>
+            {click ? (
+              <h2 onClick={closeMobileMenu}>fechei</h2>
+            ) : (
+              <FiMenu className="menu-icon" />
+            )}
+          </div>
+        </header> 
+      */}
+
+
 
         <InputCenter>
-          <input type="text" placeholder="Pesquise o seu produto" />
-          <button type="button">
-            <FiSearch />
-          </button>
-        </InputCenter>
-
-        <IconsContainer>
-          <FiUser onClick={openModal} size={20} color="black" />
-          <Link to="/favoritos"><FiHeart size={20} color="black" /></Link>
-          <Cart to="/cart">
+          <nav className="header">
             <div>
-              <strong>Meu carrinho</strong>
-              <span data-testid="cart-size">
-                {cartSize === 1 ? `${cartSize} item` : `${cartSize} itens`}
-              </span>
+              <Link to="/">
+                <img src={logo} alt="Constal" />
+              </Link>
             </div>
-            <FiShoppingBag size={20} color="black" />
-          </Cart>
-        </IconsContainer>
+
+            <ul className={click ? "nav-options active" : "nav-options"}>
+
+              <div className="input">
+                <input type="text" placeholder="Pesquise o seu produto" />
+                <button type="button">
+                  <FiSearch />
+                </button>
+              </div>
+
+              <IconsContainer>
+                <FiUser onClick={openModal} size={20} />
+                <Link to="/favoritos">
+                  <FiHeart size={20} />
+                </Link>
+                <Cart to="/cart">
+                  <div>
+                    <strong>Meu carrinho</strong>
+                    <span data-testid="cart-size">
+                      {cartSize === 1 ? `${cartSize} item` : `${cartSize} itens`}
+                    </span>
+                  </div>
+                  <FiShoppingBag size={20} />
+                </Cart>
+              </IconsContainer>
+
+              <IconsContainerMenu>
+                  <div className="icons-flex-align">
+                    <div className="flex-item" onClick={openModal}>
+                      <span>Meu perfil</span>
+                      <FiUser size={20} />  
+                    </div>
+                    <div className="flex-item">
+                      <Link to="/favoritos">
+                        <span>Meus produtos favoritos</span>
+                        <FiHeart size={20} />
+                      </Link>
+                    </div>
+                    <Cart to="/cart">
+                      <div>
+                        <strong>Meu carrinho</strong>
+                        <span data-testid="cart-size">
+                          {cartSize === 1 ? `${cartSize} item` : `${cartSize} itens`}
+                        </span>
+                      </div>
+                      <FiShoppingBag size={20} />
+                    </Cart>
+                  </div>
+              </IconsContainerMenu>
+
+            </ul>
+          </nav>
+
+          <div className="mobile-menu" onClick={handleClick}>
+            {click ? (
+              <FiX className="menu-icon" onClick={closeMobileMenu} />
+            ) : (
+              <FiMenu className="menu-icon" />
+            )}
+          </div>
+        </InputCenter>
       </Container>
 
       <Modal
@@ -139,19 +207,29 @@ const Header = (): JSX.Element => {
           </ModalEnter>
           <Form>
             <label htmlFor="user">E-mail*</label>
-            <input type="text" id="user" placeholder="Digite o seu e-mail" required value={email} onChange={text=>setUser(text.target.value)}/>
+            <input
+              type="text"
+              id="user"
+              placeholder="Digite o seu e-mail"
+              required
+              value={email}
+              onChange={(text) => setUser(text.target.value)}
+            />
             <label htmlFor="senha">Senha*</label>
             <input
               type="password"
               id="senha"
-              placeholder="Digite a sua senha" required value={password} onChange={text=>setPassword(text.target.value)}
+              placeholder="Digite a sua senha"
+              required
+              value={password}
+              onChange={(text) => setPassword(text.target.value)}
             />
 
             {/*<Link to="/meu-perfil" className="btn-enter" href="">
               Entrar
             </Link>*/}
             <button className="btn-enter" onClick={Login}>
-            Entrar
+              Entrar
             </button>
             <div className="contentBorder">
               <div className="border" />

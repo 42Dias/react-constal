@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const FooterContent = styled.header`
+export const FooterContent = styled.footer`
   background: black;
 
   strong {

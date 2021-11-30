@@ -126,6 +126,9 @@ export const BarHome = styled.div`
   /* position: relative;
   bottom: 40px; */
   margin: 50px 0;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `
 
 export const FlexBar = styled.div`
@@ -239,6 +242,11 @@ export const BannerHomeImage = styled.div`
       height: 417px !important;
       object-fit: cover;
       margin: 0;
+
+      @media (max-width: 768px)
+      {
+        object-position: -40vw;
+      }
     } 
   }
 `;
