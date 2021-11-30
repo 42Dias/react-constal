@@ -12,13 +12,9 @@ import { useCart } from "../../hooks/useCart";
 import { formatPrice } from "../../util/format";
 import { Container, ProductTable, Total, FooterContainer } from "./styles";
 import { Link } from "react-router-dom";
-import { Product } from "../../types";
+// import { Product } from "../../types";
 
 //CRIAR FUNÇÃO PARA PEGAR OS PRODUTOS DO CARRINHO DO BACKEND
-
-interface ProductFormatted extends Product {
-  priceFormatted: string;
-}
   //Puxar os produtos do carrinho
     //tenantId
 
@@ -27,8 +23,20 @@ const Cart = (): JSX.Element => {
 
   const [products, setProducts] = useState<ProductFormatted[]>([]);
 
+    interface Product {
+      id: number;
+      nome: string;
+      descricao: string;
+      preco: number;
+      publicUrl:string;
+      isOferta: number;
+      precoOferta: any;
+      produto: any;
+      quantidade: number;
+      subtotal: number;
+    }
   interface ProductFormatted extends Product {
-  priceFormatted: string;
+    priceFormatted: string;
   }
 
   const cartFormatted = cart.map((product) => ({
@@ -36,29 +44,29 @@ const Cart = (): JSX.Element => {
     priceFormatted: formatPrice(product.produto.preco),
     subtotal: formatPrice(product.produto.preco * product.quantidade),
   }));
+  console.log(cartFormatted)
   const total = formatPrice(
-    cartFormatted.reduce((sumTotal, product) => {
+    products.reduce((sumTotal, product) => {
       sumTotal += product.produto.preco * product.quantidade;
-
       return sumTotal;
     }, 0)
   );
 
-  function handleProductIncrement(product: Product) {
-    const IncrementArguments = {
-      productId: product.produto.id,
-      quantidade: product.quantidade + 1,
-    };
-    updateProductAmount(IncrementArguments);
-  }
+  // function handleProductIncrement(product: Product) {
+  //   const IncrementArguments = {
+  //     productId: product.produto.id,
+  //     quantidade: product.quantidade + 1,
+  //   };
+  //   updateProductAmount(IncrementArguments);
+  // }
 
-  function handleProductDecrement(product: Product) {
-    const IncrementArguments = {
-      productId: product.produto.id,
-      quantidade: product.quantidade - 1,
-    };
-    updateProductAmount(IncrementArguments);
-  }
+  // function handleProductDecrement(product: Product) {
+  //   const IncrementArguments = {
+  //     productId: product.produto.id,
+  //     quantidade: product.quantidade - 1,
+  //   };
+  //   updateProductAmount(IncrementArguments);
+  // }
 
   function handleRemoveProduct(productId: number) {
     removeProduct(productId);
@@ -72,7 +80,9 @@ const Cart = (): JSX.Element => {
           return response.data.rows;          
       })
 
+     console.log("cart");
      console.log(response);
+
       
        /*const productsFormated = response.rows.map(function (
         product: Product
@@ -81,11 +91,14 @@ const Cart = (): JSX.Element => {
         return { ...product, preco: formatPrice(product.preco) };
       });
      */
-     const productsFormated = response.map(function (product: Product) {
-        console.log(product.produto);
-        
-        return { ...product, preco: formatPrice(product.produto.preco) };
+     const productsFormated = response.map(function (product: { produto: { preco: number | bigint; }; }) {
+        console.log("prod");
+        console.log(product);     
+        return  product ;
       });
+
+      console.log("cartF");
+      console.log(cartFormatted)
       setProducts(productsFormated);
     }
     
@@ -112,7 +125,8 @@ const Cart = (): JSX.Element => {
               </tr>
             </thead>
             <tbody>
-              {cartFormatted.map((product) => (
+              {/* A VARIAVEL DO CARRINHO ESTÁ SENDO ATRIBUIDA A PRODUCT */}
+              {products.map((product) => (
                 <tr data-testid="product" key={product.produto.id}>
                   <td>
                     <img src={product.produto.fotos} alt={product.produto.nome} />
@@ -127,7 +141,7 @@ const Cart = (): JSX.Element => {
                         type="button"
                         data-testid="decrement-product"
                         disabled={product.quantidade <= 1}
-                        onClick={() => handleProductDecrement(product)}
+                        // onClick={() => handleProductDecrement(product)}
                       >
                         <MdRemoveCircleOutline size={20} />
                       </button>
@@ -140,14 +154,16 @@ const Cart = (): JSX.Element => {
                       <button
                         type="button"
                         data-testid="increment-product"
-                        onClick={() => handleProductIncrement(product)}
+                        // onClick={() => handleProductIncrement(product)}
                       >
                         <MdAddCircleOutline size={20} />
                       </button>
                     </div>
                   </td>
                   <td>
-                    <strong>{product.subtotal}</strong>
+                    <strong>{
+                      formatPrice(product.quantidade * product.produto.preco)
+                      }</strong>
                   </td>
                   <td>
                     <button
