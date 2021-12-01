@@ -12,6 +12,14 @@ export const CardProfile = styled.div`
   height: 422px;
   border-radius: 5px;
   display: flex;
+
+  @media (max-width: 768px) {
+    img {
+      width: 100%;
+    }
+    height: 100%;
+    flex-direction: column;
+  }
 `;
 
 export const CardDatas = styled.div`

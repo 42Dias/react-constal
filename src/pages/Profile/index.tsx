@@ -21,9 +21,9 @@ import {
   ContentFormNew,
 } from "./styles";
 import { Link } from "react-router-dom";
-import MenuEmpresa from "../../components/MenuEmpresa";
 import { api } from "../../services/api";
 import axios from "axios";
+import MenuCliente from "../../components/MenuCliente";
 
 
 export default function Profile() {
@@ -102,7 +102,7 @@ export default function Profile() {
   return (
     <>
       <Header />
-      <MenuEmpresa />
+      <MenuCliente />
       <div className="container">
         <Title>Meus dados</Title>
 

@@ -124,12 +124,12 @@ export default function Produto(props: RepositoryItemProps) {
                     <FiMinus />
                   </IconPlusMinus>
                 </FlexBtnsProd>
-                <Link to="#">Adicionar</Link>
+                <Link to="/pagar">Adicionar</Link>
               </AddCartRight>
             </BoxProd>
 
             <BoxProd>
-              <div className="oi">
+              <div className="descprod">
                 <strong>Descrição do produto</strong>
                 <span>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed

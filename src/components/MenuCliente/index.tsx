@@ -21,6 +21,8 @@ export default function MenuCliente() {
                 <Link to="/produtos">Moda Masculina</Link>
 
                 <Link to="/produtos">Ar condicionado</Link>
+
+                <Link to="/cursos">Cursos</Link>
               </div>
             </div>
           </div>
@@ -30,7 +32,7 @@ export default function MenuCliente() {
             <Link to="/produtos">Eletrodoméstico</Link>
             <Link to="/produtos">Materiais de Decoração</Link>
             <Link to="/produtos">Cama, Mesa e Banho</Link>
-            <Link to="/produtos">Cursos</Link>
+            <Link to="/cursos">Cursos</Link>
           </div>
         </FlexLink>
       </Container>
