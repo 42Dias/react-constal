@@ -76,7 +76,7 @@ export default function Products() {
   }, []);
 
   function handleAddProduct(id: number) {
-  addProduct(id);
+  // addProduct(id);
   }
 
 

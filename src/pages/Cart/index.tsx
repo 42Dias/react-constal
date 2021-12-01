@@ -39,12 +39,12 @@ const Cart = (): JSX.Element => {
     priceFormatted: string;
   }
 
-  const cartFormatted = cart.map((product) => ({
-    ...product,
-    priceFormatted: formatPrice(product.produto.preco),
-    subtotal: formatPrice(product.produto.preco * product.quantidade),
-  }));
-  console.log(cartFormatted)
+  // const cartFormatted = cart.map((product) => ({
+  //   ...product,
+  //   priceFormatted: formatPrice(product.produto.preco),
+  //   subtotal: formatPrice(product.produto.preco * product.quantidade),
+  // }));
+  // console.log(cartFormatted)
   const total = formatPrice(
     products.reduce((sumTotal, product) => {
       sumTotal += product.produto.preco * product.quantidade;
@@ -68,15 +68,15 @@ const Cart = (): JSX.Element => {
     updateProductAmount(IncrementArguments);
   }
 
-  function handleRemoveProduct(productId: number) {
+  function handleRemoveProduct(productId: string) {
     removeProduct(productId);
   }
 
   useEffect(() => {
     async function loadProducts() {
-      const response = await api.get('tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/carrinho/')
+      const response = await api.post('tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/carrinho/')
       .then(response => {
-          //console.log(response.data.count);
+          // console.log(response.data.count);
           return response.data.rows;          
       })
 
@@ -97,8 +97,8 @@ const Cart = (): JSX.Element => {
         return  product ;
       });
 
-      console.log("cartF");
-      console.log(cartFormatted)
+      // console.log("cartF");
+      // console.log(cartFormatted)
       setProducts(productsFormated);
     }
     
@@ -169,7 +169,7 @@ const Cart = (): JSX.Element => {
                     <button
                       type="button"
                       data-testid="remove-product"
-                      onClick={() => handleRemoveProduct(product.id)}
+                      //onClick={() => handleRemoveProduct(product.id)} aqui ele retorna que é num
                     >
                       <MdDelete size={20} />
                     </button>

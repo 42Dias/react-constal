@@ -51,7 +51,7 @@ const Home = (): JSX.Element => {
   const { addProduct, cart } = useCart();
 
   const cartItemsAmount = cart.reduce((sumAmount, product) => {
-    sumAmount[product.id] = product.quantidade;
+    //sumAmount[product.id] = product.quantidade;
     return sumAmount;
   }, {} as CartItemsAmount);
 
@@ -70,7 +70,7 @@ const Home = (): JSX.Element => {
   }, []);
 
   function handleAddProduct(id: number) {
-    addProduct(id);
+    //addProduct(id);
   }
 
   return (

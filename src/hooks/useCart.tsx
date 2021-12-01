@@ -1,29 +1,40 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 import { api } from '../services/api';
-import { Product, Stock } from '../types';
+
+interface Product{
+  id: string;
+  name: string;
+  title: string;
+  price: string;
+  image: string;
+  quantidade: number;
+}
+
 
 interface CartProviderProps {
   children: ReactNode;
 }
 
 interface UpdateProductAmount {
-  productId: number;
+  productId: string;
   quantidade: number;
 }
 
 interface CartContextData {
   cart: Product[];
-  addProduct: (productId: number) => Promise<void>;
-  removeProduct: (productId: number) => void;
+  addProduct:    (productId: string) => Promise<void>;
+  removeProduct: (productId: string) => void;
   updateProductAmount: ({ productId, quantidade }: UpdateProductAmount) => void;
 }
+
+const tenantId = "fa22705e-cf27-41d0-bebf-9a6ab52948c4";
 
 const CartContext = createContext<CartContextData>({} as CartContextData);
 
 export function CartProvider({ children }: CartProviderProps): JSX.Element {
-  const [cart, setCart] = useState<Product[]>(() => {
-    const storagedCart = localStorage.getItem('@RocketShoes:cart')
+  const [cart, setCart] = useState<Product[]>(() => {//para oo projeto mais avançado o useState não tem tanta importancia
+    const storagedCart = localStorage.getItem('@RocketShoes:cart')//NEM O LOCALSTORAGE
 
     if (storagedCart) {
       return JSON.parse(storagedCart);
@@ -32,18 +43,23 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
     return [];
   });
 
-  const addProduct = async (productId: number) => {
+  const addProduct = async (productId: string) => {
+    console.log(productId)
     try {
-      const productAlreadyInCart = cart.find(product => product.id === productId)
+      const productAlreadyInCart = cart.find(product => product.id == productId)
 
       if(!productAlreadyInCart) {
-        const { data: product } = await api.get<Product>(`products/${productId}`)
-        const { data: stock } = await api.get<Stock>(`stock/${productId}`)
+        const productResponse = await api.get<Product>(`/tenant/${tenantId}/produto/${productId}`);//jogar como variavel que abrange todo o escopo da função
+        const  product  = productResponse.data;
+        console.log("product")
+        console.log(product)
+        const  stock: number  = 10;//AQUI VIRIA A QUANTIDADE DO ESTOQUE!!!! FUTURA ADIÇÃO
 
-        if(stock.quantidade > 0) {
+        if(stock > 0) {
           setCart([...cart, {...product, quantidade: 1}])
-          localStorage.setItem('@RocketShoes:cart', JSON.stringify([...cart, {...product, quantidade: 1}]))
-          toast('Adicionado')
+          //AQUI É O CARRINHO 
+          const response = await api.post(`/tenant/${tenantId}/carrinho/`);
+          response.data =+ [...cart, {...product, quantidade: 1}];
           return;
         }
       }
@@ -54,7 +70,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
         if (stock.quantidade > productAlreadyInCart.quantidade) {
           const updatedCart = cart.map(cartItem => cartItem.id === productId ? {
             ...cartItem,
-            quantidade: Number(cartItem.quantidade) + 1
+            quantidade: Number(cartItem.quantidade) + 1 //aqui alterar quantidade no carrinho produto | cartItem.quantidade
           } : cartItem)
   
           setCart(updatedCart)
@@ -69,7 +85,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
     }
   };
 
-  const removeProduct = (productId: number) => {
+  const removeProduct = (productId: string) => {
     try {
       const productExists = cart.some(cartProduct => cartProduct.id === productId)
       if(!productExists) {

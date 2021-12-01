@@ -27,7 +27,10 @@ import { toast } from "react-toastify";
 
 const Header = (): JSX.Element => {
   const { cart } = useCart();
-  const cartSize = cart.length;
+  const cartSize = cart.length+1;
+  if(cart){
+    console.log("temos carrinho")
+  }
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
   
@@ -57,7 +60,6 @@ const Header = (): JSX.Element => {
   }
 
   function handleLocalStorage(emailA: string, passwordB: string) {
-    let clientData = [emailA, passwordB];
     
     localStorage.setItem("email", JSON.stringify(email));//saves client's data into localStorage:
     localStorage.setItem("password", JSON.stringify(password));//saves client's data into localStorage:
