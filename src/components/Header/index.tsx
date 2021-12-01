@@ -20,10 +20,11 @@ import {
   Form,
 } from "./styles";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useCart } from "../../hooks/useCart";
 import { toast } from "react-toastify";
+import { api } from "../../services/api";
 
 const Header = (): JSX.Element => {
   const { cart } = useCart();
@@ -79,6 +80,7 @@ const Header = (): JSX.Element => {
   function handleClickLogin() {
     history.push("/meu-perfil");
   }
+  
   async function Login(){
     let response=Axios.post('http://localhost:8157/api/auth/sign-in', {   
             email: email,
@@ -90,7 +92,7 @@ const Header = (): JSX.Element => {
               handleLocalStorage(email, password);
               handleLocalStorageToken(response.data);
               closeModal();
-
+              window.location.reload();
             }else if(response.statusText == "Forbidden"){
               toast.info("Ops, Não tem permisão!");
             }else{
@@ -100,6 +102,19 @@ const Header = (): JSX.Element => {
       })
     
   }
+  useEffect(() => {
+    async function loadUser() {
+      const response = await api.get('auth/me')
+      .then(response => {
+          return response.data;            
+      })
+      console.log(response);
+      console.log(response.tenants[0].roles[0])
+    }
+    
+    loadUser();
+
+  }, []);
   return (
     <>
       <Container>
