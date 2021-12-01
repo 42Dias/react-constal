@@ -23,6 +23,7 @@ import cama from "../../assets/images/cama.png";
 import modainfantil from "../../assets/images/modainfantil.png";
 import modafeminina from "../../assets/images/modafeminina.png";
 import modamasculina from "../../assets/images/modamasculina.png";
+import axios from "axios";
 
 interface Product {
   id: number;
@@ -57,8 +58,8 @@ const Home = (): JSX.Element => {
 
   useEffect(() => {
     async function loadProducts() {
-      const response = await api.get("produtos");
-      console.log(response.data);
+      const response = await axios.get("http://localhost:8157/api/produtos");
+      //console.log(response.data);
       const productsFormated = response.data.record.map(function (
         product: Product
       ) {
@@ -137,8 +138,8 @@ const Home = (): JSX.Element => {
               productCounter.push(p);
             }
 
-            console.log(productCounter);
-            console.log(products.length);
+            //console.log(productCounter);
+            //console.log(products.length);
           })}
 
           {productCounter.length === 0 ? (
