@@ -15,7 +15,8 @@ import prodtwo from "../../../assets/images/prodtwo.png";
 import prodthree from "../../../assets/images/prodthree.png";
 import prodfour from "../../../assets/images/prodfour.png";
 import Header from "../../../components/Header";
-import { AiOutlinePlus, AiOutlineClose } from "react-icons/ai";
+import { AiOutlineClose } from "react-icons/ai";
+import { FiCheck } from "react-icons/fi";
 import MenuEmpresa from "../../../components/MenuEmpresa";
 
 export default function Promotions() {
@@ -51,7 +52,7 @@ export default function Promotions() {
                 R$<b>219,99</b>
               </span>
               <div onClick={openModal} className="btn-more">
-                <AiOutlinePlus />
+                <FiCheck />
               </div>
             </div>
           </ProdContainerSingle>
@@ -65,7 +66,7 @@ export default function Promotions() {
                 R$<b>219,99</b>
               </span>
               <div onClick={openModal} className="btn-more">
-                <AiOutlinePlus />
+                <FiCheck />
               </div>
             </div>
           </ProdContainerSingle>
@@ -79,7 +80,7 @@ export default function Promotions() {
                 R$<b>219,99</b>
               </span>
               <div onClick={openModal} className="btn-more">
-                <AiOutlinePlus />
+                <FiCheck />
               </div>
             </div>
           </ProdContainerSingle>
@@ -93,7 +94,7 @@ export default function Promotions() {
                 R$<b>219,99</b>
               </span>
               <div onClick={openModal} className="btn-more">
-                <AiOutlinePlus />
+                <FiCheck />
               </div>
             </div>
           </ProdContainerSingle>
@@ -107,7 +108,7 @@ export default function Promotions() {
                 R$<b>219,99</b>
               </span>
               <div onClick={openModal} className="btn-more">
-                <AiOutlinePlus />
+                <FiCheck />
               </div>
             </div>
           </ProdContainerSingle>
@@ -121,7 +122,7 @@ export default function Promotions() {
                 R$<b>219,99</b>
               </span>
               <div onClick={openModal} className="btn-more">
-                <AiOutlinePlus />
+                <FiCheck />
               </div>
             </div>
           </ProdContainerSingle>
@@ -135,7 +136,7 @@ export default function Promotions() {
                 R$<b>219,99</b>
               </span>
               <div onClick={openModal} className="btn-more">
-                <AiOutlinePlus />
+                <FiCheck />
               </div>
             </div>
           </ProdContainerSingle>
@@ -149,7 +150,7 @@ export default function Promotions() {
                 R$<b>219,99</b>
               </span>
               <div onClick={openModal} className="btn-more">
-                <AiOutlinePlus />
+                <FiCheck />
               </div>
             </div>
           </ProdContainerSingle>

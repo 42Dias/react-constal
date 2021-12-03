@@ -28,6 +28,7 @@ import Payments from "./pages/Dashboard/Payments";
 import PaymentsCompanies from "./pages/Dashboard/PaymentsCompanies";
 import Courses from "./pages/Courses";
 import CoursesPage from "./pages/CoursesPage";
+import Signature from "./pages/Signature";
 
 const Routes = (): JSX.Element => {
   return (
@@ -61,6 +62,7 @@ const Routes = (): JSX.Element => {
         <Route exact path="/pagamentos" component={Payments} />
         <Route exact path="/cursos" component={Courses} />
         <Route exact path="/cursos-id" component={CoursesPage} />
+        <Route exact path="/assinaturas" component={Signature} />
         <Route
           exact
           path="/pagamentos-empresas"

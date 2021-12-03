@@ -25,8 +25,15 @@ export const FlexLink = styled.div`
   justify-content: center;
   padding: 12px 0;
 
-  @media (max-width: 768px) {
-    display: none;
+  .category-fix {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 0;
+    
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
 
   a {
@@ -38,10 +45,8 @@ export const FlexLink = styled.div`
     font-size: 15px;
     margin-right: 22px;
   }
-`;
 
-export const FlexLinkMobile = styled.div`
-.dropbtn {
+  .dropbtn {
     color: black;
     padding: 16px;
     font-size: 16px;
@@ -59,13 +64,9 @@ export const FlexLinkMobile = styled.div`
 
   .dropdown {
     position: relative;
-    display: none;
+    display: inline-block;
     transition: .5s;
     margin-right: 20px;
-
-    @media (max-width: 768px) {
-      display: block;
-    }
   }
 
   .dropdown-content {
@@ -120,4 +121,4 @@ export const FlexLinkMobile = styled.div`
       transition: .5s;
     }
   }
-`
+`;

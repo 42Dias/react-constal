@@ -63,6 +63,7 @@ export const CardDatails = styled.div`
     color: white;
     border-radius: 5px;
   }
+
 `
 
 export const CardDatailsContent = styled.div`
@@ -75,7 +76,13 @@ export const CardDatailsContent = styled.div`
   justify-content: space-between;
   padding: 0 12px;
   border-radius: 5px;
-  
+
+  &.adress { 
+    @media (max-width: 768px) {
+      height: 300px;
+    }
+  }
+
   a {
     display: flex;
     align-items: center;

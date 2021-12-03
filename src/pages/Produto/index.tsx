@@ -21,7 +21,7 @@ import {
 } from "./styles";
 import prod from "../../assets/images/prodfav.png";
 import { AiFillStar, AiOutlineClose } from "react-icons/ai";
-import { FiPlus, FiMinus } from "react-icons/fi";
+import { FiPlus, FiMinus, FiHeart } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import React from "react";
@@ -115,6 +115,7 @@ export default function Produto(props: RepositoryItemProps) {
               </BoxProdFirts>
 
               <AddCartRight>
+                <button className="fav" type="button">Favoritar <FiHeart /></button>
                 <FlexBtnsProd>
                   <IconPlusMinus onClick={increment}>
                     <FiPlus />

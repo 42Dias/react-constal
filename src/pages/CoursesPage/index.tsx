@@ -7,6 +7,7 @@ import {
   BoxProdFirts,
 } from "./styles";
 import { AiFillStar } from "react-icons/ai";
+import { FiHeart } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import React from "react";
 import MenuCliente from "../../components/MenuCliente";
@@ -50,6 +51,7 @@ export default function CoursesPage(props: RepositoryItemProps) {
               </BoxProdFirts>
 
               <AddCartRight>
+                <button type="button">Favoritar <FiHeart /></button>
                 <a target="_blank" href="https://www.youtube.com">Adicionar</a>
               </AddCartRight>
             </BoxProd>

@@ -46,6 +46,20 @@ export const CardDatas = styled.div`
   align-items: flex-start;
   justify-content: center;
   flex-direction: column;
+
+  @media (max-width: 768px) {
+    h3 {
+      font-size: 22px;  
+    }
+
+    span { 
+      font-size: 16px;
+    }
+
+    p { 
+      font-size: 16px;
+    }
+  }
 `;
 
 export const CardDatails = styled.div`
@@ -53,6 +67,15 @@ export const CardDatails = styled.div`
     color: #000;
     font-size: 30px;
     padding: 40px 0 30px 0;
+  }
+
+  button {
+    border: 0;
+    width: 174px;
+    height: 41px;
+    background: #101010;
+    border-radius: 5px;
+    color: white;
   }
 
   span {
@@ -68,11 +91,15 @@ export const CardDatails = styled.div`
     cursor: pointer;
     transition: .4s;
 
+    @media (max-width: 768px) {
+      width: 80px;
+    }
+
     &:hover {
       background: #171717;
     }
   }
-`
+`;
 
 export const CardDatailsContent = styled.div`
   background: white;
@@ -84,7 +111,7 @@ export const CardDatailsContent = styled.div`
   justify-content: space-between;
   padding: 0 12px;
   border-radius: 5px;
-  
+
   a {
     display: flex;
     align-items: center;
@@ -117,6 +144,27 @@ export const CardDatailsContent = styled.div`
   .flex-btn a {
     margin: 0 20px;
   }
+
+  &.adress {
+    @media (max-width: 768px) {
+      height: 300px;
+      justify-content: center;
+      flex-direction: column;
+      align-items: flex-start;
+
+      .flex-btn a {
+        margin: 0;
+      }
+
+      .flex-btn a:last-child {
+        margin-left: 20px;
+      }
+
+      .flex-btn {
+        margin-top: 20px;
+      }
+    }
+  }
 `;
 
 export const ContentDetails = styled.div`
@@ -126,10 +174,18 @@ export const ContentDetails = styled.div`
   span {
     font-size: 18px;
     font-weight: bold;
+    @media (max-width: 768px) {
+      font-weight: 300;
+      font-size: 14px;
+    }
   }
 
   img {
     padding: 0 40px;
+
+    @media (max-width: 768px) {
+      width: 120px;
+    }
   }
 
   p {

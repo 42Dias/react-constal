@@ -120,6 +120,25 @@ export const AddCartRight = styled.div`
   align-items: flex-end;
   flex-direction: column;
   justify-content: space-between;
+
+  button {
+    margin-bottom: 20px;
+    width: 120px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    border: 0;
+    background: black;
+    color: white;
+    
+    svg {
+      color: white;
+      margin-left: 10px;
+    }
+  }
+  
   a {
     text-decoration: none;
     color: white;
