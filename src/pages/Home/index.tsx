@@ -54,7 +54,7 @@ const Home = (): JSX.Element => {
 
   useEffect(() => {
     async function loadProducts() {
-      const response = await axios.get("http://7dd208931cad.sn.mynetname.net:8157/api/produtos");
+      const response = await axios.get("http://189.127.14.11:8157/api/produtos");
       //console.log(response.data);
       const productsFormated = response.data.record.map(function (
         product: Product
