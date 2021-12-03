@@ -58,7 +58,7 @@ export const ContainerProd = styled.div`
   justify-content: space-between;
   margin: 40px 0;
   img { 
-    width: 320px;
+    width: 449px;
     height: 481px;
     object-fit: cover;
     border-radius: 5px;
@@ -123,7 +123,7 @@ export const FlexBtnsProd = styled.div`
   }
 `;
 
-export const IconPlusMinus = styled.button`
+export const IconPlusMinus = styled.div`
   background: black;
   width: 30px;
   height: 30px;
@@ -131,38 +131,13 @@ export const IconPlusMinus = styled.button`
   align-items: center;
   justify-content: center;
   border-radius: 5px;
-  border: 0;
   svg {
     color: white;
   }
 `;
 
-export const ProdCaracteristicas = styled.div`
-  width: 100%;
-  height: 400px;
-  background: white;
-  border-radius: 5px;
-  padding: 0 30px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 40px;
-
-  div {
-    display: flex;
-    flex-direction: column;
-  }
-
-  span {
-    margin: 5px;
-    b {
-      font-weight: 500;
-    }
-  }
-`;
-
 export const ProdSecond = styled.div`
-  width: 100%;
+  width: 960px;
   height: 168px;
   background: white;
   border-radius: 5px;

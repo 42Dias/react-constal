@@ -1,10 +1,9 @@
 import { FormEvent, useState } from "react";
 import Header from "../../components/Header";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { BoxRegister, GridRegister, LinkContent, Terms } from "./styles";
 import { toast } from 'react-toastify';
 import Axios from 'axios';
-import React from "react";
 
 export default function Register() {
   const [nome, setNome] = useState('');
@@ -32,10 +31,10 @@ export default function Register() {
         role: parseInt(category)
     }).then((response) =>{
         console.log(response);  
-        if(response.statusText == "OK"){
+        if(response.statusText === "OK"){
           toast.info('Opa, recebemos o seu registro :)')
           handleClickLogin();
-        }else if(response.statusText == "Forbidden"){
+        }else if(response.statusText === "Forbidden"){
           toast.info("Ops, Não tem permisão!");
         }else{
           toast.info("Ops, Dados Incorretos!");

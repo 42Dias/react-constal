@@ -20,14 +20,18 @@ import {
   Form,
 } from "./styles";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useCart } from "../../hooks/useCart";
 import { toast } from "react-toastify";
+import { api } from "../../services/api";
 
 const Header = (): JSX.Element => {
   const { cart } = useCart();
-  const cartSize = cart.length;
+  const cartSize = cart.length+1;
+  if(cart){
+    console.log("temos carrinho")
+  }
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
   
@@ -57,7 +61,6 @@ const Header = (): JSX.Element => {
   }
 
   function handleLocalStorage(emailA: string, passwordB: string) {
-    let clientData = [emailA, passwordB];
     
     localStorage.setItem("email", JSON.stringify(email));//saves client's data into localStorage:
     localStorage.setItem("password", JSON.stringify(password));//saves client's data into localStorage:
@@ -77,6 +80,7 @@ const Header = (): JSX.Element => {
   function handleClickLogin() {
     history.push("/meu-perfil");
   }
+  
   async function Login(){
     let response=Axios.post('http://localhost:8157/api/auth/sign-in', {   
             email: email,
@@ -86,17 +90,31 @@ const Header = (): JSX.Element => {
             if(response.statusText == "OK"){
               toast.info('Login efetuado com sucesso! :)')
               handleLocalStorage(email, password);
+              handleLocalStorageToken(response.data);
               closeModal();
-
+              window.location.reload();
             }else if(response.statusText == "Forbidden"){
               toast.info("Ops, Não tem permisão!");
             }else{
               toast.info("Ops, Dados Incorretos!");
             }  
-            handleLocalStorageToken(response.data);
+            
       })
     
   }
+  useEffect(() => {
+    async function loadUser() {
+      const response = await api.get('auth/me')
+      .then(response => {
+          return response.data;            
+      })
+      console.log(response);
+      console.log(response.tenants[0].roles[0])
+    }
+    
+    loadUser();
+
+  }, []);
   return (
     <>
       <Container>

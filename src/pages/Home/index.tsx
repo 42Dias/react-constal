@@ -23,23 +23,21 @@ import cama from "../../assets/images/cama.png";
 import modainfantil from "../../assets/images/modainfantil.png";
 import modafeminina from "../../assets/images/modafeminina.png";
 import modamasculina from "../../assets/images/modamasculina.png";
+import axios from "axios";
 
 interface Product {
-  id: number;
+  id: string;
   nome: string;
   descricao: string;
   preco: number;
   publicUrl: string;
   isOferta: number;
   precoOferta: any;
+  quantidadeNoEstoque: number;
 }
 
 interface ProductFormatted extends Product {
   priceFormatted: string;
-}
-
-interface CartItemsAmount {
-  [key: number]: number;
 }
 
 let productCounter: any[] = [];
@@ -47,18 +45,29 @@ let productCounter: any[] = [];
 SwiperCore.use([Autoplay,Pagination,Navigation]);
 
 const Home = (): JSX.Element => {
+
+  const favoritos: string[] = JSON.parse(localStorage.getItem("favoritos") || '[]' );
+
+
+  function setFavoritos(favoritos: string[], produtoId: string){
+    if(favoritos){
+        console.log("favoritos")
+          favoritos.push(produtoId)
+          localStorage.setItem("favorito", JSON.stringify(favoritos))
+      }
+      else{
+        console.log("aaa")
+      }
+  }
+
   const [products = [], setProducts] = useState<ProductFormatted[]>([]);
   const { addProduct, cart } = useCart();
-
-  const cartItemsAmount = cart.reduce((sumAmount, product) => {
-    sumAmount[product.id] = product.quantidade;
-    return sumAmount;
-  }, {} as CartItemsAmount);
+  
 
   useEffect(() => {
     async function loadProducts() {
-      const response = await api.get("produtos");
-      console.log(response.data);
+      const response = await axios.get("http://localhost:8157/api/produtos");
+      //console.log(response.data);
       const productsFormated = response.data.record.map(function (
         product: Product
       ) {
@@ -69,7 +78,7 @@ const Home = (): JSX.Element => {
     loadProducts();
   }, []);
 
-  function handleAddProduct(id: number) {
+  function handleAddProduct(id: string) {
     addProduct(id);
   }
 
@@ -137,8 +146,8 @@ const Home = (): JSX.Element => {
               productCounter.push(p);
             }
 
-            console.log(productCounter);
-            console.log(products.length);
+            //console.log(productCounter);
+            //console.log(products.length);
           })}
 
           {productCounter.length === 0 ? (
@@ -166,7 +175,7 @@ const Home = (): JSX.Element => {
                       >
                         <div data-testid="cart-product-quantity">
                           <MdAddShoppingCart size={16} color="#FFF" />
-                          {cartItemsAmount[product.id] || 0}
+                          {product.quantidadeNoEstoque}
                         </div>
 
                         <span>ADICIONAR AO CARRINHO</span>
@@ -204,7 +213,7 @@ const Home = (): JSX.Element => {
                   >
                     <div data-testid="cart-product-quantity">
                       <MdAddShoppingCart size={16} color="#FFF" />
-                      {cartItemsAmount[product.id] || 0}
+                      {product.quantidadeNoEstoque}
                     </div>
 
                     <span>ADICIONAR AO CARRINHO</span>

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   DetailsProdFirts,
   ContainerProd,
@@ -16,12 +17,19 @@ import {
   ModalFlex,
   ModalContent,
   SelectAdress,
+  ProdCaracteristicas,
 } from "./styles";
+import prod from "../../assets/images/prodfav.png";
 import { AiFillStar, AiOutlineClose } from "react-icons/ai";
 import { FiPlus, FiMinus } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import React from "react";
+import MenuCliente from "../../components/MenuCliente";
+import Header from "../../components/Header";
+import { toast } from "react-toastify";
+import { api } from "../../services/api";
+import { formatPrice } from "../../util/format";
 
 interface RepositoryItemProps {
   repository: {
@@ -32,10 +40,35 @@ interface RepositoryItemProps {
     image: string;
   };
 }
-
-export default function Produto(props: RepositoryItemProps) {
+export default function Produto() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
+  const [counter, setCounter] = useState(0);
+
+  function error() {
+    toast("Não é possível adicionar menos que 0 ", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  }
+
+  function increment() {
+    setCounter(counter + 1);
+  }
+
+  function withdraw() {
+    if (counter < 1) {
+      setCounter(0);
+      error();
+    } else {
+      setCounter(counter - 1);
+    }
+  }
   function openModal() {
     setIsOpen(true);
   }
@@ -48,16 +81,94 @@ export default function Produto(props: RepositoryItemProps) {
     setIsOpen(false);
   }
 
+  function getHash() {
+    const hash = window.location.hash.replace(/#\/produto\//g, '');    
+    return hash
+  }
+  
+  function buildUrl(){
+    const productId = getHash()
+    const tenantId = "fa22705e-cf27-41d0-bebf-9a6ab52948c4";
+//  `/tenant/:tenantId/produto/:id`
+    const requisition = `/tenant/${tenantId}/produto/${productId}`
+    return requisition
+  }
+  
+  const selectedProduct = buildUrl()
+  console.log(selectedProduct);
+  
+  const [id, setId]=useState('');
+  const [nome, setNome]=useState('');
+  const [preco, setPreco]=useState('');
+  const [publicUrl, setPublicUrl]=useState(''); 
+  const [codigo, setCodigo]=useState('');
+  const [marca, setMarca]=useState('');
+  const [fotos, setFotos]=useState('');
+  const [modelo, setModelo]=useState('');
+  const [descricao, setDescricao]=useState('');
+
+
+  const [logradouro, setLogradouro]=useState('');
+  const [bairro, setBairro]=useState('');
+  const [cep, setCEP]=useState('');
+  const [cidade, setCidade]=useState('');
+  const [estado, setEstado]=useState('');
+
+  useEffect(() => {
+  async function loadProduct(){
+    const response = await api.get(selectedProduct)
+    .then(response => {
+        console.log(response.data)
+        return response.data
+    })
+
+    setId(response.id)
+    setNome(response.nome)
+    
+    if(response.isOferta === true){
+    setPreco(formatPrice(response.precoOferta))        
+    }
+    else{
+    setPreco(formatPrice(response.preco))
+    }
+    setPublicUrl(response.publicUrl)
+    setCodigo(response.codigo)
+    setMarca(response.marca)
+    setFotos(response.fotos[0].downloadUrl)
+    setModelo(response.modelo);
+    setDescricao(response.descricao)
+
+}
+async function loadUser() {
+  const user = await api.get('/tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/pessoa-fisica-perfil')
+  .then(user => {
+      console.log(user.data);
+    
+      return user.data;            
+  })
+setLogradouro(user.logradouro+", "+user.numero);
+  setBairro(user.bairro);
+  setCEP(user.cep)
+  setCidade(user.cidade);
+  setEstado(user.estado);
+}
+  loadUser()  
+  loadProduct();
+
+}, []);
+
   return (
     <>
+      <Header />
+      <MenuCliente />
       <div className="container">
         <ContainerProd>
-          {/* <img src={} alt="" /> */}
+          <img src={fotos} alt="" />
           <DetailsProdFirts>
             <BoxProd>
               <BoxProdFirts>
                 <span>Nome da marca</span>
-                <strong></strong>
+                <strong>{nome}</strong>
                 <span>Código do produto</span>
                 <IconsContentStar>
                   <AiFillStar size={18} />
@@ -68,7 +179,7 @@ export default function Produto(props: RepositoryItemProps) {
                   <small>(1)</small>
                 </IconsContentStar>
                 <br />
-                <strong>R$ {}</strong>
+                <strong>{preco}</strong>
                 <span>Variantes (ex: Cor)</span>
                 <BoxColors>
                   <ColorWhite />
@@ -82,11 +193,11 @@ export default function Produto(props: RepositoryItemProps) {
 
               <AddCartRight>
                 <FlexBtnsProd>
-                  <IconPlusMinus>
+                  <IconPlusMinus onClick={increment}>
                     <FiPlus />
                   </IconPlusMinus>
-                  <h3>4</h3>
-                  <IconPlusMinus>
+                  <h3>{counter}</h3>
+                  <IconPlusMinus onClick={withdraw}>
                     <FiMinus />
                   </IconPlusMinus>
                 </FlexBtnsProd>
@@ -96,27 +207,51 @@ export default function Produto(props: RepositoryItemProps) {
 
             <BoxProd>
               <div className="oi">
+                <strong>Descrição do produto</strong>
                 <span>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat.
-                </span>
-
-                <strong>Descrição técnica</strong>
-
-                <span>
-                  Marca: <br />
-                  Modelo: <br />
-                  Material: <br />
-                  Características: <br />
-                  Observações: <br />
-                  Acabamento: <br />
+                  {descricao}
                 </span>
               </div>
             </BoxProd>
           </DetailsProdFirts>
         </ContainerProd>
+
+        <ProdCaracteristicas>
+          <div>
+            <h2>Características Técnicas</h2>
+            <span>
+              <b>Peso do Produto:</b> 12 Kg
+            </span>
+            <span>
+              <b>Quantidade de Lugares:</b> 6 lugares
+            </span>
+            <span>
+              <b>Formato:</b> Retangular
+            </span>
+            <span>
+              <b>Material do Tampo da Mesa:</b> Plástico
+            </span>
+            <span>
+              <b>Tipo de Material do Tampo da Mesa:</b> Polipropileno
+            </span>
+
+            <span>
+              <b>Material da Estrutura da Mesa:</b> Plástico
+            </span>
+            <span>
+              <b>Tipo de Material da Estrutura da Mesa:</b> Polipropileno
+            </span>
+            <span>
+              <b>Mesa Dobrável:</b> Sim
+            </span>
+            <span>
+              <b>Furo para Ombrelone:</b> Não
+            </span>
+            <span>
+              <b>Dimensão da Mesa (AxLxC):</b> 74x75x180cm
+            </span>
+          </div>
+        </ProdCaracteristicas>
 
         <ProdSecond>
           <div>
@@ -145,9 +280,9 @@ export default function Produto(props: RepositoryItemProps) {
 
               <SelectAdress>
                 <div>
-                  <strong>Rua XXXXXX XXXX XX XXXX, 55</strong>
+                  <strong>{logradouro}</strong>
                   <br />
-                  <span>CEP: XXXX - SP</span>
+                  <span>CEP: {cep} - {estado}</span>
                 </div>
                 <div>
                   <small>Selecione outro endereço</small>
@@ -164,6 +299,10 @@ export default function Produto(props: RepositoryItemProps) {
           </div>
         </Modal>
       </ModalContainerVendedor>
+
     </>
   );
+
 }
+
+
