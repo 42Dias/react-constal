@@ -28,7 +28,7 @@ import { api } from "../../services/api";
 
 const Header = (): JSX.Element => {
   const { cart } = useCart();
-  const cartSize = cart.length+1;
+  const cartSize = cart.length;
   if(cart){
     console.log("temos carrinho")
   }
