@@ -35,6 +35,11 @@ export const MenuSell = styled.div`
 export const ContainerMenuSell = styled.div`
   width: 100%;
   height: 168px;
+
+  @media (max-width: 768px) {
+    height: 240px;
+  }
+  
   background: white;
   margin: 15px 0 10px 0;
 

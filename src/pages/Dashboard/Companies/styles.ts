@@ -1,4 +1,23 @@
-import styled from "styled-components";
+import styled from 'styled-components';
+
+export const GridProdsFour = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr)
+`;
+
+export const Title = styled.h2`
+  font-size: 30px;
+  padding: 30px 0;
+`;
+
+export const CardProfile = styled.div`
+  font-size: 40px;
+  background: white;
+  width: 100%;
+  height: 422px;
+  border-radius: 5px;
+  display: flex;
+`;
 
 export const CardDatas = styled.div`
   h3 { 
@@ -44,20 +63,29 @@ export const CardDatails = styled.div`
     color: white;
     border-radius: 5px;
   }
+
 `
 
 export const CardDatailsContent = styled.div`
   background: white;
   width: 100%;
-  height: 200px;
+  height: 180px;
   margin: 20px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 12px;
   border-radius: 5px;
-  
-  strong {
+
+  @media (max-width: 768px) {
+    height: 300px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+
+  a {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -88,6 +116,14 @@ export const CardDatailsContent = styled.div`
 
   .flex-btn a {
     margin: 0 20px;
+
+    @media (max-width: 768px) {
+      margin: 10px 0;
+
+      &:last-child {
+        margin-left: 20px;
+      }
+    }
   }
 `;
 

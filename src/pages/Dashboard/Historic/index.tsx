@@ -54,7 +54,6 @@ export default function Historic() {
               </small>
             </ContentDetails>
             <Link to="/detalhes-da-venda">Detalhes</Link>
-
           </CardDatailsContent>
         </CardDatails>
       </div>

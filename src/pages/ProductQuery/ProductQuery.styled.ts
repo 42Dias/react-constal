@@ -12,6 +12,15 @@ export const Title = styled.h2`
   padding: 30px 0;
 `;
 
+export const CardProfile = styled.div`
+  font-size: 40px;
+  background: white;
+  width: 100%;
+  height: 422px;
+  border-radius: 5px;
+  display: flex;
+`;
+
 export const CardDatas = styled.div`
   h3 { 
     font-size: 30px;
@@ -56,19 +65,28 @@ export const CardDatails = styled.div`
     color: white;
     border-radius: 5px;
   }
+
 `
 
 export const CardDatailsContent = styled.div`
   background: white;
   width: 100%;
-  height: 200px;
+  height: 100px;
   margin: 20px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 12px;
   border-radius: 5px;
-  
+
+  @media (max-width: 768px) {
+    height: 300px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+
   a {
     display: flex;
     align-items: center;
@@ -100,12 +118,26 @@ export const CardDatailsContent = styled.div`
 
   .flex-btn a {
     margin: 0 20px;
+
+    @media (max-width: 768px) {
+      margin: 10px 0;
+
+      &:last-child {
+        margin-left: 20px;
+      }
+    }
   }
 `;
 
 export const ContentDetails = styled.div`
   display: flex;
   align-items: center;
+
+  @media (max-width: 768px) {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+  }
 
   span {
     font-size: 18px;
@@ -114,10 +146,18 @@ export const ContentDetails = styled.div`
 
   img {
     padding: 0 40px;
+
+    @media (max-width: 768px) {
+      width: 160px;
+      padding: 0;
+    }
   }
 
   p {
     margin-left: 12px;
+    @media (max-width: 768px) {
+      margin-left: 0;
+    }
   }
   
   small {

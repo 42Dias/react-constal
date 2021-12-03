@@ -16,13 +16,12 @@ export default function MenuEmpresa() {
               <div className="drop-grid">
                 <Link to="/meus-produtos">Usuários</Link>
                 <Link to="/promocoes">Empresas</Link>
-                <Link to="/vendas">Produtos</Link> 
-                <Link to="/perguntas">Histórico</Link> 
+                <Link to="/produtos">Produtos</Link> 
+                <Link to="/historico">Histórico</Link> 
                 <Link to="/assinaturas">Planos</Link>
-                <Link to="/assinaturas">Vendas</Link>
-                <Link to="/assinaturas">Consultas</Link>
-                <Link to="/assinaturas">Pagamentos</Link> 
-                <Link to="/assinaturas">Todos usuários</Link> 
+                <Link to="/vendas">Vendas</Link>
+                <Link to="/consultar-produtos">Consultas</Link>
+                <Link to="/pagamentos">Pagamentos</Link> 
               </div>
             </div>
           </div>

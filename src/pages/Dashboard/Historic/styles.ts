@@ -1,5 +1,16 @@
 import styled from "styled-components";
 
+export const FooterContainer = styled.div`
+  position: relative;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+`;
+
+export const Title = styled.h2`
+  font-size: 30px;
+  padding: 30px 0;
+`;
 export const CardDatas = styled.div`
   h3 { 
     font-size: 30px;
@@ -56,6 +67,10 @@ export const CardDatailsContent = styled.div`
   justify-content: space-between;
   padding: 0 12px;
   border-radius: 5px;
+
+  @media (max-width: 768px) {
+    height: 280px;
+  }
   
   strong {
     display: flex;
@@ -95,6 +110,11 @@ export const ContentDetails = styled.div`
   display: flex;
   align-items: center;
 
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   span {
     font-size: 18px;
     font-weight: bold;
@@ -102,14 +122,48 @@ export const ContentDetails = styled.div`
 
   img {
     padding: 0 40px;
+    @media (max-width: 768px) {
+      padding: 0 0;
+      width: 155px;
+    }
   }
 
   p {
     margin-left: 12px;
+    @media (max-width: 768px) {
+      margin-left: 0;
+    }
   }
   
   small {
     color: #757575;
     font-size: 16px;
+  }
+`;
+
+export const ModalContainerVendedor = styled.div`
+  display: flex;
+`;
+
+export const ModalFlex = styled.div`
+  display: flex;
+`;
+
+export const ModalContent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+
+  h3 {
+    padding: 20px 0;
+    font-size: 24px;
+  }
+
+  p {
+    color: #4A4A4A;
+    max-width: 420px;
+    padding: 20px 0;
   }
 `;

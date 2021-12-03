@@ -29,6 +29,7 @@ import PaymentsCompanies from "./pages/Dashboard/PaymentsCompanies";
 import Courses from "./pages/Courses";
 import CoursesPage from "./pages/CoursesPage";
 import Signature from "./pages/Signature";
+import PlansAdm from "./pages/Dashboard/PlansAdm";
 
 const Routes = (): JSX.Element => {
   return (
@@ -63,6 +64,7 @@ const Routes = (): JSX.Element => {
         <Route exact path="/cursos" component={Courses} />
         <Route exact path="/cursos-id" component={CoursesPage} />
         <Route exact path="/assinaturas" component={Signature} />
+        <Route exact path="/assinaturas-adm" component={PlansAdm} />
         <Route
           exact
           path="/pagamentos-empresas"

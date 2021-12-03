@@ -3,11 +3,13 @@ import Footer from "../../components/Footer"
 import * as S from './ProductQuery.styled'
 import prodfav from "../../assets/images/prodfav.png"
 import { Link } from "react-router-dom"
+import MenuAdm from "../../components/MenuAdm"
 
 function ProductQuery() {
   return (
     <>
       <Header />
+      <MenuAdm />
       <div className="container">
         <S.CardDatails>
           <S.Title>Consulta de produtos</S.Title>
@@ -19,8 +21,10 @@ function ProductQuery() {
               <p>Quantidade</p>
               <p>R$ 999,99</p>
             </S.ContentDetails>
-            <Link to="">Aprovar</Link>
-            <Link to="" style={{ background: 'none', color: 'black', border: '1px solid black' }}>Recusar</Link>
+            <div className="flex-btn">
+              <Link to="">Aprovar</Link>
+              <Link to="">Recusar</Link>
+            </div>
           </S.CardDatailsContent>
 
           <S.CardDatailsContent>
@@ -30,8 +34,10 @@ function ProductQuery() {
               <p>Quantidade</p>
               <p>R$ 999,99</p>
             </S.ContentDetails>
-            <Link to="">Aprovar</Link>
-            <Link to="" style={{ background: 'none', color: 'black', border: '1px solid black' }}>Recusar</Link>
+            <div className="flex-btn">
+              <Link to="">Aprovar</Link>
+              <Link to="">Recusar</Link>
+            </div>
           </S.CardDatailsContent>
 
           <S.CardDatailsContent>
@@ -41,8 +47,10 @@ function ProductQuery() {
               <p>Quantidade</p>
               <p>R$ 999,99</p>
             </S.ContentDetails>
-            <Link to="">Aprovar</Link>
-            <Link to="" style={{ background: 'none', color: 'black', border: '1px solid black' }}>Recusar</Link>
+            <div className="flex-btn">
+              <Link to="">Aprovar</Link>
+              <Link to="">Recusar</Link>
+            </div>
           </S.CardDatailsContent>
         </S.CardDatails>  
 

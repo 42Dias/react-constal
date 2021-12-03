@@ -1,8 +1,8 @@
-import Header from "../../components/Header"
-import MenuEmpresa from "../../components/MenuEmpresa";
-import * as S from './Signature.styled'
+import Header from "../../../components/Header"
+import MenuEmpresa from "../../../components/MenuEmpresa";
+import * as S from './styles'
 
-export default function Signature() {
+export default function PlansAdm() {
   return (
     <>
       <Header />
