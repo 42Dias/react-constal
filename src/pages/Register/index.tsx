@@ -24,7 +24,7 @@ export default function Register() {
 
   async function Cadastro() {
     
-      Axios.post('http://localhost:8157/api/auth/sign-up', {   
+      Axios.post('http://7dd208931cad.sn.mynetname.net:8157/api/auth/sign-up', {   
         fullName: nome,   
         email: email,
         password: senha,

@@ -104,7 +104,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
           setCart([...cart, {...product, quantidade: 1}])
           //AQUI É O CARRINHO
           const response = await fetch(
-            `http://localhost:8157/api/tenant/${tenantId}/carrinho/${cartId}`, {
+            `http://7dd208931cad.sn.mynetname.net:8157/api/tenant/${tenantId}/carrinho/${cartId}`, {
               method: "PUT",
               headers: {
                 'Accept': 'application/json',
@@ -128,7 +128,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
           product.quantidade++;
   
           const response = await fetch(
-            `http://localhost:8157/api/tenant/${tenantId}/carrinho/${cartId}`, {
+            `http://7dd208931cad.sn.mynetname.net:8157/api/tenant/${tenantId}/carrinho/${cartId}`, {
               method: "PUT",
               headers: {
                 'Accept': 'application/json',
