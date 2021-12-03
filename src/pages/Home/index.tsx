@@ -46,19 +46,7 @@ SwiperCore.use([Autoplay,Pagination,Navigation]);
 
 const Home = (): JSX.Element => {
 
-  const favoritos: string[] = JSON.parse(localStorage.getItem("favoritos") || '[]' );
-
-
-  function setFavoritos(favoritos: string[], produtoId: string){
-    if(favoritos){
-        console.log("favoritos")
-          favoritos.push(produtoId)
-          localStorage.setItem("favorito", JSON.stringify(favoritos))
-      }
-      else{
-        console.log("aaa")
-      }
-  }
+  
 
   const [products = [], setProducts] = useState<ProductFormatted[]>([]);
   const { addProduct, cart } = useCart();

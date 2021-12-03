@@ -57,6 +57,24 @@ export default function Produto() {
     });
   }
 
+
+  
+  const favoritos: string[] = JSON.parse(localStorage.getItem("favoritos") || '[]' );
+
+
+  function setFavoritos(favoritos: string[], produtoId: string){
+    if(favoritos){
+        console.log("favoritos")
+          favoritos.push(produtoId)
+          localStorage.setItem("favorito", JSON.stringify(favoritos))
+      }
+      else{
+        console.log("aaa")
+      }
+  }
+
+
+
   function increment() {
     setCounter(counter + 1);
   }
@@ -85,7 +103,7 @@ export default function Produto() {
     const hash = window.location.hash.replace(/#\/produto\//g, '');    
     return hash
   }
-  
+  const productId = getHash()
   function buildUrl(){
     const productId = getHash()
     const tenantId = "fa22705e-cf27-41d0-bebf-9a6ab52948c4";
@@ -154,7 +172,7 @@ setLogradouro(user.logradouro+", "+user.numero);
 }
   loadUser()  
   loadProduct();
-
+console.log(id)
 }, []);
 
   return (
@@ -192,7 +210,10 @@ setLogradouro(user.logradouro+", "+user.numero);
               </BoxProdFirts>
 
               <AddCartRight>
-                <button className="fav" type="button">Favoritar <FiHeart /></button>
+                <button className="fav" type="button"
+                onClick={() => setFavoritos(favoritos, productId)}
+
+                >Favoritar <FiHeart /></button>
                 <FlexBtnsProd>
                   <IconPlusMinus onClick={increment}>
                     <FiPlus />
