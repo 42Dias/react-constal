@@ -1,15 +1,25 @@
 import styled from 'styled-components'
 
+export const Container = styled.div`
+  max-width: 1020px;
+  margin: 0 auto;
+  padding: 0 20px 50px;
+`;
+
 export const Title = styled.h2`
   font-size: 30px;
   padding: 30px 0;
-  margin-left: 126px;
 `
 
 export const Cards = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `
 
 export const Card = styled.div`
@@ -19,6 +29,11 @@ export const Card = styled.div`
   border-radius: 5px;
   color: #FAFAFA;
   margin: 0 20px 60px 10px;
+  position: relative;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 
   h3 {
     font-size: 24px;
@@ -40,8 +55,11 @@ export const Card = styled.div`
     height: 41px;
     border-radius: 5px;
     border: none;
-    margin: 30px;
+    position: absolute;
+    bottom: 25px;
+    left: 25px;
 
+    transition: 0.4s;
     :hover {
       opacity: 80%;
     }

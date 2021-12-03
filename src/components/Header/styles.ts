@@ -2,6 +2,164 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const Container = styled.header`
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+  padding: 0 20px;
+}
+
+.logo-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+nav li {
+  margin-left: 30px;
+  font-size: 12px;
+  line-height: 18px;
+  color: #303030;
+}
+
+nav li a {
+  color: #303030;
+}
+
+header ul {
+  display: flex;
+  align-items: center;
+}
+
+.option button {
+  width: 100px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: white !important;
+  border: 0;
+
+  background: #2E54FF;
+  border-radius: 20px;
+}
+
+.option button:hover {
+  transition: .7s;
+  background: #0125C7;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+}
+
+.nav-options {
+  display: flex;
+}
+
+.mobile-option {
+  display: none;
+}
+
+.option :hover {
+  color: #0A0A0A;
+}
+
+.mobile-menu {
+  display: none;
+}
+
+@media (max-width: 648px) {
+
+  header {
+    padding: 0px 10px;
+    overflow: hidden;
+  }
+
+  .logo {
+    width: 45px;
+    height: 45px;
+  }
+
+  .option a {
+    color: white;
+  }
+
+  .nav-options {
+    display: flex;
+    width: 80%;
+    height: 110%;
+    position: absolute;
+    overflow: hidden;
+    top: 80px;
+    left: -100%;
+    opacity: 0;
+    transition: all 0.5s ease;
+    flex-direction: column;
+    list-style-type: none;
+    grid-gap: 0px;
+    opacity: 1;
+    transform: translate3d(0, -100px, 0);
+    color: white;
+  }
+
+  .nav-options.active {
+    background: #f2f2f2;
+    left: 0;
+    opacity: 1;
+    transition: all 0.5s ease;
+    align-content: center;
+    position: fixed;
+    height: 110vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    z-index: 1;
+  } 
+
+  .menu-icon {
+    width: 45px;
+    height: 45px;
+    display: block;
+    z-index: 999;
+    color: white;
+  }
+
+  .option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 10vw;
+    padding: 30px 0px;
+    color: white;
+  }
+
+  .mobile-menu {
+    display: block;
+    z-index: 999;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 14px !important;
+    svg {
+      color: black;
+      font-size: 14px !important;
+      width: 30px;
+    }
+  }
+
+} 
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -22,6 +180,17 @@ export const Container = styled.header`
 `;
 
 export const InputCenter = styled.div`
+  nav.header {
+    display: grid;
+    grid-template-columns: 1fr 1.55fr;
+
+    .input
+    {
+      display: flex;
+      align-items: center;
+    }
+  }
+
   input[type=text] {
     width: 280px;
     height: 46px;
@@ -48,7 +217,58 @@ export const InputCenter = styled.div`
       font-size: 12px;
     }
   }
+
+  @media (max-width: 768px) {
+    input[type=text] {
+      width: 180px;
+      height: 46px;
+    }
+
+  }
 `
+
+export const IconsContainerMenu = styled.div`
+  display: none;
+
+  @media (max-width: 768px) {
+    display: block;
+
+    .icons-flex-align {
+      padding-right: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      
+      margin-top: 20px;
+
+      div.flex-item {
+        display: flex;
+        align-items: center;
+        margin-top: 30px;
+      }
+
+      span {
+        color: #0D0F21;
+      }
+
+      strong {
+        color: #0D0F21;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      svg {
+        color: black;
+      }
+
+      svg {
+        margin-left: 20px;
+      }
+    }
+  }
+`;
 
 export const IconsContainer = styled.div`
   display: flex;
@@ -57,6 +277,11 @@ export const IconsContainer = styled.div`
   svg {
     margin: 0 20px;
     cursor: pointer;
+    color: black;
+  }
+
+  @media (max-width: 768px) {
+    display: none;
   }
 `
 
@@ -64,6 +289,13 @@ export const Cart = styled(Link)`
   display: flex;
   align-items: center;
   text-decoration: none;
+  margin-top: 30px;
+
+  @media (max-width: 768px) {
+    svg {
+      color: white;
+    }
+  }
 
   div {
     text-align: right;
@@ -76,6 +308,22 @@ export const Cart = styled(Link)`
     span {
       font-size: 12px;
       color: black;
+    }
+  }
+
+  @media (max-width: 768px) {
+    div {
+      text-align: left;
+
+      strong {
+        display: block;
+        color: white;
+      }
+
+      span {
+        font-size: 12px;
+        color: white;
+      }
     }
   }
 `;

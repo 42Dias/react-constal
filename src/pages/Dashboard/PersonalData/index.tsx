@@ -70,14 +70,14 @@ export default function PersonalData() {
 
           <CardDatailsContent>
             <ContentDetails>
-              <span>Websidte:</span>
+              <span>Website:</span>
             </ContentDetails>
           </CardDatailsContent>
         </CardDatails>
 
         <CardDatails>
           <h2>Endereço</h2>
-          <CardDatailsContent>
+          <CardDatailsContent className="adress">
             <ContentDetails>
               <small>
                 Av. xxxxxxxx <br />

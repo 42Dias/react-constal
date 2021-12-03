@@ -10,6 +10,7 @@ import { useCart } from "../../hooks/useCart";
 
 import { AiOutlinePlus } from "react-icons/ai";
 import { Recommended, GridProdsFour, ProdContainerSingle } from "./styles";
+import MenuCliente from "../../components/MenuCliente";
 import MenuEmpresa from "../../components/MenuEmpresa";
 
 export default function Products() {

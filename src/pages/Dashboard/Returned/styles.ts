@@ -14,6 +14,13 @@ export const MenuSell = styled.div`
   justify-content: space-between;
   padding: 0 20px;
 
+  @media (max-width: 768px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0;
+    text-align: center;
+  }
+
   a { 
     text-decoration: none;
   }
@@ -22,11 +29,15 @@ export const MenuSell = styled.div`
     color: rgba(16, 16, 16, 0.61);
     font-size: 16px;
     font-weight: bold;
+    @media (max-width: 768px) {
+      font-size: 14px;
+    }
   }
 
   b {
     color: black;
   }
+
 `;
 
 export const ContainerMenuSell = styled.div`
@@ -40,15 +51,30 @@ export const ContainerMenuSell = styled.div`
   justify-content: space-between;
   padding: 0 20px;
 
+  @media (max-width: 768px) {
+    height: 280px;
+    flex-direction: column;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 0 40px;
+  }
+
   span {
     font-size: 18px;
     font-weight: bold;
+    @media (max-width: 768px) {
+      font-size: 16px;
+    }
   }
 
   h3 {
     font-size: 16px;
     font-weight: 300;
     padding: 7px 0;
+    @media (max-width: 768px) {
+      font-size: 14px;
+    }
   }
 
   a {

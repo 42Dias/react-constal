@@ -21,7 +21,7 @@ import {
 } from "./styles";
 import prod from "../../assets/images/prodfav.png";
 import { AiFillStar, AiOutlineClose } from "react-icons/ai";
-import { FiPlus, FiMinus } from "react-icons/fi";
+import { FiPlus, FiMinus, FiHeart } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import React from "react";
@@ -192,6 +192,7 @@ setLogradouro(user.logradouro+", "+user.numero);
               </BoxProdFirts>
 
               <AddCartRight>
+                <button className="fav" type="button">Favoritar <FiHeart /></button>
                 <FlexBtnsProd>
                   <IconPlusMinus onClick={increment}>
                     <FiPlus />
@@ -201,12 +202,12 @@ setLogradouro(user.logradouro+", "+user.numero);
                     <FiMinus />
                   </IconPlusMinus>
                 </FlexBtnsProd>
-                <Link to="#">Adicionar</Link>
+                <Link to="/pagar">Adicionar</Link>
               </AddCartRight>
             </BoxProd>
 
             <BoxProd>
-              <div className="oi">
+              <div className="descprod">
                 <strong>Descrição do produto</strong>
                 <span>
                   {descricao}

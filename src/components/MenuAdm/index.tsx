@@ -1,39 +1,27 @@
 import { Link } from "react-router-dom";
-import { FiChevronRight } from "react-icons/fi";
+import { FiMenu } from "react-icons/fi";
 import { FlexLink, Container } from "./styles";
 
 export default function MenuAdm() {
   return (
     <>
       <Container>
-        <FlexLink>
-          <Link to="/aprovar-usuarios">
-            Usuários <FiChevronRight />
-          </Link>
-          <Link to="/empresas">
-            Empresas <FiChevronRight />
-          </Link>
-          <Link to="/meus-produtos">
-            Produtos <FiChevronRight />
-          </Link>
-          <Link to="/historico">
-            Histórico <FiChevronRight />
-          </Link>
-          <Link to="/produtos">
-            Planos <FiChevronRight />
-          </Link>
-          <Link to="/vendas">
-            Vendas <FiChevronRight />
-          </Link>
-          
-          <Link to="/dados-pessoais">
-            Consultas <FiChevronRight />
-          </Link>
-
-          <Link to="/pagamentos">
-            Pagamentos <FiChevronRight />
-          </Link>
-  
+      <FlexLink>
+          <div className="dropdown">
+            <button className="dropbtn">
+              <FiMenu />
+              <span>Links úteis</span>
+            </button>
+            <div className="dropdown-content">
+              <div className="drop-grid">
+                <Link to="/meus-produtos">Novo Produtos</Link>
+                <Link to="/promocoes">Promoções</Link>
+                <Link to="/vendas">Vendas</Link> 
+                <Link to="/perguntas">Perguntas</Link> 
+                <Link to="/assinaturas">Planos</Link> 
+              </div>
+            </div>
+          </div>
         </FlexLink>
       </Container>
     </>

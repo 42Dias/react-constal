@@ -21,9 +21,9 @@ import {
   ContentFormNew,
 } from "./styles";
 import { Link } from "react-router-dom";
-import MenuEmpresa from "../../components/MenuEmpresa";
 import { api } from "../../services/api";
 import axios from "axios";
+import MenuCliente from "../../components/MenuCliente";
 
 
 export default function Profile() {
@@ -103,7 +103,7 @@ export default function Profile() {
   return (
     <>
       <Header />
-      <MenuEmpresa />
+      <MenuCliente />
       <div className="container">
         <Title>Meus dados</Title>
 
@@ -154,7 +154,7 @@ export default function Profile() {
 
           <CardDatailsContent>
             <ContentDetails>
-              <img src={visa} alt="" width = {10}/>
+              <img src={visa} alt="" />
               <p>Final em XXXX <br /> Banco <br /> Vencimento </p>
             </ContentDetails>
             <Link to="">Excluir</Link>
@@ -163,7 +163,7 @@ export default function Profile() {
 
         <CardDatails>
           <h2>Endereço</h2>
-          <CardDatailsContent>
+          <CardDatailsContent className="adress">
             <ContentDetails>
               <small>
                 Endereço: {logradouro} <br />
@@ -177,7 +177,7 @@ export default function Profile() {
               <Link to="">Excluir</Link>
             </div>
           </CardDatailsContent>
-          <span onClick={openModal}>Novo endereço</span>
+          <button onClick={openModal}>Novo endereço</button>
         </CardDatails>
       </div>
       <Footer />
