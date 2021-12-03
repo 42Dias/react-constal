@@ -11,7 +11,6 @@ export const Title = styled.h2`
   font-size: 30px;
   padding: 30px 0;
 `;
-
 export const CardDatas = styled.div`
   h3 { 
     font-size: 30px;
@@ -107,6 +106,11 @@ export const ContentDetails = styled.div`
   display: flex;
   align-items: center;
 
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   span {
     font-size: 18px;
     font-weight: bold;
@@ -114,10 +118,17 @@ export const ContentDetails = styled.div`
 
   img {
     padding: 0 40px;
+    @media (max-width: 768px) {
+      padding: 0 0;
+      width: 155px;
+    }
   }
 
   p {
     margin-left: 12px;
+    @media (max-width: 768px) {
+      margin-left: 0;
+    }
   }
   
   small {
@@ -125,7 +136,6 @@ export const ContentDetails = styled.div`
     font-size: 16px;
   }
 `;
-
 
 export const ModalContainerVendedor = styled.div`
   display: flex;

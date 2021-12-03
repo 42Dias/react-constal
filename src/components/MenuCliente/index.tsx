@@ -14,39 +14,26 @@ export default function MenuCliente() {
             </button>
             <div className="dropdown-content">
               <div className="drop-grid">
-                <Link to="/produtos">
-                  Moda infantil
-                </Link>
+                <Link to="/produtos">Moda infantil</Link>
 
-                <Link to="/produtos">
-                  Moda feminina
-                </Link>
+                <Link to="/produtos">Moda feminina</Link>
 
-                <Link to="/produtos">
-                  Moda Masculina
-                </Link>
+                <Link to="/produtos">Moda Masculina</Link>
 
-                <Link to="/produtos">
-                  Ar condicionado
-                </Link>
+                <Link to="/produtos">Ar condicionado</Link>
+
+                <Link to="/cursos">Cursos</Link>
               </div>
             </div>
           </div>
-          <Link to="/produtos">
-            Moveis
-          </Link>
-          <Link to="/produtos">
-            Eletrodoméstico
-          </Link>
-          <Link to="/produtos">
-            Materiais de Decoração
-          </Link>
-          <Link to="/produtos">
-            Cama, Mesa e Banho
-          </Link>
-          <Link to="/produtos">
-            Cursos
-          </Link>
+
+          <div className="category-fix">
+            <Link to="/produtos">Moveis</Link>
+            <Link to="/produtos">Eletrodoméstico</Link>
+            <Link to="/produtos">Materiais de Decoração</Link>
+            <Link to="/produtos">Cama, Mesa e Banho</Link>
+            <Link to="/cursos">Cursos</Link>
+          </div>
         </FlexLink>
       </Container>
     </>

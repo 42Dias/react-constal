@@ -2,7 +2,11 @@ import { createContext, ReactNode, useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 import { api } from '../services/api';
 
+let token = localStorage.getItem("token")?.replace(/"/g, "");
+
+
 interface Product{
+  quantidadeNoEstoque: number;
   id: string;
   name: string;
   title: string;
@@ -22,7 +26,7 @@ interface UpdateProductAmount {
 }
 
 interface CartContextData {
-  cart: Product[];
+  cart: any;
   addProduct:    (productId: string) => Promise<void>;
   removeProduct: (productId: string) => void;
   updateProductAmount: ({ productId, quantidade }: UpdateProductAmount) => void;
@@ -44,37 +48,96 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
   });
 
   const addProduct = async (productId: string) => {
+    console.log("productId")
     console.log(productId)
+    const cartResponse = await api.get(`tenant/${tenantId}/carrinho/`)
+    const cart = cartResponse.data.rows;
+    console.log("cart");
+    console.log(cart);
+
+    const cartId = cart[0].id;
+    console.log("cartId")  
+    console.log(cartId)  
+
+    const produtoNoCarrinho = cart[0].produto
+    console.log(produtoNoCarrinho)
+
+    const productAlreadyInCart = cart.find((product: any) => {
+      console.log("productAlreadyInCart")
+      console.log(product.id)
+      console.log(productId)
+      return product.id == productId
+    })
+    // productAlreadyInCart(produtoNoCarrinho)
+    
+    
+    console.log("productAlreadyInCart")  
+    console.log(productAlreadyInCart)  
+
+    const productResponse = await api.get<Product>(`/tenant/${tenantId}/produto/${productId}`);//jogar como variavel que abrange todo o escopo da função
+    const  product  = productResponse.data;
+    product.quantidade = 1;
+
+    console.log("product")
+    console.log(product)
+    
+    const  stock: number  = product.quantidadeNoEstoque;
+    
+    console.log("stock") 
+    console.log(stock) 
+    
+    const quantidadeDeItemsNoCarrinho = cart[0].quantidade
+    
+    console.log("quantidadeDeItemsNoCarrinho")
+    console.log(quantidadeDeItemsNoCarrinho)
+
+
+
     try {
-      const productAlreadyInCart = cart.find(product => product.id == productId)
-
+      
       if(!productAlreadyInCart) {
-        const productResponse = await api.get<Product>(`/tenant/${tenantId}/produto/${productId}`);//jogar como variavel que abrange todo o escopo da função
-        const  product  = productResponse.data;
-        console.log("product")
-        console.log(product)
-        const  stock: number  = 10;//AQUI VIRIA A QUANTIDADE DO ESTOQUE!!!! FUTURA ADIÇÃO
-
+      
+        console.log("product");
+        console.log(product); 
+        
         if(stock > 0) {
           setCart([...cart, {...product, quantidade: 1}])
-          //AQUI É O CARRINHO 
-          const response = await api.post(`/tenant/${tenantId}/carrinho/`);
-          response.data =+ [...cart, {...product, quantidade: 1}];
+          //AQUI É O CARRINHO
+          const response = await fetch(
+            `http://localhost:8157/api/tenant/${tenantId}/carrinho/${cartId}`, {
+              method: "PUT",
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+ token
+              },
+              body: JSON.stringify(product)
+          });
+          
+          // const response = await api.get(`/tenant/${tenantId}/carrinho/${cartId}`);
+          console.log("response")
+          console.log(response)
           return;
         }
       }
 
       if(productAlreadyInCart) {
-        const { data: stock } = await api.get(`stock/${productId}`)
+        const  stock: number  = product.quantidadeNoEstoque;
 
-        if (stock.quantidade > productAlreadyInCart.quantidade) {
-          const updatedCart = cart.map(cartItem => cartItem.id === productId ? {
-            ...cartItem,
-            quantidade: Number(cartItem.quantidade) + 1 //aqui alterar quantidade no carrinho produto | cartItem.quantidade
-          } : cartItem)
+        if (stock > productAlreadyInCart.quantidade) {
+          product.quantidade++;
   
-          setCart(updatedCart)
-          localStorage.setItem('@RocketShoes:cart', JSON.stringify(updatedCart))
+          const response = await fetch(
+            `http://localhost:8157/api/tenant/${tenantId}/carrinho/${cartId}`, {
+              method: "PUT",
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+ token
+              },
+              body: JSON.stringify(product)
+          });
+          console.log(response)
           return;
         } else {
           toast.error('Quantidade solicitada fora de estoque')
@@ -85,7 +148,12 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
     }
   };
 
-  const removeProduct = (productId: string) => {
+  const removeProduct = async (productId: string) => {
+    const productAlreadyInCart = cart.find(product => product.id == productId)
+      
+    const productResponse = await api.get<Product>(`/tenant/${tenantId}/produto/${productId}`);//jogar como variavel que abrange todo o escopo da função
+    const  product  = productResponse.data;
+    const  stock: number  = product.quantidadeNoEstoque;
     try {
       const productExists = cart.some(cartProduct => cartProduct.id === productId)
       if(!productExists) {
@@ -94,14 +162,15 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
       }
   
       const updatedCart = cart.filter(cartItem => cartItem.id !== productId)
-      setCart(updatedCart)
-      localStorage.setItem('@RocketShoes:cart', JSON.stringify(updatedCart))
+      const response = await api.post(`/tenant/${tenantId}/carrinho/`, updatedCart);
+      console.log(response)
     } catch {
       toast.error('Erro na remoção do produto');
     }
   };
 
-  const updateProductAmount = async ({
+  const updateProductAmount = async (
+    {
     productId,
     quantidade,
   }: UpdateProductAmount) => {
@@ -110,9 +179,14 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
         toast.error('Erro na alteração de quantidade do produto');
         return
       }
-
-      const response = await api.get(`/stock/${productId}`);
-      const productAmount = response.data.amount;
+      
+    const productAlreadyInCart = cart.find(product => product.id == productId)
+      
+    const productResponse = await api.get<Product>(`/tenant/${tenantId}/produto/${productId}`);//jogar como variavel que abrange todo o escopo da função
+    const  product  = productResponse.data;
+    const  stock: number  = product.quantidadeNoEstoque;
+    
+      const productAmount = stock;//quantos no estoque
       const stockIsFree = quantidade > productAmount
 
       if(stockIsFree) {
@@ -130,8 +204,8 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
         ...cartItem,
         quantidade: quantidade
       } : cartItem)
-      setCart(updatedCart)
-      localStorage.setItem('@RocketShoes:cart', JSON.stringify(updatedCart))
+      const response = await api.post(`/tenant/${tenantId}/carrinho/`, updatedCart);
+      console.log(response)
     } catch {
       toast.error('Erro na alteração de quantidade do produto');
     }

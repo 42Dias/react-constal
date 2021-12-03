@@ -121,7 +121,8 @@ export const AddCartRight = styled.div`
   flex-direction: column;
   justify-content: space-between;
 
-  button.fav {
+  button {
+    margin-bottom: 20px;
     width: 120px;
     height: 30px;
     display: flex;
@@ -137,7 +138,7 @@ export const AddCartRight = styled.div`
       margin-left: 10px;
     }
   }
-
+  
   a {
     text-decoration: none;
     color: white;

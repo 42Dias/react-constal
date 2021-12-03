@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { FiChevronRight } from "react-icons/fi";
+import { FiMenu } from "react-icons/fi";
 import { FlexLink, Container } from "./styles";
 
 export default function MenuEmpresa() {
@@ -7,24 +7,25 @@ export default function MenuEmpresa() {
     <>
       <Container>
         <FlexLink>
-          <Link to="/produtos">
-            Produtos <FiChevronRight />
-          </Link>
-          <Link to="/promocoes">
-            Promoções <FiChevronRight />
-          </Link>
-          <Link to="/meus-produtos">
-            Novo produto <FiChevronRight />
-          </Link>
-          <Link to="/vendas">
-            Vendas <FiChevronRight />
-          </Link>
-          <Link to="/perguntas">
-            Perguntas <FiChevronRight />
-          </Link>
-          <Link to="/produtos">
-            Planos <FiChevronRight />
-          </Link>
+          <div className="dropdown">
+            <button className="dropbtn">
+              <FiMenu />
+              <span>Links úteis</span>
+            </button>
+            <div className="dropdown-content">
+              <div className="drop-grid">
+                <Link to="/meus-produtos">Usuários</Link>
+                <Link to="/promocoes">Empresas</Link>
+                <Link to="/vendas">Produtos</Link> 
+                <Link to="/perguntas">Histórico</Link> 
+                <Link to="/assinaturas">Planos</Link>
+                <Link to="/assinaturas">Vendas</Link>
+                <Link to="/assinaturas">Consultas</Link>
+                <Link to="/assinaturas">Pagamentos</Link> 
+                <Link to="/assinaturas">Todos usuários</Link> 
+              </div>
+            </div>
+          </div>
         </FlexLink>
       </Container>
     </>

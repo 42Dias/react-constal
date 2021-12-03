@@ -24,7 +24,7 @@ const Cart = (): JSX.Element => {
   const [products, setProducts] = useState<ProductFormatted[]>([]);
 
     interface Product {
-      id: number;
+      id: string;
       nome: string;
       descricao: string;
       preco: number;
@@ -74,7 +74,7 @@ const Cart = (): JSX.Element => {
 
   useEffect(() => {
     async function loadProducts() {
-      const response = await api.post('tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/carrinho/')
+      const response = await api.get('tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/carrinho/')
       .then(response => {
           // console.log(response.data.count);
           return response.data.rows;          
@@ -99,7 +99,7 @@ const Cart = (): JSX.Element => {
 
       // console.log("cartF");
       // console.log(cartFormatted)
-      setProducts(productsFormated);
+      setProducts(response);
     }
     
     loadProducts();
@@ -169,7 +169,7 @@ const Cart = (): JSX.Element => {
                     <button
                       type="button"
                       data-testid="remove-product"
-                      //onClick={() => handleRemoveProduct(product.id)} aqui ele retorna que é num
+                      onClick={() => handleRemoveProduct(product.id)}//aqui ele retorna que é num
                     >
                       <MdDelete size={20} />
                     </button>

@@ -13,6 +13,11 @@ export const BoxRegister = styled.form`
   h2 {
     padding: 40px 0;
   }
+
+  @media (max-width: 768px) {
+    height: 700px;
+    padding: 40px 25px;
+  }
 `;
 
 export const GridRegister = styled.div`
@@ -20,6 +25,11 @@ export const GridRegister = styled.div`
   grid-template-columns: repeat(2, 1fr);
   justify-content: center;
   align-content: center;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+
   div {
     display: flex;
     flex-direction: column;
