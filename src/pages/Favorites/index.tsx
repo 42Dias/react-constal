@@ -16,9 +16,9 @@ import { formatPrice } from "../../util/format";
 
 export default function Favorites() {
 
-  const [products = [], setProducts] = useState<Product[]>([]);
+  const [favorito = [], setFavoritos] = useState<string[]>([]);
 
-
+  const products: any = [] //provavel useState aqui!!!!
 
 // function setFavoritos(favoritos: string[], produtoId: string){//essa função vai para o produto e home
 //     if(favoritos){
@@ -28,27 +28,38 @@ export default function Favorites() {
 //         localStorage.setItem("favorito", JSON.stringify([produtoId]))
 //     }
 // }
-function loadFavoritos(favoritos: string[]){
-    if(favoritos){
-        favoritos.map(
-            async favorito => {
-                console.log(favorito)
-                const response: Product[] = await api.get(`produto/${favorito}`);
-                setProducts(response)
-            } 
-        )
-    }
-}
 
   useEffect(() => {
     
+    async function loadFavoritos(favoritos: string[]){
+      console.log("favoritos");
+      console.log(favoritos);
+        favoritos.map(
+            async favorito => {
+                console.log("favorito")
+                console.log(favorito)
+                const response = await api.get(`/tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/produto/${favorito}`);
+                console.log("response.data")
+                console.log(response.data)
+                // setProducts(response.data)
+
+                products.push(response.data)
+
+                console.log("products")
+                console.log(products)
+                setFavoritos(products);
+
+            } 
+        )
+  }
+
     async function loadProducts() {
-      const favoritos: string[] = JSON.parse(localStorage.getItem("favoritos") || '[]' );
-      loadFavoritos(favoritos)
+      const favoritos: string[] = JSON.parse(localStorage.getItem("favorito") || '[]' );
+      loadFavoritos(favoritos);
     }
-  loadProducts();
+    loadProducts();
   }, []);
-  
+    console.log(favorito)
 
 
 
@@ -59,36 +70,19 @@ function loadFavoritos(favoritos: string[]){
         <CardDatails>
           <Title>Favoritos</Title>
           {
-            products.map((product: any) => (
+            favorito.map((product: any) => (
               <CardDatailsContent>
               <ContentDetails>
-                <img src={prodfav} alt="" />
-                <span>product.nome</span>
-                <p>formatPrice(product.preco)</p>
+                <img src={product.fotos[0].publicUrl} alt={product.nome} />
+                <span>{product.nome}</span>
+                <p>{formatPrice(product.preco)}</p>
               </ContentDetails>
               <Link to="">Comprar</Link>
             </CardDatailsContent>  
             )
             )
-          }
+          } 
 
-          <CardDatailsContent>
-            <ContentDetails>
-              <img src={prodfav} alt="" />
-              <span>Headset Preto</span>
-              <p>R$ 999,99</p>
-            </ContentDetails>
-            <Link to="">Comprar</Link>
-          </CardDatailsContent>
-
-          <CardDatailsContent>
-            <ContentDetails>
-              <img src={prodfav} alt="" />
-              <span>Headset Preto</span>
-              <p>R$ 999,99</p>
-            </ContentDetails>
-            <Link to="">Comprar</Link>
-          </CardDatailsContent>
         </CardDatails>  
 
       </div>
