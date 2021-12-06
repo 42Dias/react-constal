@@ -32,6 +32,7 @@ import Signature from "./pages/Signature";
 import AllUsers from "./pages/Dashboard/AllUsers";
 import CompanyUsers from "./pages/Dashboard/CompanyUsers";
 import ManagingUsers from "./pages/Dashboard/ManagingUsers";
+import SubscriptionPlans from "./pages/Dashboard/SubscriptionPlans";
 
 const Routes = (): JSX.Element => {
   return (
@@ -69,6 +70,7 @@ const Routes = (): JSX.Element => {
         <Route exact path="/todos-usuarios" component={AllUsers} />
         <Route exact path="/empresa-usuarios" component={CompanyUsers} />
         <Route exact path="/gestores" component={ManagingUsers} />
+        <Route exact path="/minhas-assinaturas" component={SubscriptionPlans} />
         <Route
           exact
           path="/pagamentos-empresas"

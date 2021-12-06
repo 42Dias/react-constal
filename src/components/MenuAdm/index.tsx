@@ -18,7 +18,7 @@ export default function MenuAdm() {
                 <Link to="/promocoes">Empresas</Link>
                 <Link to="/vendas">Produtos</Link> 
                 <Link to="/perguntas">Histórico</Link> 
-                <Link to="/assinaturas">Planos</Link>
+                <Link to="/minhas-assinaturas">Planos</Link>
                 <Link to="/vendas">Vendas</Link>
                 <Link to="/consultar-produtos">Consultas</Link>
                 <Link to="/pagamentos">Pagamentos</Link> 
