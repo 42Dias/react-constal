@@ -14,11 +14,15 @@ export default function MenuAdm() {
             </button>
             <div className="dropdown-content">
               <div className="drop-grid">
-                <Link to="/meus-produtos">Novo Produtos</Link>
-                <Link to="/promocoes">Promoções</Link>
-                <Link to="/vendas">Vendas</Link> 
-                <Link to="/perguntas">Perguntas</Link> 
-                <Link to="/assinaturas">Planos</Link> 
+                <Link to="/aprovar-usuarios">Usuários</Link>
+                <Link to="/promocoes">Empresas</Link>
+                <Link to="/vendas">Produtos</Link> 
+                <Link to="/perguntas">Histórico</Link> 
+                <Link to="/assinaturas">Planos</Link>
+                <Link to="/vendas">Vendas</Link>
+                <Link to="/consultar-produtos">Consultas</Link>
+                <Link to="/pagamentos">Pagamentos</Link> 
+                <Link to="/todos-usuarios">Todos usuários</Link> 
               </div>
             </div>
           </div>

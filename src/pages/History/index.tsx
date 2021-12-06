@@ -81,9 +81,6 @@ export default function Histoty() {
       <div className="container">
         <CardDatails>
           <Title>Histórico</Title>
-
-
-
           <CardDatailsContent>
             <ContentDetails>
               <img src={item} alt="" />
