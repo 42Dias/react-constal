@@ -50,8 +50,10 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
   const addProduct = async (productId: string) => {
     console.log("productId")
     console.log(productId)
+
     const cartResponse = await api.get(`tenant/${tenantId}/carrinho/`)
     const cart = cartResponse.data.rows;
+
     console.log("cart");
     console.log(cart);
 
@@ -86,7 +88,15 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
     console.log("stock") 
     console.log(stock) 
     
-    const quantidadeDeItemsNoCarrinho = cart[0].quantidade
+    let somaDeItens: number = 0 
+
+    const quantidadeDeItemsNoCarrinho = () =>{
+        cart.map((cart:any) =>
+        somaDeItens += cart.quantidade
+        )
+        return somaDeItens
+    }
+
     
     console.log("quantidadeDeItemsNoCarrinho")
     console.log(quantidadeDeItemsNoCarrinho)
