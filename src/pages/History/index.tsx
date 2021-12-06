@@ -18,6 +18,9 @@ import MenuEmpresa from "../../components/MenuEmpresa";
 import React, { useState, useEffect } from "react";
 import { api } from "../../services/api";
 
+
+import { formatPrice } from "../../util/format";
+
 interface Product {
   product: any;
   id: number;
@@ -54,8 +57,10 @@ export default function Histoty() {
   useEffect(() => {
 
     async function loadHistory() {
-      const res = await api.get('/tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/pedido')
+      console.log("requisição do pedido feita")
+      const res = await api.get('/tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/pedidoProduto')
           console.log(res.data.rows)
+
           const productsFormated = res.data.rows.map(function (
             product: Product
           ) {
@@ -81,7 +86,20 @@ export default function Histoty() {
       <div className="container">
         <CardDatails>
           <Title>Histórico</Title>
-
+    {
+          products.map((product) => (
+          
+         <CardDatailsContent>
+              <ContentDetails>
+                <img src={item} alt="" />
+                <span>Headset Preto</span>
+                <p>formatPrice( product.valorTotal  )</p>
+              </ContentDetails>
+              <strong onClick={openModal} >Ver detalhes</strong>
+         </CardDatailsContent>
+  
+            ))
+    }
 
 
           <CardDatailsContent>
