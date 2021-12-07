@@ -59,18 +59,17 @@ export default function Produto() {
 
 
   //BUG AO ADICIONAR MAIS DE UM!!!!!
-  const favoritos: string[] = JSON.parse(localStorage.getItem("favoritos") || "[]");
+  const favoritos: string[] = JSON.parse(localStorage.getItem("favorito") || "[]");
 
 
-  function setFavoritos(favoritos: string[], produtoId: string){
-    if(favoritos){
-        console.log("favoritos")
-          favoritos.push(produtoId)
-          localStorage.setItem("favorito", JSON.stringify(favoritos))
-      }
-      else{
-        console.log("aaa")
-      }
+  function setFavoritos(favoritos: string[], produtoId: string){    
+      console.log("favoritos")
+      console.log(favoritos)
+      console.log("produtoId")
+      console.log(produtoId)    
+      favoritos.push(produtoId)
+      console.log(favoritos)
+      localStorage.setItem("favorito", JSON.stringify(favoritos))
   }
 
 

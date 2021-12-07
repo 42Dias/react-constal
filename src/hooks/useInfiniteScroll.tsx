@@ -39,8 +39,8 @@ export default function useInfiniteScroll(number: number){
 
 	}).then(res => {
 	   setProducts(prevProducts => {
-	   	console.log([prevProducts, res.data])
-	   	return [prevProducts, res.data]
+	   	console.log([...prevProducts, ...res.data])
+	   	return [...prevProducts, ...res.data]
    	    setHasMore(true)	
 	   })
 			setLoading(false)

@@ -56,6 +56,8 @@ export default function Favorites() {
 
     async function loadProducts() {
       const favoritos: string[] = JSON.parse(localStorage.getItem("favorito") || '[]' );
+      console.log("favoritos")
+      console.log(favoritos)
       loadFavoritos(favoritos);
     }
     loadProducts();
@@ -74,7 +76,6 @@ export default function Favorites() {
             favorito.map((...product: any) => (
               <CardDatailsContent>
               <ContentDetails>
-                <img src={product.fotos[0].publicUrl} alt={product.nome} />
                 <span>{product.nome}</span>
                 <p>{formatPrice(product.preco)}</p>
               </ContentDetails>
