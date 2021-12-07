@@ -1,9 +1,7 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export default function useInfiniteScroll(number: number){
-
-  interface Product {
+interface Product {
     id: number;
     nome: string;
     descricao: string;
@@ -16,6 +14,9 @@ export default function useInfiniteScroll(number: number){
   interface ProductFormatted extends Product {
     priceFormatted: string;
   }
+
+export default function useInfiniteScroll(number: number){
+
   const [products = [], setProducts] = useState<ProductFormatted[]>([]);
 
   const [loading, setLoading] = useState(false)
@@ -38,14 +39,13 @@ export default function useInfiniteScroll(number: number){
 
 	}).then(res => {
 	   setProducts(prevProducts => {
-	   	console.log([...prevProducts, res.data])
-	   	return [...prevProducts, res.data]
+	   	console.log([prevProducts, res.data])
+	   	return [prevProducts, res.data]
    	    setHasMore(true)	
 	   })
-	   setLoading(false)
+			setLoading(false)
 	}
 	)
-
 	}, [number] )
 	return { loading, products, hasMore }
 

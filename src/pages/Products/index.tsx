@@ -22,7 +22,7 @@ export default function Products() {
 
   const [number, setNumber] = useState(1)
 
-  const { loading, products, hasMore } = useInfiniteScroll(number)
+ const { loading, products, hasMore } = useInfiniteScroll(number)
 
   useInfiniteScroll(number)
   
@@ -40,13 +40,11 @@ export default function Products() {
   }, [loading, hasMore])
 
 
-  
+
   function handleAddProduct(id: number) {
   // addProduct(id);
   }
 
-
-  
 
 
   return (
@@ -58,7 +56,7 @@ export default function Products() {
           <h4>Recomendados</h4>
         </Recommended>
       <GridProdsFour>
-    {products.map((product, index) => {
+    {products.map((product: any, index: number) => {
         if(products.length === index + 1){
           return <ProdContainerSingle ref={lastProdElementRef}  key={product.id}>
                     {/* <img src={product.publicUrl} alt={product.nome} /> */}  
