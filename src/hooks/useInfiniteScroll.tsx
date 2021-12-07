@@ -1,9 +1,12 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 export default function useInfiniteScroll(number: number){
 
-	let token = localStorage.getItem("token")?.replace(/"/g, "");
+
+	useEffect(() => {
+
+	//let token = localStorage.getItem("token")?.replace(/"/g, "");
 	axios({
 	  baseURL: 'http://localhost:8157/api/produto/:id',
 	  method: 'GET',
@@ -15,5 +18,7 @@ export default function useInfiniteScroll(number: number){
 		console.log(res.data)
 	}
 	)
+
+	}, [number] )
 
 }
