@@ -83,22 +83,6 @@ const Cart = (): JSX.Element => {
      console.log("cart");
      console.log(response);
 
-      
-       /*const productsFormated = response.rows.map(function (
-        product: Product
-      ) {
-        console.log(productsFormated);
-        return { ...product, preco: formatPrice(product.preco) };
-      });
-     */
-     const productsFormated = response.map(function (product: { produto: { preco: number | bigint; }; }) {
-        console.log("prod");
-        console.log(product);     
-        return  product ;
-      });
-
-      // console.log("cartF");
-      // console.log(cartFormatted)
       setProducts(response);
     }
     

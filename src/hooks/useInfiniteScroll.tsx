@@ -38,14 +38,13 @@ export default function useInfiniteScroll(number: number){
 	  //possível params para pesquisa
 
 	}).then(res => {
-	   setProducts(prevProducts => {
-	   	console.log([...prevProducts, ...res.data])
-	   	return [...prevProducts, ...res.data]
-   	    setHasMore(true)	
-	   })
+	   setProducts(prevProducts => [...prevProducts, ...res.data]	
+	   )
+	  	console.log(products)
 			setLoading(false)
+			setHasMore(true)
 	}
-	)
+	).catch(error => console.log(error))
 	}, [number] )
 	return { loading, products, hasMore }
 

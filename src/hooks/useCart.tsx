@@ -119,8 +119,6 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
           //AQUI É O CARRINHO
           //GUARDAR ESSA FUNÇÃO PARA ATUALIZAR A QUATIDADE
 
-          let quantidade = 1
-
 
           const response = await fetch(
             `http://localhost:8157/api/tenant/${tenantId}/carrinhoProduto`, {
@@ -130,9 +128,9 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer '+ token
               },
-              body: JSON.stringify( {product , quantidade}   )
+              body: JSON.stringify( {product , quantidade: 1}  )
           });
-          console.log(JSON.stringify({ product , quantidade}))
+          console.log(JSON.stringify({ product , quantidade: 1}))
           /*
           // para mudar a quantidade
 
