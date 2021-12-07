@@ -16,12 +16,13 @@ import { formatPrice } from "../../util/format";
 
 export default function Favorites() {
 
+  //PROBLEMA NO MAP NO RETURN
   const [favorito = [], setFavoritos] = useState<string[]>([]);
 
   const products: any = [] //provavel useState aqui!!!!
 
 // function setFavoritos(favoritos: string[], produtoId: string){//essa função vai para o produto e home
-//     if(favoritos){
+//     if(favoritos != []){
 //         favoritos.push(produtoId)
 //     }
 //     else{
@@ -47,10 +48,10 @@ export default function Favorites() {
 
                 console.log("products")
                 console.log(products)
-                setFavoritos(products);
 
             } 
         )
+        setFavoritos(products);
   }
 
     async function loadProducts() {
@@ -70,7 +71,7 @@ export default function Favorites() {
         <CardDatails>
           <Title>Favoritos</Title>
           {
-            favorito.map((product: any) => (
+            favorito.map((...product: any) => (
               <CardDatailsContent>
               <ContentDetails>
                 <img src={product.fotos[0].publicUrl} alt={product.nome} />

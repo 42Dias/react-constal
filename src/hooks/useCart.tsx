@@ -64,11 +64,14 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
     const produtoNoCarrinho = cart[0].produto
     console.log(produtoNoCarrinho)
 
-    const productAlreadyInCart = cart.find((product: any) => {
-      console.log("productAlreadyInCart")
-      console.log(product.id)
-      console.log(productId)
-      return product.id == productId
+    const productAlreadyInCart = cart.map((product: any) => {
+
+      if(product.id == productId){
+        return product
+      }
+      else{
+        return
+      }
     })
     // productAlreadyInCart(produtoNoCarrinho)
     
@@ -99,20 +102,40 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
 
     
     console.log("quantidadeDeItemsNoCarrinho")
-    console.log(quantidadeDeItemsNoCarrinho)
-
-
+    console.log(quantidadeDeItemsNoCarrinho())
 
     try {
       
-      if(!productAlreadyInCart) {
+      if(!productAlreadyInCart.id) {
       
+        console.log("ARRIVA");
+      
+
         console.log("product");
         console.log(product); 
         
         if(stock > 0) {
           setCart([...cart, {...product, quantidade: 1}])
           //AQUI É O CARRINHO
+          //GUARDAR ESSA FUNÇÃO PARA ATUALIZAR A QUATIDADE
+
+          let quantidade = 1
+
+
+          const response = await fetch(
+            `http://localhost:8157/api/tenant/${tenantId}/carrinhoProduto`, {
+              method: "POST",
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+ token
+              },
+              body: JSON.stringify( {product , quantidade}   )
+          });
+          console.log(JSON.stringify({ product , quantidade}))
+          /*
+          // para mudar a quantidade
+
           const response = await fetch(
             `http://localhost:8157/api/tenant/${tenantId}/carrinho/${cartId}`, {
               method: "PUT",
@@ -121,9 +144,9 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer '+ token
               },
-              body: JSON.stringify(product)
+              body: JSON.stringify([{...product, quantidade: 1}])
           });
-          
+          */
           // const response = await api.get(`/tenant/${tenantId}/carrinho/${cartId}`);
           console.log("response")
           console.log(response)
@@ -131,14 +154,15 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
         }
       }
 
-      if(productAlreadyInCart) {
+      else if(productAlreadyInCart.id) {
+        console.log("PRODUTO")
         const  stock: number  = product.quantidadeNoEstoque;
 
         if (stock > productAlreadyInCart.quantidade) {
-          product.quantidade++;
+          productAlreadyInCart.quantidade++;
   
           const response = await fetch(
-            `http://localhost:8157/api/tenant/${tenantId}/carrinho/${cartId}`, {
+            `http://localhost:8157/api/tenant/${tenantId}/carrinho/${productAlreadyInCart.id}`, {
               method: "PUT",
               headers: {
                 'Accept': 'application/json',

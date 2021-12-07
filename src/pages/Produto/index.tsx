@@ -58,8 +58,8 @@ export default function Produto() {
   }
 
 
-  
-  const favoritos: string[] = JSON.parse(localStorage.getItem("favoritos") || '[]' );
+  //BUG AO ADICIONAR MAIS DE UM!!!!!
+  const favoritos: string[] = JSON.parse(localStorage.getItem("favoritos") || "[]");
 
 
   function setFavoritos(favoritos: string[], produtoId: string){

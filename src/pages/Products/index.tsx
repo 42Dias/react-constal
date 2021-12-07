@@ -2,7 +2,7 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 
 import { Link } from "react-router-dom";
-import React, { useState ,useEffect } from "react";
+import React, { useState ,useEffect, useRef, useCallback } from "react";
 import { api } from "../../services/api";
 import { formatPrice } from "../../util/format";
 
@@ -12,70 +12,35 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { Recommended, GridProdsFour, ProdContainerSingle } from "./styles";
 import MenuCliente from "../../components/MenuCliente";
 import MenuEmpresa from "../../components/MenuEmpresa";
+import useInfiniteScroll from '../../hooks/useInfiniteScroll'
+
 
 export default function Products() {
 
-  interface Product {
-    id: number;
-    nome: string;
-    descricao: string;
-    preco: number;
-    publicUrl:string;
-    isOferta: number;
-    precoOferta: any;
-  }
-    
-  interface ProductFormatted extends Product {
-    priceFormatted: string;
-  }
-  const [products = [], setProducts] = useState<ProductFormatted[]>([]);
 
   const { addProduct, cart } = useCart();
 
+  const [number, setNumber] = useState(1)
+
+  const { loading, products, hasMore } = useInfiniteScroll(number)
+
+  useInfiniteScroll(number)
   
-  useEffect(() => {
-    /*
-    =================================================
-    FORMA ALTERNATIVA DE PEGAR OS DADOS DA REQUISIÇÃO
-    =================================================
-    */
-    // async function loadProducts() {
-    //   const response = await api.get("produtos")
-    //   console.log(response.data);
 
-    //   const productsFormated = response.data.record.map(function (product: Product) {
-    //     return { ...product, preco: formatPrice(product.preco) };
-    //   });
-    //   for (let product in productsFormated){
-    //     console.log(productsFormated[product]);
+  const observer: any = useRef()
+  const lastProdElementRef = useCallback(node => {
+    if (loading) return
+    if (observer.current) observer.current.disconnect()
+    observer.current = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && hasMore) {
+        setNumber(prevPageNumber => prevPageNumber + 1)
+      }
+    })
+    if (node) observer.current.observe(node)
+  }, [loading, hasMore])
 
-    //     return <ProdContainerSingle>
-    //        <img src={productsFormated[product].publicUrl} alt="" />
-    //        <h5>{productsFormated[product].nome}</h5>
-    //        <p>{productsFormated[product].descricao}</p>
-    //        <div className="btn-group-add">
-    //          <span>
-    //            R$<b>{productsFormated[product].preco}</b>
-    //          </span>
-    //          <div className="btn-more">
-    //            <AiOutlinePlus />
-    //          </div>
-    //        </div>
-    //    </ProdContainerSingle>
 
-    async function loadProducts() {
-      const response = await api.get("produtos");
-      console.log(response.data);
-      const productsFormated = response.data.record.map(function (product: Product) {
-        return { ...product, preco: formatPrice(product.preco) };
-      });
-      setProducts(productsFormated);
-    }
-    
-    loadProducts();
-    
-  }, []);
-
+  
   function handleAddProduct(id: number) {
   // addProduct(id);
   }
@@ -93,24 +58,45 @@ export default function Products() {
           <h4>Recomendados</h4>
         </Recommended>
       <GridProdsFour>
-            {products.map((product) => (
-             <ProdContainerSingle key={product.id}>
-                {/* <img src={product.publicUrl} alt={product.nome} /> */}  
-                <h5>{product.nome}</h5>
-                <p>{product.descricao}</p>
-                <div className="btn-group-add">
-                  <span>
-                    R$<b>{product.preco}</b>
-                  </span>
-                  <div className="btn-more"
-                  onClick={() => handleAddProduct(product.id)}
-                  >
-                    <AiOutlinePlus />
-                  </div>
-                </div>
-            </ProdContainerSingle>
-            ))}
+    {products.map((product, index) => {
+        if(products.length === index + 1){
+          return <ProdContainerSingle ref={lastProdElementRef}  key={product.id}>
+                    {/* <img src={product.publicUrl} alt={product.nome} /> */}  
+                    <h5>{product.nome}</h5>
+                    <p>{product.descricao}</p>
+                    <div className="btn-group-add">
+                      <span>
+                        R$<b>{product.preco}</b>
+                      </span>
+                      <div className="btn-more"
+                      onClick={() => handleAddProduct(product.id)}
+                      >
+                        <AiOutlinePlus />
+                      </div>
+                    </div>
+                </ProdContainerSingle>
+        }
+        else{
+          return <ProdContainerSingle key={product.id}>
+                    {/* <img src={product.publicUrl} alt={product.nome} /> */}  
+                    <h5>{product.nome}</h5>
+                    <p>{product.descricao}</p>
+                    <div className="btn-group-add">
+                      <span>
+                        R$<b>{product.preco}</b>
+                      </span>
+                      <div className="btn-more"
+                      onClick={() => handleAddProduct(product.id)}
+                      >
+                        <AiOutlinePlus />
+                      </div>
+                    </div>
+                </ProdContainerSingle>}
+      })}
         </GridProdsFour>
+      </div>
+      <div>
+        {loading && 'Loading...'}
       </div>
       <Footer />
     </>

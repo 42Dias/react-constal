@@ -3,8 +3,30 @@ import axios from 'axios';
 
 export default function useInfiniteScroll(number: number){
 
+  interface Product {
+    id: number;
+    nome: string;
+    descricao: string;
+    preco: number;
+    publicUrl:string;
+    isOferta: number;
+    precoOferta: any;
+  }
+    
+  interface ProductFormatted extends Product {
+    priceFormatted: string;
+  }
+  const [products = [], setProducts] = useState<ProductFormatted[]>([]);
+
+  const [loading, setLoading] = useState(false)
+
+  const [hasMore, setHasMore] = useState(false) // feito para quando não há mais resultados para pesquisa
+
+  
 
 	useEffect(() => {
+	setLoading(true)
+
 
 	//let token = localStorage.getItem("token")?.replace(/"/g, "");
 	axios({
@@ -15,10 +37,16 @@ export default function useInfiniteScroll(number: number){
 	  //possível params para pesquisa
 
 	}).then(res => {
-		console.log(res.data)
+	   setProducts(prevProducts => {
+	   	console.log([...prevProducts, res.data])
+	   	return [...prevProducts, res.data]
+   	    setHasMore(true)	
+	   })
+	   setLoading(false)
 	}
 	)
 
 	}, [number] )
+	return { loading, products, hasMore }
 
 }
