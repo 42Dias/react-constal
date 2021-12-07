@@ -46,12 +46,11 @@ export default function Favorites() {
 
                 products.push(response.data)
 
-                console.log("products")
-                console.log(products)
-
+               setFavoritos(prevProducts => {
+                  return [...new Set([...prevProducts, response.data])] 
+               })
             } 
         )
-        setFavoritos(products);
   }
 
     async function loadProducts() {
@@ -73,7 +72,7 @@ export default function Favorites() {
         <CardDatails>
           <Title>Favoritos</Title>
           {
-            favorito.map((...product: any) => (
+            favorito.map((product: any) => (
               <CardDatailsContent>
               <ContentDetails>
                 <span>{product.nome}</span>
