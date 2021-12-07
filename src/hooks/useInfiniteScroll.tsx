@@ -35,9 +35,12 @@ export default function useInfiniteScroll(number: number){
 	  timeout: 50000
 
 	}).then(res => {
+ 		 console.log("res.data")
+		 console.log(res.data)
 	   setProducts(prevProducts => {
 	   		return [...new Set([...prevProducts, ...res.data])]	
 	   	   })
+ 	  	console.log("products")	
 	  	console.log(products)
 			setLoading(false)
 			setHasMore(true)

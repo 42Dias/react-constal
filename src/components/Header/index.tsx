@@ -46,7 +46,13 @@ const Header = (): JSX.Element => {
   function openModal() {
     let email = localStorage.getItem("email");
     let password = localStorage.getItem("password");
-    let token = localStorage.getItem("token");
+    let token = localStorage.getItem("token"); 
+    /*
+
+
+    Verificar se o token é valido, caso não descartar o token
+
+    */
     console.log("email e senha: " + email + " " + password);
 
     if (email && password && token) {

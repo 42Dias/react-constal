@@ -59,7 +59,7 @@ export default function Products() {
     {products.map((product: any, index: number) => {
         if(products.length === index + 1){
           return <ProdContainerSingle ref={lastProdElementRef}  key={product.id}>
-                    {/* <img src={product.publicUrl} alt={product.nome} /> */}  
+                 <img src={product.publicUrl} alt={product.nome} /> 
                     <h5>{product.nome}</h5>
                     <p>{product.descricao}</p>
                     <div className="btn-group-add">
