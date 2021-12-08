@@ -93,7 +93,7 @@ export default function Products() {
       })}
         </GridProdsFour>
       </div>
-      <div>
+      <div >
         {loading && 'Loading...'}
       </div>
       <Footer />

@@ -58,23 +58,10 @@ export default function Histoty() {
 
     async function loadHistory() {
       console.log("requisição do pedido feita")
-      const res = await api.get('/tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/pedidoProduto')
-          console.log(res.data.rows)
-
-          const productsFormated = res.data.rows.map(function (
-            product: Product
-          ) {
-            console.log(product);
-            
-            return { product};
-        });
-        setProducts(productsFormated);
-        products.map((product) => (
-          
-          console.log(product)
-           
-            
-            ))
+      const res = await api.get('tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/findPedidoWithProduct')
+      console.log(res.data.rows)
+      //setProducts([...new Set([...res.data.rows]) 
+      //})
     }
     loadHistory()
   }, []);
