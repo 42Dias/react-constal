@@ -58,30 +58,23 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
     console.log("cart");
     console.log(cart);
 
-    const cartId = cart[0].id;
-    console.log("cartId")  
-    console.log(cartId)  
 
-    const produtoNoCarrinho = cart[0].produto
-    console.log(produtoNoCarrinho)
 
-    const productAlreadyInCart = cart.map((product: any) => {
-      if(product.id == productId){
-        return product
+    const produtoNoCarrinho = cart.filter((cart: any) => {
+      if(cart.produto.id == productId){
+        console.log(cart)      
+        return cart
       }
-      else{
-        return
-      }
-    })
-    // productAlreadyInCart(produtoNoCarrinho)
-    
-    
-    console.log("productAlreadyInCart")  
-    console.log(productAlreadyInCart)  
+
+    })    
+  
+    const productAlreadyInCart = produtoNoCarrinho[0]  
+    console.log("productAlreadyInCart")
+    console.log(productAlreadyInCart)
 
     const productResponse = await api.get<Product>(`/tenant/${tenantId}/produto/${productId}`);//jogar como variavel que abrange todo o escopo da função
     const  product  = productResponse.data;
-    product.quantidade = 1;
+    
 
     console.log("product")
     console.log(product)
@@ -93,6 +86,9 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
     
     let somaDeItens: number = 0 
 
+    /*
+    Está é a quantidade de items em todo o carrinho
+    */ 
     const quantidadeDeItemsNoCarrinho = () =>{
         cart.map((cart:any) =>
         somaDeItens += cart.quantidade
@@ -122,16 +118,16 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
 
           const response = await axios({
               method: 'post',
-              url: `http://localhost:8157/api/carrinho/`,
+              url: `http://localhost:8157/api/tenant/${tenantId}/carrinho/`,
               headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer '+ token
               },              
               timeout: 50000,
-              data   : product
+              data   : { product, quantidade: 1 }
             })              
-          console.log(JSON.stringify( product ))
+          console.log(JSON.stringify( { product, quantidade: 1 }))
 
           /*
           
@@ -160,22 +156,27 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
       }
 
       else if(productAlreadyInCart.id) {
-        console.log("PRODUTO")
+        console.log("PRODUTO ESTÁ EN EL CARIÑO")
         const  stock: number  = product.quantidadeNoEstoque;
         console.log(productAlreadyInCart)
         if (stock > productAlreadyInCart.quantidade) {
-          productAlreadyInCart.quantidade++;
-  
-          const response = await fetch(
-            `http://localhost:8157/api/tenant/${tenantId}/carrinho/${productAlreadyInCart.id}`, {
-              method: "PUT",
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer '+ token
-              },
-              body: JSON.stringify(product)
-          });
+
+          let novaQuantidade = productAlreadyInCart.quantidade;
+          
+          novaQuantidade++
+
+          const response = await axios({
+            method: 'put',
+            url: `http://localhost:8157/api/tenant/${tenantId}/carrinhoProduto/${productAlreadyInCart.id}`,
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer '+ token
+            },              
+            timeout: 50000,
+            data   : { product, quantidade: novaQuantidade }
+          })              
+          console.log({ product, quantidade: novaQuantidade })
           console.log(response)
           return;
         } else {
@@ -188,14 +189,17 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
   };
 
   const removeProduct = async (productId: string) => {
-    const productAlreadyInCart: any = cart.map((product: any) => {
-      if(product.id == productId){
-        return product
-      }
-      else{
-        return
-      }
-    })
+      const produtoNoCarrinho = cart.filter((cart: any) => {
+        if(cart.produto.id == productId){
+          console.log(cart)      
+          return cart
+        }
+      })    
+    
+      const productAlreadyInCart = produtoNoCarrinho[0]  
+      console.log("productAlreadyInCart")
+      console.log(productAlreadyInCart)
+
     
     const productResponse = await api.get<Product>(`/tenant/${tenantId}/produto/${productId}`);//jogar como variavel que abrange todo o escopo da função
     
@@ -216,9 +220,9 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
     } catch {
       toast.error('Erro na remoção do produto');
     }
-  };
+  };  
 
-  const updateProductAmount = async (
+  const updateProductAmount = async (//apenas dar um post com a nova quantidade com o id do carrinho
     {
     productId,
     quantidade,
@@ -229,33 +233,36 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
         return
       }
       
-    const productAlreadyInCart = cart.find(product => product.id == productId)
-    // pega o id do produto e faz um map sobre ele achando o id do produto dentro do cart
-
-    const productResponse = await api.get<Product>(`/tenant/${tenantId}/produto/${productId}`);//jogar como variavel que abrange todo o escopo da função
-    //post usado acima
-    const  product  = productResponse.data;
-    const  stock: number  = product.quantidadeNoEstoque;
+      const produtoNoCarrinho = cart.filter((cart: any) => {
+        if(cart.produto.id == productId){
+          console.log(cart)      
+          return cart
+        }
+      })    
     
-      const productAmount = stock;//quantos no estoque
-      const stockIsFree = quantidade > productAmount
+      const productAlreadyInCart = produtoNoCarrinho[0]  
+      console.log("productAlreadyInCart")
+      console.log(productAlreadyInCart)
+
+      const productResponse = await api.get<Product>(`/tenant/${tenantId}/produto/${productId}`);
+      const  product  = productResponse.data;
+      const  stock: number  = product.quantidadeNoEstoque;
+      //quantos no estoque
+      console.log('stock: ' + stock)
+      const stockIsFree = quantidade > stock
+      console.log('stockIsFree: ' + stockIsFree)
 
       if(stockIsFree) {
         toast.error('Quantidade solicitada fora de estoque')
         return
       }
 
-      const productExists = cart.some(cartProduct => cartProduct.id === productId)
-      // não necessária para a verificação, productAlreadyInCart já dá conta
-      if(!productExists) {
-        toast.error('Erro na alteração de quantidade do produto');
-        return
-      }
-
+      
       const updatedCart = cart.map(cartItem => cartItem.id === productId ? {
         ...cartItem,
         quantidade: quantidade
       } : cartItem)
+      //apenas fazer requisição para a alteração do carrinho com a nova quantidade
       //não é necessária a esse updated cart, passar a quantidade como variavel para o body do post de requisição
 
       const response = await api.post(`/tenant/${tenantId}/carrinho/`, updatedCart);
