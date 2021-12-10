@@ -23,7 +23,7 @@ import {
 import { Link } from "react-router-dom";
 import { api } from "../../services/api";
 import axios from "axios";
-import MenuCliente from "../../components/MenuCliente";
+import { Menu } from "../../components/Menu";
 
 
 export default function Profile() {
@@ -103,7 +103,7 @@ export default function Profile() {
   return (
     <>
       <Header />
-      <MenuCliente />
+      <Menu />
       <div className="container">
         <Title>Meus dados</Title>
 

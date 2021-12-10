@@ -10,9 +10,8 @@ import { useCart } from "../../hooks/useCart";
 
 import { AiOutlinePlus } from "react-icons/ai";
 import { Recommended, GridProdsFour, ProdContainerSingle } from "./styles";
-import MenuCliente from "../../components/MenuCliente";
-import MenuEmpresa from "../../components/MenuEmpresa";
 import useInfiniteScroll from '../../hooks/useInfiniteScroll'
+import { Menu } from "../../components/Menu";
 
 
 export default function Products() {
@@ -50,7 +49,7 @@ export default function Products() {
   return (
     <>
       <Header />
-      <MenuEmpresa />
+      <Menu />
       <div className="container">
         <Recommended>
           <h4>Recomendados</h4>

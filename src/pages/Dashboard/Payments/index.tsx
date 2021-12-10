@@ -1,13 +1,14 @@
 import Header from "../../../components/Header";
 import { Link } from "react-router-dom";
+import { Menu } from "../../../components/Menu";
 import { MenuSell, TitleVendas, ContainerMenuSell } from "./styles";
-import MenuEmpresa from "../../../components/MenuEmpresa";
 
 export default function Payments() {
   return (
     <>
       <Header />
-      <MenuEmpresa />
+      <Menu />
+
       <div className="container">
         <TitleVendas>Pagamentos</TitleVendas>
 
