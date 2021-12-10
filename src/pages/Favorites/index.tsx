@@ -39,7 +39,7 @@ export default function Favorites() {
             async favorito => {
                 console.log("favorito")
                 console.log(favorito)
-                const response = await api.get(`/tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/produto/${favorito}`);
+                const response = await api.get(`produto/${favorito}`);
                 console.log("response.data")
                 console.log(response.data)
                 // setProducts(response.data)

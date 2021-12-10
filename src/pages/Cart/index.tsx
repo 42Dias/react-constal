@@ -74,7 +74,7 @@ const Cart = (): JSX.Element => {
 
   useEffect(() => {
     async function loadProducts() {
-      const response = await api.get('tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/carrinho/')
+      const response = await api.get('carrinho/')
       .then(response => {
           // console.log(response.data.count);
           return response.data.rows;          

@@ -157,7 +157,7 @@ export default function Produto() {
 
 }
 async function loadUser() {
-  const user = await api.get('/tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/pessoa-fisica-perfil')
+  const user = await api.get('pessoa-fisica-perfil')
   .then(user => {
       console.log(user.data);
     

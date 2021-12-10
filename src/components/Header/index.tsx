@@ -27,6 +27,7 @@ import React, { useEffect, useState } from "react";
 import { useCart } from "../../hooks/useCart";
 import { toast } from "react-toastify";
 import { api } from "../../services/api";
+import axios from "axios";
 
 const Header = (): JSX.Element => {
   const [click, setClick] = useState(false);
@@ -117,12 +118,24 @@ const Header = (): JSX.Element => {
   }
   useEffect(() => {
     async function loadUser() {
-      const response = await api.get('auth/me')
-      .then(response => {
+      let token = localStorage.getItem("token")?.replace(/"/g, "");
+      const response = await axios({
+        method: 'get',
+        url: `http://localhost:8157/api/auth/me`,
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer '+ token
+        },              
+        timeout: 50000
+      }).then(response => {
           return response.data;            
       })
       console.log(response);
-      console.log(response.tenants[0].roles[0])
+      console.log(response.tenants[0].roles[0]);
+      localStorage.setItem("roles", JSON.stringify(response.tenants[0].roles[0]));//saves client's data into localStorage:
+      console.log(response.tenants[0].tenant.id);
+      localStorage.setItem("tenantId", JSON.stringify(response.tenants[0].tenant.id));//saves client's data into localStorage:
     }
     
     loadUser();

@@ -61,7 +61,7 @@ export default function Histoty() {
 
     async function loadHistory() {
       console.log("requisição do pedido feita")
-      const res = await api.get('tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/pedidoWithProduct')
+      const res = await api.get('pedidoWithProduct')
       console.log(res.data)
       setProducts(res.data) 
     }
