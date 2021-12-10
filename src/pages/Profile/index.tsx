@@ -61,6 +61,7 @@ export default function Profile() {
   const [cep, setCEP]=useState('');
   const [cidade, setCidade]=useState('');
   const [estado, setEstado]=useState('');
+  const [imagemUser, setimagemUser]=useState('');
   let role = localStorage.getItem("roles")?.replace(/"/g, "");
   useEffect(() => {
     async function loadUser() {
@@ -79,6 +80,13 @@ export default function Profile() {
       setCEP(response.cep)
       setCidade(response.cidade);
       setEstado(response.estado);
+      if(response.fotos !== undefined){
+        setimagemUser(response.avatars);
+      }else{
+        setimagemUser("https://www.camaragibe.pe.gov.br/wp-content/uploads/2019/04/default-user-male.png");
+      }
+      console.log("avatars");
+      console.log(imagemUser);
       console.log(response);
     }else{
       const response = await api.get('empresa-perfil')
@@ -95,6 +103,13 @@ export default function Profile() {
       setCEP(response.cep)
       setCidade(response.cidade);
       setEstado(response.estado);
+      if(response.avatars !== undefined){
+        setimagemUser(response.avatars);
+      }else{
+        setimagemUser("https://www.camaragibe.pe.gov.br/wp-content/uploads/2019/04/default-user-male.png");
+      }
+      console.log("avatars");
+      console.log(imagemUser);
       console.log(response);
     }
       
@@ -127,7 +142,7 @@ export default function Profile() {
         <Title>Meus dados</Title>
 
         <CardProfile>
-          <img src={user} alt="profile" />
+          <img src={imagemUser} alt="profile" width={300}/>
 
           <CardDatas>
             <h3>{fullName}</h3>

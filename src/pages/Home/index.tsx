@@ -24,6 +24,8 @@ import modainfantil from "../../assets/images/modainfantil.png";
 import modafeminina from "../../assets/images/modafeminina.png";
 import modamasculina from "../../assets/images/modamasculina.png";
 import axios from "axios";
+import MenuEmpresa from "../../components/MenuEmpresa";
+import MenuAdm from "../../components/MenuAdm";
 
 interface Product {
   id: string;
@@ -73,7 +75,7 @@ const Home = (): JSX.Element => {
   return (
     <>
       <Header />
-      <MenuCliente />
+      <MenuAdm />
       
       <BannerHomeImage>
         <Swiper
