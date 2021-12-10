@@ -79,7 +79,7 @@ export default function Histoty() {
           products.map((product) => (
          <CardDatailsContent key={product.nome}>
               <ContentDetails>
-                <img src={item} alt="" />
+                <img src={product.publicUrl} alt="" />
                 <span>{product.nomeProduto}</span>
                 <p>{formatPrice( product.valorTotal )}</p>
               </ContentDetails>
