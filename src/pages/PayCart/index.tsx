@@ -13,8 +13,6 @@ const tenantId = "fa22705e-cf27-41d0-bebf-9a6ab52948c4";
 /*          PARA CRIAR A FATURA!!!
             /tenant/:tenantId/pedido/:id/fatura
 */
-
-
 export default function PayCart() {
   
   async function gerarPedido(){

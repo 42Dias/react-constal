@@ -3,8 +3,8 @@ import { FiMenu } from "react-icons/fi";
 import { FlexLink, Container } from "./styles";
 
 export function Menu() {
-
-   function Adm() {
+  let role = localStorage.getItem("roles")?.replace(/"/g, "");
+   function Empresa() {
      return (
       <Container>
       <FlexLink>
@@ -28,7 +28,7 @@ export function Menu() {
      )
   }
   
-  function Empresa() {
+  function Adm() {
     return (
       <Container>
       <FlexLink>
@@ -40,14 +40,14 @@ export function Menu() {
           <div className="dropdown-content">
             <div className="drop-grid">
               <Link to="/meus-produtos">Usuários</Link>
-              <Link to="/promocoes">Empresas</Link>
               <Link to="/vendas">Produtos</Link> 
               <Link to="/perguntas">Histórico</Link> 
               <Link to="/assinaturas">Planos</Link>
               <Link to="/assinaturas">Vendas</Link>
               <Link to="/assinaturas">Consultas</Link>
               <Link to="/assinaturas">Pagamentos</Link> 
-              <Link to="/assinaturas">Todos usuários</Link> 
+              <Link to="/aprovar-usuarios">Aprovar empresas</Link> 
+              <Link to="/empresas">Empresas</Link> 
             </div>
           </div>
         </div>
@@ -92,11 +92,11 @@ export function Menu() {
       )
     }
 
-  let param = 'empresad';
-
+  let param = role;
+  
   function renderSwitch(param:any) {
     switch(param) {
-      case 'adm':
+      case "admin":
         return <Adm />
       case 'empresa':
         return <Empresa />;

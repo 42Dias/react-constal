@@ -138,6 +138,7 @@ const Header = (): JSX.Element => {
       localStorage.setItem("roles", JSON.stringify(response.tenants[0].roles[0]));//saves client's data into localStorage:
       console.log(response.tenants[0].tenant.id);
       localStorage.setItem("tenantId", JSON.stringify(response.tenants[0].tenant.id));//saves client's data into localStorage:
+      localStorage.setItem("id", JSON.stringify(response.id));//saves client's data into localStorage:
     }
     loadUser();
   }, []);
