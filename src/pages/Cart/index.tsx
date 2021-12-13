@@ -14,14 +14,14 @@ import { Container, ProductTable, Total, FooterContainer } from "./styles";
 import { Link } from "react-router-dom";
 // import { Product } from "../../types";
 
-//CRIAR FUNÇÃO PARA PEGAR OS PRODUTOS DO CARRINHO DO BACKEND
-  //Puxar os produtos do carrinho
-    //tenantId
-
 const Cart = (): JSX.Element => {
   const { cart, removeProduct, updateProductAmount } = useCart();
+  
+  let [howMuch , setHowMuch] = useState<any[]>([]);  
 
-  const [products, setProducts] = useState<ProductFormatted[]>([]);
+  let [price, setPrice] = useState<any[]>([]);
+
+  const [products, setProducts] = useState<Carrinho[]>([]);
 
     interface Product {
       id: string;
@@ -35,16 +35,31 @@ const Cart = (): JSX.Element => {
       quantidade: number;
       subtotal: number;
     }
+
+    interface Carrinho {
+      id: string;
+      nome: string;
+      descricao: string;
+      preco: number;
+      publicUrl:string;
+      isOferta: number;
+      precoOferta: any;
+      quantidade: number;
+      subtotal: number;
+      priceFormatted: string;
+      produto: {
+        fotos: string;
+        id: string;
+        nome: string;
+        preco: number;
+        quantidade: number;
+      };
+    }
+    
   interface ProductFormatted extends Product {
     priceFormatted: string;
   }
 
-  // const cartFormatted = cart.map((product) => ({
-  //   ...product,
-  //   priceFormatted: formatPrice(product.produto.preco),
-  //   subtotal: formatPrice(product.produto.preco * product.quantidade),
-  // }));
-  // console.log(cartFormatted)
   const total = formatPrice(
     products.reduce((sumTotal, product) => {
       sumTotal += product.produto.preco * product.quantidade;
@@ -65,7 +80,7 @@ const Cart = (): JSX.Element => {
       productId: product.produto.id,
       quantidade: product.quantidade - 1,
     };
-    updateProductAmount(IncrementArguments);
+    updateProductAmount(IncrementArguments);    
   }
 
   function handleRemoveProduct(productId: string) {
@@ -77,6 +92,14 @@ const Cart = (): JSX.Element => {
       const response = await api.get('tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/carrinho/')
       .then(response => {
           // console.log(response.data.count);
+          response.data.rows.map((product: Carrinho) => 
+          {setHowMuch(prevValues => {
+            return [...new Set([...prevValues, product.quantidade])] 
+          })
+          setPrice(prevValues => {
+            return [...new Set([...prevValues, (product.quantidade * product.produto.preco )])] 
+        })
+        })
           return response.data.rows;          
       })
 
@@ -89,9 +112,36 @@ const Cart = (): JSX.Element => {
     loadProducts();
   }, []);
 
+  function updateIncrement(q: number, Productprice: number, index: number, product: any) {
+    console.log(q)
+    console.log(q + 1 )
+    howMuch[index] = q + 1 //isso deveria ser feito
+    price[index] = Productprice * (q + 1)
+    setHowMuch(howMuch)
+    setPrice(price)
+    console.log(howMuch)
+    console.log(price)
+    handleProductIncrement(product)
+    
+  }
   
-//Está puxando mas não mostrando
+  function updateDecrement(q: number, Productprice: number, index: number, product: any) {
+    console.log(q)
+    console.log(q - 1)
+    howMuch[index] = q - 1 //isso deveria ser feito
+    price[index] = Productprice * (q - 1)
+    setHowMuch(howMuch)
+    setPrice(price)
+    console.log(howMuch)
+    console.log(price)
+    handleProductDecrement(product)
+    
+  }
+  /*Possível useEfect para alterar os valores dos produtos?*/
 
+//Está sendo alterado o useState mas não está sendo mostrado na
+console.log(howMuch)
+console.log(price)
 
   return (
     <>
@@ -109,9 +159,9 @@ const Cart = (): JSX.Element => {
               </tr>
             </thead>
             <tbody>
-              {/* A VARIAVEL DO CARRINHO ESTÁ SENDO ATRIBUIDA A PRODUCT */}
-              {products.map((product) => (
-                <tr data-testid="product" key={product.produto.id}>
+              {products.map((product: Carrinho, index) => (
+                <tr data-testid="product" key={product.produto.id}
+                >
                   <td>
                     <img src={product.produto.fotos} alt={product.produto.nome} />
                   </td>
@@ -125,7 +175,9 @@ const Cart = (): JSX.Element => {
                         type="button"
                         data-testid="decrement-product"
                         disabled={product.quantidade <= 1}
-                        onClick={() => handleProductDecrement(product)}
+                        onClick={() => {
+                          updateDecrement(howMuch[index], product.produto.preco, index, product)
+                        }}
                       >
                         <MdRemoveCircleOutline size={20} />
                       </button>
@@ -133,12 +185,14 @@ const Cart = (): JSX.Element => {
                         type="text"
                         data-testid="product-amount"
                         readOnly
-                        value={product.quantidade}
+                        value={howMuch[index]}
                       />
                       <button
                         type="button"
                         data-testid="increment-product"
-                        onClick={() => handleProductIncrement(product)}
+                        onClick={() => {
+                          updateIncrement(howMuch[index], product.produto.preco, index, product)
+                        }}
                       >
                         <MdAddCircleOutline size={20} />
                       </button>
@@ -146,7 +200,7 @@ const Cart = (): JSX.Element => {
                   </td>
                   <td>
                     <strong>{
-                      formatPrice(product.quantidade * product.produto.preco)
+                      formatPrice( price[index] )
                       }</strong>
                   </td>
                   <td>
