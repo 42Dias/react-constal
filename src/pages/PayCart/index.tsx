@@ -4,8 +4,9 @@ import { Link } from "react-router-dom";
 import { FooterContainer, CenterPay, Titleh2, BtnFinish } from "./styles";
 import { api } from "../../services/api";
 import axios from 'axios';
-let token = localStorage.getItem("token")?.replace(/"/g, "");
 import { Menu } from "../../components/Menu";
+
+let token = localStorage.getItem("token")?.replace(/"/g, "");
 const tenantId = "fa22705e-cf27-41d0-bebf-9a6ab52948c4";
 
 
