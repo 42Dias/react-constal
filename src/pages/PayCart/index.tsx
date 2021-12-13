@@ -25,7 +25,7 @@ export default function PayCart() {
             */
             const response = await axios({
               method: 'post',
-              url: `http://localhost:8157/api/tenant/${tenantId}/pedido`,
+              url: `http://189.127.14.11:8157/api/tenant/${tenantId}/pedido`,
               headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',

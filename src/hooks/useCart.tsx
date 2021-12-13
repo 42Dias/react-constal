@@ -116,7 +116,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
 
           const response = await axios({
               method: 'post',
-              url: `http://localhost:8157/api/tenant/${tenantId}/carrinho/`,
+              url: `http://189.127.14.11:8157/api/tenant/${tenantId}/carrinho/`,
               headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
@@ -163,7 +163,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
           
           const response = await axios({
             method: 'put',
-            url: `http://localhost:8157/api/tenant/${tenantId}/carrinhoProduto/`,
+            url: `http://189.127.14.11:8157/api/tenant/${tenantId}/carrinhoProduto/`,
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
@@ -219,7 +219,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
   
       const response = await axios({
         method: 'delete',
-        url: `http://localhost:8157/api/tenant/${tenantId}/carrinhoProduto/`,
+        url: `http://189.127.14.11:8157/api/tenant/${tenantId}/carrinhoProduto/`,
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -283,7 +283,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
 
       const response = await axios({
         method: 'put',
-        url: `http://localhost:8157/api/tenant/${tenantId}/carrinhoProduto/`,
+        url: `http://189.127.14.11:8157/api/tenant/${tenantId}/carrinhoProduto/`,
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',

@@ -98,7 +98,7 @@ const Header = (): JSX.Element => {
   }
   
   async function Login(){
-    let response=Axios.post('http://localhost:8157/api/auth/sign-in', {   
+    let response=Axios.post('http://189.127.14.11:8157/api/auth/sign-in', {   
             email: email,
             password: password,
         }).then((response) =>{
@@ -123,7 +123,7 @@ const Header = (): JSX.Element => {
       let token = localStorage.getItem("token")?.replace(/"/g, "");
       const response = await axios({
         method: 'get',
-        url: `http://localhost:8157/api/auth/me`,
+        url: `http://189.127.14.11:8157/api/auth/me`,
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
