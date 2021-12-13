@@ -5,9 +5,13 @@ import { Menu } from "../../../components/Menu";
 import { useState, useEffect } from "react";
 import { api } from "../../../services/api";
 import { Empresa } from "../../../types";
+import { toast } from "react-toastify";
+import React from "react";
 
 export default function ApproveUsers() {
   const [empresas = [], setEmpresas] = useState<Empresa[]>([]);
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+  
   useEffect(() => {
     async function loadUser() {
       const response = await api.get('empresa?filter%5Bstatus%5D=pendente')
@@ -21,6 +25,11 @@ export default function ApproveUsers() {
     loadUser();
 
   }, []);
+
+  function messageCancel() {
+    toast.info('Ainda não implementado')
+    setIsOpen(false);
+  }
   return (
     <>
       <Header />
@@ -43,8 +52,8 @@ export default function ApproveUsers() {
                   </ContentDetails>
                 </CardDatailsContent>
                 <div className="flex-btn">
-                  <Link to="">Recusar</Link>
-                  <Link to="">Aprovar</Link>
+                  <Link to="/aprovar-usuarios" onClick={messageCancel}>Recusar</Link>
+                  <Link to="/aprovar-usuarios" onClick={messageCancel}>Aprovar</Link>
                 </div>
               </CardDatailsContent>
             ))
@@ -55,3 +64,5 @@ export default function ApproveUsers() {
     </>
   );
 }
+
+

@@ -65,6 +65,7 @@ export default function Profile() {
   let role = localStorage.getItem("roles")?.replace(/"/g, "");
   useEffect(() => {
     async function loadUser() {
+      //Perfil pessoa
       if(role === "pessoa"){
       const response = await api.get('pessoa-fisica-perfil')
       .then(response => {
@@ -88,7 +89,9 @@ export default function Profile() {
       console.log("avatars");
       console.log(imagemUser);
       console.log(response);
-    }else{
+    }
+    //Perfil empresa
+    else if(role === "empresa"){
       const response = await api.get('empresa-perfil')
       .then(response => {
           return response.data;            
@@ -110,7 +113,37 @@ export default function Profile() {
       }
       console.log("avatars");
       console.log(imagemUser);
-      console.log(response);
+      console.log("response");
+      console.log(response.rows);
+    }
+    //Perfil Admin
+    else{
+      let id = localStorage.getItem("id")?.replace(/"/g, "");
+      const response = await api.get('user/'+id)
+      .then(response => {
+          return response.data;            
+      })
+
+      setEmail(response.email);
+      setFullName(response.fullName);
+      setCPF(response.cpf);
+      setPhone(response.telefone);
+      setLogradouro(response.logradouro+", "+response.numero);
+      setBairro(response.bairro);
+      setCEP(response.cep)
+      setCidade(response.cidade);
+      setEstado(response.estado);
+      console.log("response.avatars[0]");
+      console.log(response.avatars[0]);
+      if(response.avatars !== undefined && response.avatars[0] !== undefined){
+        setimagemUser(response.avatars);
+      }else{
+        setimagemUser("https://www.camaragibe.pe.gov.br/wp-content/uploads/2019/04/default-user-male.png");
+      }
+      console.log("avatars");
+      console.log(imagemUser);
+      console.log("response");
+      console.log(response.rows);
     }
       
     }
