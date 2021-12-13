@@ -27,7 +27,7 @@ interface UpdateProductAmount {
 }
 
 interface CartContextData {
-  cart: () => Promise<any>;
+  cart: () => Promise<number>;
   addProduct:    (productId: string) => Promise<void>;
   removeProduct: (productId: string) => void;
   updateProductAmount: ({ productId, quantidade }: UpdateProductAmount) => void;
@@ -41,7 +41,9 @@ const CartContext = createContext<CartContextData>({} as CartContextData);
 export function CartProvider({ children }: CartProviderProps): JSX.Element {
     const cart = async () =>{
       const allCart: any  = await api.get(`tenant/${tenantId}/carrinho/`)
-      return allCart.count;
+      console.log("allCart")
+      console.log(allCart)
+      return allCart.data.rows.length;
       }
       
 

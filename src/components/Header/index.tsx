@@ -33,15 +33,17 @@ const Header = (): JSX.Element => {
   const handleClick = () => setClick(!click);
 
   const { cart } = useCart();
-  const cartSize = cart.length;
-  if(cart){
-    console.log("temos carrinho")
-  }
+
+  console.log("cart")
+  console.log(cart)
+
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
   const [email, setUser] = useState("");
   const [password, setPassword] = useState("");
+  const [cartSize, setCartSize] = useState(0);
+
 
   function openModal() {
     let email = localStorage.getItem("email");
@@ -124,9 +126,17 @@ const Header = (): JSX.Element => {
       console.log(response);
       console.log(response.tenants[0].roles[0])
     }
-    
     loadUser();
-
+  }, []);
+  useEffect(() => {
+    async function loadCart() {
+    console.log("await cart")
+    console.log(await cart)
+ 
+    setCartSize(1) 
+  }
+  loadCart();
+  console.log(cartSize)
   }, []);
   return (
     <>
@@ -176,7 +186,7 @@ const Header = (): JSX.Element => {
                   <div>
                     <strong>Meu carrinho</strong>
                     <span data-testid="cart-size">
-                      {cartSize === 1 ? `${cartSize} item` : `${cartSize} itens`}
+                      {cartSize == 1 ? `${cartSize} item` : `${cartSize} itens`}
                     </span>
                   </div>
                   <FiShoppingBag size={20} />
@@ -199,7 +209,7 @@ const Header = (): JSX.Element => {
                       <div>
                         <strong>Meu carrinho</strong>
                         <span data-testid="cart-size">
-                          {cartSize === 1 ? `${cartSize} item` : `${cartSize} itens`}
+                          {cartSize == 1 ? `${cartSize} item` : `${cartSize} itens`}
                         </span>
                       </div>
                       <FiShoppingBag size={20} />
