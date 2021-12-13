@@ -43,7 +43,9 @@ export default function useInfiniteScroll(number: number){
  	  	console.log("products")	
 	  	console.log(products)
 			setLoading(false)
-			setHasMore(true)
+			setHasMore(res.data.length!==0)
+			// setHasMore(true)
+		console.log(res)
 	}
 	).catch(error => console.log(error))
 	}, [number] )
