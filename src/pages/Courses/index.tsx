@@ -2,14 +2,14 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { AiOutlinePlus } from "react-icons/ai";
 import { Recommended, GridProdsFour, ProdContainerSingle } from "./styles";
-import MenuCliente from "../../components/MenuCliente";
 import { Link } from "react-router-dom";
+import { Menu } from "../../components/Menu";
 
 export default function Courses() {
   return (
     <>
       <Header />
-      <MenuCliente />
+      <Menu />
       <div className="container">
         <Recommended>
           <h4>Cursos recomendados</h4>

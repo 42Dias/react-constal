@@ -1,13 +1,13 @@
 import Header from "../../../components/Header";
 import { Link } from "react-router-dom";
 import { MenuSell, TitleVendas, ContainerMenuSell } from "./styles";
-import MenuEmpresa from "../../../components/MenuEmpresa";
+import { Menu } from "../../../components/Menu";
 
 export default function Confirmed() {
   return (
     <>
       <Header />
-      <MenuEmpresa />
+      <Menu />
       <div className="container">
         <TitleVendas>Confirmadas</TitleVendas>
 

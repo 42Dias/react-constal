@@ -5,8 +5,9 @@ import { FooterContainer, CenterPay, Titleh2, BtnFinish } from "./styles";
 import { api } from "../../services/api";
 import axios from 'axios';
 let token = localStorage.getItem("token")?.replace(/"/g, "");
-
+import { Menu } from "../../components/Menu";
 const tenantId = "fa22705e-cf27-41d0-bebf-9a6ab52948c4";
+
 
 /*          PARA CRIAR A FATURA!!!
             /tenant/:tenantId/pedido/:id/fatura
@@ -41,6 +42,7 @@ export default function PayCart() {
     return (
       <>
         <Header />
+        <Menu />
           <div className="container">
             <Titleh2>Como prefere pagar?</Titleh2>
             <CenterPay>

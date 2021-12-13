@@ -2,11 +2,13 @@ import Header from "../../components/Header"
 import Footer from "../../components/Footer"
 import * as S from './NewPlan.styled'
 import { Link } from 'react-router-dom'
+import { Menu } from "../../components/Menu"
 
 function NewPlan() {
   return (
     <>
       <Header />
+      <Menu />
       <S.Container>
         <S.Form>
         <h2>Novo plano</h2>

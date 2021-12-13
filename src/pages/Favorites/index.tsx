@@ -13,6 +13,7 @@ import prodfav from "../../assets/images/prodfav.png";
 import { Product } from '../../types';
 import { api } from "../../services/api";
 import { formatPrice } from "../../util/format";
+import { Menu } from "../../components/Menu";
 
 export default function Favorites() {
 
@@ -39,7 +40,7 @@ export default function Favorites() {
             async favorito => {
                 console.log("favorito")
                 console.log(favorito)
-                const response = await api.get(`/tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/produto/${favorito}`);
+                const response = await api.get(`produto/${favorito}`);
                 console.log("response.data")
                 console.log(response.data)
                 // setProducts(response.data)
@@ -68,6 +69,7 @@ export default function Favorites() {
   return (
     <>
       <Header />
+      <Menu />
       <div className="container">
         <CardDatails>
           <Title>Favoritos</Title>

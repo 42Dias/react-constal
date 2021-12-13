@@ -3,12 +3,14 @@ import Footer from "../../components/Footer";
 import check from "../../assets/images/check-icon.svg";
 import { Link } from "react-router-dom";
 import { FooterContainer, CenterFinish } from "./styles";
+import { Menu } from "../../components/Menu";
 
 
 export default function FinishBuy() {
     return (
       <>
         <Header />
+        <Menu />
           <div className="container">
             <CenterFinish>
               <img src={check} alt="" />

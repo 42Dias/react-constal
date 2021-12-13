@@ -3,11 +3,13 @@ import Footer from "../../components/Footer"
 import * as S from './ProductQuery.styled'
 import prodfav from "../../assets/images/prodfav.png"
 import { Link } from "react-router-dom"
+import { Menu } from "../../components/Menu"
 
 function ProductQuery() {
   return (
     <>
       <Header />
+      <Menu />
       <div className="container">
         <S.CardDatails>
           <S.Title>Consulta de produtos</S.Title>

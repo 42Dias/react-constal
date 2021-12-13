@@ -13,13 +13,13 @@ import {
   ModalContent,
 } from "./styles";
 import Modal from "react-modal";
-import MenuEmpresa from "../../components/MenuEmpresa";
 
 import React, { useState, useEffect } from "react";
 import { api } from "../../services/api";
 
 
 import { formatPrice } from "../../util/format";
+import { Menu } from "../../components/Menu";
 
 interface Product {
   status: string;
@@ -61,7 +61,7 @@ export default function Histoty() {
 
     async function loadHistory() {
       console.log("requisição do pedido feita")
-      const res = await api.get('tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/pedidoWithProduct')
+      const res = await api.get('pedidoWithProduct')
       console.log(res.data)
       setProducts(res.data) 
     }
@@ -71,7 +71,7 @@ export default function Histoty() {
   return (
     <>
       <Header />
-      <MenuEmpresa />
+      <Menu />
       <div className="container">
         <CardDatails>
           <Title>Histórico</Title>
