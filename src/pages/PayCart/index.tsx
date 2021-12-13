@@ -2,12 +2,14 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { Link } from "react-router-dom";
 import { FooterContainer, CenterPay, Titleh2, BtnFinish } from "./styles";
+import { Menu } from "../../components/Menu";
 
 
 export default function PayCart() {
     return (
       <>
         <Header />
+        <Menu />
           <div className="container">
             <Titleh2>Como prefere pagar?</Titleh2>
             <CenterPay>

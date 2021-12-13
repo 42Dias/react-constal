@@ -14,7 +14,6 @@ import { formatPrice } from "../../util/format";
 import { useCart } from "../../hooks/useCart";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import MenuCliente from "../../components/MenuCliente";
 
 import moveis from "../../assets/images/moveis.png";
 import eletrodomesticos from "../../assets/images/eletrodomesticos.png";
@@ -24,8 +23,7 @@ import modainfantil from "../../assets/images/modainfantil.png";
 import modafeminina from "../../assets/images/modafeminina.png";
 import modamasculina from "../../assets/images/modamasculina.png";
 import axios from "axios";
-import MenuEmpresa from "../../components/MenuEmpresa";
-import MenuAdm from "../../components/MenuAdm";
+import { Menu } from "../../components/Menu";
 
 interface Product {
   id: string;
@@ -75,7 +73,7 @@ const Home = (): JSX.Element => {
   return (
     <>
       <Header />
-      <MenuAdm />
+      <Menu />
       
       <BannerHomeImage>
         <Swiper

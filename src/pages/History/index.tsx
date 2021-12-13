@@ -13,13 +13,13 @@ import {
   ModalContent,
 } from "./styles";
 import Modal from "react-modal";
-import MenuEmpresa from "../../components/MenuEmpresa";
 
 import React, { useState, useEffect } from "react";
 import { api } from "../../services/api";
 
 
 import { formatPrice } from "../../util/format";
+import { Menu } from "../../components/Menu";
 
 interface Product {
   status: string;
@@ -71,7 +71,7 @@ export default function Histoty() {
   return (
     <>
       <Header />
-      <MenuEmpresa />
+      <Menu />
       <div className="container">
         <CardDatails>
           <Title>Histórico</Title>

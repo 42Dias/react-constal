@@ -3,13 +3,13 @@ import { CardDatails, CardDatailsContent, ContentDetails } from "./styles";
 import Header from "../../../components/Header";
 import item from "../../../assets/images/prodfav.png";
 import { Link } from "react-router-dom";
-import MenuEmpresa from "../../../components/MenuEmpresa";
+import { Menu } from "../../../components/Menu";
 
 export default function SaleDetails() {
   return (
     <>
       <Header />
-      <MenuEmpresa />
+      <Menu />
       <div className="container">
         <CardDatails>
           <h2>Detalhes da venda</h2>

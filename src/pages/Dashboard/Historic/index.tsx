@@ -1,14 +1,14 @@
 import Header from "../../../components/Header";
-import MenuAdm from "../../../components/MenuAdm";
 import item from "../../../assets/images/prodfav.png";
 import { Link } from "react-router-dom";
 import { CardDatails, CardDatailsContent, ContentDetails } from "./styles";
+import { Menu } from "../../../components/Menu";
 
 export default function Historic() {
   return (
     <>
       <Header />
-      <MenuAdm />
+      <Menu />
       <div className="container">
         <CardDatails>
           <h2>Histórico</h2>
