@@ -27,7 +27,7 @@ interface UpdateProductAmount {
 }
 
 interface CartContextData {
-  cart: any;
+  cart: () => Promise<number>;
   addProduct:    (productId: string) => Promise<void>;
   removeProduct: (productId: string) => void;
   updateProductAmount: ({ productId, quantidade }: UpdateProductAmount) => void;
@@ -35,18 +35,17 @@ interface CartContextData {
 
 const tenantId = "fa22705e-cf27-41d0-bebf-9a6ab52948c4";
 
+
 const CartContext = createContext<CartContextData>({} as CartContextData);
 
 export function CartProvider({ children }: CartProviderProps): JSX.Element {
-  const [cart, setCart] = useState<Product[]>(() => {//para oo projeto mais avançado o useState não tem tanta importancia
-    const storagedCart = localStorage.getItem('@RocketShoes:cart')//NEM O LOCALSTORAGE
-
-    if (storagedCart) {
-      return JSON.parse(storagedCart);
-    }
-
-    return [];
-  });
+    const cart = async () =>{
+      const allCart: any  = await api.get(`tenant/${tenantId}/carrinho/`)
+      console.log("allCart")
+      console.log(allCart)
+      return allCart.data.rows.length;
+      }
+      
 
   const addProduct = async (productId: string) => {
     console.log("productId")
@@ -102,7 +101,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
 
     try {
       
-      if(!productAlreadyInCart.id) {
+      if(!productAlreadyInCart) {
       
         console.log("ARRIVA");
       
@@ -111,7 +110,6 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
         console.log(product); 
         
         if(stock > 0) {
-          setCart([...cart, {...product, quantidade: 1}])
           //AQUI É O CARRINHO
           //GUARDAR ESSA FUNÇÃO PARA ATUALIZAR A QUATIDADE
 
@@ -155,40 +153,47 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
         }
       }
 
-      else if(productAlreadyInCart.id) {
+      else if(productAlreadyInCart) {
         console.log("PRODUTO ESTÁ EN EL CARIÑO")
         const  stock: number  = product.quantidadeNoEstoque;
         console.log(productAlreadyInCart)
         if (stock > productAlreadyInCart.quantidade) {
 
-          let novaQuantidade = productAlreadyInCart.quantidade;
+        productAlreadyInCart.quantidade++;
           
-          novaQuantidade++
-
           const response = await axios({
             method: 'put',
-            url: `http://localhost:8157/api/tenant/${tenantId}/carrinhoProduto/${productAlreadyInCart.id}`,
+            url: `http://localhost:8157/api/tenant/${tenantId}/carrinhoProduto/`,
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
               'Authorization': 'Bearer '+ token
             },              
             timeout: 50000,
-            data   : { product, quantidade: novaQuantidade }
+            data   : productAlreadyInCart
           })              
-          console.log({ product, quantidade: novaQuantidade })
-          console.log(response)
+            console.log(JSON.stringify( productAlreadyInCart ))
+            console.log(response)
           return;
         } else {
           toast.error('Quantidade solicitada fora de estoque')
         }
       }
-    } catch {
+    }  catch (e){
+      console.log(e)
       toast.error('Erro na adição do produto')
     }
   };
 
   const removeProduct = async (productId: string) => {
+
+      console.log(productId)
+
+      const cartResponse = await api.get(`tenant/${tenantId}/carrinho/`)
+      const cart = cartResponse.data.rows;
+    
+      console.log(cart)
+
       const produtoNoCarrinho = cart.filter((cart: any) => {
         if(cart.produto.id == productId){
           console.log(cart)      
@@ -196,26 +201,34 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
         }
       })    
     
-      const productAlreadyInCart = produtoNoCarrinho[0]  
+      console.log(produtoNoCarrinho)
+
+      const productAlreadyInCart = produtoNoCarrinho[0];
       console.log("productAlreadyInCart")
       console.log(productAlreadyInCart)
 
-    
-    const productResponse = await api.get<Product>(`/tenant/${tenantId}/produto/${productId}`);//jogar como variavel que abrange todo o escopo da função
-    
-    const  product  = productResponse.data;
-    
-    const  stock: number  = product.quantidadeNoEstoque;
-    
+
+      console.log(productId)
+
+      
     try {
-      if(!productAlreadyInCart.id) {
+      if(!productAlreadyInCart) {
         toast.error('Erro na remoção do produto');
         return
       }
   
-      // post com a url de delete?
-      const response = await api.post(`/tenant/${tenantId}/carrinho/`);
-      // usar o post acima
+      const response = await axios({
+        method: 'delete',
+        url: `http://localhost:8157/api/tenant/${tenantId}/carrinhoProduto/`,
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer '+ token
+        },              
+        timeout: 50000,
+        data   : productAlreadyInCart
+      })              
+
       console.log(response)
     } catch {
       toast.error('Erro na remoção do produto');
@@ -232,22 +245,30 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
         toast.error('Erro na alteração de quantidade do produto');
         return
       }
-      
+
+      const cartResponse = await api.get(`tenant/${tenantId}/carrinho/`)
+      const cart = cartResponse.data.rows;
+    
+      console.log(cart)
+
       const produtoNoCarrinho = cart.filter((cart: any) => {
         if(cart.produto.id == productId){
           console.log(cart)      
           return cart
         }
-      })    
-    
+      })
+
+      
       const productAlreadyInCart = produtoNoCarrinho[0]  
       console.log("productAlreadyInCart")
       console.log(productAlreadyInCart)
-
+      
       const productResponse = await api.get<Product>(`/tenant/${tenantId}/produto/${productId}`);
       const  product  = productResponse.data;
+      console.log(product)
       const  stock: number  = product.quantidadeNoEstoque;
-      //quantos no estoque
+
+      
       console.log('stock: ' + stock)
       const stockIsFree = quantidade > stock
       console.log('stockIsFree: ' + stockIsFree)
@@ -258,15 +279,24 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
       }
 
       
-      const updatedCart = cart.map(cartItem => cartItem.id === productId ? {
-        ...cartItem,
-        quantidade: quantidade
-      } : cartItem)
-      //apenas fazer requisição para a alteração do carrinho com a nova quantidade
-      //não é necessária a esse updated cart, passar a quantidade como variavel para o body do post de requisição
+      productAlreadyInCart.quantidade = quantidade
 
-      const response = await api.post(`/tenant/${tenantId}/carrinho/`, updatedCart);
+      const response = await axios({
+        method: 'put',
+        url: `http://localhost:8157/api/tenant/${tenantId}/carrinhoProduto/`,
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer '+ token
+        },              
+        timeout: 50000,
+        data   : productAlreadyInCart
+      })              
+
       console.log(response)
+      window.location.reload(); 
+
+
     } catch {
       toast.error('Erro na alteração de quantidade do produto');
     }
