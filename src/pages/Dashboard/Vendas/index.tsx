@@ -2,8 +2,66 @@ import Header from "../../../components/Header";
 import { Link } from "react-router-dom";
 import { MenuSell, TitleVendas, ContainerMenuSell } from "./styles";
 import { Menu } from "../../../components/Menu";
+import { useEffect, useState } from "react";
+import { api } from "../../../services/api";
+
 
 export default function Vendas() {
+  const [pedidos = [], setPedidos]                        = useState<any[]>([]); 
+  const [pedidosPendentes = [], setPedidosPendentes]      = useState<any[]>([])
+  const [pedidosConfirmados = [], setPedidosConfirmados]  = useState<any[]>([])
+  const [pedidosDevolvidos = [], setPedidosDevolvidos]    = useState<any[]>([])
+  const [pedidosDenunciador = [], setPedidosDenunciador]  = useState<any[]>([])
+
+
+
+  useEffect(
+    ()=>{
+      async function loadPedidosPendentes(){
+        pedidos.map(
+          (pedido: any) => {
+            setPedidosPendentes(pedido)
+          }
+        )
+      }
+ 
+      async function loadPedidosConfirmados(){
+        pedidos.map(
+          (pedido: any) => {
+            setPedidosConfirmados(pedido)
+          }
+        )
+      }
+      
+      async function loadPedidosDevolvidos(){
+        pedidos.map(
+          (pedido: any) => {
+            setPedidosDevolvidos(pedido)
+          }
+        )
+      }
+      
+      async function loadPedidosDenunciador(){
+        pedidos.map(
+          (pedido: any) => {
+            setPedidosDenunciador(pedido)
+          }
+        )
+      }
+      async function loadPedidos(){
+        console.log("requisição do pedido feita")
+        const res = await api.get('pedido')
+        console.log(res.data)
+        setPedidos(res.data)
+        loadPedidosPendentes()
+        loadPedidosConfirmados()
+        loadPedidosDevolvidos()
+        loadPedidosDenunciador()
+
+      }
+      loadPedidos()
+    }, [] )
+
   return (
     <>
       <Header />
@@ -12,39 +70,30 @@ export default function Vendas() {
         <TitleVendas>Vendas</TitleVendas>
 
         <MenuSell>
-          <span><b>Pendentes(2)</b></span>
-          <Link to="/confirmadas"><span>Confirmadas(4)</span></Link>
-          <Link to="/devolvidas"><span>Devolvidas(3)</span></Link>
-          <Link to="/denunciadas"><span>Denunciadas(3)</span></Link>
+                                 <span><b>Pendentes({  pedidosPendentes.length})</b></span>
+          <Link to="/confirmadas"><span>Confirmadas({pedidosConfirmados.length})</span></Link>
+            <Link to="/devolvidas"><span>Devolvidas({ pedidosDevolvidos.length})</span></Link>
+          <Link to="/denunciadas"><span>Denunciadas({pedidosDenunciador.length})</span></Link>
         </MenuSell>
-
-        <ContainerMenuSell>
-          <div>
-            <span>Nome do cliente</span>
-            <h3>Quantidade de produtos: XXX</h3>
-            <h3>Endereço para envio: XXX</h3>
-            <h3>Cidade/Estado</h3>
-          </div>
-          <div>
-            <a href="">Ver detalhes</a>
-            <h3>Valor Total: R$800,99</h3>
-            <h3>Status: <b>Embalado</b></h3>
-          </div>
-        </ContainerMenuSell>
-
-        <ContainerMenuSell>
-          <div>
-            <span>Nome do cliente</span>
-            <h3>Quantidade de produtos: XXX</h3>
-            <h3>Endereço para envio: XXX</h3>
-            <h3>Cidade/Estado</h3>
-          </div>
-          <div>
-            <a href="">Ver detalhes</a>
-            <h3>Valor Total: R$800,99</h3>
-            <h3>Status: <b>Embalado</b></h3>
-          </div>
-        </ContainerMenuSell>
+        {
+        pedidosPendentes.map(
+          (pedidos) => {
+            <ContainerMenuSell>
+            <div>
+              <span>Nome do cliente</span>
+              <h3>Quantidade de produtos: XXX</h3>
+              <h3>Endereço para envio: XXX</h3>
+              <h3>Cidade/Estado</h3>
+            </div>
+            <div>
+              <a href="">Ver detalhes</a>
+              <h3>Valor Total: R$800,99</h3>
+              <h3>Status: <b>Entregue</b></h3>
+            </div>
+          </ContainerMenuSell>
+          }
+        )
+        }
       </div>
     </>
   );
