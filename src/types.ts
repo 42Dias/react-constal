@@ -1,11 +1,11 @@
 export interface Product {
-  id: number;
-  /*nome: string;
+  id: string;
+  nome: string;
   descricao: string;
   preco: number;
   publicUrl: string;
   isOferta: number;
-  precoOferta: any;*/
+  precoOferta: any;
   quantidade: number;
   produto:{
     id: number;
