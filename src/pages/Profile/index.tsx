@@ -22,22 +22,26 @@ import {
 import { Link } from "react-router-dom";
 import { api } from "../../services/api";
 import { Menu } from "../../components/Menu";
+import upload from "../../assets/images/upload.svg";
 
 
 export default function Profile() {
   function messageCancel() {
     toast.error('Ah, que pena. Não conseguimos adicionar o seu endereço na plataforma :(')
-    setIsOpen(false);
-  }
+    setShowModal1(false);
+    setShowModal2(false);  }
 
   function messageApprove() {
     toast.info('Eba, recebemos o seu endereço. :)')
-    setIsOpen(false);
+    setShowModal1(false);
+    setShowModal2(false);
   }
-  const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [showModal1, setShowModal1] = React.useState(false);
+  const [showModal2, setShowModal2] = React.useState(false);
 
-  function openModal() {
-    setIsOpen(true);
+  function handleNewData() {
+    toast.info('Eba, estamos cada dia mais perto da morte! :)')
+
   }
 
   function afterOpenModal() {
@@ -45,7 +49,8 @@ export default function Profile() {
   }
 
   function closeModal() {
-    setIsOpen(false);
+    setShowModal1(false);
+    setShowModal2(false);
   }
 
   const [email, setEmail]=useState('');
@@ -59,6 +64,32 @@ export default function Profile() {
   const [cidade, setCidade]=useState('');
   const [estado, setEstado]=useState('');
   const [imagemUser, setimagemUser]=useState('');
+
+  const [newNome, setNewNome]=useState('');  
+  const [newId, setNewId] = useState('')
+  const [newMarca, setNewMarca] = useState('')
+  const [newRazaoSocial, setNewRazaoSocial] = useState('')
+  const [newCnpj, setNewCnpj] = useState('')
+  const [newTelefone, setNewTelefone] = useState('')
+  const [newRamal, setNewRamal] = useState('')
+  const [newEmail, setNewEmail] = useState('')
+  const [newWebsite, setNewWebsite] = useState('')
+  const [newCep, setNewCep] = useState('')
+  const [newLogradouro, setNewLogradouro] = useState('')
+  const [newNumero, setNewNumero] = useState('')
+  const [newComplemento, setNewComplemento] = useState('')
+  const [newPontoReferencia, setNewPontoReferencia] = useState('')
+  const [newCidade, setNewCidade] = useState('')
+  const [newEstado, setNewEstado] = useState('')
+  const [newBairro, setNewBairro] = useState('')
+  const [pix, setNewPix] = useState('')
+
+
+
+
+
+
+
   let role = localStorage.getItem("roles")?.replace(/"/g, "");
   
   useEffect(() => {
@@ -186,6 +217,174 @@ export default function Profile() {
 
         <CardDatails>
           <h2>Dados da conta</h2>
+          <button onClick={
+            () => {setShowModal2(true)}
+            }>Alterar Dados</button>
+            <ModalContainerVendedor>
+      <Modal
+        isOpen={showModal2}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={() => setShowModal2(false)}
+        >
+          <div>
+            <ModalFlex>
+              <AiOutlineClose onClick={
+                () => setShowModal2(false)} />
+            </ModalFlex>
+
+            <ModalContent>
+              <img src={upload} alt="" />
+              <h3>Alterar dados</h3>
+              {
+                role == 'empresa'? (
+                  <>
+                    <ContentFormNew>
+                    <label htmlFor="">Novo Nome da Empresa</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewNome(text.target.value)}
+                    />
+                    </ContentFormNew>
+                    <ContentFormNew>
+                    <label htmlFor="">Novo Nome da Empresa</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewNome(text.target.value)}
+                    />
+                    </ContentFormNew>
+                    <ContentFormNew>
+                    <label htmlFor="">Novo Nome da Marca</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewMarca(text.target.value)}
+                    />
+                    </ContentFormNew>
+                    <ContentFormNew>
+                    <label htmlFor="">Novo Nome da Razão Social</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewRazaoSocial(text.target.value)}
+                    />
+                    </ContentFormNew>
+                    <ContentFormNew>
+                    <label htmlFor="">Novo Telefone</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewTelefone(text.target.value)}
+                    />
+                    </ContentFormNew>
+
+                    <ContentFormNew>
+                    <label htmlFor="">Novo CNPJ</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewCnpj(text.target.value)}
+                    />
+                    </ContentFormNew>
+
+                    <ContentFormNew>
+                    <label htmlFor="">Novo Ramal</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewRamal(text.target.value)}
+                    />
+                    </ContentFormNew>
+
+                    <ContentFormNew>
+                    <label htmlFor="">Novo Ramal</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewRamal(text.target.value)}
+                    />
+                    </ContentFormNew>
+                    
+                    <ContentFormNew>
+                    <label htmlFor="">Novo setNewEmail</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewEmail(text.target.value)}
+                    />
+                    </ContentFormNew>
+
+                    <ContentFormNew>
+                    <label htmlFor="">Novo setNewWebsite</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewWebsite(text.target.value)}
+                    />
+                    </ContentFormNew>
+
+                    <ContentFormNew>
+                    <label htmlFor="">Novo setNewCep</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewCep(text.target.value)}
+                    />
+                    </ContentFormNew>
+
+                    <ContentFormNew>
+                    <label htmlFor="">Novo setNewLogradouro</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewLogradouro(text.target.value)}
+                    />
+                    </ContentFormNew>
+
+                    <ContentFormNew>
+                    <label htmlFor="">Novo setNewNumero</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewNumero(text.target.value)}
+                    />
+                    </ContentFormNew>
+
+                    <ContentFormNew>
+                    <label htmlFor="">Novo setNewComplemento</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewComplemento(text.target.value)}
+                    />
+                    </ContentFormNew>
+
+                    <ContentFormNew>
+                    <label htmlFor="">Novo setNewPontoReferencia</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewPontoReferencia(text.target.value)}
+                    />
+                    </ContentFormNew>
+
+                    <ContentFormNew>
+                    <label htmlFor="">Novo setNewCidade</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewCidade(text.target.value)}
+                    />
+                    </ContentFormNew>
+
+                    <ContentFormNew>
+                    <label htmlFor="">Novo setNewEstado</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewEstado(text.target.value)}
+                    />
+                    </ContentFormNew>
+
+                    <ContentFormNew>
+                    <label htmlFor="">Novo setNewBairro</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewBairro(text.target.value)}
+                    />
+                    </ContentFormNew>
+
+                    <ContentFormNew>
+                    <label htmlFor="">Novo setNewPix</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewPix(text.target.value)}
+                    />
+                    </ContentFormNew>
+                  </>
+                ):(
+                  <ContentFormNew>
+                  <label htmlFor="">Novo Nome</label>
+                  <input type="text" placeholder="Seu novo nome"
+                  onChange={(text) => setNewNome(text.target.value)}
+                  />
+                </ContentFormNew>
+                )
+              }
+              <div className="buttonsNew">
+                <button type="button" onClick={messageCancel}>Cancelar</button>
+                <button type="button" onClick={handleNewData}>Adicionar</button>
+              </div>
+            </ModalContent>
+          </div>
+        </Modal>
+      </ModalContainerVendedor>
+
           <CardDatailsContent>
             <ContentDetails>
               <span>Login:</span>
@@ -201,6 +400,9 @@ export default function Profile() {
             <Link to="">Alterar</Link>
           </CardDatailsContent>
         </CardDatails>
+
+
+
 
         <Link to="/historico-de-pedidos">Histórico de pedidos</Link><br />
         <Link to="/detalhes-da-venda">Detalhes da venda</Link><br />
@@ -242,14 +444,16 @@ export default function Profile() {
               <Link to="">Excluir</Link>
             </div>
           </CardDatailsContent>
-          <button onClick={openModal}>Novo endereço</button>
+          <button onClick={
+            () => {setShowModal1(true)}
+            }>Novo endereço</button>
         </CardDatails>
       </div>
       <Footer />
 
       <ModalContainerVendedor>
         <Modal
-          isOpen={modalIsOpen}
+          isOpen={showModal1}
           onAfterOpen={afterOpenModal}
           onRequestClose={closeModal}
         >
