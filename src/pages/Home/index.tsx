@@ -9,7 +9,7 @@ import SwiperCore, {
 import "swiper/swiper.scss";
 
 import { SwiperStyles, BarHome, FlexBar, BannerHomeImage } from "./styles";
-import { api } from "../../services/api";
+import { api, ip } from "../../services/api";
 import { formatPrice } from "../../util/format";
 import { useCart } from "../../hooks/useCart";
 import Header from "../../components/Header";
@@ -51,11 +51,11 @@ const Home = (): JSX.Element => {
   const [products = [], setProducts] = useState<ProductFormatted[]>([]);
   const { addProduct, cart } = useCart();
   
-
+  //console.log("ip: "+ip);
   useEffect(() => {
     async function loadProducts() {
-      const response = await axios.get("http://localhost:8157/api/produtos");
-      //console.log(response.data);
+      const response = await axios.get("http://"+ip+":8157/api/produtos");
+      
       const productsFormated = response.data.record.map(function (
         product: Product
       ) {

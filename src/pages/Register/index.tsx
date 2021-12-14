@@ -5,6 +5,7 @@ import { BoxRegister, GridRegister, LinkContent, Terms } from "./styles";
 import { toast } from 'react-toastify';
 import Axios from 'axios';
 import { Menu } from "../../components/Menu";
+import { api } from "../../services/api";
 
 export default function Register() {
   const [nome, setNome] = useState('');
@@ -22,18 +23,33 @@ export default function Register() {
     });
     Cadastro();
   }
-
+  function handleLocalStorage(emailA: string, passwordB: string) {
+    
+    localStorage.setItem("email", JSON.stringify(email));//saves client's data into localStorage:
+    localStorage.setItem("password", JSON.stringify(senha));//saves client's data into localStorage:
+    console.log();
+  }
+  function handleLocalStorageToken(token: string[]) {
+    const setLocalStorage = (data: string[]) => {
+      localStorage.setItem("token", JSON.stringify(data)); //saves client's data into localStorage:
+      console.log("OK!!!");
+    };
+    setLocalStorage(token);
+  }
   async function Cadastro() {
     
-      Axios.post('http://localhost:8157/api/auth/sign-up', {   
+      Axios.post('http://'+api+':8157/api/auth/sign-up', {   
         fullName: nome,   
         email: email,
         password: senha,
-        role: parseInt(category)
+        role: parseInt(category),
+        status: ''
     }).then((response) =>{
         console.log(response);  
         if(response.statusText === "OK"){
-          toast.info('Opa, recebemos o seu registro :)')
+          toast.info('Opa, recebemos o seu registro :)');
+          handleLocalStorage(email, senha);
+          handleLocalStorageToken(response.data);
           handleClickLogin();
         }else if(response.statusText === "Forbidden"){
           toast.info("Ops, Não tem permisão!");
@@ -45,7 +61,7 @@ export default function Register() {
   }
   let history = useHistory();
     function handleClickLogin() {
-      history.push("/meu-perfil");
+      history.push("/");
     }
 
   return (

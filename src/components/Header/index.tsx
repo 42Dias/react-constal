@@ -26,8 +26,9 @@ import React, { useEffect, useState } from "react";
 
 import { useCart } from "../../hooks/useCart";
 import { toast } from "react-toastify";
-import { api } from "../../services/api";
+import { api, ip } from "../../services/api";
 import axios from "axios";
+import { margin } from "polished";
 
 const Header = (): JSX.Element => {
   const [click, setClick] = useState(false);
@@ -44,12 +45,12 @@ const Header = (): JSX.Element => {
   const [email, setUser] = useState("");
   const [password, setPassword] = useState("");
   const [cartSize, setCartSize] = useState(0);
-
+  const [loading, setLoading] = useState(false);
 
   function openModal() {
     let email = localStorage.getItem("email");
     let password = localStorage.getItem("password");
-    let token = localStorage.getItem("token"); 
+    let token = localStorage.getItem("token");
     /*
 
 
@@ -79,7 +80,7 @@ const Header = (): JSX.Element => {
   }
 
   function handleLocalStorage(emailA: string, passwordB: string) {
-    
+
     localStorage.setItem("email", JSON.stringify(email));//saves client's data into localStorage:
     localStorage.setItem("password", JSON.stringify(password));//saves client's data into localStorage:
     console.log();
@@ -96,26 +97,33 @@ const Header = (): JSX.Element => {
   function handleClickLogin() {
     history.push("/meu-perfil");
   }
-  
-  async function Login(){
-    let response=Axios.post('http://localhost:8157/api/auth/sign-in', {   
-            email: email,
-            password: password,
-        }).then((response) =>{
-            console.log(response);  
-            if(response.statusText == "OK"){
-              toast.info('Login efetuado com sucesso! :)')
-              handleLocalStorage(email, password);
-              handleLocalStorageToken(response.data);
-              closeModal();
-              window.location.reload();
-            }else if(response.statusText == "Forbidden"){
-              toast.info("Ops, Não tem permisão!");
-            }else{
-              toast.info("Ops, Dados Incorretos!");
-            }  
-            
-      })
+
+  async function Login() {
+    setLoading(true);
+    let response = Axios.post('http://'+ip+':8157/api/auth/sign-in', {
+      email: email,
+      password: password,
+    }).then((response) => {
+      if (response.statusText == "OK") {
+        toast.info('Login efetuado com sucesso! :)');
+        setLoading(false);
+        handleLocalStorage(email, password);
+        handleLocalStorageToken(response.data);
+        closeModal();
+        window.location.reload();
+      } else if (response.statusText == "Forbidden") {
+        setLoading(false);
+        toast.info("Ops, Não tem permisão!");
+      } else {
+        setLoading(false);
+        toast.info("Ops, Dados Incorretos!");
+      }
+
+    }).catch((error) =>{
+      setLoading(false);
+      console.log("error");
+      console.log(error);
+    });
     
   }
   useEffect(() => {
@@ -127,11 +135,11 @@ const Header = (): JSX.Element => {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer '+ token
-        },              
+          'Authorization': 'Bearer ' + token
+        },
         timeout: 50000
       }).then(response => {
-          return response.data;            
+        return response.data;
       })
       console.log(response);
       console.log(response.tenants[0].roles[0]);
@@ -144,13 +152,13 @@ const Header = (): JSX.Element => {
   }, []);
   useEffect(() => {
     async function loadCart() {
-    console.log("await cart")
-    console.log(await cart)
- 
-    setCartSize(1) 
-  }
-  loadCart();
-  console.log(cartSize)
+      console.log("await cart")
+      console.log(await cart)
+
+      setCartSize(1)
+    }
+    loadCart();
+    console.log(cartSize)
   }, []);
   return (
     <>
@@ -208,27 +216,27 @@ const Header = (): JSX.Element => {
               </IconsContainer>
 
               <IconsContainerMenu>
-                  <div className="icons-flex-align">
-                    <div className="flex-item" onClick={openModal}>
-                      <span>Meu perfil</span>
-                      <FiUser size={20} />  
-                    </div>
-                    <div className="flex-item">
-                      <Link to="/favoritos">
-                        <span>Meus produtos favoritos</span>
-                        <FiHeart size={20} />
-                      </Link>
-                    </div>
-                    <Cart to="/cart">
-                      <div>
-                        <strong>Meu carrinho</strong>
-                        <span data-testid="cart-size">
-                          {cartSize == 1 ? `${cartSize} item` : `${cartSize} itens`}
-                        </span>
-                      </div>
-                      <FiShoppingBag size={20} />
-                    </Cart>
+                <div className="icons-flex-align">
+                  <div className="flex-item" onClick={openModal}>
+                    <span>Meu perfil</span>
+                    <FiUser size={20} />
                   </div>
+                  <div className="flex-item">
+                    <Link to="/favoritos">
+                      <span>Meus produtos favoritos</span>
+                      <FiHeart size={20} />
+                    </Link>
+                  </div>
+                  <Cart to="/cart">
+                    <div>
+                      <strong>Meu carrinho</strong>
+                      <span data-testid="cart-size">
+                        {cartSize == 1 ? `${cartSize} item` : `${cartSize} itens`}
+                      </span>
+                    </div>
+                    <FiShoppingBag size={20} />
+                  </Cart>
+                </div>
               </IconsContainerMenu>
 
             </ul>
@@ -250,6 +258,7 @@ const Header = (): JSX.Element => {
         onRequestClose={closeModal}
         className="modal"
       >
+        
         <ModalContainer>
           <ModalEnter>
             <h2>Insira os seus dados</h2>
@@ -274,7 +283,7 @@ const Header = (): JSX.Element => {
               value={password}
               onChange={(text) => setPassword(text.target.value)}
             />
-
+            {loading ? <img src={'https://olaargentina.com/wp-content/uploads/2019/11/loading-gif-transparent-10.gif'} alt="Loading" style={{ width: 250}}></img> : false}
             {/*<Link to="/meu-perfil" className="btn-enter" href="">
               Entrar
             </Link>*/}
@@ -298,6 +307,7 @@ const Header = (): JSX.Element => {
               Clique aqui
             </Link>
           </strong>
+          
         </ModalContainer>
       </Modal>
     </>

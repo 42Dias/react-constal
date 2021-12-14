@@ -6,7 +6,6 @@ export default function Signature() {
   return (
     <>
       <Header />
-      <Menu />
       <S.Container>
         <S.Title>Planos de cobrança da plataforma</S.Title>
         <S.Cards>

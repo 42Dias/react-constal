@@ -7,7 +7,13 @@ export interface Product {
   isOferta: number;
   precoOferta: any;
   quantidade: number;
-  produto:{
+  status: string;
+  empresaId: string;
+  fotos: {
+    publicUrl: string;
+  }
+ 
+  produto: {
     id: number;
     nome: string;
     fotos: string;
@@ -20,7 +26,7 @@ export interface Stock {
   quantidade: number;
 }
 
-export interface Empresa{
+export interface Empresa {
   avatars: string;
   telefone: string;
   email: string;
