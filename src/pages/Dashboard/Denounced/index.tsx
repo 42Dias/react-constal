@@ -2,22 +2,79 @@ import Header from "../../../components/Header";
 import { Link } from "react-router-dom";
 import { MenuSell, TitleVendas, ContainerMenuSell } from "./styles";
 import { Menu } from "../../../components/Menu";
+import { api } from "../../../services/api";
+import { useEffect, useState } from "react";
 
 export default function Denounced() {
+  const [pedidos = [], setPedidos]                        = useState<any[]>([]); 
+  const [pedidosPendentes = [], setPedidosPendentes]      = useState<any[]>([])
+  const [pedidosConfirmados = [], setPedidosConfirmados]  = useState<any[]>([])
+  const [pedidosDevolvidos = [], setPedidosDevolvidos]    = useState<any[]>([])
+  const [pedidosDenunciador = [], setPedidosDenunciador]  = useState<any[]>([])
+
+
+
+  useEffect(
+    ()=>{
+      async function loadPedidosPendentes(){
+        pedidos.map(
+          (pedido: any) => {
+            setPedidosPendentes(pedido)
+          }
+        )
+      }
+ 
+      async function loadPedidosConfirmados(){
+        pedidos.map(
+          (pedido: any) => {
+            setPedidosConfirmados(pedido)
+          }
+        )
+      }
+      
+      async function loadPedidosDevolvidos(){
+        pedidos.map(
+          (pedido: any) => {
+            setPedidosDevolvidos(pedido)
+          }
+        )
+      }
+      
+      async function loadPedidosDenunciador(){
+        pedidos.map(
+          (pedido: any) => {
+            setPedidosDenunciador(pedido)
+          }
+        )
+      }
+      async function loadPedidos(){
+        console.log("requisição do pedido feita")
+        const res = await api.get('pedido')
+        console.log(res.data)
+        setPedidos(res.data)
+        loadPedidosPendentes()
+        loadPedidosConfirmados()
+        loadPedidosDevolvidos()
+        loadPedidosDenunciador()
+
+      }
+      loadPedidos()
+    }, [] )
+
   return (
     <>
       <Header />
       <Menu />
-
       <div className="container">
-        <TitleVendas>Denunciadas</TitleVendas>
+        <TitleVendas>Vendas</TitleVendas>
 
         <MenuSell>
-          <Link to="/vendas"><span>Pendentes(2)</span></Link>
-          <Link to="/confirmadas"><span>Confirmadas(4)</span></Link>
-          <Link to="/devolvidas"><span>Devolvidas(3)</span></Link>
-          <Link to="/denunciadas"><span><b>Denunciadas(3)</b></span></Link>
+                                 <span>Pendentes({  pedidosPendentes.length})</span>
+          <Link to="/confirmadas"><span>Confirmadas({pedidosConfirmados.length})</span></Link>
+            <Link to="/devolvidas"><span>Devolvidas({ pedidosDevolvidos.length})</span></Link>
+          <Link to="/denunciadas"><span><b>Denunciadas({pedidosDenunciador.length})</b></span></Link>
         </MenuSell>
+
 
         <ContainerMenuSell>
           <div>

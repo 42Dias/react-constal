@@ -5,7 +5,7 @@ import { FooterContainer, CenterPay, Titleh2, BtnFinish } from "./styles";
 import { api } from "../../services/api";
 import axios from 'axios';
 import { Menu } from "../../components/Menu";
-
+import { useEffect, useState } from "react";
 
 let token = localStorage.getItem("token")?.replace(/"/g, "");
 const tenantId = "fa22705e-cf27-41d0-bebf-9a6ab52948c4";
@@ -15,29 +15,92 @@ const tenantId = "fa22705e-cf27-41d0-bebf-9a6ab52948c4";
             /tenant/:tenantId/pedido/:id/fatura
 */
 export default function PayCart() {
+  const [produtosDosFornecedores, setProdutosDosFornecedores] = useState([]);
   
-  async function gerarPedido(){
-      const produtosNoCarrinho: any = await api.get('tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/carrinho/') 
-      produtosNoCarrinho.data.rows.map(
+
+  useEffect(() => {
+    async function gerarFornecedores(){
+      const fornecedoresNoCarrinho: string[] = []
+      const produtosNoCarrinhoResponse: any = await api.get('/carrinho/') 
+      const produtosNoCarrinho = produtosNoCarrinhoResponse.data.rows
+      
+      produtosNoCarrinho.filter(
         async (produtoNoCarrinho: any) => {
-            console.log("CARRINHO")
-            /*PASSA O CARRINHO COMO PARÂMETRO DO AXIOS COMO POST
-            */
-            const response = await axios({
-              method: 'post',
-              url: 'http://'+api+':8157/api/tenant/${tenantId}/pedido',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer '+ token
-              },              
-              timeout: 50000,
-              data   :  produtoNoCarrinho 
-            })
+          if(!fornecedoresNoCarrinho.includes(produtoNoCarrinho.fornecedorId)){
+            fornecedoresNoCarrinho.push(produtoNoCarrinho.fornecedorId)
+          }
         }
       )
+      const containerDeObjetos: any = []
+
+      fornecedoresNoCarrinho.map(
+        (fornecedor) =>{ 
+          const novoObj =  { "fornecedorId": fornecedor, "produtos": [] }
+          containerDeObjetos.push(novoObj)
+        }
+      )
+    
+      console.log(containerDeObjetos)
+
+
+      console.log(produtosNoCarrinho)
+      console.log(fornecedoresNoCarrinho)
+
+      containerDeObjetos.map( (fornecedor: any, index: number )=>{
+        produtosNoCarrinho.filter(
+          (produtoNoCarrinho: any) => {
+            if (fornecedor.fornecedorId == produtoNoCarrinho.fornecedorId){
+              fornecedor.produtos.push(produtoNoCarrinho)
+              fornecedor.produtos.map(
+                (produtoDoFornecedor: any) => {
+                  produtoDoFornecedor.fornecedorId = fornecedor.fornecedorId
+                }
+              )
+            }
+          }
+        )
+        console.log(fornecedor, index)
+      }
+      )
+      setProdutosDosFornecedores(containerDeObjetos)
     }
     gerarPedido()
+      gerarFornecedores()
+
+    async function gerarPedido() {
+      /*PASSA O CARRINHO COMO PARÂMETRO DO AXIOS COMO POST*/
+      console.log("Começou, VAI!")
+      produtosDosFornecedores.map(
+        async (produtoDoFornecedor) => {
+          const response = await axios({
+            method: 'post',
+            url: `http://localhost:8157/api/tenant/${tenantId}/pedido`,
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer '+ token
+            },              
+            timeout: 50000,
+            data   : produtoDoFornecedor  
+          })
+          console.log(response)
+        }
+      )        /*
+        Cria os pedidos pelo id do fornecedor
+        há uma variavel produtos, fazer o map de acordo com o id da empresa
+        e assim fazer a requisição
+        */
+    }
+
+
+    async function deletarCarrinho() {
+      const deletarCarrinho: any = await api.delete('/carrinho/') 
+      console.log(deletarCarrinho)
+    }
+    //deletarCarrinho()
+  }, []
+  )
+  
 
     return (
       <>

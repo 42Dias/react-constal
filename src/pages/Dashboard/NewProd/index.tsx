@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import {
   GridProdsFour,
@@ -18,9 +18,29 @@ import Header from "../../../components/Header";
 import { AiOutlinePlus, AiOutlineClose } from "react-icons/ai";
 import { toast } from 'react-toastify';
 import { Menu } from "../../../components/Menu";
+import { formatPrice } from "../../../util/format";
+import axios from "axios";
+import { Product } from "../../../types";
+import { api } from "../../../services/api";
 
 export default function NewProd() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [modalIsOpenEdit, setIsOpenEdit] = React.useState(false);
+  const [index, setIndex] = React.useState(0);
+
+  const [nome, setNome] = useState('')
+  const [codigoDaEmpresa, setCodigoDaEmpresa] = useState('')
+  const [descricao, setDescricao] = useState('')
+  const [caracteristicasTecnicas, setCaracteristicasTecnicas] = useState('')
+  const [preco, setPreco] = useState('')
+  const [prazo, setPrazo] = useState('')
+  const [quantidade, setQuantidade] = useState('')
+  const [frete, setFrete] = useState('')
+  const [imagem, setImagem] = useState('')
+  const [categoria, setCategoria] = useState('')
+
+
+
 
   function openModal() {
     setIsOpen(true);
@@ -32,6 +52,7 @@ export default function NewProd() {
 
   function closeModal() {
     setIsOpen(false);
+    setIsOpenEdit(false)
   }
 
   function messageCancel() {
@@ -49,6 +70,78 @@ export default function NewProd() {
     setIsOpen(false);
   }
 
+  async function addProduct(){
+    const data = {
+      data:{
+        "nome": nome, 
+        "codigo": codigoDaEmpresa, 
+        "descricao": descricao, 
+        "caracteristicasTecnicas": caracteristicasTecnicas, 
+        "preco": preco, 
+        "prazo": prazo, 
+        "quantidade": quantidade, 
+        "frete": frete, 
+        "categoria": categoria,
+        "imagemUrl": imagem, 
+        "status": "pendente"
+      }
+
+    }
+    const response: any = api.post('produto', data)
+    console.log(await response)
+    if(response.status == 200){
+      messageApprove()
+    }
+    else if(response.statusText != "OK"){
+      toast.info('Algo deu errado, tente mais tarde :(')
+    }
+  }
+ /*
+   app.post(
+    `/tenant/:tenantId/produto`,
+    require('./produtoCreate').default,
+  );*/
+
+  /*
+  PASSAR A REQUISIÇÃO COMO DATA
+  BODY: DATA
+  */
+
+  // app.get(
+  //   `/tenant/:tenantId/categoria`,
+  //   require('./categoriaList').default,
+  // );
+
+  const [products = [], setProducts] = useState<Product[]>([]);
+  const [categorias = [], setCategorias] = useState<any[]>([]);
+
+  useEffect(() => {
+    async function loadCategorias() {
+      const categoriasResponse = await api.get("categoria");
+      const categoriasDoBack = categoriasResponse.data.rows
+      console.log(categoriasDoBack)
+      setCategorias(categoriasDoBack)
+    }
+    loadCategorias();
+  }, []);
+
+  useEffect(() => {
+    async function loadProducts() {
+
+      const response = await api.get("produto");
+      console.log(response.data);
+      setProducts(response.data.rows);
+
+    }
+    loadProducts();
+  }, []);
+  
+  function openModalEditProduct(index: number): any  {
+    setIsOpenEdit(true)
+    setIndex(index)
+    console.log("DEVERIA ABRIR")
+  }
+
   return (
     <>
       <Header />
@@ -59,106 +152,33 @@ export default function NewProd() {
           <h2>Meus produtos</h2>
           <p onClick={openModal}>Adicionar</p>
         </ContentNew>
-
         <GridProdsFour>
-          <ProdContainerSingle>
+        {/* Como pegar os dados dos inputs? => login */}
+        {
+        products.map(
+          (product, index) => (
+            <>
+            <ProdContainerSingle>
             <img src={prodone} alt="" />
-            <h5>Nome do produto</h5>
-            <p>Descrição do produto com especificações técnicas</p>
+            <h5>{product.nome}</h5>
+            <p>{product.descricao}</p>
             <div className="btn-group-add">
               <span>
-                R$<b>219,99</b>
+                {formatPrice(product.preco)}
               </span>
-              <div className="btn-more">
+              <div className="btn-more"
+              // onClick={openModalEditProduct(index)}
+              >
                 <AiOutlinePlus />
               </div>
             </div>
           </ProdContainerSingle>
 
-          <ProdContainerSingle>
-            <img src={prodtwo} alt="" />
-            <h5>Nome do produto</h5>
-            <p>Descrição do produto com especificações técnicas</p>
-            <div className="btn-group-add">
-              <span>
-                R$<b>219,99</b>
-              </span>
-              <div className="btn-more">
-                <AiOutlinePlus />
-              </div>
-            </div>
-          </ProdContainerSingle>
-
-          <ProdContainerSingle>
-            <img src={prodthree} alt="" />
-            <h5>Nome do produto</h5>
-            <p>Descrição do produto com especificações técnicas</p>
-            <div className="btn-group-add">
-              <span>
-                R$<b>219,99</b>
-              </span>
-              <div className="btn-more">
-                <AiOutlinePlus />
-              </div>
-            </div>
-          </ProdContainerSingle>
-
-          <ProdContainerSingle>
-            <img src={prodfour} alt="" />
-            <h5>Nome do produto</h5>
-            <p>Descrição do produto com especificações técnicas</p>
-            <div className="btn-group-add">
-              <span>
-                R$<b>219,99</b>
-              </span>
-              <div className="btn-more">
-                <AiOutlinePlus />
-              </div>
-            </div>
-          </ProdContainerSingle>
-
-          <ProdContainerSingle>
-            <img src={prodone} alt="" />
-            <h5>Nome do produto</h5>
-            <p>Descrição do produto com especificações técnicas</p>
-            <div className="btn-group-add">
-              <span>
-                R$<b>219,99</b>
-              </span>
-              <div className="btn-more">
-                <AiOutlinePlus />
-              </div>
-            </div>
-          </ProdContainerSingle>
-
-          <ProdContainerSingle>
-            <img src={prodtwo} alt="" />
-            <h5>Nome do produto</h5>
-            <p>Descrição do produto com especificações técnicas</p>
-            <div className="btn-group-add">
-              <span>
-                R$<b>219,99</b>
-              </span>
-              <div className="btn-more">
-                <AiOutlinePlus />
-              </div>
-            </div>
-          </ProdContainerSingle>
-
-          <ProdContainerSingle>
-            <img src={prodthree} alt="" />
-            <h5>Nome do produto</h5>
-            <p>Descrição do produto com especificações técnicas</p>
-            <div className="btn-group-add">
-              <span>
-                R$<b>219,99</b>
-              </span>
-              <div className="btn-more">
-                <AiOutlinePlus />
-              </div>
-            </div>
-          </ProdContainerSingle>
-
+            </>
+          )
+        )
+        }
+{/* 
           <ProdContainerSingle className="prodAwait">
             <img src={prodfour} alt="" />
             <h5>Nome do produto</h5>
@@ -171,9 +191,11 @@ export default function NewProd() {
                 <AiOutlinePlus />
               </div>
             </div>
-          </ProdContainerSingle>
+          </ProdContainerSingle> */}
         </GridProdsFour>
       </div>
+      
+
 
       <ModalContainerVendedor>
         <Modal
@@ -192,36 +214,52 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Nome do produto</label>
-                <input type="text" placeholder="Nome do produto" />
+                <input type="text" placeholder="Nome do produto"
+                onChange={(text) => setNome(text.target.value)}
+                />
+                
               </ContentFormNew>
-
+              
               <ContentFormNew>
                 <label htmlFor="">Código da empresa</label>
-                <input type="text" placeholder="Código da empresa" />
+                <input type="text" placeholder="Código da empresa"
+                onChange={(text) => setCodigoDaEmpresa(text.target.value)}
+                />
               </ContentFormNew>
 
               <ContentFormNew>
                 <label htmlFor="">Descrição</label>
-                <input type="text" placeholder="Descrição" />
+                <input type="text" placeholder="Descrição"
+                onChange={(text) => setDescricao(text.target.value)}
+                />
               </ContentFormNew>
 
               <ContentFormNew>
-                <label htmlFor="">Especificações técnicas</label>
-                <input type="text" placeholder="Especificações técnicas" />
+                <label htmlFor="">Características técnicas</label>
+                <input type="text" placeholder="Especificações técnicas"
+                onChange={(text) => setCaracteristicasTecnicas(text.target.value)}
+                />
               </ContentFormNew>
+
 
               <ContentFormNew>
                 <label htmlFor="">Preço</label>
-                <input type="text" placeholder="Preço" />
+                <input type="number" placeholder="Preço"
+                onChange={(text) => setPreco(text.target.value)}
+                />
               </ContentFormNew>
 
               <ContentFormNew>
-                <label htmlFor="">Categoria</label>
-                <select>
-                  <option value="">Prato</option>
-                  <option value="">Janelas</option>
-                  <option value="">Madeiras</option>
-                </select>
+                <label htmlFor="">URL da imagem</label>
+                <input type="text" placeholder="www.imagem/suaimagem.com"
+                onChange={(text) => setImagem(text.target.value)}
+                />
+              </ContentFormNew>
+
+              {/* 
+              <ContentFormNew>
+                <label htmlFor="">Especificações técnicas</label>
+                <input type="text" placeholder="Especificações técnicas" />
               </ContentFormNew>
 
               <ContentFormNew>
@@ -237,16 +275,22 @@ export default function NewProd() {
                 <label htmlFor="">Unidades de medida</label>
                 <input type="text" placeholder="Unidades de medida" />
               </ContentFormNew>
+              */}
 
               <ContentFormNew>
                 <label htmlFor="">Prazo de entrega</label>
-                <input type="text" placeholder="Prazo de entrega" />
+                <input type="text" placeholder="Prazo de entrega"
+                onChange={(text) => setPrazo(text.target.value)}
+                />
               </ContentFormNew>
 
               <ContentFormNew>
-                <label htmlFor="">Quantidade por embalagem</label>
-                <input type="text" placeholder="Quantidade por embalagem" />
+                <label htmlFor="">Quantidade</label>
+                <input type="number" placeholder="Quantidade"
+                onChange={(text) => setQuantidade(text.target.value)} />
               </ContentFormNew>
+
+              {/* 
 
               <ContentFormNew>
                 <label htmlFor="">Peso líquido</label>
@@ -257,20 +301,39 @@ export default function NewProd() {
               <ContentFormNew>
                 <label htmlFor="">Peso bruto</label>
                 <input type="text" placeholder="Peso bruto" />
-              </ContentFormNew>
+              </ContentFormNew> 
+              */}
 
               <ContentFormNew>
                 <label htmlFor="">Tipo de frete</label>
-                <select>
-                  <option value="">Sedex</option>
-                  <option value="">A combinar</option>
-                  <option value="">Retirar</option>
+                <select
+                onChange={(text) => setFrete(text.target.value)}
+                >
+                  <option value="por_categoria">Por Cep</option>
+                  <option value="a_combinar">A combinar</option>
+                  <option value="retirar">Retirar</option>
+                  <option value="gratis">Grátis</option>
                 </select>
               </ContentFormNew>
 
+              <ContentFormNew>
+                <label htmlFor="">Tipo de categoria</label>
+                <select
+                onChange={(text) => setCategoria(text.target.value)}
+                >
+                  {categorias.map(
+                    (categoria) => (
+                      <option value={categoria.id}>{categoria.nome}</option>
+                    )
+                  )}
+                </select>
+              </ContentFormNew>
+
+              
+
               <div className="buttonsNew">
                 <button type="button" onClick={messageCancel}>Cancelar</button>
-                <button type="button" onClick={messageApprove}>Adicionar</button>
+                <button type="button" onClick={addProduct}>Adicionar</button>
               </div>
             </ModalContent>
           </div>
@@ -279,3 +342,5 @@ export default function NewProd() {
     </>
   );
 }
+
+
