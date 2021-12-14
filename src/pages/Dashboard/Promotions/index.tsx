@@ -1,5 +1,5 @@
 // import {  } from "./styles";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import {
   GridProdsFour,
@@ -18,6 +18,9 @@ import Header from "../../../components/Header";
 import { AiOutlineClose } from "react-icons/ai";
 import { FiCheck } from "react-icons/fi";
 import { Menu } from "../../../components/Menu";
+import { Product } from "../../../types";
+import { api } from "../../../services/api";
+import { formatPrice } from "../../../util/format";
 
 export default function Promotions() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -33,6 +36,23 @@ export default function Promotions() {
   function closeModal() {
     setIsOpen(false);
   }
+
+  const [products = [], setProducts] = useState<Product[]>([]);
+  
+  let productCounter: any[] = [];
+  
+  useEffect(() => {
+    async function loadProducts() {
+      const response = await api.get("produtos");
+      //console.log(response.data);
+      const productsFormated = response.data.record
+      setProducts(productsFormated);
+    }
+    loadProducts();
+  }, []);
+
+  // function updateProduc
+
   return (
     <>
       <Header />
@@ -41,105 +61,38 @@ export default function Promotions() {
         <ContentNew>
           <h2>Promoções</h2>
         </ContentNew>
+        {products.forEach((p) => {
+            if (p.isOferta === 1) {
+              productCounter.push(p);
+            }
 
+            //console.log(productCounter);
+            //console.log(products.length);
+          })}
         <GridProdsFour>
-          <ProdContainerSingle>
-            <img src={prodone} alt="" />
-            <h5>Nome do produto</h5>
-            <p>Descrição do produto com especificações técnicas</p>
-            <div className="btn-group-add">
-              <span>
-                R$<b>219,99</b>
-              </span>
-              <div onClick={openModal} className="btn-more">
-                <FiCheck />
+          {productCounter.length === 0 ? (
+            <p>Nenhum produto em promoção</p>
+          ) :(
+          productCounter.map(
+            (product, index) => (
+              <>
+              <ProdContainerSingle>
+              <img src={prodone} alt="" />
+              <h5>{product.nome}</h5>
+              <p>{product.descricao}</p>
+              <div className="btn-group-add">
+                <span>
+                  {formatPrice(product.preco)}
+                </span>
+                <div className="btn-more">
+                  <FiCheck />
+                </div>
               </div>
-            </div>
-          </ProdContainerSingle>
+            </ProdContainerSingle>            
+            </>)
+            ))
+          }
 
-          <ProdContainerSingle>
-            <img src={prodtwo} alt="" />
-            <h5>Nome do produto</h5>
-            <p>Descrição do produto com especificações técnicas</p>
-            <div className="btn-group-add">
-              <span>
-                R$<b>219,99</b>
-              </span>
-              <div onClick={openModal} className="btn-more">
-                <FiCheck />
-              </div>
-            </div>
-          </ProdContainerSingle>
-
-          <ProdContainerSingle>
-            <img src={prodthree} alt="" />
-            <h5>Nome do produto</h5>
-            <p>Descrição do produto com especificações técnicas</p>
-            <div className="btn-group-add">
-              <span>
-                R$<b>219,99</b>
-              </span>
-              <div onClick={openModal} className="btn-more">
-                <FiCheck />
-              </div>
-            </div>
-          </ProdContainerSingle>
-
-          <ProdContainerSingle>
-            <img src={prodfour} alt="" />
-            <h5>Nome do produto</h5>
-            <p>Descrição do produto com especificações técnicas</p>
-            <div className="btn-group-add">
-              <span>
-                R$<b>219,99</b>
-              </span>
-              <div onClick={openModal} className="btn-more">
-                <FiCheck />
-              </div>
-            </div>
-          </ProdContainerSingle>
-
-          <ProdContainerSingle>
-            <img src={prodone} alt="" />
-            <h5>Nome do produto</h5>
-            <p>Descrição do produto com especificações técnicas</p>
-            <div className="btn-group-add">
-              <span>
-                R$<b>219,99</b>
-              </span>
-              <div onClick={openModal} className="btn-more">
-                <FiCheck />
-              </div>
-            </div>
-          </ProdContainerSingle>
-
-          <ProdContainerSingle>
-            <img src={prodtwo} alt="" />
-            <h5>Nome do produto</h5>
-            <p>Descrição do produto com especificações técnicas</p>
-            <div className="btn-group-add">
-              <span>
-                R$<b>219,99</b>
-              </span>
-              <div onClick={openModal} className="btn-more">
-                <FiCheck />
-              </div>
-            </div>
-          </ProdContainerSingle>
-
-          <ProdContainerSingle>
-            <img src={prodthree} alt="" />
-            <h5>Nome do produto</h5>
-            <p>Descrição do produto com especificações técnicas</p>
-            <div className="btn-group-add">
-              <span>
-                R$<b>219,99</b>
-              </span>
-              <div onClick={openModal} className="btn-more">
-                <FiCheck />
-              </div>
-            </div>
-          </ProdContainerSingle>
 
           <ProdContainerSingle>
             <img src={prodfour} alt="" />
@@ -179,6 +132,14 @@ export default function Promotions() {
                 <label htmlFor="">Novo preço</label>
                 <input type="text" placeholder="R$" />
               </ContentFormNew>
+
+              <ContentFormNew>
+                <label htmlFor="">Texto Promocional</label>
+                <input type="text" placeholder="Incrível Produto com 10% de desconto" />
+              </ContentFormNew>
+
+
+
               <div className="buttonsNew">
                 <a href="">Cancelar</a>
                 <a href="">Adicionar</a>
