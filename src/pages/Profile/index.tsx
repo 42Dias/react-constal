@@ -173,7 +173,7 @@ export default function Profile() {
       <Menu />
       <div className="container">
         <Title>Meus dados</Title>
-
+        
         <CardProfile>
           <img src={imagemUser} alt="profile" width={300}/>
 

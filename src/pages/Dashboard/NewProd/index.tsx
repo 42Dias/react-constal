@@ -98,20 +98,12 @@ export default function NewProd() {
     }
   }
  /*
-   app.post(
-    `/tenant/:tenantId/produto`,
-    require('./produtoCreate').default,
-  );*/
 
   /*
   PASSAR A REQUISIÇÃO COMO DATA
   BODY: DATA
   */
 
-  // app.get(
-  //   `/tenant/:tenantId/categoria`,
-  //   require('./categoriaList').default,
-  // );
 
   const [products = [], setProducts] = useState<Product[]>([]);
   const [categorias = [], setCategorias] = useState<any[]>([]);

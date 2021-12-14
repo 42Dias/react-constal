@@ -62,9 +62,9 @@ export default function PayCart() {
         console.log(fornecedor, index)
       }
       )
+      gerarPedido()
       setProdutosDosFornecedores(containerDeObjetos)
     }
-    gerarPedido()
       gerarFornecedores()
 
     async function gerarPedido() {
