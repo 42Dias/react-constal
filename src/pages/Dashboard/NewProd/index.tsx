@@ -28,7 +28,8 @@ export default function NewProd() {
   const [showModal2, setShowModal2] = React.useState(false);
   const [index, setIndex] = React.useState(0);
 
-  const [produtoToRequisiton, setProdutoToRequisiton] = useState('')
+  const [productToReq, setProductToReq] = useState<Product>()
+
   const [nome, setNome] = useState('')
   const [codigoDaEmpresa, setCodigoDaEmpresa] = useState('')
   const [descricao, setDescricao] = useState('')
@@ -148,7 +149,7 @@ export default function NewProd() {
               setShowModal2(true)
             }
             }>Adicionar</p>
-        </ContentNew>)
+        </ContentNew>
         <GridProdsFour>
         {/* Como pegar os dados dos inputs? => login */}
         {
@@ -166,7 +167,8 @@ export default function NewProd() {
               <div className="btn-more"
               onClick={
                 () => {
-                  setProdutoToRequisiton
+                  setIndex(index)
+                  // setProductToReq(product)
                   setShowModal1(true)
                 }
               }
@@ -198,43 +200,128 @@ export default function NewProd() {
         </GridProdsFour>
       </div>
       
-      
-    <ModalContainerVendedor>
+    
+      {/* {
+      products != undefined ? (
+<ModalContainerVendedor>
       <Modal
         isOpen={showModal1}
         onAfterOpen={afterOpenModal}
-        onRequestClose={closeModal}
+        onRequestClose={() => setShowModal1(false)}
         >
           <div>
             <ModalFlex>
-              <AiOutlineClose onClick={closeModal} />
+              <AiOutlineClose onClick={
+                () => setShowModal1(false)} />
             </ModalFlex>
 
             <ModalContent>
-              <h3>Alterar produto</h3>
+              <img src={upload} alt="" />
+              <h3>Novo produto</h3>
+
               <ContentFormNew>
-                <label htmlFor="">Preço atual</label>
-                <input type="text" placeholder="" />
+                <label htmlFor="">Nome do produto</label>
+                <input type="text" placeholder="Nome do produto"
+                onChange={(text) => setNome(text.target.value)}
+                value={products[index]!.nome}
+                />
+                
+              </ContentFormNew>
+              
+              <ContentFormNew>
+                <label htmlFor="">Código da empresa</label>
+                <input type="text" placeholder="Código da empresa"
+                onChange={(text) => setCodigoDaEmpresa(text.target.value)}
+                />
               </ContentFormNew>
 
               <ContentFormNew>
-                <label htmlFor="">Novo preço</label>
-                <input type="text" placeholder="R$" />
+                <label htmlFor="">Descrição</label>
+                <input type="text" placeholder="Descrição"
+                onChange={(text) => setDescricao(text.target.value)}
+                />
               </ContentFormNew>
+
+              <ContentFormNew>
+                <label htmlFor="">Características técnicas</label>
+                <input type="text" placeholder="Especificações técnicas"
+                onChange={(text) => setCaracteristicasTecnicas(text.target.value)}
+                />
+              </ContentFormNew>
+
+
+              <ContentFormNew>
+                <label htmlFor="">Preço</label>
+                <input type="number" placeholder="Preço"
+                onChange={(text) => setPreco(text.target.value)}
+                />
+              </ContentFormNew>
+
+              <ContentFormNew>
+                <label htmlFor="">URL da imagem</label>
+                <input type="text" placeholder="www.imagem/suaimagem.com"
+                onChange={(text) => setImagem(text.target.value)}
+                />
+              </ContentFormNew>
+
+
+
+              <ContentFormNew>
+                <label htmlFor="">Prazo de entrega</label>
+                <input type="text" placeholder="Prazo de entrega"
+                onChange={(text) => setPrazo(text.target.value)}
+                value=""
+                />
+              </ContentFormNew>
+
+              <ContentFormNew>
+                <label htmlFor="">Quantidade</label>
+                <input type="number" placeholder="Quantidade"
+                onChange={(text) => setQuantidade(text.target.value)} />
+              </ContentFormNew>
+
+
+
+              <ContentFormNew>
+                <label htmlFor="">Tipo de frete</label>
+                <select
+                onChange={(text) => setFrete(text.target.value)}
+                >
+                  <option value="por_categoria">Por Cep</option>
+                  <option value="a_combinar">A combinar</option>
+                  <option value="retirar">Retirar</option>
+                  <option value="gratis">Grátis</option>
+                </select>
+              </ContentFormNew>
+
+              <ContentFormNew>
+                <label htmlFor="">Tipo de categoria</label>
+                <select
+                onChange={(text) => setCategoria(text.target.value)}
+                >
+                  {categorias.map(
+                    (categoria) => (
+                      <option value={categoria.id}>{categoria.nome}</option>
+                    )
+                  )}
+                </select>
+              </ContentFormNew>
+
+              
+
               <div className="buttonsNew">
-                <a href="">Cancelar</a>
-                <a 
-                // href=""
-                onClick={
-                  () => {
-                    console.log("he")
-                  }
-                } >Adicionar</a>
+                <button type="button" onClick={messageCancel}>Cancelar</button>
+                <button type="button" onClick={addProduct}>Adicionar</button>
               </div>
             </ModalContent>
           </div>
         </Modal>
       </ModalContainerVendedor>            
+      ) : (
+        <p>Erro</p> 
+        )
+      }  
+     */}
        
 
       <ModalContainerVendedor>
