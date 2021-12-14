@@ -39,8 +39,29 @@ export default function Profile() {
   const [showModal1, setShowModal1] = React.useState(false);
   const [showModal2, setShowModal2] = React.useState(false);
 
-  function handleNewData() {
+  function criarOuAtualizarEmpresa() {
     toast.info('Eba, estamos cada dia mais perto da morte! :)')
+    const data = {
+      data: {
+        nome : newNome, 
+        marca : newMarca,
+        razaoSocial : newRazaoSocial,
+        cnpj : newCnpj,
+        telefone : newTelefone,
+        ramal : newRamal,
+        email : newEmail,
+        website : newWebsite,
+        cep : newCep,
+        logradouro : newLogradouro,
+        numero : newNumero,
+        complemento : newComplemento,
+        pontoReferencia : newPontoReferencia,
+        cidade : newCidade,
+        estado : newEstado,
+        bairro : newBairro,
+        pix : pix,
+      }
+    }
 
   }
 
@@ -66,7 +87,6 @@ export default function Profile() {
   const [imagemUser, setimagemUser]=useState('');
 
   const [newNome, setNewNome]=useState('');  
-  const [newId, setNewId] = useState('')
   const [newMarca, setNewMarca] = useState('')
   const [newRazaoSocial, setNewRazaoSocial] = useState('')
   const [newCnpj, setNewCnpj] = useState('')
@@ -245,12 +265,6 @@ export default function Profile() {
                     />
                     </ContentFormNew>
                     <ContentFormNew>
-                    <label htmlFor="">Novo Nome da Empresa</label>
-                    <input type="text" placeholder="Seu novo nome"
-                    onChange={(text) => setNewNome(text.target.value)}
-                    />
-                    </ContentFormNew>
-                    <ContentFormNew>
                     <label htmlFor="">Novo Nome da Marca</label>
                     <input type="text" placeholder="Seu novo nome"
                     onChange={(text) => setNewMarca(text.target.value)}
@@ -378,7 +392,7 @@ export default function Profile() {
               }
               <div className="buttonsNew">
                 <button type="button" onClick={messageCancel}>Cancelar</button>
-                <button type="button" onClick={handleNewData}>Adicionar</button>
+                <button type="button" onClick={criarOuAtualizarEmpresa}>Adicionar</button>
               </div>
             </ModalContent>
           </div>
