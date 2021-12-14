@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import user from "../../assets/images/user-profile.png";
 import mastercard from "../../assets/images/master-card.svg";
 import visa from "../../assets/images/visa.svg";
 import Modal from "react-modal";
@@ -22,7 +21,6 @@ import {
 } from "./styles";
 import { Link } from "react-router-dom";
 import { api } from "../../services/api";
-import axios from "axios";
 import { Menu } from "../../components/Menu";
 
 
@@ -50,7 +48,6 @@ export default function Profile() {
     setIsOpen(false);
   }
 
-  let token = localStorage.getItem("token")?.replace(/"/g, "");
   const [email, setEmail]=useState('');
   const [password, setPassword]=useState('');
   const [fullName, setFullName]=useState('');
@@ -63,6 +60,7 @@ export default function Profile() {
   const [estado, setEstado]=useState('');
   const [imagemUser, setimagemUser]=useState('');
   let role = localStorage.getItem("roles")?.replace(/"/g, "");
+  
   useEffect(() => {
     async function loadUser() {
       //Perfil pessoa

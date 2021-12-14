@@ -1,13 +1,19 @@
 export interface Product {
   id: number;
-  /*nome: string;
+  nome: string;
   descricao: string;
   preco: number;
   publicUrl: string;
   isOferta: number;
-  precoOferta: any;*/
+  precoOferta: any;
   quantidade: number;
-  produto:{
+  status: string;
+  empresaId: string;
+  fotos: {
+    publicUrl: string;
+  }
+ 
+  produto: {
     id: number;
     nome: string;
     fotos: string;
@@ -20,7 +26,7 @@ export interface Stock {
   quantidade: number;
 }
 
-export interface Empresa{
+export interface Empresa {
   avatars: string;
   telefone: string;
   email: string;

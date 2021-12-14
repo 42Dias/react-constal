@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
 import { toast } from 'react-toastify';
-import { api } from '../services/api';
+import { api, ip } from '../services/api';
 import axios from 'axios';
 
 let token = localStorage.getItem("token")?.replace(/"/g, "");
@@ -116,7 +116,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
 
           const response = await axios({
               method: 'post',
-              url: `http://localhost:8157/api/tenant/${tenantId}/carrinho/`,
+              url: 'http://'+ip+':8157/api/tenant/${tenantId}/carrinho/', 
               headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
@@ -163,7 +163,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
           
           const response = await axios({
             method: 'put',
-            url: `http://localhost:8157/api/tenant/${tenantId}/carrinhoProduto/`,
+            url: 'http://'+ip+':8157/api/tenant/${tenantId}/carrinhoProduto/',
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
@@ -219,7 +219,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
   
       const response = await axios({
         method: 'delete',
-        url: `http://localhost:8157/api/tenant/${tenantId}/carrinhoProduto/`,
+        url: 'http://'+api+':8157/api/tenant/${tenantId}/carrinhoProduto/',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -283,7 +283,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
 
       const response = await axios({
         method: 'put',
-        url: `http://localhost:8157/api/tenant/${tenantId}/carrinhoProduto/`,
+        url: 'http://'+api+':8157/api/tenant/${tenantId}/carrinhoProduto/',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
