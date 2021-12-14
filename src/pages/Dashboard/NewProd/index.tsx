@@ -24,10 +24,11 @@ import { Product } from "../../../types";
 import { api } from "../../../services/api";
 
 export default function NewProd() {
-  const [modalIsOpen, setIsOpen] = React.useState(false);
-  const [modalIsOpenEdit, setIsOpenEdit] = React.useState(false);
+  const [showModal1, setShowModal1] = React.useState(false);
+  const [showModal2, setShowModal2] = React.useState(false);
   const [index, setIndex] = React.useState(0);
 
+  const [produtoToRequisiton, setProdutoToRequisiton] = useState('')
   const [nome, setNome] = useState('')
   const [codigoDaEmpresa, setCodigoDaEmpresa] = useState('')
   const [descricao, setDescricao] = useState('')
@@ -43,7 +44,7 @@ export default function NewProd() {
 
 
   function openModal() {
-    setIsOpen(true);
+    //setIsOpen(true);
   }
 
   function afterOpenModal() {
@@ -51,23 +52,23 @@ export default function NewProd() {
   }
 
   function closeModal() {
-    setIsOpen(false);
-    setIsOpenEdit(false)
+    //setIsOpen(false);
+    //setIsOpenEdit(false)
   }
 
   function messageCancel() {
     toast.error('Ah, que pena. o seu produto não foi cadastrado na plataforma. Revise algumas informações :(')
-    setIsOpen(false);
+    //setIsOpen(false);
   }
 
   function messageApprove() {
     toast.info('Eba, recebemos o seu pedido. Ele será revisado e logo estará na plataforma :)')
-    setIsOpen(false);
+    //setIsOpen(false);
   }
 
   function improvements() {
     toast.info('Melhore a qualidade das fotos')
-    setIsOpen(false);
+    //setIsOpen(false);
   }
 
   async function addProduct(){
@@ -137,8 +138,8 @@ export default function NewProd() {
   }, []);
   
   function openModalEditProduct(index: number): any  {
-    setIsOpenEdit(true)
-    setIndex(index)
+    // setIsOpenEdit(true)
+    // setIndex(index)
     console.log("DEVERIA ABRIR")
   }
 
@@ -150,8 +151,12 @@ export default function NewProd() {
       <div className="container">
         <ContentNew>
           <h2>Meus produtos</h2>
-          <p onClick={openModal}>Adicionar</p>
-        </ContentNew>
+          <p onClick={
+            () => {
+              setShowModal2(true)
+            }
+            }>Adicionar</p>
+        </ContentNew>)
         <GridProdsFour>
         {/* Como pegar os dados dos inputs? => login */}
         {
@@ -167,8 +172,14 @@ export default function NewProd() {
                 {formatPrice(product.preco)}
               </span>
               <div className="btn-more"
-              // onClick={openModalEditProduct(index)}
+              onClick={
+                () => {
+                  setProdutoToRequisiton
+                  setShowModal1(true)
+                }
+              }
               >
+
                 <AiOutlinePlus />
               </div>
             </div>
@@ -195,11 +206,48 @@ export default function NewProd() {
         </GridProdsFour>
       </div>
       
+      
+    <ModalContainerVendedor>
+      <Modal
+        isOpen={showModal1}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        >
+          <div>
+            <ModalFlex>
+              <AiOutlineClose onClick={closeModal} />
+            </ModalFlex>
 
+            <ModalContent>
+              <h3>Alterar produto</h3>
+              <ContentFormNew>
+                <label htmlFor="">Preço atual</label>
+                <input type="text" placeholder="" />
+              </ContentFormNew>
+
+              <ContentFormNew>
+                <label htmlFor="">Novo preço</label>
+                <input type="text" placeholder="R$" />
+              </ContentFormNew>
+              <div className="buttonsNew">
+                <a href="">Cancelar</a>
+                <a 
+                // href=""
+                onClick={
+                  () => {
+                    console.log("he")
+                  }
+                } >Adicionar</a>
+              </div>
+            </ModalContent>
+          </div>
+        </Modal>
+      </ModalContainerVendedor>            
+       
 
       <ModalContainerVendedor>
         <Modal
-          isOpen={modalIsOpen}
+          isOpen={showModal2}
           onAfterOpen={afterOpenModal}
           onRequestClose={closeModal}
         >
