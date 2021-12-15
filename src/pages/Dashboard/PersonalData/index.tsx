@@ -277,77 +277,77 @@ export default function PersonalData() {
                     </ContentFormNew>
                     
                     <ContentFormNew>
-                    <label htmlFor="">Novo setNewEmail</label>
+                    <label htmlFor="">Novo Email</label>
                     <input type="text" placeholder="Seu novo nome"
                     onChange={(text) => setNewEmail(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
-                    <label htmlFor="">Novo setNewWebsite</label>
+                    <label htmlFor="">Novo Website</label>
                     <input type="text" placeholder="Seu novo nome"
                     onChange={(text) => setNewWebsite(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
-                    <label htmlFor="">Novo setNewCep</label>
+                    <label htmlFor="">Novo Cep</label>
                     <input type="text" placeholder="Seu novo nome"
                     onChange={(text) => setNewCep(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
-                    <label htmlFor="">Novo setNewLogradouro</label>
+                    <label htmlFor="">Novo Logradouro</label>
                     <input type="text" placeholder="Seu novo nome"
                     onChange={(text) => setNewLogradouro(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
-                    <label htmlFor="">Novo setNewNumero</label>
+                    <label htmlFor="">Novo Numero</label>
                     <input type="text" placeholder="Seu novo nome"
                     onChange={(text) => setNewNumero(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
-                    <label htmlFor="">Novo setNewComplemento</label>
+                    <label htmlFor="">Novo Complemento</label>
                     <input type="text" placeholder="Seu novo nome"
                     onChange={(text) => setNewComplemento(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
-                    <label htmlFor="">Novo setNewPontoReferencia</label>
+                    <label htmlFor="">Novo PontoReferencia</label>
                     <input type="text" placeholder="Seu novo nome"
                     onChange={(text) => setNewPontoReferencia(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
-                    <label htmlFor="">Novo setNewCidade</label>
+                    <label htmlFor="">Novo Cidade</label>
                     <input type="text" placeholder="Seu novo nome"
                     onChange={(text) => setNewCidade(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
-                    <label htmlFor="">Novo setNewEstado</label>
+                    <label htmlFor="">Novo Estado</label>
                     <input type="text" placeholder="Seu novo nome"
                     onChange={(text) => setNewEstado(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
-                    <label htmlFor="">Novo setNewBairro</label>
+                    <label htmlFor="">Novo Bairro</label>
                     <input type="text" placeholder="Seu novo nome"
                     onChange={(text) => setNewBairro(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
-                    <label htmlFor="">Novo setNewPix</label>
+                    <label htmlFor="">Novo Pix</label>
                     <input type="text" placeholder="Seu novo nome"
                     onChange={(text) => setNewPix(text.target.value)}
                     />
