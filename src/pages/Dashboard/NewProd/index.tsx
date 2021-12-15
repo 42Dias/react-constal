@@ -31,6 +31,7 @@ export default function NewProd() {
 
   const [productToReq, setProductToReq] = useState<any>()
 
+  const [id, setId] = useState('')
   const [nome, setNome] = useState('')
   const [codigoDaEmpresa, setCodigoDaEmpresa] = useState('')
   const [descricao, setDescricao] = useState('')
@@ -40,8 +41,8 @@ export default function NewProd() {
   const [quantidade, setQuantidade] = useState<any>()
   const [frete, setFrete] = useState('')
   const [imagem, setImagem] = useState('')
-  const [categoria, setCategoria] = useState('')
-
+  const [categoria, setCategoria] = useState<any>()
+  console.log(categoria)
 
 
 
@@ -54,8 +55,8 @@ export default function NewProd() {
   }
 
   function closeModal() {
-    //setIsOpen(false);
-    //setIsOpenEdit(false)
+    setShowModal1(false)
+    setShowModal2(false)
   }
 
   function messageCancel() {
@@ -84,7 +85,7 @@ export default function NewProd() {
         "prazo": prazo, 
         "quantidade": quantidade, 
         "frete": frete, 
-        "categoria": categoria,
+        "categoriaId": categoria,
         "imagemUrl": imagem, 
         "status": "pendente"
       }
@@ -103,21 +104,23 @@ export default function NewProd() {
   async function changeProduct(){
     const data = {
       data:{
+        "id": id,
         "nome": nome, 
         "codigo": codigoDaEmpresa, 
         "descricao": descricao, 
         "caracteristicasTecnicas": caracteristicasTecnicas, 
         "preco": preco, 
-        "prazo": prazo, 
+        "prazo": prazo,
         "quantidade": quantidade, 
         "frete": frete, 
-        "categoria": categoria,
+        "categoriaId": categoria.id,
         "imagemUrl": imagem, 
         "status": "pendente"
       }
 
     }
-    const response: any = api.post('produto', data)
+    console.log(data)
+    const response: any = api.put(`produto/${id}`, data)
     console.log(await response)
     if(response.status == 200){
       messageApprove()
@@ -125,13 +128,13 @@ export default function NewProd() {
     else if(response.statusText != "OK"){
       toast.info('Algo deu errado, tente mais tarde :(')
     }
+    console.log(response)
   }
- /*
+  async function deleteProduct(prodId: any){
+    const response = await api.delete(`produtoDeleteOne/${prodId}`)
+    console.log(response.status)
+  }
 
-  /*
-  PASSAR A REQUISIÇÃO COMO DATA
-  BODY: DATA
-  */
 
 
   const [products = [], setProducts] = useState<Product[]>([]);
@@ -139,6 +142,7 @@ export default function NewProd() {
 
   function setProductOnClick(){
     try{      
+      setId(products[index].id)
       setNome(products[index].nome)
       setCodigoDaEmpresa(products[index].codigoDaEmpresa)
       setDescricao(products[index].descricao)
@@ -176,11 +180,7 @@ export default function NewProd() {
     loadProducts();
   }, []);
   
-  function openModalEditProduct(index: number): any  {
-    // setIsOpenEdit(true)
-    // setIndex(index)
-    console.log("DEVERIA ABRIR")
-  }
+  console.log(nome)
 
   console.log(productToReq)
 
@@ -212,13 +212,21 @@ export default function NewProd() {
               <span>
                 {formatPrice(product.preco)}
               </span>
+
+              <div onClick={
+                () => deleteProduct(product.id)
+              }>
+                  Deletar
+              </div>
+
               <div className="btn-more"
               onClick={
                 () => {
                   setIndex(index)
+                  console.log(index)
                   setProductToReq(product.id)
                   setShowModal1(true)
-                  // setProductOnClick(index)//A implementar
+                  setProductOnClick()//A implementar
                 }
               }
               >
