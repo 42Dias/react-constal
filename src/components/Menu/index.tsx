@@ -27,7 +27,7 @@ export function Menu() {
       </Container>
      )
   }
-  
+  //Adm
   function Adm() {
     return (
       <Container>
@@ -39,7 +39,7 @@ export function Menu() {
           </button>
           <div className="dropdown-content">
             <div className="drop-grid">
-              <Link to="/meus-produtos">Usuários</Link>
+              <Link to="/vendas">Vendas por Empresa</Link>
               <Link to="/perguntas">Histórico</Link> 
               <Link to="/assinaturas">Planos</Link>
               <Link to="/assinaturas">assinaturas</Link>

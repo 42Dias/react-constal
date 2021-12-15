@@ -26,7 +26,7 @@ import React, { useEffect, useState } from "react";
 
 import { useCart } from "../../hooks/useCart";
 import { toast } from "react-toastify";
-import { api, ip } from "../../services/api";
+import { api, ip, role } from "../../services/api";
 import axios from "axios";
 import { margin } from "polished";
 
@@ -95,7 +95,11 @@ const Header = (): JSX.Element => {
 
   let history = useHistory();
   function handleClickLogin() {
+    if(role == "pessoa" ){
     history.push("/meu-perfil");
+    }else{
+      history.push("/dados-pessoais");
+    }
   }
 
   async function Login() {
