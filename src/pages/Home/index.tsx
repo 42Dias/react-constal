@@ -31,6 +31,7 @@ interface Product {
   descricao: string;
   preco: number;
   publicUrl: string;
+  imagemUrl: string;
   isOferta: number;
   precoOferta: any;
   quantidadeNoEstoque: number;
@@ -41,7 +42,7 @@ interface ProductFormatted extends Product {
 }
 
 let productCounter: any[] = [];
-
+var prodId = "";
 SwiperCore.use([Autoplay,Pagination,Navigation]);
 
 const Home = (): JSX.Element => {
@@ -62,6 +63,7 @@ const Home = (): JSX.Element => {
         return { ...product, preco: formatPrice(product.preco) };
       });
       setProducts(productsFormated);
+      //productCounter = []; 
     }
     loadProducts();
   }, []);
@@ -130,8 +132,10 @@ const Home = (): JSX.Element => {
         <div className="container">
           <h2>Ofertas e promoções</h2>
           {products.forEach((p) => {
-            if (p.isOferta === 1) {
+            if (p.isOferta === 1 && prodId != p.id) {
               productCounter.push(p);
+              prodId = p.id;
+              console.log(p);
             }
 
             //console.log(productCounter);
@@ -152,7 +156,7 @@ const Home = (): JSX.Element => {
                   {product.isOferta === 1 && (
                     <li key={product.id}>
                       <Link to={`/produto/${product.id}`}>
-                        <img src={product.publicUrl} alt={product.nome} />
+                        <img src={product.imagemUrl} alt={product.nome} />
                       </Link>
                       <strong>{product.nome}</strong>
                       <p>R$ {product.precoOferta}</p>
@@ -190,7 +194,7 @@ const Home = (): JSX.Element => {
               <SwiperSlide>
                 <li key={product.id}>
                   <Link to={`/produto/${product.id}`}>
-                    <img src={product.publicUrl} alt={product.nome} />
+                    <img src={product.imagemUrl} alt={product.nome} />
                   </Link>
                   <strong>{product.nome}</strong>
                   <p>{product.preco}</p>
