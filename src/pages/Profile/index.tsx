@@ -39,8 +39,7 @@ export default function Profile() {
   const [showModal1, setShowModal1] = React.useState(false);
   const [showModal2, setShowModal2] = React.useState(false);
 
-  function criarOuAtualizarEmpresa() {
-    toast.info('Eba, estamos cada dia mais perto da morte! :)')
+  async function criarOuAtualizarEmpresa() {
     const data = {
       data: {
         nome : newNome, 
@@ -62,7 +61,10 @@ export default function Profile() {
         pix : pix,
       }
     }
-
+    const response = await api.post('empresa-perfil', data)
+    console.log(response)
+    toast.info('Eba, estamos cada dia mais perto da morte! :)')
+    closeModal()
   }
 
   function afterOpenModal() {
@@ -86,6 +88,7 @@ export default function Profile() {
   const [estado, setEstado]=useState('');
   const [imagemUser, setimagemUser]=useState('');
 
+ 
   const [newNome, setNewNome]=useState('');  
   const [newMarca, setNewMarca] = useState('')
   const [newRazaoSocial, setNewRazaoSocial] = useState('')
@@ -111,7 +114,8 @@ export default function Profile() {
 
 
   let role = localStorage.getItem("roles")?.replace(/"/g, "");
-  
+
+
   useEffect(() => {
     async function loadUser() {
       //Perfil pessoa
