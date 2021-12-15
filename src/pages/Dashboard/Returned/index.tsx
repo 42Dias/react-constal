@@ -70,7 +70,7 @@ export default function Returned() {
         <TitleVendas>Vendas</TitleVendas>
 
         <MenuSell>
-                                 <span>Pendentes({  pedidosPendentes.length})</span>
+        <Link to="/vendas"><span>Pendentes({  pedidosPendentes.length})</span></Link>
           <Link to="/confirmadas"><span>Confirmadas({pedidosConfirmados.length})</span></Link>
             <Link to="/devolvidas"><span><b>Devolvidas({ pedidosDevolvidos.length})</b></span></Link>
           <Link to="/denunciadas"><span>Denunciadas({pedidosDenunciador.length})</span></Link>

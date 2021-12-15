@@ -69,7 +69,8 @@ export default function Denounced() {
         <TitleVendas>Vendas</TitleVendas>
 
         <MenuSell>
-                                 <span>Pendentes({  pedidosPendentes.length})</span>
+        <Link to="/vendas"><span>Pendentes({  pedidosPendentes.length})</span></Link>
+
           <Link to="/confirmadas"><span>Confirmadas({pedidosConfirmados.length})</span></Link>
             <Link to="/devolvidas"><span>Devolvidas({ pedidosDevolvidos.length})</span></Link>
           <Link to="/denunciadas"><span><b>Denunciadas({pedidosDenunciador.length})</b></span></Link>
