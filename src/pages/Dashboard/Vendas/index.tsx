@@ -219,7 +219,7 @@ async function loadPedidosDenunciador() {
               </div>
 
               <div>
-                <a href="">Ver detalhes</a>
+                <Link to={`/detalhes-da-venda/${pedidos.id}`}>Ver detalhes</Link>
                 <h3>Valor Total: {formatPrice(pedidos.valorTotal)}</h3>
                 <h3>Status: <b>{pedidos.status}</b></h3>
               </div>
