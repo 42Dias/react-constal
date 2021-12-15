@@ -5,17 +5,20 @@ import { Menu } from "../../../components/Menu";
 import { useEffect, useState } from "react";
 import { api, role } from "../../../services/api";
 import { Empresa } from "../../../types";
+import { toast } from "react-toastify";
+import { Toast } from "react-toastify/dist/components";
 
 
 export default function Vendas() {
   const [pedidos = [], setPedidos] = useState<any[]>([]);
-  const [pedidosPendentes = [], setPedidosPendentes] = useState<any[]>([])
-  const [pedidosConfirmados = [], setPedidosConfirmados] = useState<any[]>([])
-  const [pedidosDevolvidos = [], setPedidosDevolvidos] = useState<any[]>([])
-  const [pedidosDenunciador = [], setPedidosDenunciador] = useState<any[]>([])
+  const [pedidosPendentes = [], setPedidosPendentes] = useState<any[]>([]);
+  const [pedidosConfirmados = [], setPedidosConfirmados] = useState<any[]>([]);
+  const [pedidosDevolvidos = [], setPedidosDevolvidos] = useState<any[]>([]);
+  const [pedidosDenunciador = [], setPedidosDenunciador] = useState<any[]>([]);
   const [empresas = [], setEmpresas] = useState<Empresa[]>([]);
-  const [empresa, setEmpresa] = useState('')
-
+  let [empresa, setEmpresa] = useState('');
+  let [display, setDisplay] = useState('none');
+  let [filter, setFilter] = useState('');
   useEffect(
     () => {
       async function loadPedidosPendentes() {
@@ -49,7 +52,7 @@ export default function Vendas() {
           }
         )
       }
-      var filter = "";
+      
       async function loadUser() {
         const response = await api.get('empresa?filter%5Bstatus%5D=aprovado')
           .then(response => {
@@ -60,13 +63,14 @@ export default function Vendas() {
         console.log(response.rows);
       }
       if (role == "admin") {
+        setDisplay('block'); 
         loadUser();
-      }
+      }else{
       async function loadPedidos() {
         console.log("requisição do pedido feita")
         const res = await api.get('pedido')
         console.log(res.data)
-        setPedidos(res.data)
+        setPedidos(res.data.rows)
         loadPedidosPendentes()
         loadPedidosConfirmados()
         loadPedidosDevolvidos()
@@ -74,7 +78,17 @@ export default function Vendas() {
 
       }
       loadPedidos()
-    }, [])
+    }
+    }, []);
+    
+    async function empresaT(empresaId: string){
+      console.log("Entrou empresaT");
+      console.log(empresaId);
+        console.log("requisição do pedido feita")
+        const res = await api.get('pedido?filter%5BfornecedorEmpresa%5D='+empresaId)
+        console.log(res.data);
+        setPedidos(res.data.rows);
+    }
 
   return (
     <>
@@ -82,16 +96,18 @@ export default function Vendas() {
       <Menu />
       <div className="container">
         <TitleVendas>Vendas</TitleVendas>
+        <div style={{display: display}}>
         <label htmlFor="">Selecionar Empresa: </label>
         <select 
-          onChange={(text) => setEmpresa(text.target.value)}
+          onChange={(text) => setEmpresa(text.target.value)} onClick={() => empresaT(empresa)}
         >
           {empresas.map(
             (empresa) => (
-              <option value={empresa.id}>{empresa.razaoSocial}</option>
+              <option value={empresa.id} >{empresa.razaoSocial}</option>
             )
           )}
         </select>
+        </div>
         <MenuSell>
           <span><b>Pendentes({pedidosPendentes.length})</b></span>
           <Link to="/confirmadas"><span>Confirmadas({pedidosConfirmados.length})</span></Link>
@@ -99,12 +115,14 @@ export default function Vendas() {
           <Link to="/denunciadas"><span>Denunciadas({pedidosDenunciador.length})</span></Link>
         </MenuSell>
         {
-          pedidosPendentes.map(
+          pedidos.map(
             (pedidos) => {
+              console.log("pedidos");
+              console.log(pedidos);
               <ContainerMenuSell>
                 <div>
-                  <span>Nome do cliente</span>
-                  <h3>Quantidade de produtos: XXX</h3>
+                  <span>{pedidos.compradorUser.firstName}</span>
+                  <h3>Quantidade de produtos: {pedidos.quantidadeProdutos}</h3>
                   <h3>Endereço para envio: XXX</h3>
                   <h3>Cidade/Estado</h3>
                 </div>

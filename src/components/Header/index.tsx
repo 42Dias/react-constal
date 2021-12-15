@@ -36,9 +36,8 @@ const Header = (): JSX.Element => {
 
   const { cart } = useCart();
 
-  console.log("cart")
-  console.log(cart)
-
+  //console.log("cart")
+  //console.log(cart)
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
@@ -156,8 +155,8 @@ const Header = (): JSX.Element => {
   }, []);
   useEffect(() => {
     async function loadCart() {
-      console.log("await cart")
-      console.log(await cart)
+      //console.log("await cart")
+      //console.log(await cart)
 
       setCartSize(1)
     }
