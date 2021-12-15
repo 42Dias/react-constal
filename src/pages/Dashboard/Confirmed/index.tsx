@@ -72,7 +72,7 @@ export default function Confirmed() {
         <TitleVendas>Vendas</TitleVendas>
 
         <MenuSell>
-                                <span>Pendentes({  pedidosPendentes.length})</span>
+          <Link to="/vendas"><span>Pendentes({  pedidosPendentes.length})</span></Link>
           <Link to="/confirmadas"><span><b>Confirmadas({pedidosConfirmados.length})</b></span></Link>
             <Link to="/devolvidas"><span>Devolvidas({ pedidosDevolvidos.length})</span></Link>
           <Link to="/denunciadas"><span>enunciadas({pedidosDenunciador.length})</span></Link>
