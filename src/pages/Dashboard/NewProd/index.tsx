@@ -85,7 +85,7 @@ export default function NewProd() {
         "prazo": prazo, 
         "quantidade": quantidade, 
         "frete": frete, 
-        "categoriaId": categoria,
+        "categoriaId": categoria.id,
         "imagemUrl": imagem, 
         "status": "pendente"
       }

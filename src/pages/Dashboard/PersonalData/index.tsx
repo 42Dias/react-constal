@@ -12,6 +12,7 @@ import { ContentFormNew } from "../NewProd/styles";
 import { ModalFlex } from "../Promotions/styles";
 import Modal from "react-modal";
 import {
+  Btn,
   // CardProfile,
   // CardDatas,
   // Title,
@@ -133,7 +134,8 @@ export default function PersonalData() {
               <span>Senha:</span>
               <p>******</p>
             </ContentDetails>
-            <Link to="">Alterar</Link>
+            <Btn
+            >Alterar</Btn>
           </CardDatailsContent>
         </CardDatails>
 
@@ -176,9 +178,9 @@ export default function PersonalData() {
           </CardDatailsContent>
         </CardDatails>
 
-        <button onClick={
-            () => {setShowModal1(true)}
-            }>Alterar Dados</button>
+      <Btn  onClick={
+          () => {setShowModal1(true)}
+          }>Alterar Dados</Btn>
 
         <CardDatails>
           <h2>Endereço</h2>
@@ -192,20 +194,20 @@ export default function PersonalData() {
               </small>
             </ContentDetails>
             <div className="flex-btn">
-              <button //estava como link
+              <Btn //estava como link
               onClick={
                 () => setShowModal2(true)}
-              >Alterar</button>
-              <button //estava como link
+              >Alterar</Btn>
+              <Btn//estava como link
               onClick={
                 () => setShowModal2(false)}
-              >Cancelar</button>
+              >Cancelar</Btn>
             </div>
           </CardDatailsContent>
-          <button
+          <Btn
           onClick={
             () => setShowModal2(true)
-          }>Novo endereço</button>
+          }>Novo endereço</Btn>
         </CardDatails>
       </div>
 
