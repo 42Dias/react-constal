@@ -66,6 +66,20 @@ export const CardDatails = styled.div`
 
 `
 
+export const Btn = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 41px;
+  text-decoration: none;
+  background: black;
+  color: white;
+  border-radius: 5px;
+  border:0;
+
+`
+
 export const CardDatailsContent = styled.div`
   background: white;
   width: 100%;
@@ -83,7 +97,7 @@ export const CardDatailsContent = styled.div`
     }
   }
 
-  a {
+  button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -93,9 +107,10 @@ export const CardDatailsContent = styled.div`
     background: black;
     color: white;
     border-radius: 5px;
+    border:0;
   }
 
-  a:nth-child(1) {
+  button:nth-child(1) {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -106,6 +121,7 @@ export const CardDatailsContent = styled.div`
     color: black;
     border-radius: 5px;
     border: 1px solid black;
+    margin: 0 20px;
   }
 
   .flex-btn {
