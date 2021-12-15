@@ -220,6 +220,7 @@ export default function Profile() {
   console.log(savedData)
 
   clientLocalStorage()  
+
   return (
     <>
       <Header />
@@ -243,8 +244,12 @@ export default function Profile() {
           <h2>Dados da conta</h2>
           <button onClick={
             () => {setShowModal2(true)}
-            }>Alterar Dados</button>
-            <ModalContainerVendedor>
+            }>
+              Alterar Dados    
+          </button>
+        </CardDatails>
+
+    <ModalContainerVendedor>
       <Modal
         isOpen={showModal2}
         onAfterOpen={afterOpenModal}
@@ -260,142 +265,16 @@ export default function Profile() {
               <img src={upload} alt="" />
               <h3>Alterar dados</h3>
               {
-                role == 'empresa'? (
-                  <>
-                    <ContentFormNew>
-                    <label htmlFor="">Novo Nome da Empresa</label>
-                    <input type="text" placeholder="Seu novo nome"
-                    onChange={(text) => setNewNome(text.target.value)}
-                    />
-                    </ContentFormNew>
-                    <ContentFormNew>
-                    <label htmlFor="">Novo Nome da Marca</label>
-                    <input type="text" placeholder="Seu novo nome"
-                    onChange={(text) => setNewMarca(text.target.value)}
-                    />
-                    </ContentFormNew>
-                    <ContentFormNew>
-                    <label htmlFor="">Novo Nome da Razão Social</label>
-                    <input type="text" placeholder="Seu novo nome"
-                    onChange={(text) => setNewRazaoSocial(text.target.value)}
-                    />
-                    </ContentFormNew>
-                    <ContentFormNew>
-                    <label htmlFor="">Novo Telefone</label>
-                    <input type="text" placeholder="Seu novo nome"
-                    onChange={(text) => setNewTelefone(text.target.value)}
-                    />
-                    </ContentFormNew>
-
-                    <ContentFormNew>
-                    <label htmlFor="">Novo CNPJ</label>
-                    <input type="text" placeholder="Seu novo nome"
-                    onChange={(text) => setNewCnpj(text.target.value)}
-                    />
-                    </ContentFormNew>
-
-                    <ContentFormNew>
-                    <label htmlFor="">Novo Ramal</label>
-                    <input type="text" placeholder="Seu novo nome"
-                    onChange={(text) => setNewRamal(text.target.value)}
-                    />
-                    </ContentFormNew>
-
-                    <ContentFormNew>
-                    <label htmlFor="">Novo Ramal</label>
-                    <input type="text" placeholder="Seu novo nome"
-                    onChange={(text) => setNewRamal(text.target.value)}
-                    />
-                    </ContentFormNew>
-                    
-                    <ContentFormNew>
-                    <label htmlFor="">Novo setNewEmail</label>
-                    <input type="text" placeholder="Seu novo nome"
-                    onChange={(text) => setNewEmail(text.target.value)}
-                    />
-                    </ContentFormNew>
-
-                    <ContentFormNew>
-                    <label htmlFor="">Novo setNewWebsite</label>
-                    <input type="text" placeholder="Seu novo nome"
-                    onChange={(text) => setNewWebsite(text.target.value)}
-                    />
-                    </ContentFormNew>
-
-                    <ContentFormNew>
-                    <label htmlFor="">Novo setNewCep</label>
-                    <input type="text" placeholder="Seu novo nome"
-                    onChange={(text) => setNewCep(text.target.value)}
-                    />
-                    </ContentFormNew>
-
-                    <ContentFormNew>
-                    <label htmlFor="">Novo setNewLogradouro</label>
-                    <input type="text" placeholder="Seu novo nome"
-                    onChange={(text) => setNewLogradouro(text.target.value)}
-                    />
-                    </ContentFormNew>
-
-                    <ContentFormNew>
-                    <label htmlFor="">Novo setNewNumero</label>
-                    <input type="text" placeholder="Seu novo nome"
-                    onChange={(text) => setNewNumero(text.target.value)}
-                    />
-                    </ContentFormNew>
-
-                    <ContentFormNew>
-                    <label htmlFor="">Novo setNewComplemento</label>
-                    <input type="text" placeholder="Seu novo nome"
-                    onChange={(text) => setNewComplemento(text.target.value)}
-                    />
-                    </ContentFormNew>
-
-                    <ContentFormNew>
-                    <label htmlFor="">Novo setNewPontoReferencia</label>
-                    <input type="text" placeholder="Seu novo nome"
-                    onChange={(text) => setNewPontoReferencia(text.target.value)}
-                    />
-                    </ContentFormNew>
-
-                    <ContentFormNew>
-                    <label htmlFor="">Novo setNewCidade</label>
-                    <input type="text" placeholder="Seu novo nome"
-                    onChange={(text) => setNewCidade(text.target.value)}
-                    />
-                    </ContentFormNew>
-
-                    <ContentFormNew>
-                    <label htmlFor="">Novo setNewEstado</label>
-                    <input type="text" placeholder="Seu novo nome"
-                    onChange={(text) => setNewEstado(text.target.value)}
-                    />
-                    </ContentFormNew>
-
-                    <ContentFormNew>
-                    <label htmlFor="">Novo setNewBairro</label>
-                    <input type="text" placeholder="Seu novo nome"
-                    onChange={(text) => setNewBairro(text.target.value)}
-                    />
-                    </ContentFormNew>
-
-                    <ContentFormNew>
-                    <label htmlFor="">Novo setNewPix</label>
-                    <input type="text" placeholder="Seu novo nome"
-                    onChange={(text) => setNewPix(text.target.value)}
-                    />
-                    </ContentFormNew>
-                  </>
-                ):(
                   <ContentFormNew>
                   <label htmlFor="">Novo Nome</label>
                   <input type="text" placeholder="Seu novo nome"
                   onChange={(text) => setNewNome(text.target.value)}
                   />
                 </ContentFormNew>
-                )
+                
               }
               <div className="buttonsNew">
-                <button type="button" onClick={messageCancel}>Cancelar</button>
+                <button style={{display: "none"}} type="button" onClick={messageCancel}>Cancelar</button>
                 <button type="button" onClick={criarOuAtualizarEmpresa}>Adicionar</button>
               </div>
             </ModalContent>
@@ -415,9 +294,9 @@ export default function Profile() {
               <span>Senha:</span>
               <p>******</p>
             </ContentDetails>
-            <Link to="">Alterar</Link>
+            <button >Alterar</button>
           </CardDatailsContent>
-        </CardDatails>
+        
 
 
 
@@ -434,7 +313,7 @@ export default function Profile() {
               <img src={mastercard} alt="" />
               <p>Final em XXXX <br /> Banco <br /> Vencimento </p>
             </ContentDetails>
-            <Link to="">Excluir</Link>
+            <button >Excluir</button>
           </CardDatailsContent>
 
           <CardDatailsContent>
@@ -442,7 +321,7 @@ export default function Profile() {
               <img src={visa} alt="" />
               <p>Final em XXXX <br /> Banco <br /> Vencimento </p>
             </ContentDetails>
-            <Link to="">Excluir</Link>
+            <button >Excluir</button>
           </CardDatailsContent>
         </CardDatails>
 
@@ -458,8 +337,8 @@ export default function Profile() {
               </small>
             </ContentDetails>
             <div className="flex-btn">
-              <Link to="">Alterar</Link>
-              <Link to="">Excluir</Link>
+              <button >Alterar</button>
+              <button >Excluir</button>
             </div>
           </CardDatailsContent>
           <button onClick={
