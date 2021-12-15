@@ -26,17 +26,18 @@ import { api } from "../../../services/api";
 export default function NewProd() {
   const [showModal1, setShowModal1] = React.useState(false);
   const [showModal2, setShowModal2] = React.useState(false);
+
   const [index, setIndex] = React.useState(0);
 
-  const [productToReq, setProductToReq] = useState<Product>()
+  const [productToReq, setProductToReq] = useState<any>()
 
   const [nome, setNome] = useState('')
   const [codigoDaEmpresa, setCodigoDaEmpresa] = useState('')
   const [descricao, setDescricao] = useState('')
   const [caracteristicasTecnicas, setCaracteristicasTecnicas] = useState('')
-  const [preco, setPreco] = useState('')
+  const [preco, setPreco] = useState<any>()
   const [prazo, setPrazo] = useState('')
-  const [quantidade, setQuantidade] = useState('')
+  const [quantidade, setQuantidade] = useState<any>()
   const [frete, setFrete] = useState('')
   const [imagem, setImagem] = useState('')
   const [categoria, setCategoria] = useState('')
@@ -98,6 +99,33 @@ export default function NewProd() {
       toast.info('Algo deu errado, tente mais tarde :(')
     }
   }
+
+  async function changeProduct(){
+    const data = {
+      data:{
+        "nome": nome, 
+        "codigo": codigoDaEmpresa, 
+        "descricao": descricao, 
+        "caracteristicasTecnicas": caracteristicasTecnicas, 
+        "preco": preco, 
+        "prazo": prazo, 
+        "quantidade": quantidade, 
+        "frete": frete, 
+        "categoria": categoria,
+        "imagemUrl": imagem, 
+        "status": "pendente"
+      }
+
+    }
+    const response: any = api.post('produto', data)
+    console.log(await response)
+    if(response.status == 200){
+      messageApprove()
+    }
+    else if(response.statusText != "OK"){
+      toast.info('Algo deu errado, tente mais tarde :(')
+    }
+  }
  /*
 
   /*
@@ -108,6 +136,24 @@ export default function NewProd() {
 
   const [products = [], setProducts] = useState<Product[]>([]);
   const [categorias = [], setCategorias] = useState<any[]>([]);
+
+  function setProductOnClick(){
+    try{      
+      setNome(products[index].nome)
+      setCodigoDaEmpresa(products[index].codigoDaEmpresa)
+      setDescricao(products[index].descricao)
+      setCaracteristicasTecnicas(products[index].caracteristicasTecnicas)
+      setPreco(products[index].preco)
+      setImagem(products[index].imagem)
+      setPrazo(products[index].prazo)
+      setQuantidade(products[index].quantidade)
+      setFrete(products[index].frete)
+      setCategoria(products[index].categoria)
+    }
+    catch(e){
+      console.log(e)
+    }
+  }
 
   useEffect(() => {
     async function loadCategorias() {
@@ -135,6 +181,8 @@ export default function NewProd() {
     // setIndex(index)
     console.log("DEVERIA ABRIR")
   }
+
+  console.log(productToReq)
 
   return (
     <>
@@ -168,8 +216,9 @@ export default function NewProd() {
               onClick={
                 () => {
                   setIndex(index)
-                  // setProductToReq(product)
+                  setProductToReq(product.id)
                   setShowModal1(true)
+                  // setProductOnClick(index)//A implementar
                 }
               }
               >
@@ -201,8 +250,8 @@ export default function NewProd() {
       </div>
       
     
-      {/* {
-      products != undefined ? (
+      {
+      // products != undefined ? (
 <ModalContainerVendedor>
       <Modal
         isOpen={showModal1}
@@ -217,13 +266,13 @@ export default function NewProd() {
 
             <ModalContent>
               <img src={upload} alt="" />
-              <h3>Novo produto</h3>
+              <h3>Alterar produto</h3>
 
               <ContentFormNew>
                 <label htmlFor="">Nome do produto</label>
                 <input type="text" placeholder="Nome do produto"
                 onChange={(text) => setNome(text.target.value)}
-                value={products[index]!.nome}
+                // value="5165161"
                 />
                 
               </ContentFormNew>
@@ -270,7 +319,7 @@ export default function NewProd() {
                 <label htmlFor="">Prazo de entrega</label>
                 <input type="text" placeholder="Prazo de entrega"
                 onChange={(text) => setPrazo(text.target.value)}
-                value=""
+                
                 />
               </ContentFormNew>
 
@@ -311,18 +360,19 @@ export default function NewProd() {
 
               <div className="buttonsNew">
                 <button type="button" onClick={messageCancel}>Cancelar</button>
-                <button type="button" onClick={addProduct}>Adicionar</button>
+                <button type="button" onClick={
+                  () => changeProduct()
+                  }>Adicionar</button>
               </div>
             </ModalContent>
           </div>
         </Modal>
       </ModalContainerVendedor>            
-      ) : (
-        <p>Erro</p> 
-        )
+      // ) : (
+      //   <p>Erro</p> 
+      //   )
       }  
-     */}
-       
+            
 
       <ModalContainerVendedor>
         <Modal

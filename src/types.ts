@@ -1,4 +1,10 @@
 export interface Product {
+  categoria: any;
+  frete: any;
+  prazo: string;
+  imagem: any;
+  caracteristicasTecnicas:string;
+  codigoDaEmpresa:string;
   id: string;
   nome: string;
   descricao: string;
