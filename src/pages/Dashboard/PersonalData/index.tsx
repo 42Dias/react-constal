@@ -1,10 +1,16 @@
 // import React from "react";
 // import Modal from "react-modal";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { AiOutlineClose } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import Header from "../../../components/Header";
 import { Menu } from "../../../components/Menu";
 import { api } from "../../../services/api";
+import { ModalContent } from "../../Produto/styles";
+import { ModalContainerVendedor } from "../../Profile/styles";
+import { ContentFormNew } from "../NewProd/styles";
+import { ModalFlex } from "../Promotions/styles";
+import Modal from "react-modal";
 import {
   // CardProfile,
   // CardDatas,
@@ -13,8 +19,29 @@ import {
   CardDatailsContent,
   ContentDetails,
 } from "./styles";
+import { toast } from "react-toastify";
 
 export default function PersonalData() {
+  const [showModal1, setShowModal1] = React.useState(false);
+  const [showModal2, setShowModal2] = React.useState(false);
+
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+  }
+  function closeModal() {
+    setShowModal1(false);
+    setShowModal2(false);
+  }
+  function messageCancel() {
+    toast.error('Ah, que pena. o seu produto não foi cadastrado na plataforma. Revise algumas informações :(')
+    //setIsOpen(false);
+  }
+
+  function messageApprove() {
+    toast.info('Eba, recebemos o seu pedido. Ele será revisado e logo estará na plataforma :)')
+    //setIsOpen(false);
+  }
+
   const [nome, setNome]=useState('');  
   const [marca, setMarca] = useState('')
   const [razaoSocial, setRazaoSocial] = useState('')
@@ -149,6 +176,10 @@ export default function PersonalData() {
           </CardDatailsContent>
         </CardDatails>
 
+        <button onClick={
+            () => {setShowModal1(true)}
+            }>Alterar Dados</button>
+
         <CardDatails>
           <h2>Endereço</h2>
           <CardDatailsContent className="adress">
@@ -161,13 +192,229 @@ export default function PersonalData() {
               </small>
             </ContentDetails>
             <div className="flex-btn">
-              <Link to="">Alterar</Link>
-              <Link to="">Excluir</Link>
+              <button //estava como link
+              onClick={
+                () => setShowModal2(true)}
+              >Alterar</button>
+              <button //estava como link
+              onClick={
+                () => setShowModal2(false)}
+              >Cancelar</button>
             </div>
           </CardDatailsContent>
-          <Link to="">Novo endereço</Link>
+          <button
+          onClick={
+            () => setShowModal2(true)
+          }>Novo endereço</button>
         </CardDatails>
       </div>
+
+
+
+
+      {/* 
+      ======================MODAIS======================
+       */}
+      <ModalContainerVendedor>
+        {/* MODAL DE ALTERAR TUDO */}
+          <Modal
+            isOpen={showModal1}
+            onAfterOpen={afterOpenModal}
+            onRequestClose={() => setShowModal1(false)}
+            >
+              <div>
+                <ModalFlex>
+                  <AiOutlineClose onClick={
+                    () => setShowModal1(false)} />
+                </ModalFlex>
+                <ModalContent>
+                  <img  alt="" />
+                  <h3>Alterar seus dados</h3>
+                    <ContentFormNew>
+                    <label htmlFor="">Novo Nome da Empresa</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewNome(text.target.value)}
+                    />
+                    </ContentFormNew>
+                    <ContentFormNew>
+                    <label htmlFor="">Novo Nome da Marca</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewMarca(text.target.value)}
+                    />
+                    </ContentFormNew>
+                    <ContentFormNew>
+                    <label htmlFor="">Novo Nome da Razão Social</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewRazaoSocial(text.target.value)}
+                    />
+                    </ContentFormNew>
+                    <ContentFormNew>
+                    <label htmlFor="">Novo Telefone</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewTelefone(text.target.value)}
+                    />
+                    </ContentFormNew>
+
+                    <ContentFormNew>
+                    <label htmlFor="">Novo CNPJ</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewCnpj(text.target.value)}
+                    />
+                    </ContentFormNew>
+
+                    <ContentFormNew>
+                    <label htmlFor="">Novo Ramal</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewRamal(text.target.value)}
+                    />
+                    </ContentFormNew>
+
+                    <ContentFormNew>
+                    <label htmlFor="">Novo Ramal</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewRamal(text.target.value)}
+                    />
+                    </ContentFormNew>
+                    
+                    <ContentFormNew>
+                    <label htmlFor="">Novo setNewEmail</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewEmail(text.target.value)}
+                    />
+                    </ContentFormNew>
+
+                    <ContentFormNew>
+                    <label htmlFor="">Novo setNewWebsite</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewWebsite(text.target.value)}
+                    />
+                    </ContentFormNew>
+
+                    <ContentFormNew>
+                    <label htmlFor="">Novo setNewCep</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewCep(text.target.value)}
+                    />
+                    </ContentFormNew>
+
+                    <ContentFormNew>
+                    <label htmlFor="">Novo setNewLogradouro</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewLogradouro(text.target.value)}
+                    />
+                    </ContentFormNew>
+
+                    <ContentFormNew>
+                    <label htmlFor="">Novo setNewNumero</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewNumero(text.target.value)}
+                    />
+                    </ContentFormNew>
+
+                    <ContentFormNew>
+                    <label htmlFor="">Novo setNewComplemento</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewComplemento(text.target.value)}
+                    />
+                    </ContentFormNew>
+
+                    <ContentFormNew>
+                    <label htmlFor="">Novo setNewPontoReferencia</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewPontoReferencia(text.target.value)}
+                    />
+                    </ContentFormNew>
+
+                    <ContentFormNew>
+                    <label htmlFor="">Novo setNewCidade</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewCidade(text.target.value)}
+                    />
+                    </ContentFormNew>
+
+                    <ContentFormNew>
+                    <label htmlFor="">Novo setNewEstado</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewEstado(text.target.value)}
+                    />
+                    </ContentFormNew>
+
+                    <ContentFormNew>
+                    <label htmlFor="">Novo setNewBairro</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewBairro(text.target.value)}
+                    />
+                    </ContentFormNew>
+
+                    <ContentFormNew>
+                    <label htmlFor="">Novo setNewPix</label>
+                    <input type="text" placeholder="Seu novo nome"
+                    onChange={(text) => setNewPix(text.target.value)}
+                    />
+                    </ContentFormNew>
+                </ModalContent>
+              </div>
+          </Modal>
+        </ModalContainerVendedor>      
+
+        <ModalContainerVendedor>
+        <Modal
+          isOpen={showModal2}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+        >
+          <div>
+            <ModalFlex>
+              <AiOutlineClose onClick={closeModal} /> 
+            </ModalFlex>
+
+            <ModalContent>
+              <h3>Novo endereço</h3>
+
+              <ContentFormNew>
+                <label htmlFor="">CEP</label>
+                <input type="number" placeholder="CEP" />
+              </ContentFormNew>
+
+              <ContentFormNew>
+                <label htmlFor="">Rua</label>
+                <input type="text" placeholder="Rua" />
+              </ContentFormNew>
+
+              <ContentFormNew>
+                <label htmlFor="">Número</label>
+                <input type="number" placeholder="Número" />
+              </ContentFormNew>
+
+              <ContentFormNew>
+                <label htmlFor="">Complemento</label>
+                <input type="text" placeholder="Complemento" />
+              </ContentFormNew>
+
+              <ContentFormNew>
+                <label htmlFor="">Referência</label>
+                <input type="text" placeholder="Referência" />
+              </ContentFormNew> 
+
+              <ContentFormNew>
+                <label htmlFor="">Estado</label>
+                <input type="text" placeholder="Estado" />
+              </ContentFormNew>
+
+              <ContentFormNew>
+                <label htmlFor="">UF</label>
+                <input type="text" placeholder="Cidade" />
+              </ContentFormNew>
+
+              <div className="buttonsNew">
+                <button type="button" onClick={messageCancel}>Cancelar</button>
+                <button type="button" onClick={messageApprove}>Adicionar</button>
+              </div>
+            </ModalContent>
+          </div>
+        </Modal>
+      </ModalContainerVendedor>
+
     </>
   );
 }
