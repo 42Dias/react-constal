@@ -49,7 +49,7 @@ const Routes = (): JSX.Element => {
         <Route exact path="/promocoes" component={Promotions} />
         <Route exact path="/dados-pessoais" component={PersonalData} />
         <Route exact path="/perguntas" component={Questions} />
-        <Route exact path="/detalhes-da-venda" component={SaleDetails} />
+        <Route exact path="/detalhes-da-venda/:id" component={SaleDetails} />
         <Route exact path="/novo-plano" component={NewPlan} />
         <Route exact path="/consultar-produtos" component={ProductQuery} />
         <Route exact path="/vendas" component={Vendas} />
