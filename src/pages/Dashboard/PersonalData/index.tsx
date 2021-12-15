@@ -232,123 +232,116 @@ export default function PersonalData() {
                   <h3>Alterar seus dados</h3>
                     <ContentFormNew>
                     <label htmlFor="">Novo Nome da Empresa</label>
-                    <input type="text" placeholder="Seu novo nome"
+                    <input type="text" placeholder="Novo Empresa"
                     onChange={(text) => setNewNome(text.target.value)}
                     />
                     </ContentFormNew>
                     <ContentFormNew>
                     <label htmlFor="">Novo Nome da Marca</label>
-                    <input type="text" placeholder="Seu novo nome"
+                    <input type="text" placeholder="Razão Social"
                     onChange={(text) => setNewMarca(text.target.value)}
                     />
                     </ContentFormNew>
                     <ContentFormNew>
                     <label htmlFor="">Novo Nome da Razão Social</label>
-                    <input type="text" placeholder="Seu novo nome"
+                    <input type="text" placeholder="Nova Razão Social"
                     onChange={(text) => setNewRazaoSocial(text.target.value)}
                     />
                     </ContentFormNew>
                     <ContentFormNew>
                     <label htmlFor="">Novo Telefone</label>
-                    <input type="text" placeholder="Seu novo nome"
+                    <input type="text" placeholder="Novo Telefone"
                     onChange={(text) => setNewTelefone(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
                     <label htmlFor="">Novo CNPJ</label>
-                    <input type="text" placeholder="Seu novo nome"
+                    <input type="text" placeholder="Novo CNPJ"
                     onChange={(text) => setNewCnpj(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
                     <label htmlFor="">Novo Ramal</label>
-                    <input type="text" placeholder="Seu novo nome"
+                    <input type="text" placeholder="Novo Ramal"
                     onChange={(text) => setNewRamal(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
-                    <label htmlFor="">Novo Ramal</label>
-                    <input type="text" placeholder="Seu novo nome"
-                    onChange={(text) => setNewRamal(text.target.value)}
-                    />
-                    </ContentFormNew>
-                    
-                    <ContentFormNew>
                     <label htmlFor="">Novo Email</label>
-                    <input type="text" placeholder="Seu novo nome"
+                    <input type="text" placeholder="Novo Email"
                     onChange={(text) => setNewEmail(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
                     <label htmlFor="">Novo Website</label>
-                    <input type="text" placeholder="Seu novo nome"
+                    <input type="text" placeholder="Website"
                     onChange={(text) => setNewWebsite(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
                     <label htmlFor="">Novo Cep</label>
-                    <input type="text" placeholder="Seu novo nome"
+                    <input type="text" placeholder="Cep"
                     onChange={(text) => setNewCep(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
                     <label htmlFor="">Novo Logradouro</label>
-                    <input type="text" placeholder="Seu novo nome"
+                    <input type="text" placeholder="Logradouro"
                     onChange={(text) => setNewLogradouro(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
                     <label htmlFor="">Novo Numero</label>
-                    <input type="text" placeholder="Seu novo nome"
+                    <input type="text" placeholder="Numero"
                     onChange={(text) => setNewNumero(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
                     <label htmlFor="">Novo Complemento</label>
-                    <input type="text" placeholder="Seu novo nome"
+                    <input type="text" placeholder="Complemento"
                     onChange={(text) => setNewComplemento(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
                     <label htmlFor="">Novo PontoReferencia</label>
-                    <input type="text" placeholder="Seu novo nome"
+                    <input type="text" placeholder="PontoReferencia"
                     onChange={(text) => setNewPontoReferencia(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
                     <label htmlFor="">Novo Cidade</label>
-                    <input type="text" placeholder="Seu novo nome"
+                    <input type="text" placeholder="Cidade"
                     onChange={(text) => setNewCidade(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
                     <label htmlFor="">Novo Estado</label>
-                    <input type="text" placeholder="Seu novo nome"
+                    <input type="text" placeholder="Estado"
                     onChange={(text) => setNewEstado(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
                     <label htmlFor="">Novo Bairro</label>
-                    <input type="text" placeholder="Seu novo nome"
+                    <input type="text" placeholder="Bairro"
                     onChange={(text) => setNewBairro(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
                     <label htmlFor="">Novo Pix</label>
-                    <input type="text" placeholder="Seu novo nome"
+                    <input type="text" placeholder="Pix"
                     onChange={(text) => setNewPix(text.target.value)}
                     />
                     </ContentFormNew>
