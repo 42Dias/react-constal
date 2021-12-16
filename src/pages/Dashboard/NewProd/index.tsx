@@ -26,6 +26,7 @@ import { api } from "../../../services/api";
 export default function NewProd() {
   const [showModal1, setShowModal1] = React.useState(false);
   const [showModal2, setShowModal2] = React.useState(false);
+  const [showModal3, setShowModal3] = React.useState(false);
 
   const [index, setIndex] = React.useState(0);
 
@@ -42,6 +43,10 @@ export default function NewProd() {
   const [frete, setFrete] = useState('')
   const [imagem, setImagem] = useState('')
   const [categoria, setCategoria] = useState<any>()
+
+  const [isOferta, setIsOferta] = useState(false)
+  const [precoOferta, setPrecoOferta] = useState('')
+
   console.log(categoria)
 
 
@@ -57,6 +62,7 @@ export default function NewProd() {
   function closeModal() {
     setShowModal1(false)
     setShowModal2(false)
+    setShowModal3(false)
   }
 
   function messageCancel() {
@@ -74,7 +80,7 @@ export default function NewProd() {
     //setIsOpen(false);
   }
 
-  async function addProduct(){
+  function setValues(){
     const data = {
       data:{
         "nome": nome, 
@@ -89,8 +95,12 @@ export default function NewProd() {
         "imagemUrl": imagem, 
         "status": "pendente"
       }
-
     }
+    return data
+  }
+
+  async function addProduct(){
+    const data = setValues()
     const response: any = api.post('produto', data)
     console.log(await response)
     if(response.status == 200){
@@ -101,6 +111,18 @@ export default function NewProd() {
     }
   }
 
+  async function makeRequisitionToChange(data: any){
+    const response: any = api.put(`produto/${id}`, data)
+    console.log(await response)
+    if(response.status == 200){
+      messageApprove()
+    }
+    else if(response.statusText != "OK"){
+      toast.info('Algo deu errado, tente mais tarde :(')
+    }
+    console.log(response)
+  }
+  
   async function changeProduct(){
     const data = {
       data:{
@@ -117,19 +139,33 @@ export default function NewProd() {
         "imagemUrl": imagem, 
         "status": "pendente"
       }
+    }
 
-    }
     console.log(data)
-    const response: any = api.put(`produto/${id}`, data)
-    console.log(await response)
-    if(response.status == 200){
-      messageApprove()
-    }
-    else if(response.statusText != "OK"){
-      toast.info('Algo deu errado, tente mais tarde :(')
-    }
-    console.log(response)
+    makeRequisitionToChange(data)
   }
+  async function addPromotion() {
+    const data = {
+      data:{
+        "id": id,
+        "nome": nome, 
+        "codigo": codigoDaEmpresa, 
+        "descricao": descricao, 
+        "caracteristicasTecnicas": caracteristicasTecnicas, 
+        "preco": preco, 
+        "prazo": prazo,
+        "quantidade": quantidade, 
+        "frete": frete, 
+        "categoriaId": categoria.id,
+        "imagemUrl": imagem, 
+        "isOferta": isOferta,
+        "precoOferta": precoOferta,
+        "status": "pendente",
+      }
+    }
+    makeRequisitionToChange(data)
+  }
+
   async function deleteProduct(prodId: any){
     const response = await api.delete(`produtoDeleteOne/${prodId}`)
     console.log(response.status)
@@ -240,7 +276,7 @@ export default function NewProd() {
           )
         )
         }
-{/* 
+        {/* 
           <ProdContainerSingle className="prodAwait">
             <img src={prodfour} alt="" />
             <h5>Nome do produto</h5>
@@ -258,9 +294,8 @@ export default function NewProd() {
       </div>
       
     
-      {
-      // products != undefined ? (
-<ModalContainerVendedor>
+    {
+    <ModalContainerVendedor>
       <Modal
         isOpen={showModal1}
         onAfterOpen={afterOpenModal}
@@ -271,7 +306,16 @@ export default function NewProd() {
               <AiOutlineClose onClick={
                 () => setShowModal1(false)} />
             </ModalFlex>
-
+            <div
+            onClick={
+              () => {
+                setShowModal1(false)
+                setShowModal3(true)
+              }
+            }
+            >
+              Colocar este produto em promoção
+            </div>
             <ModalContent>
               <img src={upload} alt="" />
               <h3>Alterar produto</h3>
@@ -376,9 +420,6 @@ export default function NewProd() {
           </div>
         </Modal>
       </ModalContainerVendedor>            
-      // ) : (
-      //   <p>Erro</p> 
-      //   )
       }  
             
 
@@ -524,6 +565,43 @@ export default function NewProd() {
           </div>
         </Modal>
       </ModalContainerVendedor>
+
+      <ModalContainerVendedor>
+        <Modal
+          isOpen={showModal3}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+        >
+          <div>
+            <ModalFlex>
+              <AiOutlineClose onClick={closeModal} />
+            </ModalFlex>
+
+            <ModalContent>
+              <h3>Nova promoção</h3>
+
+              <ContentFormNew>
+                <label htmlFor="">Novo preço</label>
+                <input type="number" placeholder="63"
+                onChange={(text) => {
+                  setPrecoOferta(text.target.value)
+                  setIsOferta(true)
+                }
+              }
+                
+                />
+              </ContentFormNew>
+
+              <div className="buttonsNew">
+              <button type="button" onClick={messageCancel}>Cancelar</button>
+              <button type="button" onClick={addPromotion}>Adicionar</button>
+              </div>
+            </ModalContent>
+          </div>
+        </Modal>
+      </ModalContainerVendedor>
+
+
     </>
   );
 }
