@@ -22,6 +22,7 @@ import { Product } from "../../../types";
 import { api } from "../../../services/api";
 import { formatPrice } from "../../../util/format";
 import { Btn } from "../PersonalData/styles";
+import { toast } from "react-toastify";
 
 export default function Promotions() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -55,6 +56,21 @@ export default function Promotions() {
        })
 
   }
+  async function makeRequisitionToChange(data: any){
+    ids.map(
+      async (id) => {        
+        const response: any = api.put(`produto/${id}`, data)
+        console.log(await response)
+        if(response.status == 200){
+          toast.info('Promoção efetuada com sucesso')      
+        }
+        else if(response.status != 200){
+          toast.error('Algo deu errado, tente mais tarde :(')
+        }
+        console.log(response)
+      }
+    )
+  }
 
   let productCounter: any[] = [];
   
@@ -66,6 +82,17 @@ export default function Promotions() {
     }
     loadProducts();
   }, []);
+
+  function addNewPromotion(){
+    const data = {
+      data: {
+        "imagemPromocional": imagemPromocional,
+        "promocaoEncerramento": dataEncerramento,
+      }
+    }
+    makeRequisitionToChange(data)
+  }
+
 
   console.log(ids)
   console.log(dataEncerramento)
@@ -150,7 +177,9 @@ export default function Promotions() {
 
               <div className="buttonsNew">
                 <button >Cancelar</button>
-                <button >Adicionar</button>
+                <button 
+                onClick={addNewPromotion}
+                >Adicionar</button>
               </div>
             </ModalContent>
           </div>
