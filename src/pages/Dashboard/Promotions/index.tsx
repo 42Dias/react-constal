@@ -87,6 +87,7 @@ export default function Promotions() {
     const data = {
       data: {
         "imagemPromocional": imagemPromocional,
+        "promocaoCriacao": new Date(),
         "promocaoEncerramento": dataEncerramento,
       }
     }
