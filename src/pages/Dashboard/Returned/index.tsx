@@ -3,64 +3,140 @@ import { Link } from "react-router-dom";
 import { MenuSell, TitleVendas, ContainerMenuSell } from "./styles";
 import { Menu } from "../../../components/Menu";
 import { useEffect, useState } from "react";
-import { api } from "../../../services/api";
+import { api, role } from "../../../services/api";
+import { formatPrice } from "../../../util/format";
+import { Empresa } from "../../../types";
 
 {/* DEVOLVIDOS */}
 export default function Returned() {
-  const [pedidos = [], setPedidos]                        = useState<any[]>([]); 
-  const [pedidosPendentes = [], setPedidosPendentes]      = useState<any[]>([])
-  const [pedidosConfirmados = [], setPedidosConfirmados]  = useState<any[]>([])
-  const [pedidosDevolvidos = [], setPedidosDevolvidos]    = useState<any[]>([])
-  const [pedidosDenunciador = [], setPedidosDenunciador]  = useState<any[]>([])
+  const [pedidos = [], setPedidos] = useState<any[]>([]);
+  const [pedidosPendentes = [], setPedidosPendentes] = useState<any[]>([]);
+  const [pedidosConfirmados = [], setPedidosConfirmados] = useState<any[]>([]);
+  const [pedidosDevolvidos = [], setPedidosDevolvidos] = useState<any[]>([]);
+  const [pedidosDenunciador = [], setPedidosDenunciador] = useState<any[]>([]);
+  const [empresas = [], setEmpresas] = useState<Empresa[]>([]);
+  let [empresa, setEmpresa] = useState('');
+  let [display, setDisplay] = useState('none');
+  let [filter, setFilter] = useState('');
+  let [sinal, setSinal] = useState(0);
+
+async function loadPedidosPendentes() {
+  setPedidosPendentes([])
+  pedidos.filter(
+    pedido => {
+      if (pedido.status == "pendente")
+      {
+        
+        setPedidosPendentes((prevProducts: any[]) => {
+          console.log(prevProducts)
+          return [...new Set([...prevProducts, pedido])]	
+            })
+      
+      }
+    }
+  )
+}
+
+async function loadPedidosConfirmados() {
+  setPedidosConfirmados([])
+  pedidos.filter(
+    (pedido: any) => {
+      if (pedido.status == "confirmado" || pedido.status == "entregue"){
+        setPedidosConfirmados((prevProducts: any[]) => {
+          console.log(prevProducts)
+          return [...new Set([...prevProducts, pedido])]	
+            })
+      }
+    }
+  )
+}
+
+async function loadPedidosDevolvidos() {
+  setPedidosDevolvidos([])
+  
+  pedidos.filter(
+    (pedido: any) => {
+      if (pedido.status == "devolvido" || pedido.status == "cancelado"){
+        setPedidosDevolvidos((prevProducts: any[]) => {
+        console.log(prevProducts)
+        return [...new Set([...prevProducts, pedido])]	
+          })
+      }
+    }
+  )
+}
+
+async function loadPedidosDenunciador() {
+  setPedidosDenunciador([])
+  pedidos.filter(
+    (pedido: any) => {
+      if (pedido.status == "denunciado"){
+        setPedidosDenunciador((prevProducts: any[]) => {
+          console.log(prevProducts)
+          return [...new Set([...prevProducts, pedido])]	
+            })
+      }
+    }
+  )
+}
 
 
 
   useEffect(
-    ()=>{
-      async function loadPedidosPendentes(){
-        pedidos.map(
-          (pedido: any) => {
-            setPedidosPendentes(pedido)
-          }
-        )
+    () => {
+      async function loadUser() {
+        setSinal(0)
+        const response = await api.get('empresa?filter%5Bstatus%5D=aprovado')
+          .then(response => {
+            return response.data;
+          })
+        setEmpresas(response.rows)
+        console.log("Empresas");
+        console.log(response.rows);
       }
- 
-      async function loadPedidosConfirmados(){
-        pedidos.map(
-          (pedido: any) => {
-            setPedidosConfirmados(pedido)
-          }
-        )
+
+      if (role == "admin") {
+        setDisplay('block'); 
+        loadUser();
       }
-      
-      async function loadPedidosDevolvidos(){
-        pedidos.map(
-          (pedido: any) => {
-            setPedidosDevolvidos(pedido)
-          }
-        )
-      }
-      
-      async function loadPedidosDenunciador(){
-        pedidos.map(
-          (pedido: any) => {
-            setPedidosDenunciador(pedido)
-          }
-        )
-      }
-      async function loadPedidos(){
+
+      else{
+      async function loadPedidos() {
         console.log("requisição do pedido feita")
         const res = await api.get('pedido')
         console.log(res.data)
-        setPedidos(res.data)
-        loadPedidosPendentes()
-        loadPedidosConfirmados()
-        loadPedidosDevolvidos()
-        loadPedidosDenunciador()
-
+        setPedidos(res.data.rows)
       }
       loadPedidos()
-    }, [] )
+      setSinal(1)
+    }
+    }, []);
+    useEffect(
+    () => {
+      loadPedidosPendentes()
+      loadPedidosConfirmados()
+      loadPedidosDevolvidos()
+      loadPedidosDenunciador()
+      console.log("EBA")
+    }, [sinal]
+    )
+    
+    async function empresaT(empresaId: string){
+      setSinal(0)
+      console.log("Entrou empresaT");
+      console.log(empresaId);
+        console.log("requisição do pedido feita")
+        const res = await api.get('pedido?filter%5BfornecedorEmpresa%5D='+empresaId)
+        // const res = await api.get('pedido')
+        console.log(res.data);
+
+        setPedidos(res.data.rows);
+        setSinal(1)
+    }
+
+    console.log(pedidosPendentes)
+    console.log(pedidosConfirmados)
+    console.log(pedidosDevolvidos)
 
   return (
     <>
@@ -69,30 +145,47 @@ export default function Returned() {
       <div className="container">
         <TitleVendas>Vendas</TitleVendas>
 
+        <div style={{display: display}}>
+        <label htmlFor="">Selecionar Empresa: </label>
+        <select 
+          onChange={(text) => setEmpresa(text.target.value)} onClick={() => empresaT(empresa)}
+        >
+          {empresas.map(
+            (empresa) => (
+              <option value={empresa.id} key={empresa.id} >{empresa.razaoSocial}</option>
+            )
+          )}
+        </select>
+        </div>
         <MenuSell>
-        <Link to="/vendas"><span>Pendentes({  pedidosPendentes.length})</span></Link>
+          <span>Pendentes({pedidosPendentes.length})</span>
           <Link to="/confirmadas"><span>Confirmadas({pedidosConfirmados.length})</span></Link>
-            <Link to="/devolvidas"><span><b>Devolvidas({ pedidosDevolvidos.length})</b></span></Link>
+          <Link to="/devolvidas"><span><b>Devolvidas({pedidosDevolvidos.length})</b></span></Link>
           <Link to="/denunciadas"><span>Denunciadas({pedidosDenunciador.length})</span></Link>
         </MenuSell>
         {
-        pedidosPendentes.map(
-          (pedidos) => {
-            <ContainerMenuSell>
-            <div>
-              <span>Nome do cliente</span>
-              <h3>Quantidade de produtos: XXX</h3>
-              <h3>Endereço para envio: XXX</h3>
-              <h3>Cidade/Estado</h3>
-            </div>
-            <div>
-              <a href="">Ver detalhes</a>
-              <h3>Valor Total: R$800,99</h3>
-              <h3>Status: <b>Entregue</b></h3>
-            </div>
-          </ContainerMenuSell>
-          }
-        )
+          pedidosDevolvidos.map(
+            (pedidos) => (
+              <ContainerMenuSell>
+              <div>
+                <span>Nome do cliente: {pedidos.compradorUser.pessoaFisica[0].nome} </span>
+                <h3>Quantidade de produtos: { pedidos.quantidadeProdutos }</h3>
+                <h3>Endereço para envio: {
+                  pedidos.compradorUser.pessoaFisica[0].logradouro+" " +
+                  pedidos.compradorUser.pessoaFisica[0].bairro }</h3>
+                <h3>{
+                  pedidos.compradorUser.pessoaFisica[0].cidade+ " " +
+                  pedidos.compradorUser.pessoaFisica[0].estado}</h3>
+              </div>
+
+              <div>
+                <Link to={`/detalhes-da-venda/${pedidos.id}`}>Ver detalhes</Link>
+                <h3>Valor Total: {formatPrice(pedidos.valorTotal)}</h3>
+                <h3>Status: <b>{pedidos.status}</b></h3>
+              </div>
+            </ContainerMenuSell>
+            )
+          )
         }
       </div>
     </>
