@@ -10,6 +10,7 @@ import Register from "./pages/Register";
 import Favorites from "./pages/Favorites";
 import Histoty from "./pages/History";
 import Products from "./pages/Products";
+import ProductsSearch from "./pages/ProductsSearch";
 import NewProd from "./pages/Dashboard/NewProd";
 import Promotions from "./pages/Dashboard/Promotions";
 import PersonalData from "./pages/Dashboard/PersonalData";
@@ -45,6 +46,7 @@ const Routes = (): JSX.Element => {
         <Route exact path="/favoritos" component={Favorites} />
         <Route exact path="/historico-de-pedidos" component={Histoty} />
         <Route exact path="/produtos" component={Products} />
+        <Route exact path="/produtos/:query" component={ProductsSearch} />
         <Route exact path="/meus-produtos" component={NewProd} />
         <Route exact path="/promocoes" component={Promotions} />
         <Route exact path="/dados-pessoais" component={PersonalData} />
