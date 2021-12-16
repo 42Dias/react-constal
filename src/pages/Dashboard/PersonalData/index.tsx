@@ -5,7 +5,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import Header from "../../../components/Header";
 import { Menu } from "../../../components/Menu";
-import { api } from "../../../services/api";
+import { api, ip, role } from "../../../services/api";
 import { ModalContent } from "../../Produto/styles";
 import { ModalContainerVendedor } from "../../Profile/styles";
 import { ContentFormNew } from "../NewProd/styles";
@@ -84,6 +84,11 @@ export default function PersonalData() {
 
     useEffect(
       () => {
+        if(role != 'admin' && role != "empresa"){
+          // Simulate an HTTP redirect:
+          window.location.replace(`http://${ip}:3000/constal#/erro`);
+        }
+    
         async function loadData(){          
           const response = await api.get('empresa-perfil')
           .then(response => {
