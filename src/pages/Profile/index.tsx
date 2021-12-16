@@ -39,33 +39,7 @@ export default function Profile() {
   const [showModal1, setShowModal1] = React.useState(false);
   const [showModal2, setShowModal2] = React.useState(false);
 
-  async function criarOuAtualizarEmpresa() {
-    const data = {
-      data: {
-        nome : newNome, 
-        marca : newMarca,
-        razaoSocial : newRazaoSocial,
-        cnpj : newCnpj,
-        telefone : newTelefone,
-        ramal : newRamal,
-        email : newEmail,
-        website : newWebsite,
-        cep : newCep,
-        logradouro : newLogradouro,
-        numero : newNumero,
-        complemento : newComplemento,
-        pontoReferencia : newPontoReferencia,
-        cidade : newCidade,
-        estado : newEstado,
-        bairro : newBairro,
-        pix : pix,
-      }
-    }
-    const response = await api.post('empresa-perfil', data)
-    console.log(response)
-    toast.info('Eba, estamos cada dia mais perto da morte! :)')
-    closeModal()
-  }
+
 
   function afterOpenModal() {
     // references are now sync'd and can be accessed.
@@ -273,11 +247,12 @@ export default function Profile() {
                 </ContentFormNew>
                 
               }
+            </ModalContent>
+            
               <div className="buttonsNew">
                 <button style={{display: "none"}} type="button" onClick={messageCancel}>Cancelar</button>
-                <button type="button" onClick={criarOuAtualizarEmpresa}>Adicionar</button>
+                <button type="button" onClick={messageApprove}>Adicionar</button>
               </div>
-            </ModalContent>
           </div>
         </Modal>
       </ModalContainerVendedor>
