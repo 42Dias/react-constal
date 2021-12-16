@@ -38,6 +38,7 @@ interface Product {
 }
 
 interface ProductFormatted extends Product {
+  imagemPromocional: string | undefined;
   priceFormatted: string;
 }
 
@@ -50,9 +51,10 @@ const Home = (): JSX.Element => {
   
 
   const [products = [], setProducts] = useState<ProductFormatted[]>([]);
+  const [promocoes = [], setPromocoes] = useState<ProductFormatted[]>([]);
+  
   const { addProduct, cart } = useCart();
   
-  //console.log("ip: "+ip);
   useEffect(() => {
     async function loadProducts() {
       const response = await axios.get("http://"+ip+":8157/api/produtos");
@@ -68,6 +70,18 @@ const Home = (): JSX.Element => {
     loadProducts();
   }, []);
 
+  useEffect(
+    () => {
+      axios.get(`http://${ip}:8157/api/produto-imagens-promocionais/`).then(
+        (response) => {
+          console.log(response.data)
+          setPromocoes(response.data)
+        }
+      )
+    }, [])
+  function filterPromocoes(){
+
+  }
   function handleAddProduct(id: string) {
     addProduct(id);
   }
@@ -91,6 +105,16 @@ const Home = (): JSX.Element => {
           loop={true}
           navigation={true}
         >
+          {
+            promocoes.map(
+              (promocao, index) => (
+                    <SwiperSlide>
+                      <img src={promocao.imagemPromocional}
+                      alt={promocao.precoOferta + " " + promocao.nome} />
+                    </SwiperSlide>
+              )             
+            )
+          }
           <SwiperSlide><img src={moveis} alt="moveis" /></SwiperSlide>
           <SwiperSlide><img src={materiais} alt="materiais" /></SwiperSlide>
           <SwiperSlide><img src={eletrodomesticos} alt="eletrodomesticos" /></SwiperSlide>
