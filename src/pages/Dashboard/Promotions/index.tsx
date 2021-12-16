@@ -23,6 +23,7 @@ import { api } from "../../../services/api";
 import { formatPrice } from "../../../util/format";
 import { Btn } from "../PersonalData/styles";
 import { toast } from "react-toastify";
+import moment from 'moment'
 
 export default function Promotions() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
