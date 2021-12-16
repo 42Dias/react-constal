@@ -6,7 +6,7 @@ import {
 } from "react-icons/md";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import { api } from "../../services/api";
+import { api, ip, role } from "../../services/api";
 
 import { useCart } from "../../hooks/useCart";
 import { formatPrice } from "../../util/format";
@@ -88,6 +88,10 @@ const Cart = (): JSX.Element => {
   }
 
   useEffect(() => {
+    if(role != 'pessoa'){
+      // Simulate an HTTP redirect:
+      window.location.replace(`http://${ip}:3000/constal#/erro`);
+    }
     async function loadProducts() {
       const response = await api.get('carrinho/')
       .then(response => {

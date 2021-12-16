@@ -4,9 +4,19 @@ import check from "../../assets/images/check-icon.svg";
 import { Link } from "react-router-dom";
 import { FooterContainer, CenterFinish } from "./styles";
 import { Menu } from "../../components/Menu";
+import { useEffect } from "react";
+import { role, ip } from "../../services/api";
 
 
 export default function FinishBuy() {
+  useEffect(
+    () => {
+      if(role != 'pessoa'){
+        // Simulate an HTTP redirect:
+        window.location.replace(`http://${ip}:3000/constal#/erro`);
+      }
+    }, []
+  )
     return (
       <>
         <Header />

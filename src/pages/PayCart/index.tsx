@@ -2,7 +2,7 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { Link } from "react-router-dom";
 import { FooterContainer, CenterPay, Titleh2, BtnFinish } from "./styles";
-import { api } from "../../services/api";
+import { api, ip, role } from "../../services/api";
 import axios from 'axios';
 import { Menu } from "../../components/Menu";
 import { useEffect, useState } from "react";
@@ -19,6 +19,11 @@ export default function PayCart() {
   
 
   useEffect(() => {
+    if(role != 'pessoa'){
+      // Simulate an HTTP redirect:
+      window.location.replace(`http://${ip}:3000/constal#/erro`);
+    }
+    
     async function gerarFornecedores(){
       const fornecedoresNoCarrinho: string[] = []
       const produtosNoCarrinhoResponse: any = await api.get('/carrinho/') 

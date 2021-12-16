@@ -2,7 +2,7 @@ import Header from "../../../components/Header";
 import { Link } from "react-router-dom";
 import { MenuSell, TitleVendas, ContainerMenuSell } from "./styles";
 import { Menu } from "../../../components/Menu";
-import { api, role } from "../../../services/api";
+import { api, ip, role } from "../../../services/api";
 import { useEffect, useState } from "react";
 import { formatPrice } from "../../../util/format";
 import { Empresa } from "../../../types";
@@ -86,6 +86,11 @@ async function loadPedidosDenunciador() {
 
   useEffect(
     () => {
+      if(role != 'admin' && role != "empresa"){
+        // Simulate an HTTP redirect:
+        window.location.replace(`http://${ip}:3000/constal#/erro`);
+      }
+  
       async function loadUser() {
         setSinal(0)
         const response = await api.get('empresa?filter%5Bstatus%5D=aprovado')

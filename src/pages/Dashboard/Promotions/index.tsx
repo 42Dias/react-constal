@@ -19,10 +19,11 @@ import { AiOutlineClose } from "react-icons/ai";
 import { FiCheck } from "react-icons/fi";
 import { Menu } from "../../../components/Menu";
 import { Product } from "../../../types";
-import { api } from "../../../services/api";
+import { api, ip, role } from "../../../services/api";
 import { formatPrice } from "../../../util/format";
 import { Btn } from "../PersonalData/styles";
 import { toast } from "react-toastify";
+import moment from 'moment'
 
 export default function Promotions() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -75,6 +76,11 @@ export default function Promotions() {
   let productCounter: any[] = [];
   
   useEffect(() => {
+    if(role != 'admin' && role != "empresa"){
+      // Simulate an HTTP redirect:
+      window.location.replace(`http://${ip}:3000/constal#/erro`);
+    }
+
     async function loadProducts() {
       const response = await api.get("produto");
       console.log(response.data);
@@ -87,6 +93,7 @@ export default function Promotions() {
     const data = {
       data: {
         "imagemPromocional": imagemPromocional,
+        "promocaoCriacao": new Date(),
         "promocaoEncerramento": dataEncerramento,
       }
     }

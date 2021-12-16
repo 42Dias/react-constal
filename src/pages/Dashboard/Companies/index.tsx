@@ -4,7 +4,7 @@ import { CardDatails, CardDatailsContent, ContentDetails } from "./styles";
 import { Menu } from "../../../components/Menu";
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { api } from "../../../services/api";
+import { api, ip, role } from "../../../services/api";
 import { Empresa } from "../../../types";
 
 export default function Companies() {
@@ -14,6 +14,11 @@ export default function Companies() {
   const [filtro, setFiltro] = useState('');
   
   useEffect(() => {
+    if(role != 'admin' && role != "empresa"){
+      // Simulate an HTTP redirect:
+      window.location.replace(`http://${ip}:3000/constal#/erro`);
+    }
+
     loadUser();
   }, []);
   async function loadUser() {

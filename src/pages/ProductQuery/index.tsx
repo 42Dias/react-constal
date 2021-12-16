@@ -5,7 +5,7 @@ import prodfav from "../../assets/images/prodfav.png"
 import { Link } from "react-router-dom"
 import { Menu } from "../../components/Menu"
 import { useEffect, useState } from "react"
-import { api, ip, tenantId } from "../../services/api"
+import { api, ip, role, tenantId } from "../../services/api"
 import { Product } from "../../types"
 import axios from "axios"
 import { toast } from "react-toastify"
@@ -14,6 +14,10 @@ function ProductQuery() {
   const [produtos = [], setProdutos] = useState<Product[]>([]);
 
   useEffect(() => {
+    if(role != 'admin'){
+      // Simulate an HTTP redirect:
+      window.location.replace(`http://${ip}:3000/constal#/erro`);
+    }
     async function loadUser() {
       const response = await api.get('produto?filter%5Bstatus%5D=pendente')
         .then(response => {
