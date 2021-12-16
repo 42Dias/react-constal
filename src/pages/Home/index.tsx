@@ -9,7 +9,7 @@ import SwiperCore, {
 import "swiper/swiper.scss";
 
 import { SwiperStyles, BarHome, FlexBar, BannerHomeImage } from "./styles";
-import { api, ip } from "../../services/api";
+import { api, ip, role } from "../../services/api";
 import { formatPrice } from "../../util/format";
 import { useCart } from "../../hooks/useCart";
 import Header from "../../components/Header";
@@ -160,6 +160,8 @@ const Home = (): JSX.Element => {
                       </Link>
                       <strong>{product.nome}</strong>
                       <p>R$ {product.precoOferta}</p>
+                      {
+                      role == "pessoa" ? (
                       <button
                         type="button"
                         data-testid="add-product-button"
@@ -169,9 +171,12 @@ const Home = (): JSX.Element => {
                           <MdAddShoppingCart size={16} color="#FFF" />
                           {product.quantidadeNoEstoque}
                         </div>
-
                         <span>ADICIONAR AO CARRINHO</span>
                       </button>
+                        ):(
+                          <br />
+                        )
+                      }
                     </li>
                   )}
                 </SwiperSlide>
@@ -198,6 +203,8 @@ const Home = (): JSX.Element => {
                   </Link>
                   <strong>{product.nome}</strong>
                   <p>{product.preco}</p>
+                  {
+                    role == "pessoa" ? (
                   <button
                     type="button"
                     data-testid="add-product-button"
@@ -207,9 +214,12 @@ const Home = (): JSX.Element => {
                       <MdAddShoppingCart size={16} color="#FFF" />
                       {product.quantidadeNoEstoque}
                     </div>
-
                     <span>ADICIONAR AO CARRINHO</span>
                   </button>
+                    ):(
+                      <br />
+                    )
+                  }
                 </li>
               </SwiperSlide>
             ))}
