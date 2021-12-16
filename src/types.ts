@@ -10,7 +10,7 @@ export interface Product {
   descricao: string;
   preco: number;
   publicUrl: string;
-  isOferta: number;
+  isOferta: any;
   precoOferta: any;
   quantidade: number;
   status: string;
