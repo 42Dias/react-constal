@@ -13,7 +13,7 @@ import { formatPrice } from "../../../util/format";
 
 export default function Vendas() {
   const [pedidos = [], setPedidos] = useState<any[]>([]);
-  const [pedidosPendentes = [], setPedidosPendentes] = useState<any>();
+  const [pedidosPendentes = [], setPedidosPendentes] = useState<any[]>([]);
   const [pedidosConfirmados = [], setPedidosConfirmados] = useState<any[]>([]);
   const [pedidosDevolvidos = [], setPedidosDevolvidos] = useState<any[]>([]);
   const [pedidosDenunciador = [], setPedidosDenunciador] = useState<any[]>([]);
@@ -21,106 +21,63 @@ export default function Vendas() {
   let [empresa, setEmpresa] = useState('');
   let [display, setDisplay] = useState('none');
   let [filter, setFilter] = useState('');
+  let [sinal, setSinal] = useState(0);
 
-/*
 async function loadPedidosPendentes() {
-  pedidosArrayPendentes = []
-
+  setPedidosPendentes([])
   pedidos.filter(
     pedido => {
       if (pedido.status == "pendente")
       {
-        pedidosArrayPendentes.push(pedido)
-      }
-    })
-    pedidosArray.map(
-      (p) => setPedidosPendentes(p)
-    )
-}
-
-async function loadPedidosConfirmados() {
-  pedidosArrayConfirmados = []
-
-  pedidos.filter(
-    (pedido: any) => {
-      if (pedido.status == "confirmados"){
-        pedidosArrayConfirmados.push(pedido)
-      }
-    })
-  pedidosArrayConfirmados.map(
-    (p) => setPedidosConfirmados(p)
-  )
-}
-
-async function loadPedidosDevolvidos() {
-  pedidosArrayDevolvidos = []
-
-  pedidos.filter(
-    (pedido: any) => {
-      if (pedido.status == "devolvidos"){
-        pedidosArrayDevolvidos.push(pedido)
-      }  
-    })
-    pedidosArrayDevolvidos.map(
-    (p) => {
-      console.log("p")
-      console.log(p)
-      setPedidosDevolvidos(p)}
-  )
-}
-
-async function loadPedidosDenunciador() {
-  pedidos.filter(
-    (pedido: any) => {
-      if (pedido.status == "denunciados"){
-
-        setPedidosDenunciador(pedido)
-      }
-    }
-  )
-}
-
-*/
-
-async function loadPedidosPendentes() {
-  pedidos.filter(
-    pedido => {
-      if (pedido.status == "pendente")
-      {
-        // setPedidosPendentes((prevValues: any) => {
-        //     return [...new Set([...prevValues, pedido])]
-        //   })
-      }
-    }
-  )
-}
-
-async function loadPedidosConfirmados() {
-  pedidos.filter(
-    (pedido: any) => {
-      if (pedido.status == "confirmados"){
-        setPedidosConfirmados(pedido)
-      }
-    }
-  )
-}
-
-async function loadPedidosDevolvidos() {
-  pedidos.filter(
-    (pedido: any) => {
-      if (pedido.status == "devolvidos"){
-        setPedidosDevolvidos(pedido)
-      }
+        
+        setPedidosPendentes((prevProducts: any[]) => {
+          console.log(prevProducts)
+          return [...new Set([...prevProducts, pedido])]	
+            })
       
+      }
+    }
+  )
+}
+
+async function loadPedidosConfirmados() {
+  setPedidosConfirmados([])
+  pedidos.filter(
+    (pedido: any) => {
+      if (pedido.status == "confirmado" || pedido.status == "entregue"){
+        setPedidosConfirmados((prevProducts: any[]) => {
+          console.log(prevProducts)
+          return [...new Set([...prevProducts, pedido])]	
+            })
+      }
+    }
+  )
+}
+
+async function loadPedidosDevolvidos() {
+  setPedidosDevolvidos([])
+  
+  pedidos.filter(
+    (pedido: any) => {
+      if (pedido.status == "devolvido" || pedido.status == "cancelado"){
+        setPedidosDevolvidos((prevProducts: any[]) => {
+        console.log(prevProducts)
+        return [...new Set([...prevProducts, pedido])]	
+          })
+      }
     }
   )
 }
 
 async function loadPedidosDenunciador() {
+  setPedidosDenunciador([])
   pedidos.filter(
     (pedido: any) => {
-      if (pedido.status == "denunciados"){
-        setPedidosDenunciador(pedido)
+      if (pedido.status == "denunciado"){
+        setPedidosDenunciador((prevProducts: any[]) => {
+          console.log(prevProducts)
+          return [...new Set([...prevProducts, pedido])]	
+            })
       }
     }
   )
@@ -131,6 +88,7 @@ async function loadPedidosDenunciador() {
   useEffect(
     () => {
       async function loadUser() {
+        setSinal(0)
         const response = await api.get('empresa?filter%5Bstatus%5D=aprovado')
           .then(response => {
             return response.data;
@@ -152,8 +110,8 @@ async function loadPedidosDenunciador() {
         console.log(res.data)
         setPedidos(res.data.rows)
       }
-
       loadPedidos()
+      setSinal(1)
     }
     }, []);
     useEffect(
@@ -162,10 +120,12 @@ async function loadPedidosDenunciador() {
       loadPedidosConfirmados()
       loadPedidosDevolvidos()
       loadPedidosDenunciador()
-    }, [pedidos]
+      console.log("EBA")
+    }, [sinal]
     )
     
     async function empresaT(empresaId: string){
+      setSinal(0)
       console.log("Entrou empresaT");
       console.log(empresaId);
         console.log("requisição do pedido feita")
@@ -174,10 +134,13 @@ async function loadPedidosDenunciador() {
         console.log(res.data);
 
         setPedidos(res.data.rows);
+        setSinal(1)
     }
-    console.log(pedidosConfirmados)
+
     console.log(pedidosPendentes)
+    console.log(pedidosConfirmados)
     console.log(pedidosDevolvidos)
+
   return (
     <>
       <Header />
@@ -204,7 +167,7 @@ async function loadPedidosDenunciador() {
           <Link to="/denunciadas"><span>Denunciadas({pedidosDenunciador.length})</span></Link>
         </MenuSell>
         {
-          pedidos.map(
+          pedidosPendentes.map(
             (pedidos) => (
               <ContainerMenuSell>
               <div>
