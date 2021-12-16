@@ -30,6 +30,42 @@ export default function ApproveUsers() {
     toast.info('Ainda não implementado')
     setIsOpen(false);
   }
+  function aprovarEmpresa(empresa: Empresa) {
+    empresa.status = "aprovado";
+    let response = api.put('empresa/' + empresa.id, {
+      id: empresa.id,
+      data: empresa,
+    }).then((response) => {
+      console.log(response)
+      if (response.statusText == "OK") {
+        toast.info('Empresa aprovado com sucesso! :)');
+        window.location.reload();
+      }else{
+        toast.error('Ops, não foi possivel aprovar a empresa! :(');
+      }
+    }).catch((error)=>{
+      toast.error('Ops, não foi possivel aprovar o produto! :(');
+      console.log(error)
+    })
+  }
+  function recusarEmpresa(empresa: Empresa) {
+    empresa.status = "recusado";
+    let response = api.put('empresa/' + empresa.id, {
+      id: empresa.id,
+      data: empresa,
+    }).then((response) => {
+      console.log(response)
+      if (response.statusText == "OK") {
+        toast.info('Empresa recusado com sucesso! :)');
+        window.location.reload();
+      }else{
+        toast.error('Ops, não foi possivel recusado a empresa! :(');
+      }
+    }).catch((error)=>{
+      toast.error('Ops, não foi possivel recusado a empresa! :(');
+      console.log(error)
+    })
+  }
   return (
     <>
       <Header />
@@ -52,8 +88,8 @@ export default function ApproveUsers() {
                   </ContentDetails>
                 </CardDatailsContent>
                 <div className="flex-btn">
-                  <Link to="/aprovar-usuarios" onClick={messageCancel}>Recusar</Link>
-                  <Link to="/aprovar-usuarios" onClick={messageCancel}>Aprovar</Link>
+                  <Link to="/aprovar-usuarios" onClick={() => recusarEmpresa(empresa)}>Recusar</Link>
+                  <Link to="/aprovar-usuarios" onClick={() => aprovarEmpresa(empresa)}>Aprovar</Link>
                 </div>
               </CardDatailsContent>
             ))
