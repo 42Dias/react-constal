@@ -105,9 +105,8 @@ export default function Produto() {
   const productId = getHash()
   function buildUrl(){
     const productId = getHash()
-    const tenantId = "fa22705e-cf27-41d0-bebf-9a6ab52948c4";
 //  `/tenant/:tenantId/produto/:id`
-    const requisition = `/tenant/${tenantId}/produto/${productId}`
+    const requisition = `/produto/${productId}`
     return requisition
   }
   
