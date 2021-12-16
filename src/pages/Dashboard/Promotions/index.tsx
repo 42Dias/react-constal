@@ -42,7 +42,17 @@ export default function Promotions() {
   }
 
   const [products = [], setProducts] = useState<Product[]>([]);
-  
+  const [ids = [], setIds] = useState<Product[]>([]);
+
+  function addNewId(newId: string){
+    console.log(newId)
+    setIds((prevValues: any[]) => {
+      return [...new Set([...prevValues, newId])]	
+       })
+    console.log(ids)
+
+  }
+
   let productCounter: any[] = [];
   
   useEffect(() => {
@@ -84,7 +94,10 @@ export default function Promotions() {
                 <span>
                   {formatPrice(product.preco)}
                 </span>
-                <div className="btn-more">
+                <div
+                onClick={
+                  () => addNewId(product.id)}
+                className="btn-more">
                   <FiCheck />
                 </div>
               </div>
@@ -109,21 +122,9 @@ export default function Promotions() {
             <ModalContent>
               <h3>Novo produto</h3>
               <ContentFormNew>
-                <label htmlFor="">Preço atual</label>
-                <input type="text" placeholder="R$ 63,33" />
+                <label htmlFor="">Imagem Promocional</label>
+                <input type="text" placeholder="www.suaImagem.com/imagem" />
               </ContentFormNew>
-
-              <ContentFormNew>
-                <label htmlFor="">Novo preço</label>
-                <input type="text" placeholder="R$" />
-              </ContentFormNew>
-
-              <ContentFormNew>
-                <label htmlFor="">Texto Promocional</label>
-                <input type="text" placeholder="Incrível Produto com 10% de desconto" />
-              </ContentFormNew>
-
-
 
               <div className="buttonsNew">
                 <a href="">Cancelar</a>
