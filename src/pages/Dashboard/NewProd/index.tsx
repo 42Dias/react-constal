@@ -106,8 +106,11 @@ export default function NewProd() {
     if(response.status == 200){
       messageApprove()
     }
-    else if(response.statusText != "OK"){
+    else if(response.status == 500){
       toast.info('Algo deu errado, tente mais tarde :(')
+    }
+    else{
+      messageApprove()
     }
   }
 
@@ -117,8 +120,11 @@ export default function NewProd() {
     if( await response.status == 200){
       messageApprove()
     }
-    else if( await response.status != 200){
+    else if( await response.status == 500){
       toast.info('Algo deu errado, tente mais tarde :(')
+    }
+    else{
+      messageApprove()
     }
     console.log(response)
   }
@@ -209,7 +215,6 @@ export default function NewProd() {
     async function loadProducts() {
 
       const response = await api.get("produto");
-      console.log(response.data);
       setProducts(response.data.rows);
 
     }

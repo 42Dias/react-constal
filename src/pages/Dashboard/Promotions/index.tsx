@@ -62,7 +62,7 @@ export default function Promotions() {
         const response: any = api.put(`produto/${id}`, data)
         console.log(await response)
         if( await response.status == 200){
-          toast.info('Promoção efetuada com sucesso')      
+          toast.info('Eba, recebemos o sua promoção. Ele será revisado e logo estará na plataforma :)')
         }
         else if( await response.status != 200){
           toast.error('Algo deu errado, tente mais tarde :(')
