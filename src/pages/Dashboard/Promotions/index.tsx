@@ -25,6 +25,8 @@ import { Btn } from "../PersonalData/styles";
 
 export default function Promotions() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [imagemPromocional, setImagemPromocional] = useState<any>();
+  const [dataEncerramento, setDataEncerramento]   =  useState<any>();
 
   function openModal() {
     setIsOpen(true);
@@ -66,7 +68,9 @@ export default function Promotions() {
   }, []);
 
   console.log(ids)
-
+  console.log(dataEncerramento)
+  console.log(imagemPromocional)
+  
   return (
     <>
       <Header />
@@ -132,12 +136,16 @@ export default function Promotions() {
               <h3>Novo produto</h3>
               <ContentFormNew>
                 <label htmlFor="">Imagem Promocional</label>
-                <input type="url" placeholder="https://www.suaImagem.com/imagem" />
+                <input type="url" placeholder="https://www.suaImagem.com/imagem" 
+                onChange={event => setImagemPromocional(event.target.value)}
+                />
               </ContentFormNew>
               
               <ContentFormNew>
                 <label htmlFor="">Data de encerramento</label>
-                <input type="date" placeholder="12/12/2022"/>
+                <input type="date" placeholder="12/12/2022" 
+                onChange={event => setDataEncerramento(event.target.value)} 
+                />
               </ContentFormNew>
 
               <div className="buttonsNew">
