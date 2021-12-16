@@ -21,6 +21,7 @@ import { Menu } from "../../../components/Menu";
 import { Product } from "../../../types";
 import { api } from "../../../services/api";
 import { formatPrice } from "../../../util/format";
+import { Btn } from "../PersonalData/styles";
 
 export default function Promotions() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -42,14 +43,14 @@ export default function Promotions() {
   }
 
   const [products = [], setProducts] = useState<Product[]>([]);
-  const [ids = [], setIds] = useState<Product[]>([]);
+  const [ids = [], setIds] = useState<any[]>([]);
 
   function addNewId(newId: string){
     console.log(newId)
     setIds((prevValues: any[]) => {
+      console.log(prevValues)
       return [...new Set([...prevValues, newId])]	
        })
-    console.log(ids)
 
   }
 
@@ -64,6 +65,7 @@ export default function Promotions() {
     loadProducts();
   }, []);
 
+  console.log(ids)
 
   return (
     <>
@@ -73,6 +75,13 @@ export default function Promotions() {
         <ContentNew>
           <h2>Promoções</h2>
         </ContentNew>
+
+        <ContentNew>
+          <Btn onClick={openModal}>
+            Adicionar Promoção
+          </Btn>
+        </ContentNew>
+        
         {products.forEach((p) => {
           
             if (p.isOferta === true) {
@@ -123,12 +132,17 @@ export default function Promotions() {
               <h3>Novo produto</h3>
               <ContentFormNew>
                 <label htmlFor="">Imagem Promocional</label>
-                <input type="text" placeholder="www.suaImagem.com/imagem" />
+                <input type="url" placeholder="https://www.suaImagem.com/imagem" />
+              </ContentFormNew>
+              
+              <ContentFormNew>
+                <label htmlFor="">Data de encerramento</label>
+                <input type="date" placeholder="12/12/2022"/>
               </ContentFormNew>
 
               <div className="buttonsNew">
-                <a href="">Cancelar</a>
-                <a href="">Adicionar</a>
+                <button >Cancelar</button>
+                <button >Adicionar</button>
               </div>
             </ModalContent>
           </div>

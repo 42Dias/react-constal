@@ -128,7 +128,7 @@ export const CardDatailsContent = styled.div`
     display: flex;
   }
 
-  .flex-btn a {
+  .flex-btn button {
     margin: 0 20px;
   }
 `;
