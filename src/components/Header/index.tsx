@@ -11,6 +11,8 @@ import {
 import Axios from "axios";
 
 import logo from "../../assets/images/logo.png";
+import loading from "../../assets/images/loading.gif";
+
 import {
   ModalContainer,
   Container,
@@ -286,7 +288,7 @@ const Header = (): JSX.Element => {
               value={password}
               onChange={(text) => setPassword(text.target.value)}
             />
-            {loading ? <img src={'https://olaargentina.com/wp-content/uploads/2019/11/loading-gif-transparent-10.gif'} alt="Loading" style={{ width: 250}}></img> : false}
+            {loading ? <img width="40px" style={{margin: '0 auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
             {/*<Link to="/meu-perfil" className="btn-enter" href="">
               Entrar
             </Link>*/}
