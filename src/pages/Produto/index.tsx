@@ -211,7 +211,6 @@ console.log(id)
               <AddCartRight>
                 <button className="fav" type="button"
                 onClick={() => setFavoritos(favoritos, productId)}
-
                 >Favoritar <FiHeart /></button>
                 <FlexBtnsProd>
                   <IconPlusMinus onClick={increment}>
