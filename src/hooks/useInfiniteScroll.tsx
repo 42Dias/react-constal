@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { api } from '../services/api';
+import { api, ip } from '../services/api';
 
 
 export default function useInfiniteScroll(number: number){
@@ -32,7 +32,7 @@ export default function useInfiniteScroll(number: number){
 
 	axios({
 		method: 'GET',
-	  url: `http://${api}:8157/api/produto/${number}`,
+	  url: `http://${ip}:8157/api/produto/${number}`,
 	  timeout: 50000
 
 	}).then(res => {
