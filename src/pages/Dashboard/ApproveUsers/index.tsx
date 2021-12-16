@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { CardDatails, CardDatailsContent, ContentDetails } from "./styles";
 import { Menu } from "../../../components/Menu";
 import { useState, useEffect } from "react";
-import { api } from "../../../services/api";
+import { api, role } from "../../../services/api";
 import { Empresa } from "../../../types";
 import { toast } from "react-toastify";
 import React from "react";
@@ -13,6 +13,11 @@ export default function ApproveUsers() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
   
   useEffect(() => {
+    if(role != 'empresa' && role != 'admin' ){
+      // Simulate an HTTP redirect:
+      window.location.replace("http://www.w3schools.com");
+    }
+
     async function loadUser() {
       const response = await api.get('empresa?filter%5Bstatus%5D=pendente')
         .then(response => {

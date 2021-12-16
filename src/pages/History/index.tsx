@@ -15,7 +15,7 @@ import {
 import Modal from "react-modal";
 
 import React, { useState, useEffect } from "react";
-import { api } from "../../services/api";
+import { api, ip, role } from "../../services/api";
 
 
 import { formatPrice } from "../../util/format";
@@ -58,7 +58,10 @@ export default function Histoty() {
   // const [estado, setestado]=useState('');
 
   useEffect(() => {
-
+    if(role != 'pessoa'){
+      // Simulate an HTTP redirect:
+      window.location.replace(`http://${ip}:3000/constal#/erro`);
+    }
     async function loadHistory() {
       console.log("requisição do pedido feita")
       const res = await api.get('pedidoWithProduct')

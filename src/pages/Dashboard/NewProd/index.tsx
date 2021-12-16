@@ -21,7 +21,7 @@ import { Menu } from "../../../components/Menu";
 import { formatPrice } from "../../../util/format";
 import axios from "axios";
 import { Product } from "../../../types";
-import { api } from "../../../services/api";
+import { api, ip, role } from "../../../services/api";
 
 export default function NewProd() {
   const [showModal1, setShowModal1] = React.useState(false);
@@ -202,6 +202,10 @@ export default function NewProd() {
   }
 
   useEffect(() => {
+    if(role != 'empresa' && role != 'admin' ){
+      // Simulate an HTTP redirect:
+      window.location.replace(`http://${ip}:3000/constal#/erro`);
+    }
     async function loadCategorias() {
       const categoriasResponse = await api.get("categoria");
       const categoriasDoBack = categoriasResponse.data.rows

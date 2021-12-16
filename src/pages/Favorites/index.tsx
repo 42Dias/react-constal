@@ -11,7 +11,7 @@ import {
 import React, { useState ,useEffect } from "react";
 import prodfav from "../../assets/images/prodfav.png";
 import { Product } from '../../types';
-import { api } from "../../services/api";
+import { api, ip, role } from "../../services/api";
 import { formatPrice } from "../../util/format";
 import { Menu } from "../../components/Menu";
 
@@ -32,7 +32,10 @@ export default function Favorites() {
 // }
 
   useEffect(() => {
-    
+    if(role != 'pessoa'){
+      // Simulate an HTTP redirect:
+      window.location.replace(`http://${ip}:3000/constal#/erro`);
+    }
     async function loadFavoritos(favoritos: string[]){
       console.log("favoritos");
       console.log(favoritos);
