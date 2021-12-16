@@ -28,7 +28,11 @@ export default function Promotions() {
   function openModal() {
     setIsOpen(true);
   }
-
+  /*
+  Não tem a ver com o produto cadastrado
+  o adicionar
+  
+  */
   function afterOpenModal() {
     // references are now sync'd and can be accessed.
   }
@@ -43,15 +47,13 @@ export default function Promotions() {
   
   useEffect(() => {
     async function loadProducts() {
-      const response = await api.get("produtos");
-      //console.log(response.data);
-      const productsFormated = response.data.record
-      setProducts(productsFormated);
+      const response = await api.get("produto");
+      console.log(response.data);
+      setProducts(response.data.rows);
     }
     loadProducts();
   }, []);
 
-  // function updateProduc
 
   return (
     <>
@@ -62,12 +64,10 @@ export default function Promotions() {
           <h2>Promoções</h2>
         </ContentNew>
         {products.forEach((p) => {
-            if (p.isOferta === 1) {
+          
+            if (p.isOferta === true) {
               productCounter.push(p);
             }
-
-            //console.log(productCounter);
-            //console.log(products.length);
           })}
         <GridProdsFour>
           {productCounter.length === 0 ? (
@@ -92,21 +92,6 @@ export default function Promotions() {
             </>)
             ))
           }
-
-
-          <ProdContainerSingle>
-            <img src={prodfour} alt="" />
-            <h5>Nome do produto</h5>
-            <p>Descrição do produto com especificações técnicas</p>
-            <div className="btn-group-add">
-              <span>
-                R$<b>219,99</b>
-              </span>
-              <div onClick={openModal} className="btn-more">
-                <FiCheck />
-              </div>
-            </div>
-          </ProdContainerSingle>
         </GridProdsFour>
       </div>
 
