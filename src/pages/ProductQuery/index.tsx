@@ -82,8 +82,15 @@ function ProductQuery() {
                   <p>{produto.quantidade}</p>
                   <p>R$ {produto.preco}</p>
                 </S.ContentDetails>
-                <Link to="/consultar-produtos" onClick={() => aprovarProd(produto)}>Aprovar</Link>
-                <Link to="/consultar-produtos" onClick={() => recusarProd(produto)} style={{ background: 'none', color: 'black', border: '1px solid black' }}>Recusar</Link>
+                <S.BtnContent>
+                  <Link to="/consultar-produtos" onClick={() => aprovarProd(produto)}>Aprovar</Link>
+                  <Link 
+                    to="/consultar-produtos" 
+                    onClick={() => recusarProd(produto)}
+                  >
+                    Recusar
+                  </Link>
+                </S.BtnContent>
               </S.CardDatailsContent>
             ))
 
