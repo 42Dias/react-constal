@@ -61,10 +61,10 @@ export default function Promotions() {
       async (id) => {        
         const response: any = api.put(`produto/${id}`, data)
         console.log(await response)
-        if(response.status == 200){
+        if( await response.status == 200){
           toast.info('Promoção efetuada com sucesso')      
         }
-        else if(response.status != 200){
+        else if( await response.status != 200){
           toast.error('Algo deu errado, tente mais tarde :(')
         }
         console.log(response)

@@ -114,10 +114,10 @@ export default function NewProd() {
   async function makeRequisitionToChange(data: any){
     const response: any = api.put(`produto/${id}`, data)
     console.log(await response)
-    if(response.status == 200){
+    if( await response.status == 200){
       messageApprove()
     }
-    else if(response.statusText != "OK"){
+    else if( await response.status != 200){
       toast.info('Algo deu errado, tente mais tarde :(')
     }
     console.log(response)
