@@ -40,7 +40,7 @@ export function Menu() {
           <div className="dropdown-content">
             <div className="drop-grid">
               <Link to="/vendas">Vendas por Empresa</Link>
-              <Link to="/perguntas">Histórico</Link> 
+              <Link to="/perguntas">Histórico Vendas</Link> 
               <Link to="/assinaturas">Planos</Link>
               <Link to="/assinaturas">assinaturas</Link>
               <Link to="/consultar-produtos">Aprovar Produtos</Link>

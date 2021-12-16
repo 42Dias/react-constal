@@ -46,7 +46,7 @@ async function loadPedidosConfirmados() {
     (pedido: any) => {
       if (pedido.status == "confirmado" || pedido.status == "entregue"){
         setPedidosConfirmados((prevProducts: any[]) => {
-          console.log(prevProducts)
+          //console.log(prevProducts)
           return [...new Set([...prevProducts, pedido])]	
             })
       }
@@ -61,7 +61,7 @@ async function loadPedidosDevolvidos() {
     (pedido: any) => {
       if (pedido.status == "devolvido" || pedido.status == "cancelado"){
         setPedidosDevolvidos((prevProducts: any[]) => {
-        console.log(prevProducts)
+        //console.log(prevProducts)
         return [...new Set([...prevProducts, pedido])]	
           })
       }
@@ -75,7 +75,7 @@ async function loadPedidosDenunciador() {
     (pedido: any) => {
       if (pedido.status == "denunciado"){
         setPedidosDenunciador((prevProducts: any[]) => {
-          console.log(prevProducts)
+          //console.log(prevProducts)
           return [...new Set([...prevProducts, pedido])]	
             })
       }
@@ -120,7 +120,7 @@ async function loadPedidosDenunciador() {
       loadPedidosConfirmados()
       loadPedidosDevolvidos()
       loadPedidosDenunciador()
-      console.log("EBA")
+      //console.log("EBA")
     }, [sinal]
     )
     
@@ -129,12 +129,14 @@ async function loadPedidosDenunciador() {
       console.log("Entrou empresaT");
       console.log(empresaId);
         console.log("requisição do pedido feita")
+        if(empresaId != ""){
         const res = await api.get('pedido?filter%5BfornecedorEmpresa%5D='+empresaId)
         // const res = await api.get('pedido')
-        console.log(res.data);
+        //console.log(res.data);
 
         setPedidos(res.data.rows);
         setSinal(1)
+        }
     }
 
     console.log(pedidosPendentes)
@@ -151,8 +153,9 @@ async function loadPedidosDenunciador() {
         <div style={{display: display}}>
         <label htmlFor="">Selecionar Empresa: </label>
         <select 
-          onChange={(text) => setEmpresa(text.target.value)} onClick={() => empresaT(empresa)}
+          onChange={(text) => setEmpresa(text.target.value)} onClick={() => empresaT(empresa)} 
         >
+          <option value={"--Selecione--"} key={"--Selecione--"} >--Selecione--</option>
           {empresas.map(
             (empresa) => (
               <option value={empresa.id} key={empresa.id} >{empresa.razaoSocial}</option>
