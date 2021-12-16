@@ -206,18 +206,26 @@ const Header = (): JSX.Element => {
 
               <IconsContainer>
                 <FiUser onClick={openModal} size={20} />
-                <Link to="/favoritos">
+                {
+                  role == "pessoa" ? (
+                       <>
+                  <Link to="/favoritos">
                   <FiHeart size={20} />
-                </Link>
-                <Cart to="/cart">
-                  <div>
-                    <strong>Meu carrinho</strong>
-                    <span data-testid="cart-size">
-                      {cartSize == 1 ? `${cartSize} item` : `${cartSize} itens`}
-                    </span>
-                  </div>
-                  <FiShoppingBag size={20} />
-                </Cart>
+                  </Link>
+                  <Cart to="/cart">
+                    <div>
+                      <strong>Meu carrinho</strong>
+                      <span data-testid="cart-size">
+                        {cartSize == 1 ? `${cartSize} item` : `${cartSize} itens`}
+                      </span>
+                    </div>
+                    <FiShoppingBag size={20} />
+                  </Cart>
+                       </>   
+                          ):(
+                            <div/>
+                          )
+                      }
               </IconsContainer>
 
               <IconsContainerMenu>
@@ -226,9 +234,9 @@ const Header = (): JSX.Element => {
                     <span>Meu perfil</span>
                     <FiUser size={20} />
                   </div>
-                  <div className="flex-item">
-                    <Link to="/favoritos">
+                    <div className="flex-item">
                       <span>Meus produtos favoritos</span>
+                    <Link to="/favoritos">
                       <FiHeart size={20} />
                     </Link>
                   </div>
