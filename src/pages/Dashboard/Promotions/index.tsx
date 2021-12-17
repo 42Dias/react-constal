@@ -173,14 +173,14 @@ export default function Promotions() {
               <h3>Novo produto</h3>
               <ContentFormNew>
                 <label htmlFor="">Imagem Promocional</label>
-                <input type="url" placeholder="https://www.suaImagem.com/imagem" 
+                <input required type="url" placeholder="https://www.suaImagem.com/imagem" 
                 onChange={event => setImagemPromocional(event.target.value)}
                 />
               </ContentFormNew>
               
               <ContentFormNew>
                 <label htmlFor="">Data de encerramento</label>
-                <input type="date" placeholder="12/12/2022" 
+                <input required type="date" placeholder="12/12/2022" 
                 onChange={event => setDataEncerramento(event.target.value)} 
                 />
               </ContentFormNew>

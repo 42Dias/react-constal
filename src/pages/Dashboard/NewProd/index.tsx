@@ -347,7 +347,7 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Nome do produto</label>
-                <input type="text" placeholder="Nome do produto"
+                <input required type="text" placeholder="Nome do produto"
                 onChange={(text) => setNome(text.target.value)}
                 // value="5165161"
                 />
@@ -356,21 +356,21 @@ export default function NewProd() {
               
               <ContentFormNew>
                 <label htmlFor="">Código da empresa</label>
-                <input type="text" placeholder="Código da empresa"
+                <input required type="text" placeholder="Código da empresa"
                 onChange={(text) => setCodigoDaEmpresa(text.target.value)}
                 />
               </ContentFormNew>
 
               <ContentFormNew>
                 <label htmlFor="">Descrição</label>
-                <input type="text" placeholder="Descrição"
+                <input required type="text" placeholder="Descrição"
                 onChange={(text) => setDescricao(text.target.value)}
                 />
               </ContentFormNew>
 
               <ContentFormNew>
                 <label htmlFor="">Características técnicas</label>
-                <input type="text" placeholder="Especificações técnicas"
+                <input required type="text" placeholder="Especificações técnicas"
                 onChange={(text) => setCaracteristicasTecnicas(text.target.value)}
                 />
               </ContentFormNew>
@@ -378,14 +378,14 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Preço</label>
-                <input type="number" placeholder="Preço"
+                <input required type="number" placeholder="Preço"
                 onChange={(text) => setPreco(text.target.value)}
                 />
               </ContentFormNew>
 
               <ContentFormNew>
                 <label htmlFor="">URL da imagem</label>
-                <input type="text" placeholder="www.imagem/suaimagem.com"
+                <input required type="text" placeholder="www.imagem/suaimagem.com"
                 onChange={(text) => setImagem(text.target.value)}
                 />
               </ContentFormNew>
@@ -394,7 +394,7 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Prazo de entrega</label>
-                <input type="text" placeholder="Prazo de entrega"
+                <input required type="text" placeholder="Prazo de entrega"
                 onChange={(text) => setPrazo(text.target.value)}
                 
                 />
@@ -402,7 +402,7 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Quantidade</label>
-                <input type="number" placeholder="Quantidade"
+                <input required type="number" placeholder="Quantidade"
                 onChange={(text) => setQuantidade(text.target.value)} />
               </ContentFormNew>
 
@@ -410,7 +410,7 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Tipo de frete</label>
-                <select
+                <select required
                 onChange={(text) => setFrete(text.target.value)}
                 >
                   <option value="por_categoria">Por Cep</option>
@@ -465,7 +465,7 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Nome do produto</label>
-                <input type="text" placeholder="Nome do produto"
+                <input required type="text" placeholder="Nome do produto"
                 onChange={(text) => setNome(text.target.value)}
                 />
                 
@@ -473,21 +473,21 @@ export default function NewProd() {
               
               <ContentFormNew>
                 <label htmlFor="">Código da empresa</label>
-                <input type="text" placeholder="Código da empresa"
+                <input required type="text" placeholder="Código da empresa"
                 onChange={(text) => setCodigoDaEmpresa(text.target.value)}
                 />
               </ContentFormNew>
 
               <ContentFormNew>
                 <label htmlFor="">Descrição</label>
-                <input type="text" placeholder="Descrição"
+                <input required type="text" placeholder="Descrição"
                 onChange={(text) => setDescricao(text.target.value)}
                 />
               </ContentFormNew>
 
               <ContentFormNew>
                 <label htmlFor="">Características técnicas</label>
-                <input type="text" placeholder="Especificações técnicas"
+                <input required type="text" placeholder="Especificações técnicas"
                 onChange={(text) => setCaracteristicasTecnicas(text.target.value)}
                 />
               </ContentFormNew>
@@ -495,14 +495,14 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Preço</label>
-                <input type="number" placeholder="Preço"
+                <input required type="number" placeholder="Preço"
                 onChange={(text) => setPreco(text.target.value)}
                 />
               </ContentFormNew>
 
               <ContentFormNew>
                 <label htmlFor="">URL da imagem</label>
-                <input type="text" placeholder="www.imagem/suaimagem.com"
+                <input required type="text" placeholder="www.imagem/suaimagem.com"
                 onChange={(text) => setImagem(text.target.value)}
                 />
               </ContentFormNew>
@@ -530,14 +530,14 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Prazo de entrega</label>
-                <input type="text" placeholder="Prazo de entrega"
+                <input required type="text" placeholder="Prazo de entrega"
                 onChange={(text) => setPrazo(text.target.value)}
                 />
               </ContentFormNew>
 
               <ContentFormNew>
                 <label htmlFor="">Quantidade</label>
-                <input type="number" placeholder="Quantidade"
+                <input required type="number" placeholder="Quantidade"
                 onChange={(text) => setQuantidade(text.target.value)} />
               </ContentFormNew>
 
@@ -557,7 +557,7 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Tipo de frete</label>
-                <select
+                <select required 
                 onChange={(text) => setFrete(text.target.value)}
                 >
                   <option value="por_categoria">Por Cep</option>
@@ -569,7 +569,7 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Tipo de categoria</label>
-                <select
+                <select required
                 onChange={(text) => setCategoria(text.target.value)}
                 >
                   {categorias.map(
@@ -616,7 +616,7 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Novo preço</label>
-                <input type="number" placeholder="650"
+                <input required type="number" placeholder="650"
                 onChange={(text) => {
                   setPrecoOferta(text.target.value)
                   setIsOferta(true)
@@ -651,7 +651,7 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Nova Categoria</label>
-                <input type="text" placeholder="Computador potente"
+                <input required type="text" placeholder="Computador potente"
                 onChange={(text) => setNewCategoria(text.target.value)}
                 
                 />
