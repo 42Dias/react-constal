@@ -207,8 +207,10 @@ const Header = (): JSX.Element => {
               <IconsContainer>
                 <FiUser onClick={openModal} size={20} />
                 {
-                  role == "pessoa" ? (
-                       <>
+                  role != "pessoa" ? (
+                    <div/>
+                          ):(
+                  <>
                   <Link to="/favoritos">
                   <FiHeart size={20} />
                   </Link>
@@ -221,9 +223,7 @@ const Header = (): JSX.Element => {
                     </div>
                     <FiShoppingBag size={20} />
                   </Cart>
-                       </>   
-                          ):(
-                            <div/>
+                    </>
                           )
                       }
               </IconsContainer>
@@ -234,21 +234,29 @@ const Header = (): JSX.Element => {
                     <span>Meu perfil</span>
                     <FiUser size={20} />
                   </div>
-                    <div className="flex-item">
-                      <span>Meus produtos favoritos</span>
-                    <Link to="/favoritos">
-                      <FiHeart size={20} />
-                    </Link>
-                  </div>
-                  <Cart to="/cart">
-                    <div>
-                      <strong>Meu carrinho</strong>
-                      <span data-testid="cart-size">
-                        {cartSize == 1 ? `${cartSize} item` : `${cartSize} itens`}
-                      </span>
-                    </div>
-                    <FiShoppingBag size={20} />
-                  </Cart>
+                  {
+                  role != "pessoa" ? (
+                    <div/>
+                          ):(
+                            <>
+                          <div className="flex-item">
+                            <span>Meus produtos favoritos</span>
+                          <Link to="/favoritos">
+                            <FiHeart size={20} />
+                          </Link>
+                        </div>
+                        <Cart to="/cart">
+                          <div>
+                            <strong>Meu carrinho</strong>
+                            <span data-testid="cart-size">
+                              {cartSize == 1 ? `${cartSize} item` : `${cartSize} itens`}
+                            </span>
+                          </div>
+                          <FiShoppingBag size={20} />
+                        </Cart>
+                            </>
+                          )
+                    }
                 </div>
               </IconsContainerMenu>
 
