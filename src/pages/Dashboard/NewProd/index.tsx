@@ -22,11 +22,13 @@ import { formatPrice } from "../../../util/format";
 import axios from "axios";
 import { Product } from "../../../types";
 import { api, ip, role } from "../../../services/api";
+import { Btn } from "../PersonalData/styles";
 
 export default function NewProd() {
   const [showModal1, setShowModal1] = React.useState(false);
   const [showModal2, setShowModal2] = React.useState(false);
   const [showModal3, setShowModal3] = React.useState(false);
+  const [showModal4, setShowModal4] = React.useState(false);
 
   const [index, setIndex] = React.useState(0);
 
@@ -44,8 +46,11 @@ export default function NewProd() {
   const [imagem, setImagem] = useState('')
   const [categoria, setCategoria] = useState<any>()
 
+  
   const [isOferta, setIsOferta] = useState(false)
   const [precoOferta, setPrecoOferta] = useState('')
+  
+  const [newCategoria, setNewCategoria] = useState('')
 
   console.log(categoria)
 
@@ -63,6 +68,7 @@ export default function NewProd() {
     setShowModal1(false)
     setShowModal2(false)
     setShowModal3(false)
+    setShowModal4(false)
   }
 
   function messageCancel() {
@@ -171,6 +177,18 @@ export default function NewProd() {
     makeRequisitionToChange(data)
   }
 
+  async function addCategoria(){
+    const data = {
+      data: {
+        nome: newCategoria,
+        status: 'pendente'
+      }
+    }
+    const response = await api.post('categoria', data)
+    console.log(response)
+    // console.log(newCategoria)
+  }
+
   async function deleteProduct(prodId: any){
     const response = await api.delete(`produtoDeleteOne/${prodId}`)
     console.log(response.status)
@@ -224,9 +242,8 @@ export default function NewProd() {
     loadProducts();
   }, []);
   
-  console.log(nome)
+  console.log(newCategoria)
 
-  console.log(productToReq)
 
   return (
     <>
@@ -562,7 +579,16 @@ export default function NewProd() {
                   )}
                 </select>
               </ContentFormNew>
-
+              <Btn
+                onClick={
+                  () => {
+                  setShowModal2(false)
+                  setShowModal4(true)
+                } 
+                }
+                >
+                Adicionar nova categoria
+                </Btn>
               
 
               <div className="buttonsNew">
@@ -590,7 +616,7 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Novo preço</label>
-                <input type="number" placeholder="63"
+                <input type="number" placeholder="650"
                 onChange={(text) => {
                   setPrecoOferta(text.target.value)
                   setIsOferta(true)
@@ -609,6 +635,36 @@ export default function NewProd() {
         </Modal>
       </ModalContainerVendedor>
 
+      <ModalContainerVendedor>
+        <Modal
+          isOpen={showModal4}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+        >
+          <div>
+            <ModalFlex>
+              <AiOutlineClose onClick={closeModal} />
+            </ModalFlex>
+
+            <ModalContent>
+              <h3>Nova promoção</h3>
+
+              <ContentFormNew>
+                <label htmlFor="">Nova Categoria</label>
+                <input type="text" placeholder="Computador potente"
+                onChange={(text) => setNewCategoria(text.target.value)}
+                
+                />
+              </ContentFormNew>
+
+              <div className="buttonsNew">
+              <button type="button" onClick={messageCancel}>Cancelar</button>
+              <button type="button" onClick={addCategoria}>Adicionar</button>
+              </div>
+            </ModalContent>
+          </div>
+        </Modal>
+      </ModalContainerVendedor>
 
     </>
   );
