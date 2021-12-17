@@ -136,6 +136,7 @@ export default function PersonalData() {
         estado : newEstado,
         bairro : newBairro,
         pix : pix,
+        status : "pendente",
       }
     }
     const response = await api.post('empresa-perfil', data)
