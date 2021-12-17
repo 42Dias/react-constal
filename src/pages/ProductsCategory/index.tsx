@@ -14,7 +14,8 @@ import useInfiniteScroll from '../../hooks/useInfiniteScroll'
 import { Menu } from "../../components/Menu";
 
 
-export default function Products() {
+
+export default function ProductsCategory() {
 
   const [products = [], setProducts] = useState<any[]>([]);
 
@@ -22,7 +23,7 @@ export default function Products() {
     ()=>{
       async function loadProdutosPesquisados(){
         const pesquisa = window.location.hash.replace(/#\/produtos\//g, '');
-        const resultadoDaPesquisa = await api.get(`produto?filter%5Bnome%5D=${pesquisa}`)
+        const resultadoDaPesquisa = await api.get(`produto?filter%5BcategoriaId%5D=${pesquisa}`)
         setProducts(resultadoDaPesquisa.data.rows)
       }
       loadProdutosPesquisados()
