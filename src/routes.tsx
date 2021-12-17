@@ -17,6 +17,8 @@ import PersonalData from "./pages/Dashboard/PersonalData";
 import Questions from "./pages/Dashboard/Questions";
 import SaleDetails from "./pages/Dashboard/SaleDetails";
 import NewPlan from "./pages/NewPlan";
+import ProductsCategory from "./pages/ProductsCategory";
+import ProductsPromotions from "./pages/ProductsPromotions";
 import ProductQuery from "./pages/ProductQuery";
 import Vendas from "./pages/Dashboard/Vendas";
 import Confirmed from "./pages/Dashboard/Confirmed";
@@ -43,6 +45,8 @@ const Routes = (): JSX.Element => {
         <Route path="/meu-perfil" component={Profile} />
         <Route path="/cadastrar" component={Register} />
         <Route exact path="/produto/:id" component={Produto} />
+        <Route exact path="/produtos-promocao/:id" component={ProductsPromotions} />
+        <Route exact path="/produto-categoria/:id" component={ProductsCategory} />
         <Route exact path="/finalizar" component={FinishBuy} />
         <Route exact path="/pagar" component={PayCart} />
         <Route exact path="/favoritos" component={Favorites} />
