@@ -166,7 +166,6 @@ export default function NewProd() {
         "imagemUrl": imagem, 
         "isOferta": isOferta,
         "precoOferta": precoOferta,
-        "status": "pendente",
       }
     }
     makeRequisitionToChange(data)
