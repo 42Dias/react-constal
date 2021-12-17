@@ -108,15 +108,18 @@ const Home = (): JSX.Element => {
           {
             promocoes.map(
               (promocao, index) => (
-                    <SwiperSlide>
-                      <img src={promocao.imagemPromocional}
-                      alt={promocao.precoOferta + " " + promocao.nome} />
+                    <SwiperSlide key={index}>
+                      <a href={`http://${ip}:8157/api/produtos/${promocao.imagemPromocional}`}>
+                        <img src={promocao.imagemPromocional}
+                        alt={promocao.precoOferta + " " + promocao.nome} />
+                    </a>
                     </SwiperSlide>
               )             
             )
           }
           <SwiperSlide><img src={moveis} alt="moveis" /></SwiperSlide>
-          <SwiperSlide><img src={materiais} alt="materiais" /></SwiperSlide>
+          <SwiperSlide><img src={materiais} alt="materiais" />
+          </SwiperSlide>
           <SwiperSlide><img src={eletrodomesticos} alt="eletrodomesticos" /></SwiperSlide>
           <SwiperSlide><img src={cama} alt="cama" /></SwiperSlide>
           <SwiperSlide><img src={modainfantil} alt="moda infantil" /></SwiperSlide>
