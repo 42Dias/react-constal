@@ -38,6 +38,7 @@ interface Product {
 }
 
 interface ProductFormatted extends Product {
+  promocaoId: any;
   imagemPromocional: string | undefined;
   priceFormatted: string;
 }
@@ -109,7 +110,8 @@ const Home = (): JSX.Element => {
             promocoes.map(
               (promocao, index) => (
                     <SwiperSlide key={index}>
-                      <a href={`http://${ip}:8157/api/produtos/${promocao.imagemPromocional}`}>
+                      <a href={`http://${ip}:3000/constal#/produtos-promocao/${promocao.promocaoId}`}>
+                        {/* /produtos-promocao/:imagemId */}
                         <img src={promocao.imagemPromocional}
                         alt={promocao.precoOferta + " " + promocao.nome} />
                     </a>
