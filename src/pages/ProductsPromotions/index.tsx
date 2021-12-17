@@ -14,15 +14,15 @@ import useInfiniteScroll from '../../hooks/useInfiniteScroll'
 import { Menu } from "../../components/Menu";
 
 
-export default function Products() {
+export default function ProductsPromotions() {
 
   const [products = [], setProducts] = useState<any[]>([]);
 
   useEffect(
     ()=>{
       async function loadProdutosPesquisados(){
-        const pesquisa = window.location.hash.replace(/#\/produtos\//g, '');
-        const resultadoDaPesquisa = await api.get(`produto?filter%5Bnome%5D=${pesquisa}`)
+        const pesquisa = window.location.hash.replace(/#\/produtos-promocao\//g, '');
+        const resultadoDaPesquisa = await api.get(`produto?filter%5BpromocaoId%5D=${pesquisa}`)
         setProducts(resultadoDaPesquisa.data.rows)
       }
       loadProdutosPesquisados()
