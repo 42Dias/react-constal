@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 import { FiMenu } from "react-icons/fi";
 import { FlexLink, Container } from "./styles";
+import { useEffect, useState } from "react";
+import { api, ip } from "../../services/api";
+import axios from "axios";
 
 export function Menu() {
   let role = localStorage.getItem("roles")?.replace(/"/g, "");
@@ -56,6 +59,22 @@ export function Menu() {
   }
   
    function Cliente() {
+    const [categorias = [], setCategorias] = useState<any[]>([]);
+
+     useEffect(
+       () => {
+        async function loadCategorias(){
+          const categoriasResponse = await axios.get('http://'+ip+':8157/api/categoria-aprovados');
+          const categoriasDoBack = categoriasResponse.data.record
+          console.log("categoriasDoBack")
+          console.log("categoriasDoBack")
+          console.log(categoriasDoBack)
+          setCategorias(categoriasDoBack)
+          const controller = new AbortController(); 
+          return () => { controller.abort(); }         
+        }
+        loadCategorias()
+       }, [] )
       return (
         <Container>
         <FlexLink>
@@ -66,25 +85,31 @@ export function Menu() {
             </button>
             <div className="dropdown-content">
               <div className="drop-grid">
-                <Link to="/produtos">Moda infantil</Link>
-
-                <Link to="/produtos">Moda feminina</Link>
-
-                <Link to="/produtos">Moda Masculina</Link>
-
-                <Link to="/produtos">Ar condicionado</Link>
-
-                <Link to="/cursos">Cursos</Link>
+                {/* categorias do back? */}
+                {
+                  categorias.map(
+                    (categoria, index) => (
+                      <Link
+                      key={index} 
+                      to={`/produto-categoria/${categoria.id}`}>{categoria.nome}</Link>
+                    )
+                  )
+                }
+             <Link to="/produtos">Moveis</Link>
               </div>
             </div>
           </div>
 
           <div className="category-fix">
+            {/* 
+            Categorias fixas
+            Categorias do cliente
+            */}
             <Link to="/produtos">Moveis</Link>
             <Link to="/produtos">Eletrodoméstico</Link>
             <Link to="/produtos">Materiais de Decoração</Link>
             <Link to="/produtos">Cama, Mesa e Banho</Link>
-            <Link to="/cursos">Cursos</Link>
+            <Link to="/produto-categoria/:id">Cursos</Link>
           </div>
         </FlexLink>
       </Container>
