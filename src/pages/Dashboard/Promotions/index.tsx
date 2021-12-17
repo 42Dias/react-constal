@@ -23,7 +23,8 @@ import { api, ip, role } from "../../../services/api";
 import { formatPrice } from "../../../util/format";
 import { Btn } from "../PersonalData/styles";
 import { toast } from "react-toastify";
-import moment from 'moment'
+var uuid = require("uuid");
+
 
 export default function Promotions() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -95,11 +96,13 @@ export default function Promotions() {
         "imagemPromocional": imagemPromocional,
         "promocaoCriacao": new Date(),
         "promocaoEncerramento": dataEncerramento,
+        "promocaoId": uuid.v4(),
       }
     }
     makeRequisitionToChange(data)
   }
 
+  console.log(uuid.v4())
 
   console.log(ids)
   console.log(dataEncerramento)
