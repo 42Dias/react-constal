@@ -95,7 +95,6 @@ const Cart = (): JSX.Element => {
     async function loadProducts() {
       const response = await api.get('carrinho/')
       .then(response => {
-          // console.log(response.data.count);
           response.data.rows.map((product: Carrinho) => 
           {setHowMuch(prevValues => {
             return [...new Set([...prevValues, product.quantidade])] 
