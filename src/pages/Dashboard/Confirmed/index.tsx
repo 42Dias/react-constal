@@ -93,7 +93,7 @@ async function loadPedidosDenunciador() {
   
       async function loadUser() {
         setSinal(0)
-        const response = await api.get('empresa?filter%5Bstatus%5D=aprovado')
+        const response = await api.get('empresaStatus?filter%5Bstatus%5D=active')
           .then(response => {
             return response.data;
           })
@@ -133,7 +133,7 @@ async function loadPedidosDenunciador() {
       console.log("Entrou empresaT");
       console.log(empresaId);
         console.log("requisição do pedido feita")
-        const res = await api.get('pedido?filter%5BfornecedorEmpresa%5D='+empresaId)
+        const res = await api.get('pedido?filter%5BfornecedorEmpresaId%5D='+empresaId)
         // const res = await api.get('pedido')
         console.log(res.data);
 
@@ -152,21 +152,22 @@ async function loadPedidosDenunciador() {
       <div className="container">
         <TitleVendas>Vendas</TitleVendas>
 
-        <div style={{display: display}}>
+        {/*<div style={{display: display}}>
         <label htmlFor="">Selecionar Empresa: </label>
         <select 
           onChange={(text) => setEmpresa(text.target.value)} onClick={() => empresaT(empresa)}
         >
+          <option value={"--Selecione--"} key={"--Selecione--"} >--Selecione--</option>
           {empresas.map(
             (empresa) => (
               <option value={empresa.id} key={empresa.id} >{empresa.razaoSocial}</option>
             )
           )}
         </select>
-        </div>
+            </div>*/}
         <MenuSell>
-          <span>Pendentes({pedidosPendentes.length})</span>
-          <Link to="/confirmadas"><span><b>Confirmadas({pedidosConfirmados.length})</b></span></Link>
+          <Link to="/vendas"><span>Pendentes({pedidosPendentes.length})</span></Link>
+          <span><b>Confirmadas({pedidosConfirmados.length})</b></span>
           <Link to="/devolvidas"><span>Devolvidas({pedidosDevolvidos.length})</span></Link>
           <Link to="/denunciadas"><span>Denunciadas({pedidosDenunciador.length})</span></Link>
         </MenuSell>

@@ -90,7 +90,7 @@ async function loadPedidosDenunciador() {
   
       async function loadUser() {
         setSinal(0)
-        const response = await api.get('empresa?filter%5Bstatus%5D=aprovado')
+        const response = await api.get('empresa?filter%5Bstatus%5D=active')
           .then(response => {
             return response.data;
           })
@@ -154,6 +154,7 @@ async function loadPedidosDenunciador() {
         <select 
           onChange={(text) => setEmpresa(text.target.value)} onClick={() => empresaT(empresa)}
         >
+          <option value={"--Selecione--"} key={"--Selecione--"} >--Selecione--</option>
           {empresas.map(
             (empresa) => (
               <option value={empresa.id} key={empresa.id} >{empresa.razaoSocial}</option>
@@ -162,10 +163,10 @@ async function loadPedidosDenunciador() {
         </select>
         </div>
         <MenuSell>
-          <span>Pendentes({pedidosPendentes.length})</span>
+          <Link to="/vendas"><span>Pendentes({pedidosPendentes.length})</span></Link>
           <Link to="/confirmadas"><span>Confirmadas({pedidosConfirmados.length})</span></Link>
           <Link to="/devolvidas"><span>Devolvidas({pedidosDevolvidos.length})</span></Link>
-          <Link to="/denunciadas"><span><b>Denunciadas({pedidosDenunciador.length})</b></span></Link>
+          <span><b>Denunciadas({pedidosDenunciador.length})</b></span>
         </MenuSell>
         {
           pedidosDenunciador.map(

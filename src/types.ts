@@ -41,4 +41,5 @@ export interface Empresa {
   razaoSocial: string;
   cnpj: string;
   status: string;
+  tId: string;
 }

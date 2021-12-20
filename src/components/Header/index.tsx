@@ -96,7 +96,7 @@ const Header = (): JSX.Element => {
 
   let history = useHistory();
   function handleClickLogin() {
-    if(role == "pessoa" ){
+    if(role === "pessoa" ){
     history.push("/meu-perfil");
     }else{
       history.push("/dados-pessoais");
@@ -296,7 +296,7 @@ const Header = (): JSX.Element => {
               value={password}
               onChange={(text) => setPassword(text.target.value)}
             />
-            {loading ? <img width="40px" style={{margin: '0 auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
+            
             {/*<Link to="/meu-perfil" className="btn-enter" href="">
               Entrar
             </Link>*/}

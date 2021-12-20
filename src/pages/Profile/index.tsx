@@ -125,7 +125,7 @@ export default function Profile() {
           return response.data;            
       })
 
-      setEmail(response.user.email);
+      setEmail(response.email);
       setFullName(response.nome);
       setCPF(response.cpf);
       setPhone(response.telefone);

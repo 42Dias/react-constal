@@ -12,25 +12,28 @@ import { toast } from "react-toastify"
 
 function ProductQuery() {
   const [produtos = [], setProdutos] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(false);
 
+  async function loadUser() {
+    setLoading(true)
+    const response = await api.get('produto?filter%5Bstatus%5D=pendente')
+      .then(response => {
+        setLoading(false)
+        return response.data;
+      })
+    setProdutos(response.rows)
+    console.log("Produtos");
+    console.log(response.rows);
+
+    /*produtos.map((produto)=>(
+      console.log(produto)  
+  ))*/
+  }
   useEffect(() => {
     if(role != 'admin'){
       // Simulate an HTTP redirect:
       window.location.replace(`http://${ip}:3000/constal#/erro`);
-    }
-    async function loadUser() {
-      const response = await api.get('produto?filter%5Bstatus%5D=pendente')
-        .then(response => {
-          return response.data;
-        })
-      setProdutos(response.rows)
-      console.log("Produtos");
-      console.log(response.rows);
-
-      /*produtos.map((produto)=>(
-        console.log(produto)  
-    ))*/
-    }
+    }    
     loadUser();
 
   }, []);
@@ -43,7 +46,8 @@ function ProductQuery() {
       console.log(response)
       if (response.statusText == "OK") {
         toast.info('Produto aprovado com sucesso! :)');
-        window.location.reload();
+        //window.location.reload();
+        loadUser()
       }else{
         toast.error('Ops, não foi possivel aprovar o produto! :(');
       }
@@ -53,15 +57,18 @@ function ProductQuery() {
     })
   }
   function recusarProd(produto: Product) {
+    setLoading(true)
     produto.status = "recusado";
     let response = api.put('produto/' + produto.id, {
       id: produto.id,
       data: produto,
     }).then((response) => {
+      setLoading(false)
       console.log(response)
       if (response.statusText == "OK") {
         toast.info('Produto recusado com sucesso! :)');
-        window.location.reload();
+        //window.location.reload();
+        loadUser()
       }else{
         toast.error('Ops, não foi possivel recusado o produto! :(');
       }
@@ -76,7 +83,8 @@ function ProductQuery() {
       <Menu />
       <div className="container">
         <S.CardDatails>
-          <S.Title>Aprovar Produtos</S.Title>
+          <S.Title>Aprovar Produtos  {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}</S.Title>
+         
           {
             produtos.map((produto) => (
               <S.CardDatailsContent>
