@@ -221,7 +221,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
   
       const response = await axios({
         method: 'delete',
-        url: `http://${api}:8157/api/tenant/${tenantId}/carrinhoProduto/`,
+        url: `http://${ip}:8157/api/tenant/${tenantId}/carrinhoProduto/`,
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
