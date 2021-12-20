@@ -20,13 +20,15 @@ import { toast } from 'react-toastify';
 import { Menu } from "../../../components/Menu";
 import { formatPrice } from "../../../util/format";
 import axios from "axios";
-import { Product } from "../../../types";
+import { Empresa, Product } from "../../../types";
 import { api, ip, role } from "../../../services/api";
+import { Btn } from "../PersonalData/styles";
 
 export default function NewProd() {
   const [showModal1, setShowModal1] = React.useState(false);
   const [showModal2, setShowModal2] = React.useState(false);
   const [showModal3, setShowModal3] = React.useState(false);
+  const [showModal4, setShowModal4] = React.useState(false);
 
   const [index, setIndex] = React.useState(0);
 
@@ -43,9 +45,12 @@ export default function NewProd() {
   const [frete, setFrete] = useState('')
   const [imagem, setImagem] = useState('')
   const [categoria, setCategoria] = useState<any>()
-
+  const [empresas = [], setEmpresas] = useState<Empresa[]>([]);
+  
   const [isOferta, setIsOferta] = useState(false)
   const [precoOferta, setPrecoOferta] = useState('')
+  
+  const [newCategoria, setNewCategoria] = useState('')
 
   console.log(categoria)
 
@@ -63,6 +68,7 @@ export default function NewProd() {
     setShowModal1(false)
     setShowModal2(false)
     setShowModal3(false)
+    setShowModal4(false)
   }
 
   function messageCancel() {
@@ -166,10 +172,21 @@ export default function NewProd() {
         "imagemUrl": imagem, 
         "isOferta": isOferta,
         "precoOferta": precoOferta,
-        "status": "pendente",
       }
     }
     makeRequisitionToChange(data)
+  }
+
+  async function addCategoria(){
+    const data = {
+      data: {
+        nome: newCategoria,
+        status: 'pendente'
+      }
+    }
+    const response = await api.post('categoria', data)
+    console.log(response)
+    // console.log(newCategoria)
   }
 
   async function deleteProduct(prodId: any){
@@ -214,8 +231,17 @@ export default function NewProd() {
     }
     loadCategorias();
   }, []);
-
+  async function loadEmpresa() {
+    const response = await api.get('empresaStatus?filter%5Bid%5D='+id)
+      .then(response => {
+        return response.data;
+      })
+    setEmpresas(response.rows)
+    console.log("Empresas");
+    console.log(response.rows);
+  }
   useEffect(() => {
+    loadEmpresa();
     async function loadProducts() {
 
       const response = await api.get("produto");
@@ -223,11 +249,11 @@ export default function NewProd() {
 
     }
     loadProducts();
+     
   }, []);
   
-  console.log(nome)
+  console.log(newCategoria)
 
-  console.log(productToReq)
 
   return (
     <>
@@ -331,7 +357,7 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Nome do produto</label>
-                <input type="text" placeholder="Nome do produto"
+                <input required type="text" placeholder="Nome do produto"
                 onChange={(text) => setNome(text.target.value)}
                 // value="5165161"
                 />
@@ -340,21 +366,21 @@ export default function NewProd() {
               
               <ContentFormNew>
                 <label htmlFor="">Código da empresa</label>
-                <input type="text" placeholder="Código da empresa"
+                <input required type="text" placeholder="Código da empresa"
                 onChange={(text) => setCodigoDaEmpresa(text.target.value)}
                 />
               </ContentFormNew>
 
               <ContentFormNew>
                 <label htmlFor="">Descrição</label>
-                <input type="text" placeholder="Descrição"
+                <input required type="text" placeholder="Descrição"
                 onChange={(text) => setDescricao(text.target.value)}
                 />
               </ContentFormNew>
 
               <ContentFormNew>
                 <label htmlFor="">Características técnicas</label>
-                <input type="text" placeholder="Especificações técnicas"
+                <input required type="text" placeholder="Especificações técnicas"
                 onChange={(text) => setCaracteristicasTecnicas(text.target.value)}
                 />
               </ContentFormNew>
@@ -362,14 +388,14 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Preço</label>
-                <input type="number" placeholder="Preço"
+                <input required type="number" placeholder="Preço"
                 onChange={(text) => setPreco(text.target.value)}
                 />
               </ContentFormNew>
 
               <ContentFormNew>
                 <label htmlFor="">URL da imagem</label>
-                <input type="text" placeholder="www.imagem/suaimagem.com"
+                <input required type="text" placeholder="www.imagem/suaimagem.com"
                 onChange={(text) => setImagem(text.target.value)}
                 />
               </ContentFormNew>
@@ -378,7 +404,7 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Prazo de entrega</label>
-                <input type="text" placeholder="Prazo de entrega"
+                <input required type="text" placeholder="Prazo de entrega"
                 onChange={(text) => setPrazo(text.target.value)}
                 
                 />
@@ -386,7 +412,7 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Quantidade</label>
-                <input type="number" placeholder="Quantidade"
+                <input required type="number" placeholder="Quantidade"
                 onChange={(text) => setQuantidade(text.target.value)} />
               </ContentFormNew>
 
@@ -394,7 +420,7 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Tipo de frete</label>
-                <select
+                <select required
                 onChange={(text) => setFrete(text.target.value)}
                 >
                   <option value="por_categoria">Por Cep</option>
@@ -449,7 +475,7 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Nome do produto</label>
-                <input type="text" placeholder="Nome do produto"
+                <input required type="text" placeholder="Nome do produto"
                 onChange={(text) => setNome(text.target.value)}
                 />
                 
@@ -457,21 +483,21 @@ export default function NewProd() {
               
               <ContentFormNew>
                 <label htmlFor="">Código da empresa</label>
-                <input type="text" placeholder="Código da empresa"
+                <input required type="text" placeholder="Código da empresa"
                 onChange={(text) => setCodigoDaEmpresa(text.target.value)}
                 />
               </ContentFormNew>
 
               <ContentFormNew>
                 <label htmlFor="">Descrição</label>
-                <input type="text" placeholder="Descrição"
+                <input required type="text" placeholder="Descrição"
                 onChange={(text) => setDescricao(text.target.value)}
                 />
               </ContentFormNew>
 
               <ContentFormNew>
                 <label htmlFor="">Características técnicas</label>
-                <input type="text" placeholder="Especificações técnicas"
+                <input required type="text" placeholder="Especificações técnicas"
                 onChange={(text) => setCaracteristicasTecnicas(text.target.value)}
                 />
               </ContentFormNew>
@@ -479,14 +505,14 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Preço</label>
-                <input type="number" placeholder="Preço"
+                <input required type="number" placeholder="Preço"
                 onChange={(text) => setPreco(text.target.value)}
                 />
               </ContentFormNew>
 
               <ContentFormNew>
                 <label htmlFor="">URL da imagem</label>
-                <input type="text" placeholder="www.imagem/suaimagem.com"
+                <input required type="text" placeholder="www.imagem/suaimagem.com"
                 onChange={(text) => setImagem(text.target.value)}
                 />
               </ContentFormNew>
@@ -514,14 +540,14 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Prazo de entrega</label>
-                <input type="text" placeholder="Prazo de entrega"
+                <input required type="text" placeholder="Prazo de entrega"
                 onChange={(text) => setPrazo(text.target.value)}
                 />
               </ContentFormNew>
 
               <ContentFormNew>
                 <label htmlFor="">Quantidade</label>
-                <input type="number" placeholder="Quantidade"
+                <input required type="number" placeholder="Quantidade"
                 onChange={(text) => setQuantidade(text.target.value)} />
               </ContentFormNew>
 
@@ -541,7 +567,7 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Tipo de frete</label>
-                <select
+                <select required 
                 onChange={(text) => setFrete(text.target.value)}
                 >
                   <option value="por_categoria">Por Cep</option>
@@ -553,7 +579,7 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Tipo de categoria</label>
-                <select
+                <select required
                 onChange={(text) => setCategoria(text.target.value)}
                 >
                   {categorias.map(
@@ -563,7 +589,16 @@ export default function NewProd() {
                   )}
                 </select>
               </ContentFormNew>
-
+              <Btn
+                onClick={
+                  () => {
+                  setShowModal2(false)
+                  setShowModal4(true)
+                } 
+                }
+                >
+                Adicionar nova categoria
+                </Btn>
               
 
               <div className="buttonsNew">
@@ -591,7 +626,7 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Novo preço</label>
-                <input type="number" placeholder="63"
+                <input required type="number" placeholder="650"
                 onChange={(text) => {
                   setPrecoOferta(text.target.value)
                   setIsOferta(true)
@@ -610,6 +645,36 @@ export default function NewProd() {
         </Modal>
       </ModalContainerVendedor>
 
+      <ModalContainerVendedor>
+        <Modal
+          isOpen={showModal4}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+        >
+          <div>
+            <ModalFlex>
+              <AiOutlineClose onClick={closeModal} />
+            </ModalFlex>
+
+            <ModalContent>
+              <h3>Nova promoção</h3>
+
+              <ContentFormNew>
+                <label htmlFor="">Nova Categoria</label>
+                <input required type="text" placeholder="Computador potente"
+                onChange={(text) => setNewCategoria(text.target.value)}
+                
+                />
+              </ContentFormNew>
+
+              <div className="buttonsNew">
+              <button type="button" onClick={messageCancel}>Cancelar</button>
+              <button type="button" onClick={addCategoria}>Adicionar</button>
+              </div>
+            </ModalContent>
+          </div>
+        </Modal>
+      </ModalContainerVendedor>
 
     </>
   );

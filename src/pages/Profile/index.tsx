@@ -39,33 +39,7 @@ export default function Profile() {
   const [showModal1, setShowModal1] = React.useState(false);
   const [showModal2, setShowModal2] = React.useState(false);
 
-  async function criarOuAtualizarEmpresa() {
-    const data = {
-      data: {
-        nome : newNome, 
-        marca : newMarca,
-        razaoSocial : newRazaoSocial,
-        cnpj : newCnpj,
-        telefone : newTelefone,
-        ramal : newRamal,
-        email : newEmail,
-        website : newWebsite,
-        cep : newCep,
-        logradouro : newLogradouro,
-        numero : newNumero,
-        complemento : newComplemento,
-        pontoReferencia : newPontoReferencia,
-        cidade : newCidade,
-        estado : newEstado,
-        bairro : newBairro,
-        pix : pix,
-      }
-    }
-    const response = await api.post('empresa-perfil', data)
-    console.log(response)
-    toast.info('Eba, estamos cada dia mais perto da morte! :)')
-    closeModal()
-  }
+
 
   function afterOpenModal() {
     // references are now sync'd and can be accessed.
@@ -75,7 +49,7 @@ export default function Profile() {
     setShowModal1(false);
     setShowModal2(false);
   }
-
+  const [id, setId]=useState('');
   const [email, setEmail]=useState('');
   const [password, setPassword]=useState('');
   const [fullName, setFullName]=useState('');
@@ -90,11 +64,7 @@ export default function Profile() {
 
  
   const [newNome, setNewNome]=useState('');  
-  const [newMarca, setNewMarca] = useState('')
-  const [newRazaoSocial, setNewRazaoSocial] = useState('')
-  const [newCnpj, setNewCnpj] = useState('')
   const [newTelefone, setNewTelefone] = useState('')
-  const [newRamal, setNewRamal] = useState('')
   const [newEmail, setNewEmail] = useState('')
   const [newWebsite, setNewWebsite] = useState('')
   const [newCep, setNewCep] = useState('')
@@ -105,7 +75,6 @@ export default function Profile() {
   const [newCidade, setNewCidade] = useState('')
   const [newEstado, setNewEstado] = useState('')
   const [newBairro, setNewBairro] = useState('')
-  const [pix, setNewPix] = useState('')
 
 
 
@@ -115,16 +84,19 @@ export default function Profile() {
 
   let role = localStorage.getItem("roles")?.replace(/"/g, "");
 
-
   useEffect(() => {
+    setId(
+      localStorage.getItem("id")?.replace(/"/g, "") || ""
+    )
     async function loadUser() {
       //Perfil pessoa
       if(role === "pessoa"){
       const response = await api.get('pessoa-fisica-perfil')
       .then(response => {
+          console.log(response)
           return response.data;            
       })
-
+      console.log(response)
       setEmail(response.email);
       setFullName(response.nome);
       setCPF(response.cpf);
@@ -215,6 +187,44 @@ export default function Profile() {
       return savedData;
   }
 
+  async function setNewData(){
+    const data = {
+      data: {
+        "user": id,
+        "email": email,
+        "password": password,
+        "fullName": fullName,
+        "cpf": cpf,
+        "phone": phone,
+        "logradouro": logradouro,
+        "bairro": bairro,
+        "cep": cep,
+        "cidade": cidade,
+        "estado": estado,
+        "imagemUser": imagemUser,
+        "numero": newNumero,
+        "complemento": newComplemento,
+        "pontoReferencia": newPontoReferencia,
+      }
+    }
+    if(email){
+      console.log("MAOI")
+      // const updatePersonalData = await api.put('pessoa-fisica/' +  id, data)
+      // console.log(updatePersonalData)
+    }
+    else{
+      console.log("hehe")
+      console.log(data)
+      data.data.email = localStorage.getItem('email') || ''
+      data.data.password = localStorage.getItem('senha') || ''
+
+      
+      const createPersonalData = await api.post('pessoa-fisica/', data)
+      console.log(createPersonalData)
+    }
+    messageApprove()
+  }
+
   const [savedData] = useState([]);
 
   console.log(savedData)
@@ -243,7 +253,7 @@ export default function Profile() {
         <CardDatails>
           <h2>Dados da conta</h2>
           <button onClick={
-            () => {setShowModal2(true)}
+            () => {setShowModal1(true)}
             }>
               Alterar Dados    
           </button>
@@ -273,11 +283,12 @@ export default function Profile() {
                 </ContentFormNew>
                 
               }
+            </ModalContent>
+            
               <div className="buttonsNew">
                 <button style={{display: "none"}} type="button" onClick={messageCancel}>Cancelar</button>
-                <button type="button" onClick={criarOuAtualizarEmpresa}>Adicionar</button>
+                <button type="button" onClick={messageApprove}>Adicionar</button>
               </div>
-            </ModalContent>
           </div>
         </Modal>
       </ModalContainerVendedor>
@@ -297,10 +308,6 @@ export default function Profile() {
             <button >Alterar</button>
           </CardDatailsContent>
         
-
-
-
-
         <Link to="/historico-de-pedidos">Histórico de pedidos</Link><br />
         <Link to="/detalhes-da-venda">Detalhes da venda</Link><br />
         <Link to="/vendas">Vendas</Link><br />
@@ -361,45 +368,87 @@ export default function Profile() {
 
             <ModalContent>
               <h3>Novo endereço</h3>
+              <ContentFormNew>
+                <label htmlFor="">email</label>
+                <input type="text" placeholder="CPF" 
+                onChange={(text) => setCPF(text.target.value)}
+                />
+              </ContentFormNew>
+
+              <ContentFormNew>
+                <label htmlFor="">CPF</label>
+                <input type="text" placeholder="CPF" 
+                onChange={(text) => setCPF(text.target.value)}
+                />
+              </ContentFormNew>
+
+              <ContentFormNew>
+                <label htmlFor="">bairro</label>
+                <input type="text" placeholder="bairro" 
+                onChange={(text) => setBairro(text.target.value)}
+                />
+              </ContentFormNew>
+
+              <ContentFormNew>
+                <label htmlFor="">bairro</label>
+                <input type="text" placeholder="bairro" 
+                onChange={(text) => setBairro(text.target.value)}
+                />
+              </ContentFormNew>
+
 
               <ContentFormNew>
                 <label htmlFor="">CEP</label>
-                <input type="number" placeholder="CEP" />
+                <input type="number" placeholder="CEP" 
+                onChange={(text) => setCEP(text.target.value)}
+                />
               </ContentFormNew>
 
               <ContentFormNew>
                 <label htmlFor="">Rua</label>
-                <input type="text" placeholder="Rua" />
+                <input type="text" placeholder="Rua" 
+                onChange={(text) => setLogradouro(text.target.value)}
+                />
               </ContentFormNew>
 
               <ContentFormNew>
                 <label htmlFor="">Número</label>
-                <input type="number" placeholder="Número" />
+                <input type="number" placeholder="Número" 
+                onChange={(text) => setNewNumero(text.target.value)}
+                />
               </ContentFormNew>
 
               <ContentFormNew>
                 <label htmlFor="">Complemento</label>
-                <input type="text" placeholder="Complemento" />
+                <input type="text" placeholder="Complemento" 
+                onChange={(text) => setNewComplemento(text.target.value)}
+                />
               </ContentFormNew>
 
               <ContentFormNew>
                 <label htmlFor="">Referência</label>
-                <input type="text" placeholder="Referência" />
+                <input type="text" placeholder="Referência" 
+                onChange={(text) => setNewPontoReferencia(text.target.value)}
+                />
               </ContentFormNew> 
 
               <ContentFormNew>
                 <label htmlFor="">Estado</label>
-                <input type="text" placeholder="Estado" />
+                <input type="text" placeholder="Estado" 
+                onChange={(text) => setEstado(text.target.value)}
+                />
               </ContentFormNew>
 
               <ContentFormNew>
                 <label htmlFor="">UF</label>
-                <input type="text" placeholder="Cidade" />
+                <input type="text" placeholder="Cidade" 
+                onChange={(text) => setCidade(text.target.value)}
+                />
               </ContentFormNew>
 
               <div className="buttonsNew">
                 <button type="button" onClick={messageCancel}>Cancelar</button>
-                <button type="button" onClick={messageApprove}>Adicionar</button>
+                <button type="button" onClick={setNewData}>Adicionar</button>
               </div>
             </ModalContent>
           </div>

@@ -7,6 +7,9 @@ let token = localStorage.getItem("token")?.replace(/"/g, "");
 
 
 interface Product{
+  preco: any;
+  precoOferta: any;
+  isOferta: boolean;
   quantidadeNoEstoque: number;
   id: string;
   name: string;
@@ -73,6 +76,9 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
 
     const productResponse = await api.get<Product>(`produto/${productId}`);//jogar como variavel que abrange todo o escopo da função
     const  product  = productResponse.data;
+    if(product.isOferta == true){
+      product.preco = product.precoOferta
+    }
     
 
     console.log("product")
@@ -215,7 +221,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
   
       const response = await axios({
         method: 'delete',
-        url: `http://${api}:8157/api/tenant/${tenantId}/carrinhoProduto/`,
+        url: `http://${ip}:8157/api/tenant/${tenantId}/carrinhoProduto/`,
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',

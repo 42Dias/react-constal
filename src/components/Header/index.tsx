@@ -28,7 +28,7 @@ import React, { useEffect, useState } from "react";
 
 import { useCart } from "../../hooks/useCart";
 import { toast } from "react-toastify";
-import { api, ip, role } from "../../services/api";
+import { api, ip, role, token } from "../../services/api";
 import axios from "axios";
 import { margin } from "polished";
 
@@ -102,7 +102,26 @@ const Header = (): JSX.Element => {
       history.push("/dados-pessoais");
     }
   }
-
+  async function loadUser() {
+    const response = await axios({
+      method: 'get',
+      url: `http://localhost:8157/api/auth/me`,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+      timeout: 50000
+    }).then(response => {
+      return response.data;
+    })
+    console.log(response);
+    console.log(response.tenants[0].roles[0]);
+    localStorage.setItem("roles", JSON.stringify(response.tenants[0].roles[0]));//saves client's data into localStorage:
+    console.log(response.tenants[0].tenant.id);
+    localStorage.setItem("tenantId", JSON.stringify(response.tenants[0].tenant.id));//saves client's data into localStorage:
+    localStorage.setItem("id", JSON.stringify(response.id));//saves client's data into localStorage:
+  }
   async function Login() {
     setLoading(true);
     let response = Axios.post('http://'+ip+':8157/api/auth/sign-in', {
@@ -115,7 +134,8 @@ const Header = (): JSX.Element => {
         handleLocalStorage(email, password);
         handleLocalStorageToken(response.data);
         closeModal();
-        window.location.reload();
+        //window.location.reload();
+        loadUser();
       } else if (response.statusText == "Forbidden") {
         setLoading(false);
         toast.info("Ops, Não tem permisão!");
@@ -132,27 +152,7 @@ const Header = (): JSX.Element => {
     
   }
   useEffect(() => {
-    async function loadUser() {
-      let token = localStorage.getItem("token")?.replace(/"/g, "");
-      const response = await axios({
-        method: 'get',
-        url: `http://localhost:8157/api/auth/me`,
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + token
-        },
-        timeout: 50000
-      }).then(response => {
-        return response.data;
-      })
-      console.log(response);
-      console.log(response.tenants[0].roles[0]);
-      localStorage.setItem("roles", JSON.stringify(response.tenants[0].roles[0]));//saves client's data into localStorage:
-      console.log(response.tenants[0].tenant.id);
-      localStorage.setItem("tenantId", JSON.stringify(response.tenants[0].tenant.id));//saves client's data into localStorage:
-      localStorage.setItem("id", JSON.stringify(response.id));//saves client's data into localStorage:
-    }
+    
     loadUser();
   }, []);
   useEffect(() => {
@@ -207,8 +207,10 @@ const Header = (): JSX.Element => {
               <IconsContainer>
                 <FiUser onClick={openModal} size={20} />
                 {
-                  role == "pessoa" ? (
-                       <>
+                  role != "pessoa" ? (
+                    <div/>
+                          ):(
+                  <>
                   <Link to="/favoritos">
                   <FiHeart size={20} />
                   </Link>
@@ -221,9 +223,7 @@ const Header = (): JSX.Element => {
                     </div>
                     <FiShoppingBag size={20} />
                   </Cart>
-                       </>   
-                          ):(
-                            <div/>
+                    </>
                           )
                       }
               </IconsContainer>
@@ -234,21 +234,29 @@ const Header = (): JSX.Element => {
                     <span>Meu perfil</span>
                     <FiUser size={20} />
                   </div>
-                    <div className="flex-item">
-                      <span>Meus produtos favoritos</span>
-                    <Link to="/favoritos">
-                      <FiHeart size={20} />
-                    </Link>
-                  </div>
-                  <Cart to="/cart">
-                    <div>
-                      <strong>Meu carrinho</strong>
-                      <span data-testid="cart-size">
-                        {cartSize == 1 ? `${cartSize} item` : `${cartSize} itens`}
-                      </span>
-                    </div>
-                    <FiShoppingBag size={20} />
-                  </Cart>
+                  {
+                  role != "pessoa" ? (
+                    <div/>
+                          ):(
+                            <>
+                          <div className="flex-item">
+                            <span>Meus produtos favoritos</span>
+                          <Link to="/favoritos">
+                            <FiHeart size={20} />
+                          </Link>
+                        </div>
+                        <Cart to="/cart">
+                          <div>
+                            <strong>Meu carrinho</strong>
+                            <span data-testid="cart-size">
+                              {cartSize == 1 ? `${cartSize} item` : `${cartSize} itens`}
+                            </span>
+                          </div>
+                          <FiShoppingBag size={20} />
+                        </Cart>
+                            </>
+                          )
+                    }
                 </div>
               </IconsContainerMenu>
 

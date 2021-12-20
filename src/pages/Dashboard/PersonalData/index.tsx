@@ -19,6 +19,7 @@ import {
   CardDatails,
   CardDatailsContent,
   ContentDetails,
+  NewBtn,
 } from "./styles";
 import { toast } from "react-toastify";
 
@@ -79,9 +80,6 @@ export default function PersonalData() {
   const [newBairro, setNewBairro] = useState('')
   const [newPix, setNewPix] = useState('')
 
-
-
-
     useEffect(
       () => {
         if(role != 'admin' && role != "empresa"){
@@ -90,11 +88,9 @@ export default function PersonalData() {
         }
     
         async function loadData(){          
-          const response = await api.get('empresa-perfil')
-          .then(response => {
-              console.log(response.data)
-              return response.data;            
-          })
+          const responseRes = await api.get('empresa-perfil')
+          const response = responseRes.data
+          console.log(responseRes)
 
           setNome(response.nome)
           setMarca(response.marca)
@@ -120,6 +116,35 @@ export default function PersonalData() {
       , []
     )
 
+  async function criarOuAtualizarEmpresa() {
+    const data = {
+      data: {
+        nome : newNome, 
+        marca : newMarca,
+        razaoSocial : newRazaoSocial,
+        cnpj : newCnpj,
+        telefone : newTelefone,
+        ramal : newRamal,
+        email : newEmail,
+        website : newWebsite,
+        cep : newCep,
+        logradouro : newLogradouro,
+        numero : newNumero,
+        complemento : newComplemento,
+        pontoReferencia : newPontoReferencia,
+        cidade : newCidade,
+        estado : newEstado,
+        bairro : newBairro,
+        pix : pix,
+        status : "pendente",
+      }
+    }
+    const response = await api.post('empresa-perfil', data)
+    console.log(response)
+    toast.info('Eba, estamos cada dia mais perto da morte! :)')
+    closeModal()
+  }
+  
   return (
     <>
       <Header />
@@ -352,6 +377,10 @@ export default function PersonalData() {
                     onChange={(text) => setNewPix(text.target.value)}
                     />
                     </ContentFormNew>
+                    <NewBtn>
+                      <button type="button" onClick={() => setShowModal1(false)}>Cancelar</button>
+                      <button type="button" onClick={() => criarOuAtualizarEmpresa()}>Adicionar</button>
+                    </NewBtn>
                 </ModalContent>
               </div>
           </Modal>
@@ -406,10 +435,10 @@ export default function PersonalData() {
                 <input type="text" placeholder="Cidade" />
               </ContentFormNew>
 
-              <div className="buttonsNew">
+              <NewBtn>
                 <button type="button" onClick={messageCancel}>Cancelar</button>
                 <button type="button" onClick={messageApprove}>Adicionar</button>
-              </div>
+              </NewBtn>
             </ModalContent>
           </div>
         </Modal>

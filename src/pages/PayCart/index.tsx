@@ -20,7 +20,6 @@ export default function PayCart() {
 
   useEffect(() => {
     if(role != 'pessoa'){
-      // Simulate an HTTP redirect:
       window.location.replace(`http://${ip}:3000/constal#/erro`);
     }
     
@@ -90,7 +89,8 @@ export default function PayCart() {
           })
           console.log(response)
         }
-      )        /*
+      ) 
+        /*
         Cria os pedidos pelo id do fornecedor
         há uma variavel produtos, fazer o map de acordo com o id da empresa
         e assim fazer a requisição

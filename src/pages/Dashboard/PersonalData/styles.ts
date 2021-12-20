@@ -77,7 +77,6 @@ export const Btn = styled.button`
   color: white;
   border-radius: 5px;
   border:0;
-
 `
 
 export const CardDatailsContent = styled.div`
@@ -154,4 +153,41 @@ export const ContentDetails = styled.div`
     color: #757575;
     font-size: 16px;
   }
-`;
+`
+export const NewBtn = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+
+  button {
+    width: 165px;
+    height: 40px;
+
+    border-radius: 5px;
+    color: black;
+    border: 1px solid rgba(16, 16, 16, 1);
+    text-decoration: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 5px;
+  }
+
+  button:nth-child(2) {
+    width: 165px;
+    height: 40px;
+
+    background: #101010;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 5px;
+    border: 0;
+  }
+`
+;

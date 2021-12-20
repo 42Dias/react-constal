@@ -22,6 +22,8 @@ import { formatPrice } from "../../util/format";
 import { Menu } from "../../components/Menu";
 
 interface Product {
+  precoTotal: number | bigint;
+  imagemUrl: string | undefined;
   status: string;
   valorTotal: number;
   nomeProduto: string;
@@ -82,9 +84,9 @@ export default function Histoty() {
           products.map((product) => (
          <CardDatailsContent key={product.nome}>
               <ContentDetails>
-                <img src={product.publicUrl} alt="" />
-                <span>{product.nomeProduto}</span>
-                <p>{formatPrice( product.valorTotal )}</p>
+                <img src={product.imagemUrl} alt="" />
+                <span>{product.nome}</span>
+                <p>{formatPrice( product.precoTotal)}</p>
               </ContentDetails>
               <strong onClick={openModal} >Ver detalhes</strong>
          </CardDatailsContent>
