@@ -274,6 +274,20 @@ export const IconsContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;  
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;  
+    width: 80px;
+    background: transparent;  
+    svg {
+      color: black;
+    }
+
+    &:hover
+  }
+
   svg {
     margin: 0 20px;
     cursor: pointer;
@@ -464,5 +478,26 @@ export const ModalEnter = styled.div`
 
   svg {
     margin-left: 30px;
+  }
+`;
+
+export const PasswordContent = styled.div`
+  padding: 40px 0;
+
+  input[type=email] {
+    width: 100%;
+    height: 40px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+
+  button {
+    border-radius: 5px;
+    height: 40px;
+    width: 100%;
+    background: black;
+    color: white;
   }
 `;

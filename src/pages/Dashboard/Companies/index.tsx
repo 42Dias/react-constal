@@ -24,9 +24,11 @@ export default function Companies() {
   }, []);
   async function loadEmpresa() {
     console.log("entrou");
+    setLoading(true)
     const response = await api
       .get("empresaStatus?filter%5Bstatus%5D=" + filtro)
       .then((response) => {
+        setLoading(false)
         return response.data;
       });
     setEmpresas(response.rows);
@@ -84,7 +86,7 @@ export default function Companies() {
       <Menu />
       <div className="container">
         <CardDatails>
-          <h2>Empresas</h2>
+          <h2>Empresas {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}</h2>
 
           <SelectInput>
             <select
@@ -103,7 +105,7 @@ export default function Companies() {
               </option>
             </select>
           </SelectInput>
-          {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
+          
           {empresas.map((empresa) => (
             <CardDatailsContent>
               <CardDatailsContent key={empresa.razaoSocial}>
