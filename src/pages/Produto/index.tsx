@@ -27,7 +27,7 @@ import Modal from "react-modal";
 import React from "react";
 import Header from "../../components/Header";
 import { toast } from "react-toastify";
-import { api } from "../../services/api";
+import { api, role, id } from "../../services/api";
 import { formatPrice } from "../../util/format";
 import { Menu } from "../../components/Menu";
 
@@ -56,7 +56,6 @@ export default function Produto() {
       progress: undefined,
     });
   }
-
 
   //BUG AO ADICIONAR MAIS DE UM!!!!!
   const favoritos: string[] = JSON.parse(localStorage.getItem("favorito") || "[]");
@@ -113,7 +112,7 @@ export default function Produto() {
   const selectedProduct = buildUrl()
   console.log(selectedProduct);
   
-  const [id, setId]=useState('');
+  const [prodId, setProdId]=useState('');
   const [nome, setNome]=useState('');
   const [preco, setPreco]=useState('');
   const [publicUrl, setPublicUrl]=useState(''); 
@@ -122,6 +121,7 @@ export default function Produto() {
   const [fotos, setFotos]=useState('');
   const [modelo, setModelo]=useState('');
   const [descricao, setDescricao]=useState('');
+  const [caracteristicasTecnicas, setCaracteristicasTecnicas]=useState('');
 
 
   const [logradouro, setLogradouro]=useState('');
@@ -129,6 +129,11 @@ export default function Produto() {
   const [cep, setCEP]=useState('');
   const [cidade, setCidade]=useState('');
   const [estado, setEstado]=useState('');
+
+  const [empresaId, setEmpresaId]=useState('');
+  const [comentario, setComentario]=useState('');
+  
+  const userId = id
 
   useEffect(() => {
   async function loadProduct(){
@@ -138,7 +143,7 @@ export default function Produto() {
         return response.data
     })
 
-    setId(response.id)
+    setProdId(response.id)
     setNome(response.nome)
     
     if(response.isOferta === true){
@@ -153,6 +158,9 @@ export default function Produto() {
     setFotos(response.fotos[0].downloadUrl)
     setModelo(response.modelo);
     setDescricao(response.descricao)
+    setCaracteristicasTecnicas(response.caracteristicasTecnicas)
+    setEmpresaId(response.empresaId)
+
 
 }
 async function loadUser() {
@@ -172,6 +180,20 @@ setLogradouro(user.logradouro+", "+user.numero);
   loadProduct();
 console.log(id)
 }, []);
+
+  async function makeCommentary() {
+    let data = {
+      data: {
+        "comentario": comentario ,
+        "fornecedorEmpresaId": empresaId,
+        "produtoId": prodId,
+        "userId": id,
+      }
+    }
+    console.log(data)
+    const response = await api.post('comentario', data)
+    console.log(response)
+  }
 
   return (
     <>
@@ -239,38 +261,38 @@ console.log(id)
           <div>
             <h2>Características Técnicas</h2>
             <span>
-              <b>Peso do Produto:</b> 12 Kg
-            </span>
-            <span>
-              <b>Quantidade de Lugares:</b> 6 lugares
-            </span>
-            <span>
-              <b>Formato:</b> Retangular
-            </span>
-            <span>
-              <b>Material do Tampo da Mesa:</b> Plástico
-            </span>
-            <span>
-              <b>Tipo de Material do Tampo da Mesa:</b> Polipropileno
-            </span>
-
-            <span>
-              <b>Material da Estrutura da Mesa:</b> Plástico
-            </span>
-            <span>
-              <b>Tipo de Material da Estrutura da Mesa:</b> Polipropileno
-            </span>
-            <span>
-              <b>Mesa Dobrável:</b> Sim
-            </span>
-            <span>
-              <b>Furo para Ombrelone:</b> Não
-            </span>
-            <span>
-              <b>Dimensão da Mesa (AxLxC):</b> 74x75x180cm
+                {caracteristicasTecnicas}
             </span>
           </div>
         </ProdCaracteristicas>
+
+        {
+          role == "pessoa"? (
+        <form action="submit">
+          <fieldset>
+              <input type="text" name="" id="" 
+              placeholder="digite seu comentario"
+              onChange={(text) => {
+                setComentario(text.target.value)
+              }}
+              />
+              <button 
+              onClick={
+                (e) => {
+                  e.preventDefault()
+                  makeCommentary()
+                }
+              }
+              >
+                Fazer Comentario
+              </button>
+          </fieldset>
+        </form>
+          ):(
+            <div></div>
+          )
+        }
+
 
         <ProdSecond>
           <div>
