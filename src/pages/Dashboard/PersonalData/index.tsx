@@ -154,15 +154,15 @@ export default function PersonalData() {
           <h2>Dados da conta</h2>
           <CardDatailsContent>
             <ContentDetails>
-              <span>Login:</span>
-              <p>{email}</p>
+              <h3>Login: <span>{email}</span></h3>
+              
             </ContentDetails>
           </CardDatailsContent>
 
           <CardDatailsContent>
-            <ContentDetails>
-              <span>Senha:</span>
-              <p>******</p>
+            <ContentDetails> 
+              <h3>Senha: <span>******</span></h3>
+              
             </ContentDetails>
             <Btn
             >Alterar</Btn>
@@ -218,10 +218,10 @@ export default function PersonalData() {
           <CardDatailsContent className="adress">
             <ContentDetails>
               <small>
-                Logradouro: {logradouro} <br />
-                Referência: {pontoReferencia} <br />
-                CEP: {cep} <br />
-                Cidade: {cidade}
+                <h3>Logradouro: <span>{logradouro}</span></h3>  
+                <h3>Referência: <span>{pontoReferencia}</span></h3> 
+                <h3>CEP: <span>{cep}</span></h3>
+                <h3>Cidade: <span>{cidade}</span></h3> 
               </small>
             </ContentDetails>
             <div className="flex-btn">

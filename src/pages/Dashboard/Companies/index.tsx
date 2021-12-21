@@ -11,17 +11,18 @@ import { SelectInput } from "../Vendas/styles";
 export default function Companies() {
   const [empresas = [], setEmpresas] = useState<Empresa[]>([]);
   const [modalIsOpen, setIsOpen] = React.useState(false);
-  const [filtro, setFiltro] = useState("Todas");
+  const [filtro, setFiltro] = useState('Todas');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (role != "admin" && role != "empresa") {
+    if (role !== "admin" && role !== "empresa") {
       // Simulate an HTTP redirect:
       window.location.replace(`http://${ip}:3000/constal#/erro`);
     }
 
-    loadUser();
+    loadEmpresa();
   }, []);
-  async function loadUser() {
+  async function loadEmpresa() {
     console.log("entrou");
     const response = await api
       .get("empresaStatus?filter%5Bstatus%5D=" + filtro)
@@ -36,7 +37,47 @@ export default function Companies() {
     //toast.info('Ainda não implementado')
     setIsOpen(false);
   }
-
+  function aprovarEmpresa(empresa: Empresa) {
+    empresa.status = "active";
+    setLoading(true)
+    let response = api.put('empresaStatusUpdate/' + empresa.tId, {
+      id: empresa.id,
+      data: empresa,
+    }).then((response) => {
+      console.log(response)
+      if (response.statusText == "OK") {
+        toast.info('Empresa aprovado com sucesso! :)');
+        //window.location.reload();
+        setLoading(false)
+        loadEmpresa();
+      } else {
+        toast.error('Ops, não foi possivel aprovar a empresa! :(');
+      }
+    }).catch((error) => {
+      toast.error('Ops, não foi possivel aprovar a empresa! :(');
+      console.log(error)
+    })
+  }
+  function recusarEmpresa(empresa: Empresa) {
+    empresa.status = "inative";
+    setLoading(true)
+    let response = api.put('empresaStatusUpdate/' + empresa.tId, {
+      id: empresa.id,
+      data: empresa,
+    }).then((response) => {
+      console.log(response)
+      if (response.statusText == "OK") {
+        toast.info('Empresa recusado com sucesso! :)');
+        //window.location.reload();
+        setLoading(false)
+      } else {
+        toast.error('Ops, não foi possivel recusado a empresa! :(');
+      }
+    }).catch((error) => {
+      toast.error('Ops, não foi possivel recusado a empresa! :(');
+      console.log(error)
+    })
+  }
   return (
     <>
       <Header />
@@ -49,20 +90,20 @@ export default function Companies() {
             <select
               value={filtro}
               onChange={(event) => setFiltro(event.target.value)}
-              onClick={loadUser}
+              onClick={loadEmpresa}
             >
-              <option value={"Todas"} onClick={loadUser}>
+              <option value={"Todas"} onClick={loadEmpresa}>
                 Todos
               </option>
-              <option value={"active"} onClick={loadUser}>
+              <option value={"active"} onClick={loadEmpresa}>
                 Ativas
               </option>
-              <option value={"inative"} onClick={loadUser}>
+              <option value={"inative"} onClick={loadEmpresa}>
                 Inativas
               </option>
             </select>
           </SelectInput>
-
+          {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
           {empresas.map((empresa) => (
             <CardDatailsContent>
               <CardDatailsContent key={empresa.razaoSocial}>
@@ -78,8 +119,8 @@ export default function Companies() {
                 </ContentDetails>
               </CardDatailsContent>
               <div className="flex-btn">
-                {/*<Link to="/aprovar-usuarios" onClick={messageCancel}>Recusar</Link>
-                  <Link to="/aprovar-usuarios" onClick={messageCancel}>Aprovar</Link>*/}
+                {empresa.status == 'active' ? <button onClick={() => recusarEmpresa(empresa)}>Recusar</button> : ''}
+                {empresa.status == 'inative' ? <button onClick={() => aprovarEmpresa(empresa)}>Aprovar</button> : ''}
               </div>
             </CardDatailsContent>
           ))}

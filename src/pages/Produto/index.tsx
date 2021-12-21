@@ -278,22 +278,7 @@ export default function Produto() {
           <Link to="#">Responder</Link>
         </ProdSecond>
 
-        <ProdSecondComents>
-          <FormComents>
-            <h2>Tire a sua dúvida aqui</h2>
-            <input type="text" name="" id="" placeholder="Seu nome"/>
-            <input type="email" name="" id="" placeholder="Seu email" />
-            <select name="" id="">
-              <option value="">Motivo da mensagem</option>
-              <option value="">Reclamação</option>
-              <option value="">Elogio</option>
-              <option value="">Pergunta</option>
-              <option value="">Denuncia</option>
-            </select>
-            <textarea placeholder="Sua mensagem" name="" id=""></textarea>
-            <input type="submit" value="Enviar" />
-          </FormComents>
-        </ProdSecondComents>
+        
       </div>
 
       <ModalContainerVendedor>
