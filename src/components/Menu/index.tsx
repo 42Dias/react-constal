@@ -7,10 +7,10 @@ import axios from "axios";
 
 export function Menu() {
   let role = localStorage.getItem("roles")?.replace(/"/g, "");
-   function Empresa() {
-     return (
+  function Empresa() {
+    return (
       <Container>
-      <FlexLink>
+        <FlexLink>
           <div className="dropdown">
             <button className="dropbtn">
               <FiMenu />
@@ -20,50 +20,49 @@ export function Menu() {
               <div className="drop-grid">
                 <Link to="/meus-produtos">Novo Produtos</Link>
                 <Link to="/promocoes">Promoções</Link>
-                <Link to="/vendas">Vendas</Link> 
-                <Link to="/perguntas">Perguntas</Link> 
-                <Link to="/assinaturas">Planos</Link> 
+                <Link to="/vendas">Vendas</Link>
+                <Link to="/perguntas">Perguntas</Link>
+                <Link to="/assinaturas">Planos</Link>
               </div>
             </div>
           </div>
         </FlexLink>
       </Container>
-     )
+    )
   }
   //Adm
   function Adm() {
     return (
       <Container>
-      <FlexLink>
-        <div className="dropdown">
-          <button className="dropbtn">
-            <FiMenu />
-            <span>Links úteis</span>
-          </button>
-          <div className="dropdown-content">
-            <div className="drop-grid">
-              <Link to="/vendas">Vendas por Empresa</Link>
-              {/* <Link to="/perguntas">Histórico Vendas</Link> 
-             <Link to="/assinaturas">Planos</Link>*/}
-              <Link to="/assinaturas">Assinaturas</Link>
-              <Link to="/consultar-produtos">Aprovar Produtos</Link>
-              <Link to="/assinaturas">Pagamentos</Link> 
-              <Link to="/aprovar-usuarios">Aprovar empresas</Link> 
-              <Link to="/empresas">Empresas</Link> 
+        <FlexLink>
+          <div className="dropdown">
+            <button className="dropbtn">
+              <FiMenu />
+              <span>Links úteis</span>
+            </button>
+            <div className="dropdown-content">
+              <div className="drop-grid">
+                {/*<Link to="/assinaturas">Assinaturas</Link>*/}
+                <Link to="/aprovar-usuarios">Aprovar empresas</Link>
+                <Link to="/consultar-produtos">Aprovar Produtos</Link>
+                <Link to="/empresas">Empresas</Link>
+                <Link to="/assinaturas">Pagamentos</Link>
+                <Link to="/vendas">Vendas por Empresa</Link>
+
+              </div>
             </div>
           </div>
-        </div>
-      </FlexLink>
-    </Container>
+        </FlexLink>
+      </Container>
     )
   }
-  
-   function Cliente() {
+
+  function Cliente() {
     const [categorias = [], setCategorias] = useState<any[]>([]);
 
-     useEffect(
-       () => {
-        async function loadCategorias(){
+    useEffect(
+      () => {
+        async function loadCategorias() {
           // const categoriasResponse = await axios.get('http://'+ip+':8157/api/categoria-aprovados');
           // const categoriasDoBack = categoriasResponse.data.record
           // console.log("categoriasDoBack")
@@ -71,13 +70,13 @@ export function Menu() {
           // console.log(categoriasDoBack)
           // setCategorias(categoriasDoBack)
           setCategorias([])
-          const controller = new AbortController(); 
-          return () => { controller.abort(); }         
+          const controller = new AbortController();
+          return () => { controller.abort(); }
         }
         loadCategorias()
-       }, [] )
-      return (
-        <Container>
+      }, [])
+    return (
+      <Container>
         <FlexLink>
           <div className="dropdown">
             <button className="dropbtn">
@@ -91,12 +90,12 @@ export function Menu() {
                   categorias.map(
                     (categoria, index) => (
                       <Link
-                      key={index} 
-                      to={`/produto-categoria/${categoria.id}`}>{categoria.nome}</Link>
+                        key={index}
+                        to={`/produto-categoria/${categoria.id}`}>{categoria.nome}</Link>
                     )
                   )
                 }
-             <Link to="/produtos">Moveis</Link>
+                <Link to="/produtos">Moveis</Link>
               </div>
             </div>
           </div>
@@ -114,13 +113,13 @@ export function Menu() {
           </div>
         </FlexLink>
       </Container>
-      )
-    }
+    )
+  }
 
   let param = role;
-  
-  function renderSwitch(param:any) {
-    switch(param) {
+
+  function renderSwitch(param: any) {
+    switch (param) {
       case "admin":
         return <Adm />
       case 'empresa':
@@ -130,11 +129,11 @@ export function Menu() {
     }
   }
 
-    return (
+  return (
+    <div>
       <div>
-        <div>
-          {renderSwitch(param)}
-        </div>
+        {renderSwitch(param)}
       </div>
-    );
+    </div>
+  );
 }

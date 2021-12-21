@@ -38,8 +38,9 @@ function ProductQuery() {
 
   }, []);
   function aprovarProd(produto: Product) {
+    toast.info("Processando...")
     produto.status = "aprovado";
-    let response = api.put('produto/' + produto.id, {
+    let response = api.put('produtoStatusUpdate/' + produto.id, {
       id: produto.id,
       data: produto,
     }).then((response) => {
@@ -57,9 +58,10 @@ function ProductQuery() {
     })
   }
   function recusarProd(produto: Product) {
+    toast.info("Processando...")
     setLoading(true)
     produto.status = "recusado";
-    let response = api.put('produto/' + produto.id, {
+    let response = api.put('produtoStatusUpdate/' + produto.id, {
       id: produto.id,
       data: produto,
     }).then((response) => {
@@ -96,12 +98,7 @@ function ProductQuery() {
                 </S.ContentDetails>
                 <S.BtnContent>
                   <Link to="/consultar-produtos" onClick={() => aprovarProd(produto)}>Aprovar</Link>
-                  <Link 
-                    to="/consultar-produtos" 
-                    onClick={() => recusarProd(produto)}
-                  >
-                    Recusar
-                  </Link>
+                  <Link to="/consultar-produtos" onClick={() => recusarProd(produto)}>Recusar</Link>
                 </S.BtnContent>
               </S.CardDatailsContent>
             ))

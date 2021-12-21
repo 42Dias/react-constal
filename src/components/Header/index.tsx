@@ -137,19 +137,18 @@ const Header = (): JSX.Element => {
         handleLocalStorage(email, password);
         handleLocalStorageToken(response.data);
         closeModal();
-        //window.location.reload();
+        window.location.reload();
       } else if (response.statusText == "Forbidden") {
         setLoading(false);
-        toast.info("Ops, Não tem permisão!");
+        toast.error("Ops, Não tem permisão!");
       } else {
         setLoading(false);
-        toast.info("Ops, Dados Incorretos!");
+        toast.error("Ops, Dados Incorretos!");
       }
 
     }).catch((error) =>{
       setLoading(false);
-      console.log("error");
-      console.log(error);
+      toast.error("Desculpe, não reconhecemos suas credenciais")
     });
     
   }
