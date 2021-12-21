@@ -15,7 +15,6 @@ import {
   ProdSecond,
   ModalContainerVendedor,
   ModalFlex,
-  ModalContent,
   SelectAdress,
   ProdCaracteristicas,
 } from "./styles";
@@ -32,6 +31,7 @@ import { formatPrice } from "../../util/format";
 import { Menu } from "../../components/Menu";
 import { FormComents, ProdSecondComents } from "./ProdItem/styles";
 import { Btn } from "../Dashboard/PersonalData/styles";
+import { ContentFormNew, ModalContent } from "../Dashboard/NewProd/styles";
 
 interface RepositoryItemProps {
   repository: {
@@ -44,6 +44,8 @@ interface RepositoryItemProps {
 }
 export default function Produto() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [showModal1, setShowModal1] = React.useState(false);
+  const [showModal2, setShowModal2] = React.useState(false);
 
   const [counter, setCounter] = useState(0);
 
@@ -97,6 +99,8 @@ export default function Produto() {
 
   function closeModal() {
     setIsOpen(false);
+    setShowModal1(false)
+    setShowModal2(false)
   }
 
   function getHash() {
@@ -140,6 +144,7 @@ export default function Produto() {
   const [comentario, setComentario]=useState('');
 
   const [comentarios = [] , setComentarios]=useState<any[]>([]);
+  const [comment , setComment]=useState<any>();
   
   useEffect(() => {
     async function loadProduct() {
@@ -199,7 +204,12 @@ export default function Produto() {
       }
     
       async function addResposta() {
-        console.log(resposta)
+        
+        comment.resposta = resposta
+        comment.isRespondido = 1
+
+        const response = await api.put(`comentario/${comment.id}`, comment)
+        console.log(response)
       }
     
     
@@ -245,7 +255,9 @@ export default function Produto() {
                   <ColorBlack />
                   <ColorRed />
                 </BoxColors>
-                <a className="vendedor" onClick={openModal}>
+                <a className="vendedor" onClick={
+                  () => setShowModal2(true)
+                }>
                   Opções de frete
                 </a>
               </BoxProdFirts>
@@ -291,18 +303,22 @@ export default function Produto() {
 
         {
         comentarios.map(
-          (comentario: any) => (
+          (comentario: any, index: number) => (
         <ProdSecond>
           <div>
             <h2>{comentario.firstName}</h2>
             <span>{comentario.comentario}</span>
           </div>
+          {/* 
+          pegar o id do comentátio
+          */}
           {
             role != 'pessoa'? ( 
               <Btn
               onClick={
                 () => {
-                  
+                  setShowModal1(true)
+                  setComment(comentario)
                 }
               } 
               >Responder</Btn>
@@ -315,36 +331,83 @@ export default function Produto() {
           )
         )
         }
-
-        <ProdSecondComents>
-          <FormComents>
-            <h2>Tire a sua dúvida aqui</h2>
-            <select name="" id="">
-              <option value="">Motivo da mensagem</option>
-              <option value="">Reclamação</option>
-              <option value="">Elogio</option>
-              <option value="">Pergunta</option>
-              <option value="">Denuncia</option>
-            </select>
-            <textarea name="" id=""
-            onChange={(text) => {
-              setComentario(text.target.value)
-            }}
-            ></textarea>
-            <input placeholder="Sua mensagem" type="submit" value="Enviar"
-              onClick={
-              (e) => {
-                e.preventDefault()
-                makeCommentary()
-              }
-            } />
-          </FormComents>
-        </ProdSecondComents>
+        {
+          role != 'pessoa'? (
+            <div></div>
+          ) : (
+            <ProdSecondComents>
+            <FormComents>
+              <h2>Tire a sua dúvida aqui</h2>
+              <select name="" id="">
+                <option value="">Motivo da mensagem</option>
+                <option value="">Reclamação</option>
+                <option value="">Elogio</option>
+                <option value="">Pergunta</option>
+                <option value="">Denuncia</option>
+              </select>
+              <textarea name="" id=""
+              onChange={(text) => {
+                setComentario(text.target.value)
+              }}
+              ></textarea>
+              <input placeholder="Sua mensagem" type="submit" value="Enviar"
+                onClick={
+                (e) => {
+                  e.preventDefault()
+                  makeCommentary()
+                }
+              } />
+            </FormComents>
+          </ProdSecondComents>    
+          )
+        }
       </div>
+
+       <ModalContainerVendedor>
+         <Modal
+          isOpen={showModal1}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+        >
+          <div>
+            <ModalFlex>
+              <AiOutlineClose onClick={closeModal} />
+            </ModalFlex>
+
+            <ModalContent>
+              <h3>Nova resposta</h3>
+
+              <ContentFormNew>
+                <label htmlFor="">Responder</label>
+                <input
+                  required
+                  type="text"
+                  onChange={(text) => {
+                    setResposta(text.target.value);
+                  }}
+                />
+              </ContentFormNew>
+
+              <div className="buttonsNew">
+                <button type="button" onClick={
+                  () => console.log('ok')
+                }>
+                  Cancelar
+                </button>
+                <button type="button" onClick={addResposta}>
+                  Adicionar
+                </button>
+              </div>
+            </ModalContent>
+          </div>
+        </Modal>
+      </ModalContainerVendedor>
+
+
 
       <ModalContainerVendedor>
         <Modal
-          isOpen={modalIsOpen}
+          isOpen={showModal2}
           onAfterOpen={afterOpenModal}
           onRequestClose={closeModal}
         >
@@ -361,9 +424,7 @@ export default function Produto() {
                 <div>
                   <strong>{logradouro}</strong>
                   <br />
-                  <span>
-                    CEP: {cep} - {estado}
-                  </span>
+                  <span>CEP: {cep} - {estado}</span>
                 </div>
                 <div>
                   <small>Selecione outro endereço</small>

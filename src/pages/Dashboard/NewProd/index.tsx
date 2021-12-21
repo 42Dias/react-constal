@@ -654,7 +654,9 @@ export default function NewProd() {
 
             <ModalContent>
               <h3>Nova promoção</h3>
+              <fieldset>
 
+              
               <ContentFormNew>
                 <label htmlFor="">Novo preço</label>
                 <input
@@ -676,6 +678,7 @@ export default function NewProd() {
                   Adicionar
                 </button>
               </div>
+              </fieldset>
             </ModalContent>
           </div>
         </Modal>
