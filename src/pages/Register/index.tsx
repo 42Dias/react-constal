@@ -5,7 +5,7 @@ import { BoxRegister, GridRegister, LinkContent, Terms } from "./styles";
 import { toast } from 'react-toastify';
 import Axios from 'axios';
 import { Menu } from "../../components/Menu";
-import { api } from "../../services/api";
+import { api, ip } from "../../services/api";
 
 export default function Register() {
   const [nome, setNome] = useState('');
@@ -38,7 +38,7 @@ export default function Register() {
   }
   async function Cadastro() {
     
-      Axios.post('http://'+api+':8157/api/auth/sign-up', {   
+      Axios.post('http://'+ip+':8157/api/auth/sign-up', {   
         fullName: nome,   
         email: email,
         password: senha,
