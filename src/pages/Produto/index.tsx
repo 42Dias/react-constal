@@ -27,10 +27,10 @@ import Modal from "react-modal";
 import React from "react";
 import Header from "../../components/Header";
 import { toast } from "react-toastify";
-import { api, role, id } from "../../services/api";
+import { api, id, role } from "../../services/api";
 import { formatPrice } from "../../util/format";
 import { Menu } from "../../components/Menu";
-import { REFUSED } from "dns";
+import { FormComents, ProdSecondComents } from "./ProdItem/styles";
 import { Btn } from "../Dashboard/PersonalData/styles";
 
 interface RepositoryItemProps {
@@ -111,6 +111,8 @@ export default function Produto() {
     return requisition
   }
   
+  
+  
   const selectedProduct = buildUrl()
   console.log(selectedProduct);
   
@@ -132,57 +134,75 @@ export default function Produto() {
   const [cidade, setCidade]=useState('');
   const [estado, setEstado]=useState('');
 
+  const [resposta, setResposta] = useState('')
+  
   const [empresaId, setEmpresaId]=useState('');
   const [comentario, setComentario]=useState('');
 
   const [comentarios = [] , setComentarios]=useState<any[]>([]);
   
-  const userId = id
-
   useEffect(() => {
-  async function loadProduct(){
-    const response = await api.get(selectedProduct)
-    .then(response => {
-        console.log(response.data)
-        return response.data
-    })
+    async function loadProduct() {
+      const response = await api.get(selectedProduct).then((response) => {
+        console.log(response.data);
+        return response.data;
+      });
 
-    setProdId(response.id)
-    setNome(response.nome)
-    
-    if(response.isOferta === true){
-    setPreco(formatPrice(response.precoOferta))        
-    }
-    else{
-    setPreco(formatPrice(response.preco))
-    }
-    setPublicUrl(response.publicUrl)
-    setCodigo(response.codigo)
-    setMarca(response.marca)
-    setFotos(response.fotos[0].downloadUrl)
-    setModelo(response.modelo);
-    setDescricao(response.descricao)
-    setCaracteristicasTecnicas(response.caracteristicasTecnicas)
-    setEmpresaId(response.empresaId)
-}
-async function loadUser() {
-  const user = await api.get('pessoa-fisica-perfil')
-  .then(user => {
-      console.log(user.data);
-    
-      return user.data;            
-  })
-setLogradouro(user.logradouro+", "+user.numero);
-  setBairro(user.bairro);
-  setCEP(user.cep)
-  setCidade(user.cidade);
-  setEstado(user.estado);
-}
-  loadUser()  
-  loadProduct();
-console.log(id)
-}, []);
+      setProdId(response.id)
 
+      setNome(response.nome);
+
+      if (response.isOferta === true) {
+        setPreco(formatPrice(response.precoOferta));
+      } else {
+        setPreco(formatPrice(response.preco));
+      }
+      setPublicUrl(response.publicUrl);
+      setCodigo(response.codigo);
+      setMarca(response.marca);
+      setFotos(response.fotos[0].downloadUrl);
+      setModelo(response.modelo);
+      setDescricao(response.descricao);
+      setCaracteristicasTecnicas(response.caracteristicasTecnicas)
+      setEmpresaId(response.empresaId)
+
+
+    }
+    async function loadUser() {
+      const user = await api.get("pessoa-fisica-perfil").then((user) => {
+        console.log(user.data);
+
+        return user.data;
+      });
+      setLogradouro(user.logradouro + ", " + user.numero);
+      setBairro(user.bairro);
+      setCEP(user.cep);
+      setCidade(user.cidade);
+      setEstado(user.estado);
+    }
+    loadUser();
+    loadProduct();
+  }, []);
+
+     async function makeCommentary() {
+        let data = {
+          data: {
+            "comentario": comentario ,
+            "fornecedorEmpresaId": empresaId,
+            "produtoId": prodId,
+            "userId": id,
+          }
+        }
+        console.log(data)
+        const response = await api.post('comentario', data)
+        console.log(response)
+      }
+    
+      async function addResposta() {
+        console.log(resposta)
+      }
+    
+    
 
   useEffect(
     () => {
@@ -196,21 +216,6 @@ console.log(id)
       loadComments()
     }, [prodId]
   )
-
-  async function makeCommentary() {
-    let data = {
-      data: {
-        "comentario": comentario ,
-        "fornecedorEmpresaId": empresaId,
-        "produtoId": prodId,
-        "userId": id,
-      }
-    }
-    console.log(data)
-    const response = await api.post('comentario', data)
-    console.log(response)
-  }
-
   return (
     <>
       <Header />
@@ -246,9 +251,13 @@ console.log(id)
               </BoxProdFirts>
 
               <AddCartRight>
-                <button className="fav" type="button"
-                onClick={() => setFavoritos(favoritos, productId)}
-                >Favoritar <FiHeart /></button>
+                <button
+                  className="fav"
+                  type="button"
+                  onClick={() => setFavoritos(favoritos, productId)}
+                >
+                  Favoritar <FiHeart />
+                </button>
                 <FlexBtnsProd>
                   <IconPlusMinus onClick={increment}>
                     <FiPlus />
@@ -265,9 +274,7 @@ console.log(id)
             <BoxProd>
               <div className="descprod">
                 <strong>Descrição do produto</strong>
-                <span>
-                  {descricao}
-                </span>
+                <span>{descricao}</span>
               </div>
             </BoxProd>
           </DetailsProdFirts>
@@ -277,37 +284,10 @@ console.log(id)
           <div>
             <h2>Características Técnicas</h2>
             <span>
-                {caracteristicasTecnicas}
+              {caracteristicasTecnicas}
             </span>
           </div>
         </ProdCaracteristicas>
-
-        {
-          role == "pessoa"? (
-        <form action="submit">
-          <fieldset>
-              <input type="text" name="" id="" 
-              placeholder="digite seu comentario"
-              onChange={(text) => {
-                setComentario(text.target.value)
-              }}
-              />
-              <button 
-              onClick={
-                (e) => {
-                  e.preventDefault()
-                  makeCommentary()
-                }
-              }
-              >
-                Fazer Comentario
-              </button>
-          </fieldset>
-        </form>
-          ):(
-            <div></div>
-          )
-        }
 
         {
         comentarios.map(
@@ -321,7 +301,9 @@ console.log(id)
             role != 'pessoa'? ( 
               <Btn
               onClick={
-                () => console.log('fkdbnldfbnjdfnçbjndfbndjnbndfbjakjfbnjvnbndajkkf')
+                () => {
+                  
+                }
               } 
               >Responder</Btn>
             ): (
@@ -334,6 +316,30 @@ console.log(id)
         )
         }
 
+        <ProdSecondComents>
+          <FormComents>
+            <h2>Tire a sua dúvida aqui</h2>
+            <select name="" id="">
+              <option value="">Motivo da mensagem</option>
+              <option value="">Reclamação</option>
+              <option value="">Elogio</option>
+              <option value="">Pergunta</option>
+              <option value="">Denuncia</option>
+            </select>
+            <textarea name="" id=""
+            onChange={(text) => {
+              setComentario(text.target.value)
+            }}
+            ></textarea>
+            <input placeholder="Sua mensagem" type="submit" value="Enviar"
+              onClick={
+              (e) => {
+                e.preventDefault()
+                makeCommentary()
+              }
+            } />
+          </FormComents>
+        </ProdSecondComents>
       </div>
 
       <ModalContainerVendedor>
@@ -355,7 +361,9 @@ console.log(id)
                 <div>
                   <strong>{logradouro}</strong>
                   <br />
-                  <span>CEP: {cep} - {estado}</span>
+                  <span>
+                    CEP: {cep} - {estado}
+                  </span>
                 </div>
                 <div>
                   <small>Selecione outro endereço</small>
@@ -372,10 +380,6 @@ console.log(id)
           </div>
         </Modal>
       </ModalContainerVendedor>
-
     </>
   );
-
 }
-
-
