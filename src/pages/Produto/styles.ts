@@ -211,9 +211,12 @@ export const ProdSecond = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin: 20px 0;
+
   h2 {
     margin: -5px 0 20px 0;  
   }
+
   a {
     width: 165px;
     height: 40px;
@@ -269,4 +272,65 @@ export const SelectAdress = styled.div`
     color: #58A4B0;
     font-size: 14px;
   }
+`;
+
+export const ProdSecondComents = styled.div`
+  width: 100%;
+  height: 400px;
+  background: white;
+  border-radius: 5px;
+  padding: 0 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+
+  select {
+    width: 100%;
+    border: 0;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin: 5px 0;
+  }
+
+  textarea {
+    resize: none;
+    width: 100%;
+    height: 120px;
+    border: 0;
+    font-family: "Roboto";
+    margin: 5px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+
+  input[type=text], input[type=email] {
+    width: 100%;
+    border: 0;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid #ccc; 
+    margin: 5px 0;
+    padding: 10px;
+  }
+
+  input[type=submit] {
+    border-radius: 5px;
+    width: 100%;
+    border: 0;
+    background: black;
+    color: white;
+    height: 40px;
+  }
+
+  h2 {
+    margin: -5px 0 20px 0;  
+  }
+
+`;
+
+export const FormComents = styled.form`
+
 `;

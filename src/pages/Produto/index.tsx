@@ -18,6 +18,8 @@ import {
   ModalContent,
   SelectAdress,
   ProdCaracteristicas,
+  ProdSecondComents,
+  FormComents,
 } from "./styles";
 import prod from "../../assets/images/prodfav.png";
 import { AiFillStar, AiOutlineClose } from "react-icons/ai";
@@ -57,22 +59,20 @@ export default function Produto() {
     });
   }
 
-
   //BUG AO ADICIONAR MAIS DE UM!!!!!
-  const favoritos: string[] = JSON.parse(localStorage.getItem("favorito") || "[]");
+  const favoritos: string[] = JSON.parse(
+    localStorage.getItem("favorito") || "[]"
+  );
 
-
-  function setFavoritos(favoritos: string[], produtoId: string){    
-      console.log("favoritos")
-      console.log(favoritos)
-      console.log("produtoId")
-      console.log(produtoId)    
-      favoritos.push(produtoId)
-      console.log(favoritos)
-      localStorage.setItem("favorito", JSON.stringify(favoritos))
+  function setFavoritos(favoritos: string[], produtoId: string) {
+    console.log("favoritos");
+    console.log(favoritos);
+    console.log("produtoId");
+    console.log(produtoId);
+    favoritos.push(produtoId);
+    console.log(favoritos);
+    localStorage.setItem("favorito", JSON.stringify(favoritos));
   }
-
-
 
   function increment() {
     setCounter(counter + 1);
@@ -99,79 +99,74 @@ export default function Produto() {
   }
 
   function getHash() {
-    const hash = window.location.hash.replace(/#\/produto\//g, '');    
-    return hash
+    const hash = window.location.hash.replace(/#\/produto\//g, "");
+    return hash;
   }
-  const productId = getHash()
-  function buildUrl(){
-    const productId = getHash()
-//  `/tenant/:tenantId/produto/:id`
-    const requisition = `/produto/${productId}`
-    return requisition
+  const productId = getHash();
+  function buildUrl() {
+    const productId = getHash();
+    //  `/tenant/:tenantId/produto/:id`
+    const requisition = `/produto/${productId}`;
+    return requisition;
   }
-  
-  const selectedProduct = buildUrl()
+
+  const selectedProduct = buildUrl();
   console.log(selectedProduct);
-  
-  const [id, setId]=useState('');
-  const [nome, setNome]=useState('');
-  const [preco, setPreco]=useState('');
-  const [publicUrl, setPublicUrl]=useState(''); 
-  const [codigo, setCodigo]=useState('');
-  const [marca, setMarca]=useState('');
-  const [fotos, setFotos]=useState('');
-  const [modelo, setModelo]=useState('');
-  const [descricao, setDescricao]=useState('');
 
+  const [id, setId] = useState("");
+  const [nome, setNome] = useState("");
+  const [preco, setPreco] = useState("");
+  const [publicUrl, setPublicUrl] = useState("");
+  const [codigo, setCodigo] = useState("");
+  const [marca, setMarca] = useState("");
+  const [fotos, setFotos] = useState("");
+  const [modelo, setModelo] = useState("");
+  const [descricao, setDescricao] = useState("");
 
-  const [logradouro, setLogradouro]=useState('');
-  const [bairro, setBairro]=useState('');
-  const [cep, setCEP]=useState('');
-  const [cidade, setCidade]=useState('');
-  const [estado, setEstado]=useState('');
+  const [logradouro, setLogradouro] = useState("");
+  const [bairro, setBairro] = useState("");
+  const [cep, setCEP] = useState("");
+  const [cidade, setCidade] = useState("");
+  const [estado, setEstado] = useState("");
 
   useEffect(() => {
-  async function loadProduct(){
-    const response = await api.get(selectedProduct)
-    .then(response => {
-        console.log(response.data)
-        return response.data
-    })
+    async function loadProduct() {
+      const response = await api.get(selectedProduct).then((response) => {
+        console.log(response.data);
+        return response.data;
+      });
 
-    setId(response.id)
-    setNome(response.nome)
-    
-    if(response.isOferta === true){
-    setPreco(formatPrice(response.precoOferta))        
-    }
-    else{
-    setPreco(formatPrice(response.preco))
-    }
-    setPublicUrl(response.publicUrl)
-    setCodigo(response.codigo)
-    setMarca(response.marca)
-    setFotos(response.fotos[0].downloadUrl)
-    setModelo(response.modelo);
-    setDescricao(response.descricao)
+      setId(response.id);
+      setNome(response.nome);
 
-}
-async function loadUser() {
-  const user = await api.get('pessoa-fisica-perfil')
-  .then(user => {
-      console.log(user.data);
-    
-      return user.data;            
-  })
-setLogradouro(user.logradouro+", "+user.numero);
-  setBairro(user.bairro);
-  setCEP(user.cep)
-  setCidade(user.cidade);
-  setEstado(user.estado);
-}
-  loadUser()  
-  loadProduct();
-console.log(id)
-}, []);
+      if (response.isOferta === true) {
+        setPreco(formatPrice(response.precoOferta));
+      } else {
+        setPreco(formatPrice(response.preco));
+      }
+      setPublicUrl(response.publicUrl);
+      setCodigo(response.codigo);
+      setMarca(response.marca);
+      setFotos(response.fotos[0].downloadUrl);
+      setModelo(response.modelo);
+      setDescricao(response.descricao);
+    }
+    async function loadUser() {
+      const user = await api.get("pessoa-fisica-perfil").then((user) => {
+        console.log(user.data);
+
+        return user.data;
+      });
+      setLogradouro(user.logradouro + ", " + user.numero);
+      setBairro(user.bairro);
+      setCEP(user.cep);
+      setCidade(user.cidade);
+      setEstado(user.estado);
+    }
+    loadUser();
+    loadProduct();
+    console.log(id);
+  }, []);
 
   return (
     <>
@@ -208,9 +203,13 @@ console.log(id)
               </BoxProdFirts>
 
               <AddCartRight>
-                <button className="fav" type="button"
-                onClick={() => setFavoritos(favoritos, productId)}
-                >Favoritar <FiHeart /></button>
+                <button
+                  className="fav"
+                  type="button"
+                  onClick={() => setFavoritos(favoritos, productId)}
+                >
+                  Favoritar <FiHeart />
+                </button>
                 <FlexBtnsProd>
                   <IconPlusMinus onClick={increment}>
                     <FiPlus />
@@ -227,9 +226,7 @@ console.log(id)
             <BoxProd>
               <div className="descprod">
                 <strong>Descrição do produto</strong>
-                <span>
-                  {descricao}
-                </span>
+                <span>{descricao}</span>
               </div>
             </BoxProd>
           </DetailsProdFirts>
@@ -280,6 +277,23 @@ console.log(id)
 
           <Link to="#">Responder</Link>
         </ProdSecond>
+
+        <ProdSecondComents>
+          <FormComents>
+            <h2>Tire a sua dúvida aqui</h2>
+            <input type="text" name="" id="" placeholder="Seu nome"/>
+            <input type="email" name="" id="" placeholder="Seu email" />
+            <select name="" id="">
+              <option value="">Motivo da mensagem</option>
+              <option value="">Reclamação</option>
+              <option value="">Elogio</option>
+              <option value="">Pergunta</option>
+              <option value="">Denuncia</option>
+            </select>
+            <textarea placeholder="Sua mensagem" name="" id=""></textarea>
+            <input type="submit" value="Enviar" />
+          </FormComents>
+        </ProdSecondComents>
       </div>
 
       <ModalContainerVendedor>
@@ -301,7 +315,9 @@ console.log(id)
                 <div>
                   <strong>{logradouro}</strong>
                   <br />
-                  <span>CEP: {cep} - {estado}</span>
+                  <span>
+                    CEP: {cep} - {estado}
+                  </span>
                 </div>
                 <div>
                   <small>Selecione outro endereço</small>
@@ -318,10 +334,6 @@ console.log(id)
           </div>
         </Modal>
       </ModalContainerVendedor>
-
     </>
   );
-
 }
-
-
