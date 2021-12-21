@@ -91,7 +91,7 @@ export default function PayCart() {
         produtoDoFornecedor.formaPagemento = formaDePagamento
         const response = await axios({
           method: 'post',
-          url: `http://localhost:8157/api/tenant/${tenantId}/pedido`,
+          url: `http://${ip}:8157/api/tenant/${tenantId}/pedido`,
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -116,6 +116,25 @@ export default function PayCart() {
       */
       
   }
+  async function reduceStock(){
+    // ids.map(
+    //   async (id) => {
+    //     const response = await axios({
+    //       method: 'get',
+    //       url: `http://${ip}:8157/api/tenant/${tenantId}/produto/${id}`,
+    //       headers: {
+    //         'Accept': 'application/json',
+    //         'Content-Type': 'application/json',
+    //         'Authorization': 'Bearer '+ token
+    //       },              
+    //       timeout: 50000,
+    //       // data   : produtoDoFornecedor
+    //     })
+    //     console.log(response)
+    //   } 
+    // )
+  }
+
 
   
   
@@ -125,7 +144,7 @@ export default function PayCart() {
       async (id) => {
         const response = await axios({
           method: 'post',
-          url: `http://localhost:8157/api/tenant/${tenantId}/pedido/${id}/fatura`,
+          url: `http://${ip}:8157/api/tenant/${tenantId}/pedido/${id}/fatura`,
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -143,12 +162,10 @@ export default function PayCart() {
     }
     
     async function makeMagic() {
-      gerarPedido().then(
-        () => {
-          createNewFatura()
-
-        }
-      )
+      await gerarPedido()
+      createNewFatura()
+      reduceStock()
+        
       
     }
 
