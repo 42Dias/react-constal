@@ -11,7 +11,7 @@ export default function Companies() {
 
   const [empresas = [], setEmpresas] = useState<Empresa[]>([]);
   const [modalIsOpen, setIsOpen] = React.useState(false);
-  const [filtro, setFiltro] = useState('');
+  const [filtro, setFiltro] = useState('Todas');
   
   useEffect(() => {
     if(role != 'admin' && role != "empresa"){
@@ -23,7 +23,7 @@ export default function Companies() {
   }, []);
   async function loadUser() {
     console.log("entrou");
-    const response = await api.get('empresa'+filtro)
+    const response = await api.get('empresaStatus?filter%5Bstatus%5D='+filtro)
       .then(response => {
         return response.data;
       })
@@ -32,7 +32,7 @@ export default function Companies() {
     console.log(response.rows);
   }
   function message() {
-    toast.info('Ainda não implementado')
+    //toast.info('Ainda não implementado')
     setIsOpen(false);
   }
   
@@ -45,10 +45,10 @@ export default function Companies() {
           <h2>Empresas</h2>
 
           <form>
-            <select value={filtro} onChange={event => setFiltro(event.target.value)}>
-              <option value={''} onClick={message}>Todos</option>
-              <option value={'?fiter%5Bstatus%5D=ativo'} onClick={message}>Ativas</option>
-              <option value={''} onClick={message}>Inativas</option>
+            <select value={filtro} onChange={event => setFiltro(event.target.value)} onClick={loadUser}>
+              <option value={'Todas'} onClick={loadUser}>Todos</option>
+              <option value={'active'} onClick={loadUser}>Ativas</option>
+              <option value={'inative'} onClick={loadUser}>Inativas</option>
             </select>
           </form>
 

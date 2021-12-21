@@ -11,23 +11,28 @@ import React from "react";
 export default function ApproveUsers() {
   const [empresas = [], setEmpresas] = useState<Empresa[]>([]);
   const [modalIsOpen, setIsOpen] = React.useState(false);
-  
+  const [loading, setLoading] = useState(false);
+  const [loading2, setLoading2] = useState(false);
+
+
+  async function loadEmpresa() {
+    setLoading(true);
+    const response = await api.get('empresaStatus?filter%5Bstatus%5D=pendente')
+      .then(response => {
+        setLoading(false);
+        return response.data;
+      })
+    setEmpresas(response.rows)
+    console.log("Empresas");
+    console.log(response.rows);
+  }
+
   useEffect(() => {
     if(role != 'admin' && role != "empresa"){
       // Simulate an HTTP redirect:
       window.location.replace(`http://${ip}:3000/constal#/erro`);
     }
-
-    async function loadUser() {
-      const response = await api.get('empresa?filter%5Bstatus%5D=pendente')
-        .then(response => {
-          return response.data;
-        })
-      setEmpresas(response.rows)
-      console.log("Empresas");
-      console.log(response.rows);
-    }
-    loadUser();
+    loadEmpresa();
 
   }, []);
 
@@ -35,15 +40,59 @@ export default function ApproveUsers() {
     toast.info('Ainda não implementado')
     setIsOpen(false);
   }
+  function aprovarEmpresa(empresa: Empresa) {
+    empresa.status = "active";
+    setLoading2(true)
+    let response = api.put('empresaStatusUpdate/' + empresa.tId, {
+      id: empresa.id,
+      data: empresa,
+    }).then((response) => {
+      console.log(response)
+      if (response.statusText == "OK") {
+        toast.info('Empresa aprovado com sucesso! :)');
+        //window.location.reload();
+        setLoading2(false)
+        loadEmpresa();
+      }else{
+        toast.error('Ops, não foi possivel aprovar a empresa! :(');
+      }
+    }).catch((error)=>{
+      toast.error('Ops, não foi possivel aprovar a empresa! :(');
+      console.log(error)
+    })
+  }
+  function recusarEmpresa(empresa: Empresa) {
+    empresa.status = "inative";
+    setLoading(true)
+    let response = api.put('empresaStatusUpdate/' + empresa.tId, {
+      id: empresa.id,
+      data: empresa,
+    }).then((response) => {
+      console.log(response)
+      if (response.statusText == "OK") {
+        toast.info('Empresa recusado com sucesso! :)');
+        //window.location.reload();
+        setLoading(false)
+      }else{
+        toast.error('Ops, não foi possivel recusado a empresa! :(');
+      }
+    }).catch((error)=>{
+      toast.error('Ops, não foi possivel recusado a empresa! :(');
+      console.log(error)
+    })
+  }
   return (
     <>
       <Header />
       <Menu />
       <div className="container">
         <CardDatails>
-          <h2>Aprovar empresas</h2>
-
+          <h2>Aprovar empresas {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}</h2>
+          
           {
+            empresas.length === 0 ? (
+              <p>Todas a empresas ja foram aprovadas</p>
+            ) : (
             empresas.map((empresa) => (
               <CardDatailsContent>
                 <CardDatailsContent key={empresa.razaoSocial}>
@@ -56,13 +105,14 @@ export default function ApproveUsers() {
                     </small>
                   </ContentDetails>
                 </CardDatailsContent>
+                
                 <div className="flex-btn">
-                  <Link to="/aprovar-usuarios" onClick={messageCancel}>Recusar</Link>
-                  <Link to="/aprovar-usuarios" onClick={messageCancel}>Aprovar</Link>
+                  <Link to="/aprovar-usuarios" onClick={() => recusarEmpresa(empresa)}>Recusar</Link>
+                  <Link to="/aprovar-usuarios" onClick={() => aprovarEmpresa(empresa)}>Aprovar</Link>
                 </div>
               </CardDatailsContent>
             ))
-
+            )
           }
         </CardDatails>
       </div>

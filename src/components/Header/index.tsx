@@ -28,7 +28,7 @@ import React, { useEffect, useState } from "react";
 
 import { useCart } from "../../hooks/useCart";
 import { toast } from "react-toastify";
-import { api, ip, role } from "../../services/api";
+import { api, ip, role, token } from "../../services/api";
 import axios from "axios";
 import { margin } from "polished";
 
@@ -96,13 +96,32 @@ const Header = (): JSX.Element => {
 
   let history = useHistory();
   function handleClickLogin() {
-    if(role == "pessoa" ){
+    if(role === "pessoa" ){
     history.push("/meu-perfil");
     }else{
       history.push("/dados-pessoais");
     }
   }
-
+  async function loadUser() {
+    const response = await axios({
+      method: 'get',
+      url: `http://localhost:8157/api/auth/me`,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+      timeout: 50000
+    }).then(response => {
+      return response.data;
+    })
+    console.log(response);
+    console.log(response.tenants[0].roles[0]);
+    localStorage.setItem("roles", JSON.stringify(response.tenants[0].roles[0]));//saves client's data into localStorage:
+    console.log(response.tenants[0].tenant.id);
+    localStorage.setItem("tenantId", JSON.stringify(response.tenants[0].tenant.id));//saves client's data into localStorage:
+    localStorage.setItem("id", JSON.stringify(response.id));//saves client's data into localStorage:
+  }
   async function Login() {
     setLoading(true);
     let response = Axios.post('http://'+ip+':8157/api/auth/sign-in', {
@@ -115,7 +134,8 @@ const Header = (): JSX.Element => {
         handleLocalStorage(email, password);
         handleLocalStorageToken(response.data);
         closeModal();
-        window.location.reload();
+        //window.location.reload();
+        loadUser();
       } else if (response.statusText == "Forbidden") {
         setLoading(false);
         toast.info("Ops, Não tem permisão!");
@@ -132,27 +152,7 @@ const Header = (): JSX.Element => {
     
   }
   useEffect(() => {
-    async function loadUser() {
-      let token = localStorage.getItem("token")?.replace(/"/g, "");
-      const response = await axios({
-        method: 'get',
-        url: `http://localhost:8157/api/auth/me`,
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + token
-        },
-        timeout: 50000
-      }).then(response => {
-        return response.data;
-      })
-      console.log(response);
-      console.log(response.tenants[0].roles[0]);
-      localStorage.setItem("roles", JSON.stringify(response.tenants[0].roles[0]));//saves client's data into localStorage:
-      console.log(response.tenants[0].tenant.id);
-      localStorage.setItem("tenantId", JSON.stringify(response.tenants[0].tenant.id));//saves client's data into localStorage:
-      localStorage.setItem("id", JSON.stringify(response.id));//saves client's data into localStorage:
-    }
+    
     loadUser();
   }, []);
   useEffect(() => {
@@ -304,7 +304,7 @@ const Header = (): JSX.Element => {
               value={password}
               onChange={(text) => setPassword(text.target.value)}
             />
-            {loading ? <img width="40px" style={{margin: '0 auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
+            
             {/*<Link to="/meu-perfil" className="btn-enter" href="">
               Entrar
             </Link>*/}

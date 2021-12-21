@@ -11,9 +11,6 @@ import {
   ContentFormNew,
 } from "./styles";
 import prodone from "../../../assets/images/prodone.png";
-import prodtwo from "../../../assets/images/prodtwo.png";
-import prodthree from "../../../assets/images/prodthree.png";
-import prodfour from "../../../assets/images/prodfour.png";
 import Header from "../../../components/Header";
 import { AiOutlineClose } from "react-icons/ai";
 import { FiCheck } from "react-icons/fi";

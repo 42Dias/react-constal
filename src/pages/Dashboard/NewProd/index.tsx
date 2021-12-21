@@ -20,7 +20,7 @@ import { toast } from 'react-toastify';
 import { Menu } from "../../../components/Menu";
 import { formatPrice } from "../../../util/format";
 import axios from "axios";
-import { Product } from "../../../types";
+import { Empresa, Product } from "../../../types";
 import { api, ip, role } from "../../../services/api";
 import { Btn } from "../PersonalData/styles";
 
@@ -45,7 +45,7 @@ export default function NewProd() {
   const [frete, setFrete] = useState('')
   const [imagem, setImagem] = useState('')
   const [categoria, setCategoria] = useState<any>()
-
+  const [empresas = [], setEmpresas] = useState<Empresa[]>([]);
   
   const [isOferta, setIsOferta] = useState(false)
   const [precoOferta, setPrecoOferta] = useState('')
@@ -231,8 +231,17 @@ export default function NewProd() {
     }
     loadCategorias();
   }, []);
-
+  async function loadEmpresa() {
+    const response = await api.get('empresaStatus?filter%5Bid%5D='+id)
+      .then(response => {
+        return response.data;
+      })
+    setEmpresas(response.rows)
+    console.log("Empresas");
+    console.log(response.rows);
+  }
   useEffect(() => {
+    loadEmpresa();
     async function loadProducts() {
 
       const response = await api.get("produto");
@@ -240,6 +249,7 @@ export default function NewProd() {
 
     }
     loadProducts();
+     
   }, []);
   
   console.log(newCategoria)
