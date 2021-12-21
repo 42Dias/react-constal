@@ -28,7 +28,7 @@ import React, { useEffect, useState } from "react";
 
 import { useCart } from "../../hooks/useCart";
 import { toast } from "react-toastify";
-import { api, ip, role, token } from "../../services/api";
+import { api, id, ip, role, token } from "../../services/api";
 import axios from "axios";
 import { margin } from "polished";
 
@@ -82,8 +82,8 @@ const Header = (): JSX.Element => {
 
   function handleLocalStorage(emailA: string, passwordB: string) {
 
-    localStorage.setItem("email", JSON.stringify(email));//saves client's data into localStorage:
-    localStorage.setItem("password", JSON.stringify(password));//saves client's data into localStorage:
+    localStorage.setItem("email", JSON.stringify(emailA));//saves client's data into localStorage:
+    localStorage.setItem("password", JSON.stringify(passwordB));//saves client's data into localStorage:
     console.log();
   }
   function handleLocalStorageToken(token: string[]) {
@@ -92,6 +92,7 @@ const Header = (): JSX.Element => {
       console.log("OK!!!");
     };
     setLocalStorage(token);
+    loadUser();
   }
 
   let history = useHistory();
@@ -121,6 +122,8 @@ const Header = (): JSX.Element => {
     console.log(response.tenants[0].tenant.id);
     localStorage.setItem("tenantId", JSON.stringify(response.tenants[0].tenant.id));//saves client's data into localStorage:
     localStorage.setItem("id", JSON.stringify(response.id));//saves client's data into localStorage:
+    localStorage.setItem("status", JSON.stringify(response.tenants[0].status));//saves client's data into localStorage:
+    
   }
   async function Login() {
     setLoading(true);
@@ -135,7 +138,6 @@ const Header = (): JSX.Element => {
         handleLocalStorageToken(response.data);
         closeModal();
         //window.location.reload();
-        loadUser();
       } else if (response.statusText == "Forbidden") {
         setLoading(false);
         toast.info("Ops, Não tem permisão!");
@@ -308,6 +310,7 @@ const Header = (): JSX.Element => {
             {/*<Link to="/meu-perfil" className="btn-enter" href="">
               Entrar
             </Link>*/}
+            {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
             <button className="btn-enter" onClick={Login}>
               Entrar
             </button>

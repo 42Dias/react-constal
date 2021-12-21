@@ -69,17 +69,16 @@ export const CardDatailsContent = styled.div`
     border-radius: 5px;
   }
 
-  a:nth-child(1) {
+  button:nth-child(1) {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 101px;
     height: 41px;
     text-decoration: none;
-    background: transparent;
-    color: black;
+    background: black;
+    color: white;
     border-radius: 5px;
-    border: 1px solid black;
   }
 
   .flex-btn {

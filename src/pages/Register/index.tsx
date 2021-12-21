@@ -5,13 +5,15 @@ import { BoxRegister, GridRegister, LinkContent, Terms } from "./styles";
 import { toast } from 'react-toastify';
 import Axios from 'axios';
 import { Menu } from "../../components/Menu";
-import { api, ip } from "../../services/api";
+import { api, id, ip, token } from "../../services/api";
+import axios from "axios";
 
 export default function Register() {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [category, setCategory] = useState('1');
+  const [loading, setLoading] = useState(false);
 
   function handleCreateUser(event: FormEvent) {
     event.preventDefault();
@@ -25,9 +27,44 @@ export default function Register() {
   }
   function handleLocalStorage(emailA: string, passwordB: string) {
     
-    localStorage.setItem("email", JSON.stringify(email));//saves client's data into localStorage:
-    localStorage.setItem("password", JSON.stringify(senha));//saves client's data into localStorage:
+    localStorage.setItem("email", JSON.stringify(emailA));//saves client's data into localStorage:
+    localStorage.setItem("password", JSON.stringify(passwordB));//saves client's data into localStorage:
     console.log();
+  }
+  async function senEmail() {
+    Axios.post(`http://${ip}:8157/api/cliente/${id}/${token}/verificarEmail`,{
+      email: email
+    }).then((response) => {
+      if (response.statusText == "OK") {
+        toast.info('Email enviado com sucesso!');
+        setLoading(false)
+        handleClickLogin();
+      }else{
+        toast.error('Email não enviado com sucesso!');
+      }
+    });
+  }
+  async function loadUser(token:any) {
+    const response = await axios({
+      method: 'get',
+      url: `http://${ip}:8157/api/auth/me`,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token 
+      },
+      timeout: 50000
+    }).then(response => {
+      return response.data;
+    })
+    console.log(response);
+    console.log(response.tenants[0].roles[0]);
+    localStorage.setItem("roles", JSON.stringify(response.tenants[0].roles[0]));//saves client's data into localStorage:
+    console.log(response.tenants[0].tenant.id);
+    localStorage.setItem("tenantId", JSON.stringify(response.tenants[0].tenant.id));//saves client's data into localStorage:
+    localStorage.setItem("id", JSON.stringify(response.id));//saves client's data into localStorage:
+    localStorage.setItem("status", JSON.stringify(response.tenants[0].status));//saves client's data into localStorage:
+    senEmail();
   }
   function handleLocalStorageToken(token: string[]) {
     const setLocalStorage = (data: string[]) => {
@@ -35,10 +72,11 @@ export default function Register() {
       console.log("OK!!!");
     };
     setLocalStorage(token);
+    loadUser(token)
   }
   async function Cadastro() {
-    
-      Axios.post('http://'+ip+':8157/api/auth/sign-up', {   
+      setLoading(true)
+      let responser = Axios.post('http://'+ip+':8157/api/auth/sign-up', {   
         fullName: nome,   
         email: email,
         password: senha,
@@ -50,12 +88,17 @@ export default function Register() {
           toast.info('Opa, recebemos o seu registro :)');
           handleLocalStorage(email, senha);
           handleLocalStorageToken(response.data);
-          handleClickLogin();
         }else if(response.statusText === "Forbidden"){
-          toast.info("Ops, Não tem permisão!");
+          toast.error("Ops, Não tem permisão!");
+          setLoading(false)
         }else{
-          toast.info("Ops, Dados Incorretos!");
+          toast.error("Ops, Dados Incorretos!");
+          setLoading(false)
         }
+  }).catch(res => {
+    console.log(responser); 
+    toast.error("O email já está sendo usado!");
+    setLoading(false)
   })
     
   }
@@ -120,7 +163,8 @@ export default function Register() {
             </span>
           </Terms>
           <LinkContent>
-            <button type="submit">Cadastrar</button>
+          {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : 
+            <button type="submit">Cadastrar</button>}
           </LinkContent>
         </BoxRegister>
       </div>
