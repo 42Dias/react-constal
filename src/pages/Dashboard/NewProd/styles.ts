@@ -171,6 +171,10 @@ export const ModalContent = styled.form`
   flex-direction: column;
   text-align: left;
 
+  fieldset {
+    border: 0;
+  }
+
   h3 {
     padding: 20px 0;
     font-size: 24px;
@@ -184,6 +188,8 @@ export const ModalContent = styled.form`
 
   .buttonsNew {
     display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
   }
 
@@ -208,7 +214,7 @@ export const ModalContent = styled.form`
     }
   }
 
-  .buttonsNew button:nth-child(2) {
+  .buttonsNew input[type=submit] {
     width: 165px;
     height: 40px;
     cursor: pointer;

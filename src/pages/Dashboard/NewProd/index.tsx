@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import GlobalStyles from '../../../styles/global'
+import GlobalStyles from "../../../styles/global";
 import Modal from "react-modal";
 import {
   GridProdsFour,
@@ -12,9 +12,6 @@ import {
 } from "./styles";
 import { FiTrash2 } from "react-icons/fi";
 import prodone from "../../../assets/images/prodone.png";
-import prodtwo from "../../../assets/images/prodtwo.png";
-import prodthree from "../../../assets/images/prodthree.png";
-import prodfour from "../../../assets/images/prodfour.png";
 import upload from "../../../assets/images/upload.svg";
 import Header from "../../../components/Header";
 import { AiOutlinePlus, AiOutlineClose } from "react-icons/ai";
@@ -216,10 +213,10 @@ export default function NewProd() {
   }
 
   useEffect(() => {
-    if (role != "empresa" && role != "admin") {
-      // Simulate an HTTP redirect:
-      window.location.replace(`http://${ip}:3000/constal#/erro`);
-    }
+    // if (role != "empresa" && role != "admin") {
+    //   // Simulate an HTTP redirect:
+    //   window.location.replace(`http://${ip}:3000/constal#/erro`);
+    // }
     async function loadCategorias() {
       const categoriasResponse = await api.get("categoria");
       const categoriasDoBack = categoriasResponse.data.rows;
@@ -258,11 +255,19 @@ export default function NewProd() {
       <div className="container">
         <ContentNew>
           <h2>Meus produtos</h2>
-          {status != 'active' ?<button onClick={
+          {/* {status != 'active' ?
+          <button onClick={
             () => {
               setShowModal2(true)
             }
-            }>Adicionar</button>: ''}
+            }>Adicionar</button>: ''} */}
+          <button
+            onClick={() => {
+              setShowModal2(true);
+            }}
+          >
+            Adicionar
+          </button>
         </ContentNew>
         <GridProdsFour>
           {/* Como pegar os dados dos inputs? => login */}
@@ -342,7 +347,7 @@ export default function NewProd() {
                 <img src={upload} alt="" />
                 <h3>Alterar produto</h3>
 
-                <ContentFormNew>
+                <fieldset>
                   <label htmlFor="">Nome do produto</label>
                   <input
                     required
@@ -350,6 +355,122 @@ export default function NewProd() {
                     placeholder="Nome do produto"
                     onChange={(text) => setNome(text.target.value)}
                     // value="5165161"
+                  />
+
+                  <label htmlFor="">Código da empresa</label>
+                  <input
+                    required
+                    type="text"
+                    placeholder="Código da empresa"
+                    onChange={(text) => setCodigoDaEmpresa(text.target.value)}
+                  />
+
+                  <label htmlFor="">Descrição</label>
+                  <input
+                    required
+                    type="text"
+                    placeholder="Descrição"
+                    onChange={(text) => setDescricao(text.target.value)}
+                  />
+
+                  <label htmlFor="">Características técnicas</label>
+                  <input
+                    required
+                    type="text"
+                    placeholder="Especificações técnicas"
+                    onChange={(text) =>
+                      setCaracteristicasTecnicas(text.target.value)
+                    }
+                  />
+
+                  <label htmlFor="">Preço</label>
+                  <input
+                    required
+                    type="number"
+                    placeholder="Preço"
+                    onChange={(text) => setPreco(text.target.value)}
+                  />
+
+                  <label htmlFor="">URL da imagem</label>
+                  <input
+                    required
+                    type="text"
+                    placeholder="www.imagem/suaimagem.com"
+                    onChange={(text) => setImagem(text.target.value)}
+                  />
+
+                  <label htmlFor="">Prazo de entrega</label>
+                  <input
+                    required
+                    type="text"
+                    placeholder="Prazo de entrega"
+                    onChange={(text) => setPrazo(text.target.value)}
+                  />
+
+                  <label htmlFor="">Quantidade</label>
+                  <input
+                    required
+                    type="number"
+                    placeholder="Quantidade"
+                    onChange={(text) => setQuantidade(text.target.value)}
+                  />
+
+                  <label htmlFor="">Tipo de frete</label>
+                  <select
+                    required
+                    onChange={(text) => setFrete(text.target.value)}
+                  >
+                    <option value="por_categoria">Por Cep</option>
+                    <option value="a_combinar">A combinar</option>
+                    <option value="retirar">Retirar</option>
+                    <option value="gratis">Grátis</option>
+                  </select>
+
+                  <label htmlFor="">Tipo de categoria</label>
+                  <select onChange={(text) => setCategoria(text.target.value)}>
+                    {categorias.map((categoria) => (
+                      <option value={categoria.id}>{categoria.nome}</option>
+                    ))}
+                  </select>
+
+                  <div className="buttonsNew">
+                    <button type="button" onClick={messageCancel}>
+                      Cancelar
+                    </button>
+                    <button type="button" onClick={() => changeProduct()}>
+                      Adicionar
+                    </button>
+                  </div>
+                </fieldset>
+              </ModalContent>
+            </div>
+          </Modal>
+        </ModalContainerVendedor>
+      }
+
+      <ModalContainerVendedor>
+        <Modal
+          isOpen={showModal2}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+        >
+          <div>
+            <ModalFlex>
+              <AiOutlineClose onClick={closeModal} />
+            </ModalFlex>
+
+            <ModalContent onSubmit={addProduct}>
+              <img src={upload} alt="" />
+              <h3>Novo produto</h3>
+
+              <fieldset>
+                <ContentFormNew>
+                  <label htmlFor="">Nome do produto</label>
+                  <input
+                    required
+                    type="text"
+                    placeholder="Nome do produto"
+                    onChange={(text) => setNome(text.target.value)}
                   />
                 </ContentFormNew>
 
@@ -371,6 +492,27 @@ export default function NewProd() {
                     placeholder="Descrição"
                     onChange={(text) => setDescricao(text.target.value)}
                   />
+                </ContentFormNew>
+
+                <ContentFormNew>
+                  <label htmlFor="">Tipo de categoria</label>
+                  <select
+                    required
+                    onChange={(text) => setCategoria(text.target.value)}
+                  >
+                    {categorias.map((categoria) => (
+                      <option value={categoria.id}>{categoria.nome}</option>
+                    ))}
+                  </select>
+                  <Btn
+                    className="btn-add-category"
+                    onClick={() => {
+                      setShowModal2(false);
+                      setShowModal4(true);
+                    }}
+                  >
+                    Não encontrou a sua categoria? adicione uma aqui.
+                  </Btn>
                 </ContentFormNew>
 
                 <ContentFormNew>
@@ -437,205 +579,13 @@ export default function NewProd() {
                     <option value="gratis">Grátis</option>
                   </select>
                 </ContentFormNew>
-
-                <ContentFormNew>
-                  <label htmlFor="">Tipo de categoria</label>
-                  <select onChange={(text) => setCategoria(text.target.value)}>
-                    {categorias.map((categoria) => (
-                      <option value={categoria.id}>{categoria.nome}</option>
-                    ))}
-                  </select>
-                </ContentFormNew>
-
                 <div className="buttonsNew">
                   <button type="button" onClick={messageCancel}>
                     Cancelar
                   </button>
-                  <button type="button" onClick={() => changeProduct()}>
-                    Adicionar
-                  </button>
+                  <input type="submit" value="adicionar" />
                 </div>
-              </ModalContent>
-            </div>
-          </Modal>
-        </ModalContainerVendedor>
-      }
-
-      <ModalContainerVendedor>
-        <Modal
-          isOpen={showModal2}
-          onAfterOpen={afterOpenModal}
-          onRequestClose={closeModal}
-        >
-          <div>
-            <ModalFlex>
-              <AiOutlineClose onClick={closeModal} />
-            </ModalFlex>
-
-            <ModalContent>
-              <img src={upload} alt="" />
-              <h3>Novo produto</h3>
-
-              <ContentFormNew>
-                <label htmlFor="">Nome do produto</label>
-                <input
-                  required
-                  type="text"
-                  placeholder="Nome do produto"
-                  onChange={(text) => setNome(text.target.value)}
-                />
-              </ContentFormNew>
-
-              <ContentFormNew>
-                <label htmlFor="">Código da empresa</label>
-                <input
-                  required
-                  type="text"
-                  placeholder="Código da empresa"
-                  onChange={(text) => setCodigoDaEmpresa(text.target.value)}
-                />
-              </ContentFormNew>
-
-              <ContentFormNew>
-                <label htmlFor="">Descrição</label>
-                <input
-                  required
-                  type="text"
-                  placeholder="Descrição"
-                  onChange={(text) => setDescricao(text.target.value)}
-                />
-              </ContentFormNew>
-
-              <ContentFormNew>
-                <label htmlFor="">Tipo de categoria</label>
-                <select
-                  required
-                  onChange={(text) => setCategoria(text.target.value)}
-                >
-                  {categorias.map((categoria) => (
-                    <option value={categoria.id}>{categoria.nome}</option>
-                  ))}
-
-                </select>
-                <Btn
-                className="btn-add-category"
-                onClick={() => {
-                  setShowModal2(false);
-                  setShowModal4(true);
-                }}
-              >
-                Não encontrou a sua categoria? adicione uma aqui.
-              </Btn>
-              </ContentFormNew>
-
-              <ContentFormNew>
-                <label htmlFor="">Características técnicas</label>
-                <input
-                  required
-                  type="text"
-                  placeholder="Especificações técnicas"
-                  onChange={(text) =>
-                    setCaracteristicasTecnicas(text.target.value)
-                  }
-                />
-              </ContentFormNew>
-
-              <ContentFormNew>
-                <label htmlFor="">Preço</label>
-                <input
-                  required
-                  type="number"
-                  placeholder="Preço"
-                  onChange={(text) => setPreco(text.target.value)}
-                />
-              </ContentFormNew>
-
-              <ContentFormNew>
-                <label htmlFor="">URL da imagem</label>
-                <input
-                  required
-                  type="text"
-                  placeholder="www.imagem/suaimagem.com"
-                  onChange={(text) => setImagem(text.target.value)}
-                />
-              </ContentFormNew>
-
-              {/* 
-              <ContentFormNew>
-                <label htmlFor="">Especificações técnicas</label>
-                <input type="text" placeholder="Especificações técnicas" />
-              </ContentFormNew>
-
-              <ContentFormNew>
-                <label htmlFor="">Cores disponíveis</label>
-                <select>
-                  <option value="">Verde</option>
-                  <option value="">Preto</option>
-                  <option value="">Amarelo</option>
-                </select>
-              </ContentFormNew>
-
-              <ContentFormNew>
-                <label htmlFor="">Unidades de medida</label>
-                <input type="text" placeholder="Unidades de medida" />
-              </ContentFormNew>
-              */}
-
-              <ContentFormNew>
-                <label htmlFor="">Prazo de entrega</label>
-                <input
-                  required
-                  type="text"
-                  placeholder="Prazo de entrega"
-                  onChange={(text) => setPrazo(text.target.value)}
-                />
-              </ContentFormNew>
-
-              <ContentFormNew>
-                <label htmlFor="">Quantidade</label>
-                <input
-                  required
-                  type="number"
-                  placeholder="Quantidade"
-                  onChange={(text) => setQuantidade(text.target.value)}
-                />
-              </ContentFormNew>
-
-              {/* 
-
-              <ContentFormNew>
-                <label htmlFor="">Peso líquido</label>
-                <input type="text" placeholder="Peso líquido" />
-              </ContentFormNew>
-
-
-              <ContentFormNew>
-                <label htmlFor="">Peso bruto</label>
-                <input type="text" placeholder="Peso bruto" />
-              </ContentFormNew> 
-              */}
-
-              <ContentFormNew>
-                <label htmlFor="">Tipo de frete</label>
-                <select
-                  required
-                  onChange={(text) => setFrete(text.target.value)}
-                >
-                  <option value="por_categoria">Por Cep</option>
-                  <option value="a_combinar">A combinar</option>
-                  <option value="retirar">Retirar</option>
-                  <option value="gratis">Grátis</option>
-                </select>
-              </ContentFormNew>
-
-              <div className="buttonsNew">
-                <button type="button" onClick={messageCancel}>
-                  Cancelar
-                </button>
-                <button type="button" onClick={addProduct}>
-                  Adicionar
-                </button>
-              </div>
+              </fieldset>
             </ModalContent>
           </div>
         </Modal>

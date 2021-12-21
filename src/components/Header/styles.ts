@@ -78,7 +78,7 @@ header ul {
   display: none;
 }
 
-@media (max-width: 648px) {
+@media (max-width: 1024px) {
 
   header {
     padding: 0px 10px;
