@@ -204,10 +204,10 @@ export default function Produto() {
       }
     
       async function addResposta() {
-        // const data = {
-        //   ...comment
-        // }
-        // console.log(data)
+        
+        comment.resposta = resposta
+        comment.isRespondido = 1
+
         const response = await api.put(`comentario/${comment.id}`, comment)
         console.log(response)
       }
@@ -331,31 +331,36 @@ export default function Produto() {
           )
         )
         }
-
-        <ProdSecondComents>
-          <FormComents>
-            <h2>Tire a sua dúvida aqui</h2>
-            <select name="" id="">
-              <option value="">Motivo da mensagem</option>
-              <option value="">Reclamação</option>
-              <option value="">Elogio</option>
-              <option value="">Pergunta</option>
-              <option value="">Denuncia</option>
-            </select>
-            <textarea name="" id=""
-            onChange={(text) => {
-              setComentario(text.target.value)
-            }}
-            ></textarea>
-            <input placeholder="Sua mensagem" type="submit" value="Enviar"
-              onClick={
-              (e) => {
-                e.preventDefault()
-                makeCommentary()
-              }
-            } />
-          </FormComents>
-        </ProdSecondComents>
+        {
+          role != 'pessoa'? (
+            <div></div>
+          ) : (
+            <ProdSecondComents>
+            <FormComents>
+              <h2>Tire a sua dúvida aqui</h2>
+              <select name="" id="">
+                <option value="">Motivo da mensagem</option>
+                <option value="">Reclamação</option>
+                <option value="">Elogio</option>
+                <option value="">Pergunta</option>
+                <option value="">Denuncia</option>
+              </select>
+              <textarea name="" id=""
+              onChange={(text) => {
+                setComentario(text.target.value)
+              }}
+              ></textarea>
+              <input placeholder="Sua mensagem" type="submit" value="Enviar"
+                onClick={
+                (e) => {
+                  e.preventDefault()
+                  makeCommentary()
+                }
+              } />
+            </FormComents>
+          </ProdSecondComents>    
+          )
+        }
       </div>
 
        <ModalContainerVendedor>
@@ -373,7 +378,7 @@ export default function Produto() {
               <h3>Nova resposta</h3>
 
               <ContentFormNew>
-                <label htmlFor="">Novo preço</label>
+                <label htmlFor="">Responder</label>
                 <input
                   required
                   type="text"
