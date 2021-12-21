@@ -33,6 +33,7 @@ import Courses from "./pages/Courses";
 import CoursesPage from "./pages/CoursesPage";
 import Signature from "./pages/Signature";
 import Error from "./pages/Error";
+import CheckEmail from "./pages/CheckEmail";
 
 
 const Routes = (): JSX.Element => {
@@ -72,6 +73,7 @@ const Routes = (): JSX.Element => {
         <Route exact path="/cursos-id" component={CoursesPage} />
         <Route exact path="/erro" component={Error} />
         <Route exact path="/assinaturas" component={Signature} />
+        <Route exact path="/checar-email" component={CheckEmail} />
         <Route
           exact
           path="/pagamentos-empresas"
