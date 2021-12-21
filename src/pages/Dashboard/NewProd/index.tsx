@@ -23,7 +23,7 @@ import { Menu } from "../../../components/Menu";
 import { formatPrice } from "../../../util/format";
 import axios from "axios";
 import { Empresa, Product } from "../../../types";
-import { api, ip, role } from "../../../services/api";
+import { api, ip, role, status } from "../../../services/api";
 import { Btn } from "./styles";
 
 export default function NewProd() {
@@ -258,13 +258,11 @@ export default function NewProd() {
       <div className="container">
         <ContentNew>
           <h2>Meus produtos</h2>
-          <button
-            onClick={() => {
-              setShowModal2(true);
-            }}
-          >
-            Adicionar
-          </button>
+          {status != 'active' ?<button onClick={
+            () => {
+              setShowModal2(true)
+            }
+            }>Adicionar</button>: ''}
         </ContentNew>
         <GridProdsFour>
           {/* Como pegar os dados dos inputs? => login */}
