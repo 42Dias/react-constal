@@ -580,6 +580,7 @@ export default function NewProd() {
                 </select>
               </ContentFormNew>
               <Btn
+                className="btn-add-category"
                 onClick={
                   () => {
                   setShowModal2(false)
