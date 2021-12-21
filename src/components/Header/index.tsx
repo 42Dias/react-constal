@@ -1,4 +1,5 @@
 import { Link, useHistory } from "react-router-dom";
+import GlobalStyles from '../../styles/global'
 import Modal from "react-modal";
 import {
   FiShoppingBag,
@@ -9,7 +10,6 @@ import {
   FiMenu,
 } from "react-icons/fi";
 import Axios from "axios";
-
 import logo from "../../assets/images/logo.png";
 import loading from "../../assets/images/loading.gif";
 
@@ -167,6 +167,7 @@ const Header = (): JSX.Element => {
   }, []);
   return (
     <>
+      <GlobalStyles />
       <Container>
         {/* 
         <header>

@@ -1,6 +1,7 @@
 import Header from "../../../components/Header";
+
 import { Link } from "react-router-dom";
-import { MenuSell, TitleVendas, ContainerMenuSell } from "./styles";
+import { MenuSell, TitleVendas, ContainerMenuSell, SelectInput } from "./styles";
 import { Menu } from "../../../components/Menu";
 import { useEffect, useState } from "react";
 import { api, ip, role } from "../../../services/api";
@@ -162,20 +163,20 @@ export default function Vendas() {
       <div className="container">
         <TitleVendas>Vendas</TitleVendas>
 
-        <div style={{ display: display }}>
+        <SelectInput>
           <label htmlFor="">Selecionar Empresa: </label>
           <select
             onChange={(text) => setEmpresa(text.target.value)} onClick={() => empresaT(empresa)}
           >
-            <option value={"--Selecione--"} key={"--Selecione--"} >--Selecione--</option>
+            <option value={"Selecione"} key={"--Selecione--"} >Selecione</option>
             {empresas.map(
               (empresa) => (
                 <option value={empresa.id} key={empresa.id} >{empresa.razaoSocial}</option>
               )
             )}
           </select>
-          {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
-        </div>
+          {loading ? <img width="40px" height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
+        </SelectInput>
         <MenuSell>
           <span><b>Pendentes({pedidosPendentes.length})</b></span>
           <Link to="/confirmadas"><span>Confirmadas({pedidosConfirmados.length})</span></Link>

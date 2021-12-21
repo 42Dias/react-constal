@@ -112,7 +112,7 @@ export const CardDatailsContent = styled.div`
   padding: 0 12px;
   border-radius: 5px;
 
-  a {
+  button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -122,9 +122,10 @@ export const CardDatailsContent = styled.div`
     background: black;
     color: white;
     border-radius: 5px;
+    border: 0;
   }
 
-  a:nth-child(1) {
+  button:nth-child(1) {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -135,6 +136,7 @@ export const CardDatailsContent = styled.div`
     color: black;
     border-radius: 5px;
     border: 1px solid black;
+    margin: 0 20px;
   }
 
   .flex-btn {
@@ -146,6 +148,7 @@ export const CardDatailsContent = styled.div`
   }
 
   &.adress {
+    height: 150px;
     @media (max-width: 768px) {
       height: 300px;
       justify-content: center;

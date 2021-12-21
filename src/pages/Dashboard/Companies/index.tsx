@@ -6,15 +6,15 @@ import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { api, ip, role } from "../../../services/api";
 import { Empresa } from "../../../types";
+import { SelectInput } from "../Vendas/styles";
 
 export default function Companies() {
-
   const [empresas = [], setEmpresas] = useState<Empresa[]>([]);
   const [modalIsOpen, setIsOpen] = React.useState(false);
-  const [filtro, setFiltro] = useState('Todas');
-  
+  const [filtro, setFiltro] = useState("Todas");
+
   useEffect(() => {
-    if(role != 'admin' && role != "empresa"){
+    if (role != "admin" && role != "empresa") {
       // Simulate an HTTP redirect:
       window.location.replace(`http://${ip}:3000/constal#/erro`);
     }
@@ -23,11 +23,12 @@ export default function Companies() {
   }, []);
   async function loadUser() {
     console.log("entrou");
-    const response = await api.get('empresaStatus?filter%5Bstatus%5D='+filtro)
-      .then(response => {
+    const response = await api
+      .get("empresaStatus?filter%5Bstatus%5D=" + filtro)
+      .then((response) => {
         return response.data;
-      })
-    setEmpresas(response.rows)
+      });
+    setEmpresas(response.rows);
     console.log("Empresas");
     console.log(response.rows);
   }
@@ -35,7 +36,7 @@ export default function Companies() {
     //toast.info('Ainda não implementado')
     setIsOpen(false);
   }
-  
+
   return (
     <>
       <Header />
@@ -44,35 +45,44 @@ export default function Companies() {
         <CardDatails>
           <h2>Empresas</h2>
 
-          <form>
-            <select value={filtro} onChange={event => setFiltro(event.target.value)} onClick={loadUser}>
-              <option value={'Todas'} onClick={loadUser}>Todos</option>
-              <option value={'active'} onClick={loadUser}>Ativas</option>
-              <option value={'inative'} onClick={loadUser}>Inativas</option>
+          <SelectInput>
+            <select
+              value={filtro}
+              onChange={(event) => setFiltro(event.target.value)}
+              onClick={loadUser}
+            >
+              <option value={"Todas"} onClick={loadUser}>
+                Todos
+              </option>
+              <option value={"active"} onClick={loadUser}>
+                Ativas
+              </option>
+              <option value={"inative"} onClick={loadUser}>
+                Inativas
+              </option>
             </select>
-          </form>
+          </SelectInput>
 
-          {
-            empresas.map((empresa) => (
-              <CardDatailsContent>
-                <CardDatailsContent key={empresa.razaoSocial}>
-                  <ContentDetails>
-                    <small>
-                      <b>{empresa.razaoSocial}</b><br />
-                      CNPJ: {empresa.cnpj} <br />
-                      Telefone: {empresa.telefone}<br />
-                      E-mail: {empresa.email}
-                    </small>
-                  </ContentDetails>
-                </CardDatailsContent>
-                <div className="flex-btn">
-                  {/*<Link to="/aprovar-usuarios" onClick={messageCancel}>Recusar</Link>
-                  <Link to="/aprovar-usuarios" onClick={messageCancel}>Aprovar</Link>*/}
-                </div>
+          {empresas.map((empresa) => (
+            <CardDatailsContent>
+              <CardDatailsContent key={empresa.razaoSocial}>
+                <ContentDetails>
+                  <small>
+                    <b>{empresa.razaoSocial}</b>
+                    <br />
+                    CNPJ: {empresa.cnpj} <br />
+                    Telefone: {empresa.telefone}
+                    <br />
+                    E-mail: {empresa.email}
+                  </small>
+                </ContentDetails>
               </CardDatailsContent>
-            ))
-
-          }
+              <div className="flex-btn">
+                {/*<Link to="/aprovar-usuarios" onClick={messageCancel}>Recusar</Link>
+                  <Link to="/aprovar-usuarios" onClick={messageCancel}>Aprovar</Link>*/}
+              </div>
+            </CardDatailsContent>
+          ))}
         </CardDatails>
       </div>
     </>

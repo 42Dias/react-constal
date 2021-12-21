@@ -34,11 +34,14 @@ export const GridProdsFour = styled.div`
 
 export const ProdContainerSingle = styled.div`
   width: 222px;
-  height: 260px;
+  height: 300px;
   background: white;
   margin: 20px auto;
   border-radius: 10px;
-
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-direction: column;
   @media (max-width: 768px) {
     width: 100%;
     height: 390px;
@@ -78,11 +81,34 @@ export const ProdContainerSingle = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    .delete {
+      background: #AA2323;
+      border: 0;
+      width: 30px;
+      height: 25px; 
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 10px;
+
+      svg {
+        color: white;
+      }
+
+      @media (max-width: 768px) {
+        width: 40px;
+        height: 35px; 
+      }
+    }
+
     @media (max-width: 768px) {
       span {
         font-size: 16px;
       }
     }
+
     .btn-more {
       width: 30px;
       height: 25px; 
@@ -100,10 +126,11 @@ export const ProdContainerSingle = styled.div`
       }
     }
 
-    span {
-      b {
-        color: #58A4B0;
-      }
+    .btn-group {
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      margin-left: 40px;
     }
   }
 `;
@@ -114,7 +141,7 @@ export const ContentNew = styled.div`
     font-size: 30px;
   }
 
-  p {
+  button {
     margin: 20px 0 !important;
     width: 182px;
     height: 33px;
@@ -157,9 +184,12 @@ export const ModalContent = styled.form`
 
   .buttonsNew {
     display: flex;
+    cursor: pointer;
   }
 
   .buttonsNew button {
+    cursor: pointer;
+
     width: 165px;
     height: 40px;
 
@@ -181,6 +211,7 @@ export const ModalContent = styled.form`
   .buttonsNew button:nth-child(2) {
     width: 165px;
     height: 40px;
+    cursor: pointer;
 
     background: #101010;
     border-radius: 5px;
@@ -241,3 +272,14 @@ export const ContentFormNew = styled.div`
     margin: 0 20px;
   }
 ` 
+
+export const Btn = styled.button`
+  background: white;
+  text-align: left;
+  padding: 10px 0 40px 0;
+  transition: .5s;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;

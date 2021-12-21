@@ -173,37 +173,38 @@ export default function PersonalData() {
           <h2>{nome}</h2>
           <CardDatailsContent>
             <ContentDetails>
-              <span>Marca: {marca}</span>
+              <h3>Marca: <span>{marca}</span></h3>
             </ContentDetails>
           </CardDatailsContent>
 
           <CardDatailsContent>
             <ContentDetails>
-              <span>Razão Social: {razaoSocial}</span>
+              <h3>Razão Social: <span>{razaoSocial}</span></h3>
             </ContentDetails>
           </CardDatailsContent>
 
           <CardDatailsContent>
             <ContentDetails>
-              <span>CNPJ: {cnpj} </span>
+              <h3>CNPJ: <span> {cnpj} </span></h3>
             </ContentDetails>
           </CardDatailsContent>
 
           <CardDatailsContent>
             <ContentDetails>
-              <span>Telefone: {telefone} </span>
+              <h3>Telefone: <span> {telefone}</span></h3>
+              
             </ContentDetails>
           </CardDatailsContent>
 
           <CardDatailsContent>
             <ContentDetails>
-              <span>E-mail: {email} </span>
+              <h3>E-mail: <span> {email}</span></h3>
             </ContentDetails>
           </CardDatailsContent>
 
           <CardDatailsContent>
             <ContentDetails>
-              <span>Website: {website} </span>
+              <h3>Website: <span> {website} </span></h3>
             </ContentDetails>
           </CardDatailsContent>
         </CardDatails>
