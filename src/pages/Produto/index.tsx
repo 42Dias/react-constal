@@ -32,6 +32,7 @@ import { formatPrice } from "../../util/format";
 import { Menu } from "../../components/Menu";
 import { REFUSED } from "dns";
 import { Btn } from "../Dashboard/PersonalData/styles";
+import { ContentFormNew } from "../Profile/styles";
 
 interface RepositoryItemProps {
   repository: {
@@ -44,6 +45,8 @@ interface RepositoryItemProps {
 }
 export default function Produto() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [showModal1, setShowModal1] = React.useState(false);
+  const [showModal2, setShowModal2] = React.useState(false);
 
   const [counter, setCounter] = useState(0);
 
@@ -132,6 +135,8 @@ export default function Produto() {
   const [cidade, setCidade]=useState('');
   const [estado, setEstado]=useState('');
 
+  const [resposta, setResposta] = useState('')
+  
   const [empresaId, setEmpresaId]=useState('');
   const [comentario, setComentario]=useState('');
 
@@ -210,6 +215,11 @@ console.log(id)
     const response = await api.post('comentario', data)
     console.log(response)
   }
+
+  async function addResposta() {
+    console.log(resposta)
+  }
+
 
   return (
     <>
@@ -335,6 +345,49 @@ console.log(id)
         }
 
       </div>
+      <ModalContainerVendedor>
+        <Modal
+          isOpen={showModal1}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+        >
+          <div>
+            <ModalFlex>
+              <AiOutlineClose onClick={closeModal} />
+            </ModalFlex>
+
+            <ModalContent>
+              <h3>Nova promoção</h3>
+
+              <ContentFormNew>
+                <label htmlFor="">Novo preço</label>
+                <input
+                  required
+                  type="text"
+                  placeholder="650"
+                  onChange={(text) => {
+                    setResposta(text.target.value);
+   
+                  }}
+                />
+              </ContentFormNew>
+
+              <div className="buttonsNew">
+                <button type="button" onClick={
+                  () => console.log('ok')
+                }>
+                  Cancelar
+                </button>
+                <button type="button" onClick={addResposta}>
+                  Adicionar
+                </button>
+              </div>
+            </ModalContent>
+          </div>
+        </Modal>
+      </ModalContainerVendedor>
+
+
 
       <ModalContainerVendedor>
         <Modal
