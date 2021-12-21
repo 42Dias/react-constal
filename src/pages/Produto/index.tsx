@@ -30,6 +30,8 @@ import { toast } from "react-toastify";
 import { api, role, id } from "../../services/api";
 import { formatPrice } from "../../util/format";
 import { Menu } from "../../components/Menu";
+import { REFUSED } from "dns";
+import { Btn } from "../Dashboard/PersonalData/styles";
 
 interface RepositoryItemProps {
   repository: {
@@ -132,6 +134,8 @@ export default function Produto() {
 
   const [empresaId, setEmpresaId]=useState('');
   const [comentario, setComentario]=useState('');
+
+  const [comentarios = [] , setComentarios]=useState<any[]>([]);
   
   const userId = id
 
@@ -160,8 +164,6 @@ export default function Produto() {
     setDescricao(response.descricao)
     setCaracteristicasTecnicas(response.caracteristicasTecnicas)
     setEmpresaId(response.empresaId)
-
-
 }
 async function loadUser() {
   const user = await api.get('pessoa-fisica-perfil')
@@ -180,6 +182,20 @@ setLogradouro(user.logradouro+", "+user.numero);
   loadProduct();
 console.log(id)
 }, []);
+
+
+  useEffect(
+    () => {
+      async function loadComments() {
+        if(prodId){
+          const response = await api.get(`findByProduto/${prodId}`);
+          console.log(response)
+          setComentarios( response.data)
+        }
+      }
+      loadComments()
+    }, [prodId]
+  )
 
   async function makeCommentary() {
     let data = {
@@ -293,15 +309,31 @@ console.log(id)
           )
         }
 
-
+        {
+        comentarios.map(
+          (comentario: any) => (
         <ProdSecond>
           <div>
-            <h2>Nome do cliente</h2>
-            <span>Posso pedir para embrulhar para presente?</span>
+            <h2>{comentario.firstName}</h2>
+            <span>{comentario.comentario}</span>
           </div>
-
-          <Link to="#">Responder</Link>
+          {
+            role != 'pessoa'? ( 
+              <Btn
+              onClick={
+                () => console.log('fkdbnldfbnjdfnçbjndfbndjnbndfbjakjfbnjvnbndajkkf')
+              } 
+              >Responder</Btn>
+            ): (
+              <div></div>
+             )
+          }
         </ProdSecond>
+
+          )
+        )
+        }
+
       </div>
 
       <ModalContainerVendedor>
