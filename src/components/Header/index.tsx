@@ -1,4 +1,5 @@
 import { Link, useHistory } from "react-router-dom";
+import GlobalStyles from '../../styles/global'
 import Modal from "react-modal";
 import {
   FiShoppingBag,
@@ -9,7 +10,6 @@ import {
   FiMenu,
 } from "react-icons/fi";
 import Axios from "axios";
-
 import logo from "../../assets/images/logo.png";
 import loading from "../../assets/images/loading.gif";
 
@@ -169,6 +169,7 @@ const Header = (): JSX.Element => {
   }, []);
   return (
     <>
+      <GlobalStyles />
       <Container>
         {/* 
         <header>
@@ -310,10 +311,10 @@ const Header = (): JSX.Element => {
             {/*<Link to="/meu-perfil" className="btn-enter" href="">
               Entrar
             </Link>*/}
-            {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
+            {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : 
             <button className="btn-enter" onClick={Login}>
               Entrar
-            </button>
+            </button>}
             <div className="contentBorder">
               <div className="border" />
               <p>ou</p>

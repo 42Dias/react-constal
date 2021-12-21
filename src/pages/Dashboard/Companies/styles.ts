@@ -112,3 +112,19 @@ export const ContentDetails = styled.div`
     font-size: 16px;
   }
 `;
+
+export const SelectInput = styled.form`
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+
+  select {
+    width: 200px;
+    height: 40px;
+    border-radius: 5px;
+    border: 0;
+    margin: 10px 0;
+  }
+
+`;

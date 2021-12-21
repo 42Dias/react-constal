@@ -5,7 +5,7 @@ import mastercard from "../../assets/images/master-card.svg";
 import visa from "../../assets/images/visa.svg";
 import Modal from "react-modal";
 import { AiOutlineClose } from "react-icons/ai";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 import {
   CardProfile,
@@ -24,22 +24,22 @@ import { api } from "../../services/api";
 import { Menu } from "../../components/Menu";
 import upload from "../../assets/images/upload.svg";
 
-
 export default function Profile() {
   function messageCancel() {
-    toast.error('Ah, que pena. Não conseguimos adicionar o seu endereço na plataforma :(')
+    toast.error(
+      "Ah, que pena. Não conseguimos adicionar o seu endereço na plataforma :("
+    );
     setShowModal1(false);
-    setShowModal2(false);  }
+    setShowModal2(false);
+  }
 
   function messageApprove() {
-    toast.info('Eba, recebemos o seu endereço. :)')
+    toast.info("Eba, recebemos o seu endereço. :)");
     setShowModal1(false);
     setShowModal2(false);
   }
   const [showModal1, setShowModal1] = React.useState(false);
   const [showModal2, setShowModal2] = React.useState(false);
-
-
 
   function afterOpenModal() {
     // references are now sync'd and can be accessed.
@@ -49,187 +49,183 @@ export default function Profile() {
     setShowModal1(false);
     setShowModal2(false);
   }
-  const [id, setId]=useState('');
-  const [email, setEmail]=useState('');
-  const [password, setPassword]=useState('');
-  const [fullName, setFullName]=useState('');
-  const [cpf, setCPF]=useState('');
-  const [phone, setPhone]=useState('');
-  const [logradouro, setLogradouro]=useState('');
-  const [bairro, setBairro]=useState('');
-  const [cep, setCEP]=useState('');
-  const [cidade, setCidade]=useState('');
-  const [estado, setEstado]=useState('');
-  const [imagemUser, setimagemUser]=useState('');
+  const [id, setId] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [cpf, setCPF] = useState("");
+  const [phone, setPhone] = useState("");
+  const [logradouro, setLogradouro] = useState("");
+  const [bairro, setBairro] = useState("");
+  const [cep, setCEP] = useState("");
+  const [cidade, setCidade] = useState("");
+  const [estado, setEstado] = useState("");
+  const [imagemUser, setimagemUser] = useState("");
 
- 
-  const [newNome, setNewNome]=useState('');  
-  const [newTelefone, setNewTelefone] = useState('')
-  const [newEmail, setNewEmail] = useState('')
-  const [newWebsite, setNewWebsite] = useState('')
-  const [newCep, setNewCep] = useState('')
-  const [newLogradouro, setNewLogradouro] = useState('')
-  const [newNumero, setNewNumero] = useState('')
-  const [newComplemento, setNewComplemento] = useState('')
-  const [newPontoReferencia, setNewPontoReferencia] = useState('')
-  const [newCidade, setNewCidade] = useState('')
-  const [newEstado, setNewEstado] = useState('')
-  const [newBairro, setNewBairro] = useState('')
-
-
-
-
-
-
+  const [newNome, setNewNome] = useState("");
+  const [newTelefone, setNewTelefone] = useState("");
+  const [newEmail, setNewEmail] = useState("");
+  const [newWebsite, setNewWebsite] = useState("");
+  const [newCep, setNewCep] = useState("");
+  const [newLogradouro, setNewLogradouro] = useState("");
+  const [newNumero, setNewNumero] = useState("");
+  const [newComplemento, setNewComplemento] = useState("");
+  const [newPontoReferencia, setNewPontoReferencia] = useState("");
+  const [newCidade, setNewCidade] = useState("");
+  const [newEstado, setNewEstado] = useState("");
+  const [newBairro, setNewBairro] = useState("");
 
   let role = localStorage.getItem("roles")?.replace(/"/g, "");
 
   useEffect(() => {
-    setId(
-      localStorage.getItem("id")?.replace(/"/g, "") || ""
-    )
+    setId(localStorage.getItem("id")?.replace(/"/g, "") || "");
     async function loadUser() {
       //Perfil pessoa
-      if(role === "pessoa"){
-      const response = await api.get('pessoa-fisica-perfil')
-      .then(response => {
-          console.log(response)
-          return response.data;            
-      })
-      console.log(response)
-      setEmail(response.email);
-      setFullName(response.nome);
-      setCPF(response.cpf);
-      setPhone(response.telefone);
-      setLogradouro(response.logradouro+", "+response.numero);
-      setBairro(response.bairro);
-      setCEP(response.cep)
-      setCidade(response.cidade);
-      setEstado(response.estado);
-      if(response.fotos !== undefined){
-        setimagemUser(response.avatars);
-      }else{
-        setimagemUser("https://www.camaragibe.pe.gov.br/wp-content/uploads/2019/04/default-user-male.png");
+      if (role === "pessoa") {
+        const response = await api
+          .get("pessoa-fisica-perfil")
+          .then((response) => {
+            console.log(response);
+            return response.data;
+          });
+        console.log(response);
+        setEmail(response.email);
+        setFullName(response.nome);
+        setCPF(response.cpf);
+        setPhone(response.telefone);
+        setLogradouro(response.logradouro + ", " + response.numero);
+        setBairro(response.bairro);
+        setCEP(response.cep);
+        setCidade(response.cidade);
+        setEstado(response.estado);
+        if (response.fotos !== undefined) {
+          setimagemUser(response.avatars);
+        } else {
+          setimagemUser(
+            "https://www.camaragibe.pe.gov.br/wp-content/uploads/2019/04/default-user-male.png"
+          );
+        }
+        console.log("avatars");
+        console.log(imagemUser);
+        console.log(response);
       }
-      console.log("avatars");
-      console.log(imagemUser);
-      console.log(response);
-    }
-    //Perfil empresa
-    else if(role === "empresa"){
-      const response = await api.get('empresa-perfil')
-      .then(response => {
-          return response.data;            
-      })
+      //Perfil empresa
+      else if (role === "empresa") {
+        const response = await api.get("empresa-perfil").then((response) => {
+          return response.data;
+        });
 
-      setEmail(response.email);
-      setFullName(response.nome);
-      setCPF(response.cpf);
-      setPhone(response.telefone);
-      setLogradouro(response.logradouro+", "+response.numero);
-      setBairro(response.bairro);
-      setCEP(response.cep)
-      setCidade(response.cidade);
-      setEstado(response.estado);
-      if(response.avatars !== undefined){
-        setimagemUser(response.avatars);
-      }else{
-        setimagemUser("https://www.camaragibe.pe.gov.br/wp-content/uploads/2019/04/default-user-male.png");
+        setEmail(response.email);
+        setFullName(response.nome);
+        setCPF(response.cpf);
+        setPhone(response.telefone);
+        setLogradouro(response.logradouro + ", " + response.numero);
+        setBairro(response.bairro);
+        setCEP(response.cep);
+        setCidade(response.cidade);
+        setEstado(response.estado);
+        if (response.avatars !== undefined) {
+          setimagemUser(response.avatars);
+        } else {
+          setimagemUser(
+            "https://www.camaragibe.pe.gov.br/wp-content/uploads/2019/04/default-user-male.png"
+          );
+        }
+        console.log("avatars");
+        console.log(imagemUser);
+        console.log("response");
+        console.log(response.rows);
       }
-      console.log("avatars");
-      console.log(imagemUser);
-      console.log("response");
-      console.log(response.rows);
-    }
-    //Perfil Admin
-    else{
-      let id = localStorage.getItem("id")?.replace(/"/g, "");
-      const response = await api.get('user/'+id)
-      .then(response => {
-          return response.data;            
-      })
+      //Perfil Admin
+      else {
+        let id = localStorage.getItem("id")?.replace(/"/g, "");
+        const response = await api.get("user/" + id).then((response) => {
+          return response.data;
+        });
 
-      setEmail(response.email);
-      setFullName(response.fullName);
-      setCPF(response.cpf);
-      setPhone(response.telefone);
-      setLogradouro(response.logradouro+", "+response.numero);
-      setBairro(response.bairro);
-      setCEP(response.cep)
-      setCidade(response.cidade);
-      setEstado(response.estado);
-      console.log("response.avatars[0]");
-      console.log(response.avatars[0]);
-      if(response.avatars !== undefined && response.avatars[0] !== undefined){
-        setimagemUser(response.avatars);
-      }else{
-        setimagemUser("https://www.camaragibe.pe.gov.br/wp-content/uploads/2019/04/default-user-male.png");
+        setEmail(response.email);
+        setFullName(response.fullName);
+        setCPF(response.cpf);
+        setPhone(response.telefone);
+        setLogradouro(response.logradouro + ", " + response.numero);
+        setBairro(response.bairro);
+        setCEP(response.cep);
+        setCidade(response.cidade);
+        setEstado(response.estado);
+        console.log("response.avatars[0]");
+        console.log(response.avatars[0]);
+        if (
+          response.avatars !== undefined &&
+          response.avatars[0] !== undefined
+        ) {
+          setimagemUser(response.avatars);
+        } else {
+          setimagemUser(
+            "https://www.camaragibe.pe.gov.br/wp-content/uploads/2019/04/default-user-male.png"
+          );
+        }
+        console.log("avatars");
+        console.log(imagemUser);
+        console.log("response");
+        console.log(response.rows);
       }
-      console.log("avatars");
-      console.log(imagemUser);
-      console.log("response");
-      console.log(response.rows);
     }
-      
-    }
-    
+
     loadUser();
-
   }, []);
 
   function clientLocalStorage() {
-      // getting stored value
+    // getting stored value
 
-      const savedData:string[] = JSON.parse(
-        localStorage.getItem("clientDataFromLocalStorage") || "{}" );
-        console.log(savedData)
-      
-      return savedData;
+    const savedData: string[] = JSON.parse(
+      localStorage.getItem("clientDataFromLocalStorage") || "{}"
+    );
+    console.log(savedData);
+
+    return savedData;
   }
 
-  async function setNewData(){
+  async function setNewData() {
     const data = {
       data: {
-        "user": id,
-        "email": email,
-        "password": password,
-        "fullName": fullName,
-        "cpf": cpf,
-        "phone": phone,
-        "logradouro": logradouro,
-        "bairro": bairro,
-        "cep": cep,
-        "cidade": cidade,
-        "estado": estado,
-        "imagemUser": imagemUser,
-        "numero": newNumero,
-        "complemento": newComplemento,
-        "pontoReferencia": newPontoReferencia,
-      }
-    }
-    if(email){
-      console.log("MAOI")
+        user: id,
+        email: email,
+        password: password,
+        fullName: fullName,
+        cpf: cpf,
+        phone: phone,
+        logradouro: logradouro,
+        bairro: bairro,
+        cep: cep,
+        cidade: cidade,
+        estado: estado,
+        imagemUser: imagemUser,
+        numero: newNumero,
+        complemento: newComplemento,
+        pontoReferencia: newPontoReferencia,
+      },
+    };
+    if (email) {
+      console.log("MAOI");
       // const updatePersonalData = await api.put('pessoa-fisica/' +  id, data)
       // console.log(updatePersonalData)
-    }
-    else{
-      console.log("hehe")
-      console.log(data)
-      data.data.email = localStorage.getItem('email') || ''
-      data.data.password = localStorage.getItem('senha') || ''
+    } else {
+      console.log("hehe");
+      console.log(data);
+      data.data.email = localStorage.getItem("email") || "";
+      data.data.password = localStorage.getItem("senha") || "";
 
-      
-      const createPersonalData = await api.post('pessoa-fisica/', data)
-      console.log(createPersonalData)
+      const createPersonalData = await api.post("pessoa-fisica/", data);
+      console.log(createPersonalData);
     }
-    messageApprove()
+    messageApprove();
   }
 
   const [savedData] = useState([]);
 
-  console.log(savedData)
+  console.log(savedData);
 
-  clientLocalStorage()  
+  clientLocalStorage();
 
   return (
     <>
@@ -237,9 +233,9 @@ export default function Profile() {
       <Menu />
       <div className="container">
         <Title>Meus dados</Title>
-        
+
         <CardProfile>
-          <img src={imagemUser} alt="profile" width={300}/>
+          <img src={imagemUser} alt="profile" width={300} />
 
           <CardDatas>
             <h3>{fullName}</h3>
@@ -247,88 +243,96 @@ export default function Profile() {
             <p>{phone}</p>
             <p>{email}</p>
           </CardDatas>
-          
         </CardProfile>
 
         <CardDatails>
           <h2>Dados da conta</h2>
-          <button onClick={
-            () => {setShowModal1(true)}
-            }>
-              Alterar Dados    
+          <button
+            onClick={() => {
+              setShowModal1(true);
+            }}
+          >
+            Alterar Dados
           </button>
         </CardDatails>
 
-    <ModalContainerVendedor>
-      <Modal
-        isOpen={showModal2}
-        onAfterOpen={afterOpenModal}
-        onRequestClose={() => setShowModal2(false)}
-        >
-          <div>
-            <ModalFlex>
-              <AiOutlineClose onClick={
-                () => setShowModal2(false)} />
-            </ModalFlex>
+        <ModalContainerVendedor>
+          <Modal
+            isOpen={showModal2}
+            onAfterOpen={afterOpenModal}
+            onRequestClose={() => setShowModal2(false)}
+          >
+            <div>
+              <ModalFlex>
+                <AiOutlineClose onClick={() => setShowModal2(false)} />
+              </ModalFlex>
 
-            <ModalContent>
-              <img src={upload} alt="" />
-              <h3>Alterar dados</h3>
-              {
+              <ModalContent>
+                <img src={upload} alt="" />
+                <h3>Alterar dados</h3>
+                {
                   <ContentFormNew>
-                  <label htmlFor="">Novo Nome</label>
-                  <input type="text" placeholder="Seu novo nome"
-                  onChange={(text) => setNewNome(text.target.value)}
-                  />
-                </ContentFormNew>
-                
-              }
-            </ModalContent>
-            
+                    <label htmlFor="">Novo Nome</label>
+                    <input
+                      type="text"
+                      placeholder="Seu novo nome"
+                      onChange={(text) => setNewNome(text.target.value)}
+                    />
+                  </ContentFormNew>
+                }
+              </ModalContent>
+
               <div className="buttonsNew">
-                <button style={{display: "none"}} type="button" onClick={messageCancel}>Cancelar</button>
-                <button type="button" onClick={messageApprove}>Adicionar</button>
+                <button
+                  style={{ display: "none" }}
+                  type="button"
+                  onClick={messageCancel}
+                >
+                  Cancelar
+                </button>
+                <button type="button" onClick={messageApprove}>
+                  Adicionar
+                </button>
               </div>
-          </div>
-        </Modal>
-      </ModalContainerVendedor>
+            </div>
+          </Modal>
+        </ModalContainerVendedor>
 
-          <CardDatailsContent>
-            <ContentDetails>
-              <span>Login:</span>
-              <p>{email}</p>
-            </ContentDetails>
-          </CardDatailsContent>
+        <CardDatailsContent>
+          <ContentDetails>
+            <span>Login:</span>
+            <p>{email}</p>
+          </ContentDetails>
+        </CardDatailsContent>
 
-          <CardDatailsContent>
-            <ContentDetails>
-              <span>Senha:</span>
-              <p>******</p>
-            </ContentDetails>
-            <button >Alterar</button>
-          </CardDatailsContent>
-        
-        <Link to="/historico-de-pedidos">Histórico de pedidos</Link><br />
-        <Link to="/detalhes-da-venda">Detalhes da venda</Link><br />
-        <Link to="/vendas">Vendas</Link><br />
-        <Link to="/aprovar-usuarios">Aprovar usuários</Link>
+        <CardDatailsContent>
+          <ContentDetails>
+            <span>Senha:</span>
+            <p>******</p>
+          </ContentDetails>
+          <button>Alterar</button>
+        </CardDatailsContent>
 
         <CardDatails>
           <h2>Cartões</h2>
           <CardDatailsContent>
             <ContentDetails>
               <img src={mastercard} alt="" />
-              <p>Final em XXXX <br /> Banco <br /> Vencimento </p>
+              <p>
+                Final em XXXX <br /> Banco <br /> Vencimento{" "}
+              </p>
             </ContentDetails>
-            <button >Excluir</button>
+            <button>Excluir</button>
           </CardDatailsContent>
 
           <CardDatailsContent>
             <ContentDetails>
               <img src={visa} alt="" />
-              <p>Final em XXXX <br /> Banco <br /> Vencimento </p>
+              <p>
+                Final em XXXX <br /> Banco <br /> Vencimento{" "}
+              </p>
             </ContentDetails>
-            <button >Excluir</button>
+            <button>Excluir</button>
           </CardDatailsContent>
         </CardDatails>
 
@@ -340,17 +344,21 @@ export default function Profile() {
                 Endereço: {logradouro} <br />
                 Bairro: {bairro} <br />
                 CEP: {cep} <br />
-                Cidade: {cidade+" - "+estado}
+                Cidade: {cidade + " - " + estado}
               </small>
             </ContentDetails>
             <div className="flex-btn">
-              <button >Alterar</button>
-              <button >Excluir</button>
+              <button>Alterar</button>
+              <button>Excluir</button>
             </div>
           </CardDatailsContent>
-          <button onClick={
-            () => {setShowModal1(true)}
-            }>Novo endereço</button>
+          <button
+            onClick={() => {
+              setShowModal1(true);
+            }}
+          >
+            Novo endereço
+          </button>
         </CardDatails>
       </div>
       <Footer />
@@ -363,92 +371,117 @@ export default function Profile() {
         >
           <div>
             <ModalFlex>
-              <AiOutlineClose onClick={closeModal} /> 
+              <AiOutlineClose onClick={closeModal} />
             </ModalFlex>
 
             <ModalContent>
               <h3>Novo endereço</h3>
               <ContentFormNew>
                 <label htmlFor="">email</label>
-                <input type="text" placeholder="CPF" 
-                onChange={(text) => setCPF(text.target.value)}
+                <input
+                  type="text"
+                  placeholder="CPF"
+                  onChange={(text) => setCPF(text.target.value)}
                 />
               </ContentFormNew>
 
               <ContentFormNew>
                 <label htmlFor="">CPF</label>
-                <input type="text" placeholder="CPF" 
-                onChange={(text) => setCPF(text.target.value)}
+                <input
+                  type="text"
+                  placeholder="CPF"
+                  onChange={(text) => setCPF(text.target.value)}
                 />
               </ContentFormNew>
 
               <ContentFormNew>
                 <label htmlFor="">bairro</label>
-                <input type="text" placeholder="bairro" 
-                onChange={(text) => setBairro(text.target.value)}
+                <input
+                  type="text"
+                  placeholder="bairro"
+                  onChange={(text) => setBairro(text.target.value)}
                 />
               </ContentFormNew>
 
               <ContentFormNew>
                 <label htmlFor="">bairro</label>
-                <input type="text" placeholder="bairro" 
-                onChange={(text) => setBairro(text.target.value)}
+                <input
+                  type="text"
+                  placeholder="bairro"
+                  onChange={(text) => setBairro(text.target.value)}
                 />
               </ContentFormNew>
-
 
               <ContentFormNew>
                 <label htmlFor="">CEP</label>
-                <input type="number" placeholder="CEP" 
-                onChange={(text) => setCEP(text.target.value)}
+                <input
+                  type="number"
+                  placeholder="CEP"
+                  onChange={(text) => setCEP(text.target.value)}
                 />
               </ContentFormNew>
 
               <ContentFormNew>
                 <label htmlFor="">Rua</label>
-                <input type="text" placeholder="Rua" 
-                onChange={(text) => setLogradouro(text.target.value)}
+                <input
+                  type="text"
+                  placeholder="Rua"
+                  onChange={(text) => setLogradouro(text.target.value)}
                 />
               </ContentFormNew>
 
               <ContentFormNew>
                 <label htmlFor="">Número</label>
-                <input type="number" placeholder="Número" 
-                onChange={(text) => setNewNumero(text.target.value)}
+                <input
+                  type="number"
+                  placeholder="Número"
+                  onChange={(text) => setNewNumero(text.target.value)}
                 />
               </ContentFormNew>
 
               <ContentFormNew>
                 <label htmlFor="">Complemento</label>
-                <input type="text" placeholder="Complemento" 
-                onChange={(text) => setNewComplemento(text.target.value)}
+                <input
+                  type="text"
+                  placeholder="Complemento"
+                  onChange={(text) => setNewComplemento(text.target.value)}
                 />
               </ContentFormNew>
 
               <ContentFormNew>
                 <label htmlFor="">Referência</label>
-                <input type="text" placeholder="Referência" 
-                onChange={(text) => setNewPontoReferencia(text.target.value)}
+                <input
+                  type="text"
+                  placeholder="Referência"
+                  onChange={(text) => setNewPontoReferencia(text.target.value)}
                 />
-              </ContentFormNew> 
+              </ContentFormNew>
 
               <ContentFormNew>
                 <label htmlFor="">Estado</label>
-                <input type="text" placeholder="Estado" 
-                onChange={(text) => setEstado(text.target.value)}
+                <input
+                  type="text"
+                  placeholder="Estado"
+                  onChange={(text) => setEstado(text.target.value)}
                 />
               </ContentFormNew>
 
               <ContentFormNew>
                 <label htmlFor="">UF</label>
-                <input type="text" placeholder="Cidade" 
-                onChange={(text) => setCidade(text.target.value)}
+                <input
+                  type="text"
+                  placeholder="Cidade"
+                  onChange={(text) => setCidade(text.target.value)}
                 />
               </ContentFormNew>
 
               <div className="buttonsNew">
-                <button type="button" onClick={messageCancel}>Cancelar</button>
-                <button type="button" onClick={setNewData}>Adicionar</button>
+                <button type="button" onClick={messageCancel}>
+                  Cancelar
+                </button>
+                <button type="button" onClick={setNewData}>
+                  Adicionar
+                </button>
               </div>
             </ModalContent>
           </div>
@@ -457,5 +490,3 @@ export default function Profile() {
     </>
   );
 }
-
-

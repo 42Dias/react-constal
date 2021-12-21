@@ -92,3 +92,19 @@ export const ContainerMenuSell = styled.div`
     color: white;
   }
 ` 
+
+export const SelectInput = styled.div`
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+
+  select {
+    width: 200px;
+    height: 40px;
+    border-radius: 5px;
+    border: 0;
+    margin: 10px 0;
+  }
+
+`;

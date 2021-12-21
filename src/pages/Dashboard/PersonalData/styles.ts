@@ -136,9 +136,14 @@ export const ContentDetails = styled.div`
   display: flex;
   align-items: center;
 
-  span {
+  h3 {
     font-size: 18px;
     font-weight: bold;
+  }
+
+  span {
+    font-weight: lighter;
+    font-size: 16px;
   }
 
   img {

@@ -6,6 +6,7 @@ import { api, ip, role } from "../../services/api";
 import axios from 'axios';
 import { Menu } from "../../components/Menu";
 import { useEffect, useState } from "react";
+import { Btn } from "../Dashboard/PersonalData/styles";
 
 let token = localStorage.getItem("token")?.replace(/"/g, "");
 const tenantId = "fa22705e-cf27-41d0-bebf-9a6ab52948c4";
@@ -16,7 +17,9 @@ const tenantId = "fa22705e-cf27-41d0-bebf-9a6ab52948c4";
 */
 export default function PayCart() {
   const [produtosDosFornecedores, setProdutosDosFornecedores] = useState([]);
+  const [ids = [], setIds] = useState<any[]>([]);
   
+
 
   useEffect(() => {
     if(role != 'pessoa'){
@@ -62,74 +65,164 @@ export default function PayCart() {
               )
             }
           }
-        )
-        console.log(fornecedor, index)
-      }
-      )
-      gerarPedido()
-      setProdutosDosFornecedores(containerDeObjetos)
-    }
-      gerarFornecedores()
-
-    async function gerarPedido() {
-      /*PASSA O CARRINHO COMO PARÂMETRO DO AXIOS COMO POST*/
-      console.log("Começou, VAI!")
-      produtosDosFornecedores.map(
-        async (produtoDoFornecedor) => {
-          const response = await axios({
-            method: 'post',
-            url: `http://localhost:8157/api/tenant/${tenantId}/pedido`,
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer '+ token
-            },              
-            timeout: 50000,
-            data   : produtoDoFornecedor  
-          })
-          console.log(response)
+          )
+          console.log(fornecedor, index)
         }
-      ) 
-        /*
-        Cria os pedidos pelo id do fornecedor
-        há uma variavel produtos, fazer o map de acordo com o id da empresa
-        e assim fazer a requisição
-        */
-    }
-
-
+        )
+        setProdutosDosFornecedores(containerDeObjetos)
+        
+        
+      }
+      gerarFornecedores()  
+    }, []
+    )
+    
     async function deletarCarrinho() {
       const deletarCarrinho: any = await api.delete('/carrinho/') 
       console.log(deletarCarrinho)
     }
     //deletarCarrinho()
-  }, []
-  )
-  
 
+  async function gerarPedido() {
+    /*PASSA O CARRINHO COMO PARÂMETRO DO AXIOS COMO POST*/
+    console.log("Começou, VAI!")
+    produtosDosFornecedores.map(
+      async (produtoDoFornecedor: any) => {
+        produtoDoFornecedor.formaPagemento = formaDePagamento
+        const response = await axios({
+          method: 'post',
+          url: `http://${ip}:8157/api/tenant/${tenantId}/pedido`,
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ token
+          },              
+          timeout: 50000,
+          data   : produtoDoFornecedor  
+        })
+        console.log(response)
+        setIds(prevValues => {
+          return [...new Set([...prevValues,  response.data.id])]	
+        })
+        /*
+        Salvar ids
+        */
+      }
+    ) 
+      /*
+      Cria os pedidos pelo id do fornecedor
+      há uma variavel produtos, fazer o map de acordo com o id da empresa
+      e assim fazer a requisição
+      */
+      
+  }
+  async function reduceStock(){
+    // ids.map(
+    //   async (id) => {
+    //     const response = await axios({
+    //       method: 'get',
+    //       url: `http://${ip}:8157/api/tenant/${tenantId}/produto/${id}`,
+    //       headers: {
+    //         'Accept': 'application/json',
+    //         'Content-Type': 'application/json',
+    //         'Authorization': 'Bearer '+ token
+    //       },              
+    //       timeout: 50000,
+    //       // data   : produtoDoFornecedor
+    //     })
+    //     console.log(response)
+    //   } 
+    // )
+  }
+
+
+  
+  
+  async function createNewFatura() {
+    console.log(ids)
+    ids.map(
+      async (id) => {
+        const response = await axios({
+          method: 'post',
+          url: `http://${ip}:8157/api/tenant/${tenantId}/pedido/${id}/fatura`,
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ token
+          },              
+          timeout: 50000
+        })
+        console.log(response)
+        
+        let url = response.data.urlFaturaIugu
+        window.open(url, '_blank')?.focus();
+      }
+      ) 
+      
+    }
+    
+    async function makeMagic() {
+      await gerarPedido()
+      createNewFatura()
+      reduceStock()
+        
+      
+    }
+
+    let formaDePagamento: string;
+    
     return (
       <>
         <Header />
         <Menu />
+        {/* 
+
+        Pegar a forma de pagamento, salvar em uma variavel e passar ela dentro do body da requisição
+        
+        */}
           <div className="container">
             <Titleh2>Como prefere pagar?</Titleh2>
             <CenterPay>
               <div className="input">
-                <input type="checkbox" name="" id="" />
+                <input type="checkbox" name="" id=""
+                  onClick={
+                    () => {
+                      formaDePagamento = 'pix'
+                    console.log(formaDePagamento)
+                    }
+                  }
+                />
                 <div>
                   <h2>Pix</h2>
                   <p>Aprovação imediata</p>
                 </div>
               </div>
               <div className="input">
-                <input type="checkbox" name="" id="" />
+                <input type="checkbox" name="" id="" 
+                onClick={
+                  () => {
+                    formaDePagamento = 'cartao'
+                    console.log(formaDePagamento)
+                  }
+                }
+                />
                 <div>
                   <h2>Cartão de crédito</h2>
                   <p>Aprovação imediata</p>
                 </div>
               </div>
               <div className="input">
-                <input type="checkbox" name="" id="" />
+                <input type="checkbox" name="" id=""
+                  onClick={
+                    () => {
+                      formaDePagamento = 'boleto'
+                    console.log(formaDePagamento)
+                    console.log(produtosDosFornecedores)
+                    console.log(ids)
+                    }
+                  }
+                
+                />
                 <div>
                   <h2>Boleto</h2>
                   <p>Aprovado em 1 ou 2 dias úteis após pagamento</p>
@@ -137,7 +230,13 @@ export default function PayCart() {
               </div>
             </CenterPay>
             <BtnFinish>
-              <Link to="/finalizar">Finalizar</Link>
+              <Btn
+              onClick={
+                () => {
+                  makeMagic()
+                }
+              }
+              >Finalizar</Btn>
             </BtnFinish>
           </div>
         <FooterContainer>

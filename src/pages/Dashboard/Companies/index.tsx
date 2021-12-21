@@ -6,16 +6,16 @@ import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { api, ip, role } from "../../../services/api";
 import { Empresa } from "../../../types";
+import { SelectInput } from "../Vendas/styles";
 
 export default function Companies() {
-
   const [empresas = [], setEmpresas] = useState<Empresa[]>([]);
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [filtro, setFiltro] = useState('Todas');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if(role != 'admin' && role != "empresa"){
+    if (role !== "admin" && role !== "empresa") {
       // Simulate an HTTP redirect:
       window.location.replace(`http://${ip}:3000/constal#/erro`);
     }
@@ -24,11 +24,12 @@ export default function Companies() {
   }, []);
   async function loadEmpresa() {
     console.log("entrou");
-    const response = await api.get('empresaStatus?filter%5Bstatus%5D='+filtro)
-      .then(response => {
+    const response = await api
+      .get("empresaStatus?filter%5Bstatus%5D=" + filtro)
+      .then((response) => {
         return response.data;
-      })
-    setEmpresas(response.rows)
+      });
+    setEmpresas(response.rows);
     console.log("Empresas");
     console.log(response.rows);
   }
@@ -49,10 +50,10 @@ export default function Companies() {
         //window.location.reload();
         setLoading(false)
         loadEmpresa();
-      }else{
+      } else {
         toast.error('Ops, não foi possivel aprovar a empresa! :(');
       }
-    }).catch((error)=>{
+    }).catch((error) => {
       toast.error('Ops, não foi possivel aprovar a empresa! :(');
       console.log(error)
     })
@@ -69,10 +70,10 @@ export default function Companies() {
         toast.info('Empresa recusado com sucesso! :)');
         //window.location.reload();
         setLoading(false)
-      }else{
+      } else {
         toast.error('Ops, não foi possivel recusado a empresa! :(');
       }
-    }).catch((error)=>{
+    }).catch((error) => {
       toast.error('Ops, não foi possivel recusado a empresa! :(');
       console.log(error)
     })
@@ -85,35 +86,44 @@ export default function Companies() {
         <CardDatails>
           <h2>Empresas</h2>
 
-          <form>
-            <select value={filtro} onChange={event => setFiltro(event.target.value)} onClick={loadEmpresa}>
-              <option value={'Todas'} onClick={loadEmpresa}>Todos</option>
-              <option value={'active'} onClick={loadEmpresa}>Ativas</option>
-              <option value={'inative'} onClick={loadEmpresa}>Inativas</option>
+          <SelectInput>
+            <select
+              value={filtro}
+              onChange={(event) => setFiltro(event.target.value)}
+              onClick={loadEmpresa}
+            >
+              <option value={"Todas"} onClick={loadEmpresa}>
+                Todos
+              </option>
+              <option value={"active"} onClick={loadEmpresa}>
+                Ativas
+              </option>
+              <option value={"inative"} onClick={loadEmpresa}>
+                Inativas
+              </option>
             </select>
-          </form>
+          </SelectInput>
           {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
-          {
-            empresas.map((empresa) => (
-              <CardDatailsContent>
-                <CardDatailsContent key={empresa.razaoSocial}>
-                  <ContentDetails>
-                    <small>
-                      <b>{empresa.razaoSocial}</b><br />
-                      CNPJ: {empresa.cnpj} <br />
-                      Telefone: {empresa.telefone}<br />
-                      E-mail: {empresa.email}
-                    </small>
-                  </ContentDetails>
-                </CardDatailsContent>
-                <div className="flex-btn">
-                  {empresa.status == 'active' ? <button onClick={() => recusarEmpresa(empresa)}>Recusar</button>: ''}
-                  {empresa.status == 'inative' ? <button onClick={() => aprovarEmpresa(empresa)}>Aprovar</button>: ''}
-                </div>
+          {empresas.map((empresa) => (
+            <CardDatailsContent>
+              <CardDatailsContent key={empresa.razaoSocial}>
+                <ContentDetails>
+                  <small>
+                    <b>{empresa.razaoSocial}</b>
+                    <br />
+                    CNPJ: {empresa.cnpj} <br />
+                    Telefone: {empresa.telefone}
+                    <br />
+                    E-mail: {empresa.email}
+                  </small>
+                </ContentDetails>
               </CardDatailsContent>
-            ))
-
-          }
+              <div className="flex-btn">
+                {empresa.status == 'active' ? <button onClick={() => recusarEmpresa(empresa)}>Recusar</button> : ''}
+                {empresa.status == 'inative' ? <button onClick={() => aprovarEmpresa(empresa)}>Aprovar</button> : ''}
+              </div>
+            </CardDatailsContent>
+          ))}
         </CardDatails>
       </div>
     </>

@@ -23,6 +23,11 @@ export default createGlobalStyle`
     font: 14px 'Poppins', sans-serif;
   }
 
+  button {
+    cursor: pointer !important;
+    border: 0;
+  }
+
   .container {
     max-width: 1020px;
     margin: 0 auto;
