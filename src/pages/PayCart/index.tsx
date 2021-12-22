@@ -24,6 +24,8 @@ export default function PayCart() {
   useEffect(() => {
     if(role != 'pessoa'){
       window.location.replace(`http://${ip}:3000/constal#/erro`);
+      //
+      // window.location.replace(`http://${ip}:3000/constal#/finalizar`);
     }
     
     async function gerarFornecedores(){
@@ -122,6 +124,8 @@ export default function PayCart() {
             //   return [...new Set([...prevValues,  response.data.id])]	
             // })
           }
+          ).then(
+            () =>  window.location.replace(`http://${ip}:3000/constal#/finalizar`)
           )
         
         
@@ -183,9 +187,7 @@ export default function PayCart() {
     
     async function makeMagic() {
       await gerarPedido()
-      createNewFatura()
-  
-        
+      // createNewFatura()
       
     }
 
