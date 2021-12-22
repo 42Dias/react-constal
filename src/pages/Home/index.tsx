@@ -52,6 +52,7 @@ const Home = (): JSX.Element => {
   
 
   const [products = [], setProducts] = useState<ProductFormatted[]>([]);
+  const [products2 = [], setProducts2] = useState<ProductFormatted[]>([]);
   const [promocoes = [], setPromocoes] = useState<ProductFormatted[]>([]);
   
   const { addProduct, cart } = useCart();
@@ -67,6 +68,14 @@ const Home = (): JSX.Element => {
       });
       setProducts(productsFormated);
       //productCounter = []; 
+      const response2 = await axios.get("http://"+ip+":8157/api/produtosTrue");
+      
+      const productsFormated2 = response2.data.record.map(function (
+        product: Product
+      ) {
+        return { ...product, preco: formatPrice(product.preco) };
+      });
+      setProducts2(productsFormated2);
     }
     loadProducts();
   }, []);
@@ -160,7 +169,7 @@ const Home = (): JSX.Element => {
       <SwiperStyles>
         <div className="container">
           <h2>Ofertas e promoções</h2>
-          {products.forEach((p) => {
+          {/*products.forEach((p) => {
             if (p.isOferta === 1 && prodId != p.id) {
               productCounter.push(p);
               prodId = p.id;
@@ -169,9 +178,9 @@ const Home = (): JSX.Element => {
 
             //console.log(productCounter);
             //console.log(products.length);
-          })}
+          })*/}
 
-          {productCounter.length === 0 ? (
+          {products2.length === 0 ? (
             <p>Nenhum produto em promoção</p>
           ) : (
             <Swiper
@@ -180,9 +189,9 @@ const Home = (): JSX.Element => {
               onSlideChange={() => console.log("slide change")}
               onSwiper={(swiper) => console.log(swiper)}
             >
-              {productCounter.map((product) => (
+              {products2.map((product) => (
                 <SwiperSlide>
-                  {product.isOferta === 1 && (
+                  {(
                     <li key={product.id}>
                       <Link to={`/produto/${product.id}`}>
                         <img src={product.imagemUrl} alt={product.nome} />

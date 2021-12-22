@@ -90,7 +90,7 @@ export default function Vendas() {
 
   useEffect(
     () => {
-      if (role != 'admin' && role != "empresa") {
+      if (role != "admin" && role != "empresa") {
         // Simulate an HTTP redirect:
         window.location.replace(`http://${ip}:3000/constal#/erro`);
       }

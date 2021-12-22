@@ -258,7 +258,7 @@ export default function NewProd() {
       <div className="container">
         <ContentNew>
           <h2>Meus produtos</h2>
-          {status != 'active' ?<button onClick={
+          {status == 'active' ?<button onClick={
             () => {
               setShowModal2(true)
             }

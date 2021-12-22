@@ -1,5 +1,5 @@
 import { Link, useHistory } from "react-router-dom";
-import GlobalStyles from '../../styles/global'
+import GlobalStyles from "../../styles/global";
 import Modal from "react-modal";
 import {
   FiShoppingBag,
@@ -11,6 +11,7 @@ import {
 } from "react-icons/fi";
 import Axios from "axios";
 import logo from "../../assets/images/logo.png";
+import { FiLogOut } from "react-icons/fi";
 import loading from "../../assets/images/loading.gif";
 
 import {
@@ -22,6 +23,7 @@ import {
   ModalEnter,
   Form,
   IconsContainerMenu,
+  PasswordContent,
 } from "./styles";
 
 import React, { useEffect, useState } from "react";
@@ -42,6 +44,19 @@ const Header = (): JSX.Element => {
   //console.log(cart)
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [modalIsOpen2, setIsOpen2] = React.useState(false);
+
+  function openModal2() {
+    setIsOpen2(true);
+  }
+
+  function afterOpenModal2() {
+    // references are now sync'd and can be accessed.
+  }
+
+  function closeModal2() {
+    setIsOpen2(false);
+  }
 
   const [email, setUser] = useState("");
   const [password, setPassword] = useState("");
@@ -53,8 +68,6 @@ const Header = (): JSX.Element => {
     let password = localStorage.getItem("password");
     let token = localStorage.getItem("token");
     /*
-
-
     Verificar se o token é valido, caso não descartar o token
 
     */
@@ -81,9 +94,8 @@ const Header = (): JSX.Element => {
   }
 
   function handleLocalStorage(emailA: string, passwordB: string) {
-
-    localStorage.setItem("email", JSON.stringify(emailA));//saves client's data into localStorage:
-    localStorage.setItem("password", JSON.stringify(passwordB));//saves client's data into localStorage:
+    localStorage.setItem("email", JSON.stringify(emailA)); //saves client's data into localStorage:
+    localStorage.setItem("password", JSON.stringify(passwordB)); //saves client's data into localStorage:
     console.log();
   }
   function handleLocalStorageToken(token: string[]) {
@@ -97,37 +109,39 @@ const Header = (): JSX.Element => {
 
   let history = useHistory();
   function handleClickLogin() {
-    if(role === "pessoa" ){
-    history.push("/meu-perfil");
-    }else{
+    if (role === "pessoa") {
+      history.push("/meu-perfil");
+    } else {
       history.push("/dados-pessoais");
     }
   }
   async function loadUser() {
     const response = await axios({
-      method: 'get',
+      method: "get",
       url: `http://localhost:8157/api/auth/me`,
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
       },
-      timeout: 50000
-    }).then(response => {
+      timeout: 50000,
+    }).then((response) => {
       return response.data;
-    })
+    });
     console.log(response);
     console.log(response.tenants[0].roles[0]);
-    localStorage.setItem("roles", JSON.stringify(response.tenants[0].roles[0]));//saves client's data into localStorage:
+    localStorage.setItem("roles", JSON.stringify(response.tenants[0].roles[0])); //saves client's data into localStorage:
     console.log(response.tenants[0].tenant.id);
-    localStorage.setItem("tenantId", JSON.stringify(response.tenants[0].tenant.id));//saves client's data into localStorage:
-    localStorage.setItem("id", JSON.stringify(response.id));//saves client's data into localStorage:
-    localStorage.setItem("status", JSON.stringify(response.tenants[0].status));//saves client's data into localStorage:
-    
+    localStorage.setItem(
+      "tenantId",
+      JSON.stringify(response.tenants[0].tenant.id)
+    ); //saves client's data into localStorage:
+    localStorage.setItem("id", JSON.stringify(response.id)); //saves client's data into localStorage:
+    localStorage.setItem("status", JSON.stringify(response.tenants[0].status)); //saves client's data into localStorage:
   }
   async function Login() {
     setLoading(true);
-    let response = Axios.post('http://'+ip+':8157/api/auth/sign-in', {
+    let response = Axios.post("http://" + ip + ":8157/api/auth/sign-in", {
       email: email,
       password: password,
     }).then((response) => {
@@ -137,24 +151,22 @@ const Header = (): JSX.Element => {
         handleLocalStorage(email, password);
         handleLocalStorageToken(response.data);
         closeModal();
-        //window.location.reload();
+        window.location.reload();
       } else if (response.statusText == "Forbidden") {
         setLoading(false);
-        toast.info("Ops, Não tem permisão!");
+        toast.error("Ops, Não tem permisão!");
       } else {
         setLoading(false);
-        toast.info("Ops, Dados Incorretos!");
+        toast.error("Ops, Dados Incorretos!");
       }
 
     }).catch((error) =>{
       setLoading(false);
-      console.log("error");
-      console.log(error);
+      toast.error("Desculpe, não reconhecemos suas credenciais")
     });
     
   }
   useEffect(() => {
-    
     loadUser();
   }, []);
   useEffect(() => {
@@ -162,11 +174,29 @@ const Header = (): JSX.Element => {
       //console.log("await cart")
       //console.log(await cart)
 
-      setCartSize(1)
+      setCartSize(1);
     }
     loadCart();
-    console.log(cartSize)
+    console.log(cartSize);
   }, []);
+
+  function logof(){
+    localStorage.clear();
+  }
+
+  async function senEmail() {
+    axios.post(`http://${ip}:8157/api/cliente/trocarSenha`,{
+      email: email
+    }).then((response) => {
+      if (response.statusText == "OK") {
+        toast.info('Email enviado com sucesso!');
+        setLoading(false)
+      }else{
+        toast.error('Email não enviado com sucesso!');
+      }
+    });
+  }
+
   return (
     <>
       <GlobalStyles />
@@ -188,8 +218,6 @@ const Header = (): JSX.Element => {
         </header> 
       */}
 
-
-
         <InputCenter>
           <nav className="header">
             <div>
@@ -199,7 +227,6 @@ const Header = (): JSX.Element => {
             </div>
 
             <ul className={click ? "nav-options active" : "nav-options"}>
-
               <div className="input">
                 <input type="text" placeholder="Pesquise o seu produto" />
                 <button type="button">
@@ -209,26 +236,29 @@ const Header = (): JSX.Element => {
 
               <IconsContainer>
                 <FiUser onClick={openModal} size={20} />
-                {
-                  role != "pessoa" ? (
-                    <div/>
-                          ):(
+                {role != "pessoa" ? (
+                  <div />
+                ) : (
                   <>
-                  <Link to="/favoritos">
-                  <FiHeart size={20} />
-                  </Link>
-                  <Cart to="/cart">
-                    <div>
-                      <strong>Meu carrinho</strong>
-                      <span data-testid="cart-size">
-                        {cartSize == 1 ? `${cartSize} item` : `${cartSize} itens`}
-                      </span>
-                    </div>
-                    <FiShoppingBag size={20} />
-                  </Cart>
-                    </>
-                          )
-                      }
+                    <Link to="/favoritos">
+                      <FiHeart size={20} />
+                    </Link>
+                    <Cart to="/cart">
+                      <div>
+                        <strong>Meu carrinho</strong>
+                        <span data-testid="cart-size">
+                          {cartSize == 1
+                            ? `${cartSize} item`
+                            : `${cartSize} itens`}
+                        </span>
+                      </div>
+                      <FiShoppingBag size={20} />
+                    </Cart>
+                  </>
+                )}
+                <button className="loggout">
+                  <FiLogOut size={20} onClick={logof}/>
+                </button>
               </IconsContainer>
 
               <IconsContainerMenu>
@@ -237,32 +267,31 @@ const Header = (): JSX.Element => {
                     <span>Meu perfil</span>
                     <FiUser size={20} />
                   </div>
-                  {
-                  role != "pessoa" ? (
-                    <div/>
-                          ):(
-                            <>
-                          <div className="flex-item">
-                            <span>Meus produtos favoritos</span>
-                          <Link to="/favoritos">
-                            <FiHeart size={20} />
-                          </Link>
+                  {role != "pessoa" ? (
+                    <div />
+                  ) : (
+                    <>
+                      <div className="flex-item">
+                        <span>Meus produtos favoritos</span>
+                        <Link to="/favoritos">
+                          <FiHeart size={20} />
+                        </Link>
+                      </div>
+                      <Cart to="/cart">
+                        <div>
+                          <strong>Meu carrinho</strong>
+                          <span data-testid="cart-size">
+                            {cartSize == 1
+                              ? `${cartSize} item`
+                              : `${cartSize} itens`}
+                          </span>
                         </div>
-                        <Cart to="/cart">
-                          <div>
-                            <strong>Meu carrinho</strong>
-                            <span data-testid="cart-size">
-                              {cartSize == 1 ? `${cartSize} item` : `${cartSize} itens`}
-                            </span>
-                          </div>
-                          <FiShoppingBag size={20} />
-                        </Cart>
-                            </>
-                          )
-                    }
+                        <FiShoppingBag size={20} />
+                      </Cart>
+                    </>
+                  )}
                 </div>
               </IconsContainerMenu>
-
             </ul>
           </nav>
 
@@ -282,7 +311,6 @@ const Header = (): JSX.Element => {
         onRequestClose={closeModal}
         className="modal"
       >
-        
         <ModalContainer>
           <ModalEnter>
             <h2>Insira os seus dados</h2>
@@ -307,14 +335,23 @@ const Header = (): JSX.Element => {
               value={password}
               onChange={(text) => setPassword(text.target.value)}
             />
-            
+
             {/*<Link to="/meu-perfil" className="btn-enter" href="">
               Entrar
             </Link>*/}
-            {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : 
-            <button className="btn-enter" onClick={Login}>
-              Entrar
-            </button>}
+            {loading ? (
+              <img
+                width="40px"
+                style={{ margin: "auto" }}
+                height=""
+                src={"https://contribua.org/mb-static/images/loading.gif"}
+                alt="Loading"
+              />
+            ) : (
+              <button className="btn-enter" onClick={Login}>
+                Entrar
+              </button>
+            )}
             <div className="contentBorder">
               <div className="border" />
               <p>ou</p>
@@ -327,12 +364,30 @@ const Header = (): JSX.Element => {
           </Form>
 
           <strong>
-            Esqueceu a senha?
-            <Link to="" href="">
-              Clique aqui
-            </Link>
+            Esqueceu a senha? 
+            <span onClick={openModal2}> Clique aqui</span>
           </strong>
-          
+        </ModalContainer>
+      </Modal>
+
+      <Modal
+        isOpen={modalIsOpen2}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal2}
+        className="modal"
+      >
+        <ModalContainer>
+          <ModalEnter>
+            <h2>Insira os seus dados</h2>
+            <FiX size={20} onClick={closeModal} />
+          </ModalEnter>
+
+          <PasswordContent>
+            <label htmlFor="email">Confirme o seu e-mail</label>
+            <input type="email" id="email" placeholder="Email" value={email}
+              onChange={(text) => setUser(text.target.value)}/>
+            <button onClick={senEmail}>Verificar</button>
+          </PasswordContent>
         </ModalContainer>
       </Modal>
     </>
