@@ -40,7 +40,7 @@ export default function Questions() {
               console.log(empresaIdResponse.data)
               const response  = api.get(`findByEmpresa/${empresaIdResponse.data.id}`).then(
                 // const response  = api.get(`findByEmpresa/3b386e29-c490-4231-b3f6-bb9b407fc8e9`).then(
-                (response) => { //3b386e29-c490-4231-b3f6-bb9b407fc8e9
+                (response) => {
                   setComentarios(response.data)
                   console.log(response)
                 }

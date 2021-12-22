@@ -81,7 +81,7 @@ export default function PayCart() {
       const deletarCarrinho: any = await api.delete('/carrinho/') 
       console.log(deletarCarrinho)
     }
-    //deletarCarrinho()
+    // deletarCarrinho()
 
   async function gerarPedido() {
     /*PASSA O CARRINHO COMO PARÂMETRO DO AXIOS COMO POST*/
@@ -99,14 +99,34 @@ export default function PayCart() {
           },              
           timeout: 50000,
           data   : produtoDoFornecedor  
-        })
+        }).then(
+          (response) => {
+            axios({
+              method: 'post',
+              url: `http://${ip}:8157/api/tenant/${tenantId}/pedido/${response.data.id}/fatura`,
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+ token
+              },              
+              timeout: 50000
+            }).then(
+              (response) => {
+                let url = response.data.urlFaturaIugu
+                window.open(url, '_blank')?.focus();
+              }
+            )
+            console.log(response)
+
+            // setIds(prevValues => {
+            //   return [...new Set([...prevValues,  response.data.id])]	
+            // })
+          }
+          )
+        
+        
         console.log(response)
-        setIds(prevValues => {
-          return [...new Set([...prevValues,  response.data.id])]	
-        })
-        /*
-        Salvar ids
-        */
+
       }
     ) 
       /*
@@ -164,7 +184,7 @@ export default function PayCart() {
     async function makeMagic() {
       await gerarPedido()
       createNewFatura()
-      reduceStock()
+  
         
       
     }

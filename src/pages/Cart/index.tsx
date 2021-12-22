@@ -37,6 +37,7 @@ const Cart = (): JSX.Element => {
     }
 
     interface Carrinho {
+      price: number | bigint;
       id: string;
       nome: string;
       descricao: string;
@@ -188,7 +189,10 @@ console.log(price)
                         type="text"
                         data-testid="product-amount"
                         readOnly
-                        value={howMuch[index]}
+                        value={
+                          product.quantidade
+                          // howMuch[index]
+                        }
                       />
                       <button
                         type="button"
@@ -202,7 +206,9 @@ console.log(price)
                     </div>
                   </td>
                   <td>
-                    <strong>{
+                    <strong>
+                      {
+                      // formatPrice( product.produto.preco )
                       formatPrice( price[index] )
                       }</strong>
                   </td>
