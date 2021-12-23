@@ -207,7 +207,6 @@ export default function Profile() {
     setShowModalResetSenha(false);
   }
 
-
   useEffect(() => {
     const hash = window.location.hash.replace('http://localhost:3000/constal#/', '');
     console.log(hash)
@@ -215,8 +214,10 @@ export default function Profile() {
       
       var token = hash.replace('#/meu-perfil/', '');
       console.log(token)
+      if(token){
       localStorage.setItem("token", JSON.stringify(token));
       loadUser()
+      }
     }
     
   }, []);

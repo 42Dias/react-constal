@@ -9,7 +9,7 @@ import { Empresa } from "../../../types";
 import { SelectInput } from "../Vendas/styles";
 
 export default function Companies() {
-  const [empresas = [], setEmpresas] = useState<Empresa[]>([]);
+  const [empresas = [], setEmpresas] = useState<any[]>([]);
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [filtro, setFiltro] = useState('Todas');
   const [loading, setLoading] = useState(false);
@@ -116,7 +116,7 @@ export default function Companies() {
               <CardDatailsContent key={empresa.razaoSocial}>
                 <ContentDetails>
                   <small>
-                    <b>{empresa.razaoSocial}</b>
+                    <b>{empresa.razaoSocial || empresa.fullName}</b>
                     <br />
                     CNPJ: {empresa.cnpj} <br />
                     Telefone: {empresa.telefone}

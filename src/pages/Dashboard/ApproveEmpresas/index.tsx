@@ -113,8 +113,8 @@ export default function ApproveEmpresas() {
                 </CardDatailsContent>
                 
                 <div className="flex-btn">
-                  <Link to="/aprovar-usuarios" onClick={() => recusarEmpresa(empresa)}>Recusar</Link>
-                  <Link to="/aprovar-usuarios" onClick={() => aprovarEmpresa(empresa)}>Aprovar</Link>
+                  <Link to="/aprovar-empresas" onClick={() => recusarEmpresa(empresa)}>Recusar</Link>
+                  <Link to="/aprovar-empresas" onClick={() => aprovarEmpresa(empresa)}>Aprovar</Link>
                 </div>
               </CardDatailsContent>
             ))

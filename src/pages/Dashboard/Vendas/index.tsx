@@ -18,7 +18,7 @@ export default function Vendas() {
   const [pedidosConfirmados = [], setPedidosConfirmados] = useState<any[]>([]);
   const [pedidosDevolvidos = [], setPedidosDevolvidos] = useState<any[]>([]);
   const [pedidosDenunciador = [], setPedidosDenunciador] = useState<any[]>([]);
-  const [empresas = [], setEmpresas] = useState<Empresa[]>([]);
+  const [empresas = [], setEmpresas] = useState<any[]>([]);
   let [empresa, setEmpresa] = useState('');
   let [display, setDisplay] = useState('none');
   let [filter, setFilter] = useState('');
@@ -176,7 +176,7 @@ export default function Vendas() {
             <option value={"Selecione"} key={"--Selecione--"} >Selecione</option>
             {empresas.map(
               (empresa) => (
-                <option value={empresa.id} key={empresa.id} >{empresa.razaoSocial}</option>
+                <option value={empresa.empresaId} key={empresa.empresaId} >{empresa.razaoSocial || empresa.fullName}</option>
               )
             )}
           </select>

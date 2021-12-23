@@ -5,7 +5,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import Header from "../../../components/Header";
 import { Menu } from "../../../components/Menu";
-import { api, Email, ip, role, status } from "../../../services/api";
+import { api, Email, id, ip, role, status } from "../../../services/api";
 import { ModalContent } from "../../Produto/styles";
 import { ModalContainerVendedor } from "../../Profile/styles";
 import { ContentFormNew } from "../NewProd/styles";
@@ -22,6 +22,7 @@ import {
   NewBtn,
 } from "./styles";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 export default function PersonalData() {
   const [showModal1, setShowModal1] = React.useState(false);
@@ -61,7 +62,7 @@ export default function PersonalData() {
   const [estado, setEstado] = useState('')
   const [bairro, setBairro] = useState('')
   const [pix, setPix] = useState('')
-
+  const [showModalResetSenha, setShowModalResetSenha] = React.useState(false);
   const [newNome, setNewNome]=useState('');  
   const [newMarca, setNewMarca] = useState('')
   const [newRazaoSocial, setNewRazaoSocial] = useState('')
@@ -79,6 +80,8 @@ export default function PersonalData() {
   const [newEstado, setNewEstado] = useState('')
   const [newBairro, setNewBairro] = useState('')
   const [newPix, setNewPix] = useState('')
+  const [loading, setLoading] = useState(false);
+  const [senha, setSenha] = useState("");
 
     useEffect(
       () => {
@@ -150,7 +153,33 @@ export default function PersonalData() {
     toast.info('Eba, estamos cada dia mais perto da morte! :)')
     closeModal()
   }
-  
+  async function resetSenha(){
+    setLoading(true)
+    const data = await api.get("user/" + id).then((response) => {
+      update(response.data)
+      return response.data;
+    });
+    console.log(data)
+    
+    async function update(data:any){
+      if(data){
+        data.password = senha
+      const response = await axios.put(`http://${ip}:8157/api/auth/password-reset/`, {
+        token: id,
+        password: senha
+      }).then((response) => {
+        setLoading(false)
+        return response.data;
+      }).catch(error =>{
+        toast.error("Link de redefinição de senha inválido ou expirado")
+        setLoading(false)
+      })
+    }
+  }
+}
+  function closeModalResetSenha() {
+    setShowModalResetSenha(false);
+  }
   return (
     <>
       <Header />
@@ -160,7 +189,7 @@ export default function PersonalData() {
           <h2>Dados da conta</h2>
           <CardDatailsContent>
             <ContentDetails>
-              <h3>Login: <span>{email}</span></h3>
+              <h3>Login: <span>{email || Email}</span></h3>
               
             </ContentDetails>
           </CardDatailsContent>
@@ -170,7 +199,7 @@ export default function PersonalData() {
               <h3>Senha: <span>******</span></h3>
               
             </ContentDetails>
-            <Btn
+            <Btn onClick={() => setShowModalResetSenha(true)}
             >Alterar</Btn>
           </CardDatailsContent>
         </CardDatails>
@@ -450,7 +479,47 @@ export default function PersonalData() {
           </div>
         </Modal>
       </ModalContainerVendedor>
+ <ModalContainerVendedor>
+ <Modal
+   isOpen={showModalResetSenha}
+   onAfterOpen={afterOpenModal}
+   onRequestClose={closeModalResetSenha}
+ >
+   <div>
+     <ModalFlex>
+       <AiOutlineClose onClick={closeModalResetSenha} />
+     </ModalFlex>
 
+     <ModalContent>
+       <h3>Nova Senha</h3>
+       <ContentFormNew>
+         <label htmlFor="">Senha: </label>
+         <input
+           type="password"
+           onChange={(text) => setSenha(text.target.value)}
+         />
+       </ContentFormNew>
+       {loading ? (
+       <img
+         width="40px"
+         style={{ margin: "auto" }}
+         height=""
+         src={"https://contribua.org/mb-static/images/loading.gif"}
+         alt="Loading"
+       />
+     ) :false}
+       <div className="buttonsNew">
+         <button type="button" onClick={closeModalResetSenha}>
+           Cancelar
+         </button>
+         <button type="button" onClick={resetSenha}>
+           Adicionar
+         </button>
+       </div>
+     </ModalContent>
+   </div>
+ </Modal>
+</ModalContainerVendedor>
     </>
   );
 }
