@@ -701,7 +701,7 @@ export default function NewProd() {
             </ModalFlex>
 
             <ModalContent>
-              <h3>Nova promoção</h3>
+              <h3>Nova Categoria</h3>
 
               <ContentFormNew>
                 <label htmlFor="">Nova Categoria</label>
