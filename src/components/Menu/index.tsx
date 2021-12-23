@@ -61,6 +61,11 @@ export function Menu() {
 
   function Cliente() {
     const [categorias = [], setCategorias] = useState<any[]>([]);
+    const [moveis, setMoveis ] = useState<any>();
+    const [eletrodoméstico, setTeletrodoméstico ] = useState<any>();
+    const [materiais, setMateriais ] = useState<any>();
+    const [cama, setCama ] = useState<any>();
+    const [cursos, setCursos] = useState<any>();
 
     useEffect(
       () => {
@@ -72,6 +77,21 @@ export function Menu() {
           console.log(categoriasDoBack)
           setCategorias(categoriasDoBack)
           // setCategorias([])
+
+
+          const moveisResponse           = await axios.get('http://'+ip+':8157/api/categoria-name/moveis'); 
+          const eletrodomésticoResponse  = await axios.get('http://'+ip+':8157/api//categoria-name/eletrodoméstico'); 
+          const materiaisResponse        = await axios.get('http://'+ip+':8157/api/categoria-name/materiais'); 
+          const camaResponse             = await axios.get('http://'+ip+':8157/api/categoria-name/cama'); 
+          const cursosResponse           = await axios.get('http://'+ip+':8157/api/categoria-name/cursos'); 
+
+          setMoveis(moveisResponse.data[0].id)
+          setTeletrodoméstico(eletrodomésticoResponse.data[0].id)
+          setMateriais(materiaisResponse.data[0].id)
+          setCama(camaResponse.data[0].id)
+          setCursos(cursosResponse.data[0].id)
+
+
           const controller = new AbortController();
           return () => { controller.abort(); }
         }
@@ -97,7 +117,6 @@ export function Menu() {
                     )
                   )
                 }
-                <Link to="/produtos">Moveis</Link>
               </div>
             </div>
           </div>
@@ -107,11 +126,11 @@ export function Menu() {
             Categorias fixas
             Categorias do cliente
             */}
-            <Link to="/produtos">Moveis</Link>
-            <Link to="/produtos">Eletrodoméstico</Link>
-            <Link to="/produtos">Materiais de Decoração</Link>
-            <Link to="/produtos">Cama, Mesa e Banho</Link>
-            <Link to="/produto-categoria/:id">Cursos</Link>
+            <Link to={`/produto-categoria/${moveis}`}>Moveis</Link>
+            <Link to={`/produto-categoria/${eletrodoméstico}`}>Eletrodoméstico</Link>
+            <Link to={`/produto-categoria/${materiais}`}>Materiais de Decoração</Link>
+            <Link to={`/produto-categoria/${cama}`}>Cama, Mesa e Banho</Link>
+            <Link to={`/produto-categoria/${cursos}`}>Cursos</Link>
           </div>
         </FlexLink>
       </Container>
