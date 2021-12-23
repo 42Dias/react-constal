@@ -229,9 +229,12 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
         },              
         timeout: 50000,
         data   : productAlreadyInCart
-      })              
+      }).then(
+        () => {
+          window.location.reload(); 
+        }
+      )              
 
-      console.log(response)
     } catch {
       toast.error('Erro na remoção do produto');
     }
