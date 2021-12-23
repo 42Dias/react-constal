@@ -6,6 +6,7 @@ import { api, ip, role, status } from "../../../services/api";
 import { useEffect, useState } from "react";
 import { formatPrice } from "../../../util/format";
 import { Empresa } from "../../../types";
+import { SelectInput } from "../Vendas/styles";
 
 export default function Denounced() {
   const [pedidos = [], setPedidos] = useState<any[]>([]);
@@ -18,6 +19,8 @@ export default function Denounced() {
   let [display, setDisplay] = useState('none');
   let [filter, setFilter] = useState('');
   let [sinal, setSinal] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [loading2, setLoading2] = useState(false);
 
 async function loadPedidosPendentes() {
   setPedidosPendentes([])
@@ -105,6 +108,9 @@ async function loadPedidosDenunciador() {
       }
 
       if (role == "admin") {
+        const empresaId = window.location.hash.replace(/#\/confirmadas\//g, "");
+        console.log(empresaId)
+        empresaT(empresaId)
         setDisplay('block'); 
         loadUser();
       }
@@ -154,19 +160,26 @@ async function loadPedidosDenunciador() {
       <div className="container">
         <TitleVendas>Vendas</TitleVendas>
 
-        <div style={{display: display}}>
-        <label htmlFor="">Selecionar Empresa: </label>
-        <select 
-          onChange={(text) => setEmpresa(text.target.value)} onClick={() => empresaT(empresa)}
-        >
-          <option value={"--Selecione--"} key={"--Selecione--"} >--Selecione--</option>
-          {empresas.map(
-            (empresa) => (
-              <option value={empresa.id} key={empresa.id} >{empresa.razaoSocial}</option>
-            )
-          )}
-        </select>
-        </div>
+        {
+          role == 'admin' ? (
+        <SelectInput>
+          <label htmlFor="">Selecionar Empresa: </label>
+          <select
+            onChange={(text) => setEmpresa(text.target.value)} onClick={() => empresaT(empresa)}
+          >
+            <option value={"Selecione"} key={"--Selecione--"} >Selecione</option>
+            {empresas.map(
+              (empresa) => (
+                <option value={empresa.id} key={empresa.id} >{empresa.razaoSocial}</option>
+              )
+            )}
+          </select>
+          {loading ? <img width="40px" height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
+        </SelectInput>
+          ) : (
+            false
+          )
+        }
         <MenuSell>
           <Link to="/vendas"><span>Pendentes({pedidosPendentes.length})</span></Link>
           <Link to="/confirmadas"><span>Confirmadas({pedidosConfirmados.length})</span></Link>
