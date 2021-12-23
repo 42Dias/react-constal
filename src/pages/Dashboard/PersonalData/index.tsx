@@ -84,6 +84,7 @@ export default function PersonalData() {
   const [senha, setSenha] = useState("");
 
     useEffect(
+      
       () => {
         console.log(role +" "+ status)
         if(!role){
@@ -122,6 +123,7 @@ export default function PersonalData() {
         }
         loadData()
       }
+      
       , []
     )
 
