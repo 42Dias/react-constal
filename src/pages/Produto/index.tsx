@@ -25,11 +25,11 @@ import { FiPlus, FiMinus, FiHeart } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import React from "react";
-import MenuCliente from "../../components/MenuCliente";
 import Header from "../../components/Header";
 import { toast } from "react-toastify";
 import { api } from "../../services/api";
 import { formatPrice } from "../../util/format";
+import { Menu } from "../../components/Menu";
 
 interface RepositoryItemProps {
   repository: {
@@ -58,19 +58,18 @@ export default function Produto() {
   }
 
 
-  
-  const favoritos: string[] = JSON.parse(localStorage.getItem("favoritos") || '[]' );
+  //BUG AO ADICIONAR MAIS DE UM!!!!!
+  const favoritos: string[] = JSON.parse(localStorage.getItem("favorito") || "[]");
 
 
-  function setFavoritos(favoritos: string[], produtoId: string){
-    if(favoritos){
-        console.log("favoritos")
-          favoritos.push(produtoId)
-          localStorage.setItem("favorito", JSON.stringify(favoritos))
-      }
-      else{
-        console.log("aaa")
-      }
+  function setFavoritos(favoritos: string[], produtoId: string){    
+      console.log("favoritos")
+      console.log(favoritos)
+      console.log("produtoId")
+      console.log(produtoId)    
+      favoritos.push(produtoId)
+      console.log(favoritos)
+      localStorage.setItem("favorito", JSON.stringify(favoritos))
   }
 
 
@@ -158,7 +157,7 @@ export default function Produto() {
 
 }
 async function loadUser() {
-  const user = await api.get('/tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/pessoa-fisica-perfil')
+  const user = await api.get('pessoa-fisica-perfil')
   .then(user => {
       console.log(user.data);
     
@@ -178,7 +177,7 @@ console.log(id)
   return (
     <>
       <Header />
-      <MenuCliente />
+      <Menu />
       <div className="container">
         <ContainerProd>
           <img src={fotos} alt="" />

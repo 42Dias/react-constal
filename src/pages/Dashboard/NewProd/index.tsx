@@ -16,8 +16,8 @@ import prodfour from "../../../assets/images/prodfour.png";
 import upload from "../../../assets/images/upload.svg";
 import Header from "../../../components/Header";
 import { AiOutlinePlus, AiOutlineClose } from "react-icons/ai";
-import MenuEmpresa from "../../../components/MenuEmpresa";
 import { toast } from 'react-toastify';
+import { Menu } from "../../../components/Menu";
 
 export default function NewProd() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -52,7 +52,8 @@ export default function NewProd() {
   return (
     <>
       <Header />
-      <MenuEmpresa />
+      <Menu />
+  
       <div className="container">
         <ContentNew>
           <h2>Meus produtos</h2>

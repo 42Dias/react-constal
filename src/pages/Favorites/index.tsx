@@ -13,15 +13,17 @@ import prodfav from "../../assets/images/prodfav.png";
 import { Product } from '../../types';
 import { api } from "../../services/api";
 import { formatPrice } from "../../util/format";
+import { Menu } from "../../components/Menu";
 
 export default function Favorites() {
 
+  //PROBLEMA NO MAP NO RETURN
   const [favorito = [], setFavoritos] = useState<string[]>([]);
 
   const products: any = [] //provavel useState aqui!!!!
 
 // function setFavoritos(favoritos: string[], produtoId: string){//essa função vai para o produto e home
-//     if(favoritos){
+//     if(favoritos != []){
 //         favoritos.push(produtoId)
 //     }
 //     else{
@@ -38,23 +40,24 @@ export default function Favorites() {
             async favorito => {
                 console.log("favorito")
                 console.log(favorito)
-                const response = await api.get(`/tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/produto/${favorito}`);
+                const response = await api.get(`produto/${favorito}`);
                 console.log("response.data")
                 console.log(response.data)
                 // setProducts(response.data)
 
                 products.push(response.data)
 
-                console.log("products")
-                console.log(products)
-                setFavoritos(products);
-
+               setFavoritos(prevProducts => {
+                  return [...new Set([...prevProducts, response.data])] 
+               })
             } 
         )
   }
 
     async function loadProducts() {
       const favoritos: string[] = JSON.parse(localStorage.getItem("favorito") || '[]' );
+      console.log("favoritos")
+      console.log(favoritos)
       loadFavoritos(favoritos);
     }
     loadProducts();
@@ -66,6 +69,7 @@ export default function Favorites() {
   return (
     <>
       <Header />
+      <Menu />
       <div className="container">
         <CardDatails>
           <Title>Favoritos</Title>
@@ -73,7 +77,6 @@ export default function Favorites() {
             favorito.map((product: any) => (
               <CardDatailsContent>
               <ContentDetails>
-                <img src={product.fotos[0].publicUrl} alt={product.nome} />
                 <span>{product.nome}</span>
                 <p>{formatPrice(product.preco)}</p>
               </ContentDetails>

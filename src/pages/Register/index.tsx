@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { BoxRegister, GridRegister, LinkContent, Terms } from "./styles";
 import { toast } from 'react-toastify';
 import Axios from 'axios';
+import { Menu } from "../../components/Menu";
 
 export default function Register() {
   const [nome, setNome] = useState('');
@@ -50,6 +51,7 @@ export default function Register() {
   return (
     <>
       <Header />
+      <Menu />
       <div className="container">
         <BoxRegister onSubmit={handleCreateUser}>
           <h2>Preencha os campos com seus dados</h2>

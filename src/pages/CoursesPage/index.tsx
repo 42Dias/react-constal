@@ -10,8 +10,8 @@ import { AiFillStar } from "react-icons/ai";
 import { FiHeart } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import React from "react";
-import MenuCliente from "../../components/MenuCliente";
 import Header from "../../components/Header";
+import { Menu } from "../../components/Menu";
 
 interface RepositoryItemProps {
   repository: {
@@ -28,7 +28,7 @@ export default function CoursesPage(props: RepositoryItemProps) {
   return (
     <>
       <Header />
-      <MenuCliente />
+      <Menu />
       <div className="container">
         <ContainerProd>
           <img src="https://repository-images.githubusercontent.com/349411927/39e29500-897d-11eb-9967-8f72695e2483" alt="" />

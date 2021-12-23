@@ -2,7 +2,7 @@
 // import Modal from "react-modal";
 import { Link } from "react-router-dom";
 import Header from "../../../components/Header";
-import MenuEmpresa from "../../../components/MenuEmpresa";
+import { Menu } from "../../../components/Menu";
 import {
   // CardProfile,
   // CardDatas,
@@ -16,7 +16,7 @@ export default function PersonalData() {
   return (
     <>
       <Header />
-      <MenuEmpresa />
+      <Menu />
       <div className="container">
         <CardDatails>
           <h2>Dados da conta</h2>

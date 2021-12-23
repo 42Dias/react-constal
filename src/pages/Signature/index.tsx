@@ -1,10 +1,12 @@
 import Header from "../../components/Header"
+import Menu from "../../components/Header"
 import * as S from './Signature.styled'
 
 export default function Signature() {
   return (
     <>
       <Header />
+      <Menu />
       <S.Container>
         <S.Title>Planos de cobrança da plataforma</S.Title>
         <S.Cards>
