@@ -152,6 +152,7 @@ export default function Register() {
               >
                   <option value={"1"}>Cliente</option>
                   <option value={"2"}>Empresa</option>
+                  <option value={"3"}>Admin</option>
               </select> 
             </div>
           </GridRegister>

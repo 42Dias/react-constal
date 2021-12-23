@@ -5,7 +5,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import Header from "../../../components/Header";
 import { Menu } from "../../../components/Menu";
-import { api, ip, role } from "../../../services/api";
+import { api, Email, ip, role, status } from "../../../services/api";
 import { ModalContent } from "../../Produto/styles";
 import { ModalContainerVendedor } from "../../Profile/styles";
 import { ContentFormNew } from "../NewProd/styles";
@@ -82,11 +82,17 @@ export default function PersonalData() {
 
     useEffect(
       () => {
-        if(role != 'admin' && role != "empresa"){
-          // Simulate an HTTP redirect:
-          window.location.replace(`http://${ip}:3000/constal#/erro`);
+        console.log(role +" "+ status)
+        if(!role){
+          window.location.reload()
         }
-    
+        else{
+          if(role !== "admin" && role !== "empresa"){
+            // Simulate an HTTP redirect:
+            window.location.replace(`http://${ip}:3000/constal#/erro`);
+          }
+        }
+
         async function loadData(){          
           const responseRes = await api.get('empresa-perfil')
           const response = responseRes.data
@@ -98,7 +104,7 @@ export default function PersonalData() {
           setCnpj(response.cnpj)
           setTelefone(response.telefone)
           setRamal(response.ramal)
-          setEmail(response.email)
+          setEmail(response.email || Email)
           setWebsite(response.website)
           setCep(response.cep)
           setLogradouro(response.logradouro)

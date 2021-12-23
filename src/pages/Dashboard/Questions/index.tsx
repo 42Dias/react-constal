@@ -6,7 +6,7 @@ import { Menu } from "../../../components/Menu";
 import Modal from "react-modal";
 
 import { useEffect, useState } from "react";
-import { role, ip, id, api } from "../../../services/api";
+import { role, ip, id, api, status } from "../../../services/api";
 import React from "react";
 import { Btn } from "../PersonalData/styles";
 import { ContentFormNew, ModalContainerVendedor, ModalContent, ModalFlex } from "../NewProd/styles";
@@ -28,10 +28,16 @@ export default function Questions() {
 
   useEffect(
     () => {
-      if(role != 'admin' && role != "empresa"){
-        // Simulate an HTTP redirect:
-        window.location.replace(`http://${ip}:3000/constal#/erro`);
+      if(!role){
+        window.location.reload()
       }
+      else{
+        if(role !== "admin" && role !== "empresa" || status === "pendente"){
+          // Simulate an HTTP redirect:
+          window.location.replace(`http://${ip}:3000/constal#/erro`);
+        }
+      }
+
       async function loadComentarios(){
         async function getEmpresaId() {
           const empresaIdResponse =  api.get(`empresaUser/${id}`).then(

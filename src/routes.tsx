@@ -34,7 +34,8 @@ import CoursesPage from "./pages/CoursesPage";
 import Signature from "./pages/Signature";
 import Error from "./pages/Error";
 import CheckEmail from "./pages/CheckEmail";
-
+import ApproveCategorias from "./pages/Dashboard/ApproveCategorias";
+import ApproveEmpresas from "./pages/Dashboard/ApproveEmpresas";
 
 const Routes = (): JSX.Element => {
   return (
@@ -43,7 +44,7 @@ const Routes = (): JSX.Element => {
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/cart" component={Cart} />
-        <Route path="/meu-perfil" component={Profile} />
+        <Route path="/meu-perfil/:token" component={Profile} />
         <Route path="/cadastrar" component={Register} />
         <Route exact path="/produto/:id" component={Produto} />
         <Route exact path="/produtos-promocao/:id" component={ProductsPromotions} />
@@ -66,6 +67,8 @@ const Routes = (): JSX.Element => {
         <Route exact path="/devolvidas" component={Returned} />
         <Route exact path="/denunciadas" component={Denounced} />
         <Route exact path="/aprovar-usuarios" component={ApproveUsers} />
+        <Route exact path="/aprovar-empresas" component={ApproveEmpresas} />
+        <Route exact path="/aprovar-categorias" component={ApproveCategorias} />
         <Route exact path="/empresas" component={Companies} />
         <Route exact path="/historico" component={Historic} />
         <Route exact path="/pagamentos" component={Payments} />

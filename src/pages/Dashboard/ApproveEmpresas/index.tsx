@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 import { CardDatails, CardDatailsContent, ContentDetails } from "./styles";
 import { Menu } from "../../../components/Menu";
 import { useState, useEffect } from "react";
-import { api, ip, role, status } from "../../../services/api";
+import { api, ip, role, status, token } from "../../../services/api";
 import { Empresa } from "../../../types";
 import { toast } from "react-toastify";
 import React from "react";
 
-export default function ApproveUsers() {
+export default function ApproveEmpresas() {
   const [empresas = [], setEmpresas] = useState<any[]>([]);
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [loading, setLoading] = useState(false);
@@ -17,7 +17,7 @@ export default function ApproveUsers() {
 
   async function loadEmpresa() {
     setLoading(true);
-    const response = await api.get('empresaStatus?filter%5Brole%5D=admin&filter%5Bstatus%5D=pendente')
+    const response = await api.get('empresaStatus?filter%5Bstatus%5D=pendente')
       .then(response => {
         setLoading(false);
         return response.data;
@@ -28,7 +28,7 @@ export default function ApproveUsers() {
   }
 
   useEffect(() => {
-    if(!role){
+    if (!token){
       window.location.reload()
     }
     else{
@@ -37,6 +37,7 @@ export default function ApproveUsers() {
         window.location.replace(`http://${ip}:3000/constal#/erro`);
       }
     }
+    
     loadEmpresa();
 
   }, []);
@@ -92,7 +93,7 @@ export default function ApproveUsers() {
       <Menu />
       <div className="container">
         <CardDatails>
-          <h2>Aprovar Admin {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}</h2>
+          <h2>Aprovar Empresas {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}</h2>
           
           {
             empresas.length === 0 ? (

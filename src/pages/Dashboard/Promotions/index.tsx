@@ -16,7 +16,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { FiCheck } from "react-icons/fi";
 import { Menu } from "../../../components/Menu";
 import { Product } from "../../../types";
-import { api, ip, role } from "../../../services/api";
+import { api, ip, role, status } from "../../../services/api";
 import { formatPrice } from "../../../util/format";
 import { Btn } from "../PersonalData/styles";
 import { toast } from "react-toastify";
@@ -74,9 +74,14 @@ export default function Promotions() {
   let productCounter: any[] = [];
   
   useEffect(() => {
-    if(role != 'admin' && role != "empresa"){
-      // Simulate an HTTP redirect:
-      window.location.replace(`http://${ip}:3000/constal#/erro`);
+    if(!role){
+      window.location.reload()
+    }
+    else{
+      if(role !== "admin" && role !== "empresa" || status === "pendente"){
+        // Simulate an HTTP redirect:
+        window.location.replace(`http://${ip}:3000/constal#/erro`);
+      }
     }
 
     async function loadProducts() {

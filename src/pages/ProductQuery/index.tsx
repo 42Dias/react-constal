@@ -5,7 +5,7 @@ import prodfav from "../../assets/images/prodfav.png"
 import { Link } from "react-router-dom"
 import { Menu } from "../../components/Menu"
 import { useEffect, useState } from "react"
-import { api, ip, role, tenantId } from "../../services/api"
+import { api, ip, role, status, tenantId } from "../../services/api"
 import { Product } from "../../types"
 import axios from "axios"
 import { toast } from "react-toastify"
@@ -30,10 +30,10 @@ function ProductQuery() {
   ))*/
   }
   useEffect(() => {
-    if(role != 'admin'){
+    if(role !== "admin" && role !== "empresa" || status === "pendente"){
       // Simulate an HTTP redirect:
       window.location.replace(`http://${ip}:3000/constal#/erro`);
-    }    
+    }  
     loadUser();
 
   }, []);

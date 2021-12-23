@@ -4,15 +4,20 @@ import { Link } from "react-router-dom";
 import { CardDatails, CardDatailsContent, ContentDetails } from "./styles";
 import { Menu } from "../../../components/Menu";
 import { useEffect } from "react";
-import { ip, role } from "../../../services/api";
+import { ip, role, status } from "../../../services/api";
 
 export default function Historic() {
 
   useEffect(
     ()=>{
-      if(role != 'admin' && role != "empresa"){
-        // Simulate an HTTP redirect:
-        window.location.replace(`http://${ip}:3000/constal#/erro`);
+      if(!role){
+        window.location.reload()
+      }
+      else{
+        if(role !== "admin" && role !== "empresa" || status === "pendente"){
+          // Simulate an HTTP redirect:
+          window.location.replace(`http://${ip}:3000/constal#/erro`);
+        }
       }
   
     }

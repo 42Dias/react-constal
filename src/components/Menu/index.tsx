@@ -43,7 +43,9 @@ export function Menu() {
             <div className="dropdown-content">
               <div className="drop-grid">
                 {/*<Link to="/assinaturas">Assinaturas</Link>*/}
-                <Link to="/aprovar-usuarios">Aprovar empresas</Link>
+                <Link to="/aprovar-usuarios">Aprovar Admin</Link>
+                <Link to="/aprovar-empresas">Aprovar Empresas</Link>
+                <Link to="/aprovar-categorias">Aprovar Categorias</Link>
                 <Link to="/consultar-produtos">Aprovar Produtos</Link>
                 <Link to="/empresas">Empresas</Link>
                 <Link to="/assinaturas">Pagamentos</Link>
