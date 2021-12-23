@@ -103,29 +103,33 @@ export default function PayCart() {
           data   : produtoDoFornecedor  
         }).then(
           (response) => {
-            axios({
-              method: 'post',
-              url: `http://${ip}:8157/api/tenant/${tenantId}/pedido/${response.data.id}/fatura`,
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer '+ token
-              },              
-              timeout: 50000
-            }).then(
-              (response) => {
-                let url = response.data.urlFaturaIugu
-                window.open(url, '_blank')?.focus();
-              }
-            )
-            console.log(response)
+            setTimeout(() => {
+              axios({
+                method: 'post',
+                url: `http://${ip}:8157/api/tenant/${tenantId}/pedido/${response.data.id}/fatura`,
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer '+ token
+                },              
+                timeout: 50000
+              }).then(
+                (response) => {
+                  let url = response.data.urlFaturaIugu
+                  window.open(url, '_blank')?.focus();
+                }
+              )
+              .then(
+                () =>  window.location.replace(`http://${ip}:3000/constal#/finalizar`)
+              )
+              console.log(response)
+
+            }, 3000);
 
             // setIds(prevValues => {
             //   return [...new Set([...prevValues,  response.data.id])]	
             // })
           }
-          ).then(
-            // () =>  window.location.replace(`http://${ip}:3000/constal#/finalizar`)
           )
         
         
