@@ -99,7 +99,7 @@ export default function NewProd() {
         caracteristicasTecnicas: caracteristicasTecnicas,
         preco: preco,
         prazo: prazo,
-        quantidade: quantidade,
+        quantidadeNoEstoque: quantidade,
         frete: frete,
         categoriaId: categoria.id,
         imagemUrl: imagem,
