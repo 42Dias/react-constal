@@ -24,6 +24,7 @@ export default function Vendas() {
   let [filter, setFilter] = useState('');
   let [sinal, setSinal] = useState(0);
   let [empresaIds, setEmpresaId] = useState('');
+  let [empresaIdParaRequisicao, setEmpresaIdParaRequisicao] = useState('');
   const [loading, setLoading] = useState(false);
   const [loading2, setLoading2] = useState(false);
 
@@ -146,6 +147,8 @@ export default function Vendas() {
     setSinal(0)
     console.log("Entrou empresaT");
     console.log(empresaId);
+    setEmpresaIdParaRequisicao(empresaId)
+
 
     if (empresaId != "" && empresaId !== empresaIds) {
       setLoading2(true)
@@ -192,9 +195,9 @@ export default function Vendas() {
         }
         <MenuSell>
           <span><b>Pendentes({pedidosPendentes.length})</b></span>
-          <Link to="/confirmadas"><span>Confirmadas({pedidosConfirmados.length})</span></Link>
-          <Link to="/devolvidas"><span>Devolvidas({pedidosDevolvidos.length})</span></Link>
-          <Link to="/denunciadas"><span>Denunciadas({pedidosDenunciador.length})</span></Link>
+          <Link to={`/confirmadas/${empresaIdParaRequisicao}`}><span>Confirmadas({pedidosConfirmados.length})</span></Link>
+          <Link to={`/devolvidas/${empresaIdParaRequisicao}`}><span>Devolvidas({pedidosDevolvidos.length})</span></Link>
+          <Link to={`/denunciadas/${empresaIdParaRequisicao}`}><span>Denunciadas({pedidosDenunciador.length})</span></Link>
         </MenuSell>
         {loading2 ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
         {
