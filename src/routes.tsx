@@ -66,6 +66,9 @@ const Routes = (): JSX.Element => {
         <Route exact path="/confirmadas" component={Confirmed} />
         <Route exact path="/devolvidas" component={Returned} />
         <Route exact path="/denunciadas" component={Denounced} />
+        <Route exact path="/confirmadas/:id" component={Confirmed} />
+        <Route exact path="/devolvidas/:id" component={Returned} />
+        <Route exact path="/denunciadas/:id" component={Denounced} />
         <Route exact path="/aprovar-usuarios" component={ApproveUsers} />
         <Route exact path="/aprovar-empresas" component={ApproveEmpresas} />
         <Route exact path="/aprovar-categorias" component={ApproveCategorias} />
