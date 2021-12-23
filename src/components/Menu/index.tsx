@@ -65,13 +65,13 @@ export function Menu() {
     useEffect(
       () => {
         async function loadCategorias() {
-          // const categoriasResponse = await axios.get('http://'+ip+':8157/api/categoria-aprovados');
-          // const categoriasDoBack = categoriasResponse.data.record
-          // console.log("categoriasDoBack")
-          // console.log("categoriasDoBack")
-          // console.log(categoriasDoBack)
-          // setCategorias(categoriasDoBack)
-          setCategorias([])
+          const categoriasResponse = await axios.get('http://'+ip+':8157/api/categoria-aprovados');
+          const categoriasDoBack = categoriasResponse.data.record
+          console.log("categoriasDoBack")
+          console.log("categoriasDoBack")
+          console.log(categoriasDoBack)
+          setCategorias(categoriasDoBack)
+          // setCategorias([])
           const controller = new AbortController();
           return () => { controller.abort(); }
         }
