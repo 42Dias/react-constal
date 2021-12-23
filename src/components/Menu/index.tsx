@@ -71,7 +71,7 @@ export function Menu() {
       () => {
         async function loadCategorias() {
           const categoriasResponse = await axios.get('http://'+ip+':8157/api/categoria-aprovados');
-          const categoriasDoBack = categoriasResponse.data.record
+          const categoriasDoBack = categoriasResponse.data
           console.log("categoriasDoBack")
           console.log("categoriasDoBack")
           console.log(categoriasDoBack)
