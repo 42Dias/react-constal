@@ -15,7 +15,7 @@ export default function Returned() {
   const [pedidosConfirmados = [], setPedidosConfirmados] = useState<any[]>([]);
   const [pedidosDevolvidos = [], setPedidosDevolvidos] = useState<any[]>([]);
   const [pedidosDenunciador = [], setPedidosDenunciador] = useState<any[]>([]);
-  const [empresas = [], setEmpresas] = useState<Empresa[]>([]);
+  const [empresas = [], setEmpresas] = useState<any[]>([]);
   let [empresa, setEmpresa] = useState('');
   let [display, setDisplay] = useState('none');
   let [filter, setFilter] = useState('');
