@@ -20,35 +20,15 @@ import {
   ContentFormNew,
 } from "./styles";
 import { Link } from "react-router-dom";
-import { api } from "../../services/api";
+import { api, idPessoa, ip, role, token } from "../../services/api";
 import { Menu } from "../../components/Menu";
 import upload from "../../assets/images/upload.svg";
+import axios from "axios";
 
 export default function Profile() {
-  function messageCancel() {
-    toast.error(
-      "Ah, que pena. Não conseguimos adicionar o seu endereço na plataforma :("
-    );
-    setShowModal1(false);
-    setShowModal2(false);
-  }
-
-  function messageApprove() {
-    toast.info("Eba, recebemos o seu endereço. :)");
-    setShowModal1(false);
-    setShowModal2(false);
-  }
   const [showModal1, setShowModal1] = React.useState(false);
   const [showModal2, setShowModal2] = React.useState(false);
-
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-  }
-
-  function closeModal() {
-    setShowModal1(false);
-    setShowModal2(false);
-  }
+  const [showModalResetSenha, setShowModalResetSenha] = React.useState(false);
   const [id, setId] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -61,7 +41,8 @@ export default function Profile() {
   const [cidade, setCidade] = useState("");
   const [estado, setEstado] = useState("");
   const [imagemUser, setimagemUser] = useState("");
-
+  const [senha, setSenha] = useState("");
+  const [loading, setLoading] = useState(false);
   const [newNome, setNewNome] = useState("");
   const [newTelefone, setNewTelefone] = useState("");
   const [newEmail, setNewEmail] = useState("");
@@ -75,25 +56,54 @@ export default function Profile() {
   const [newEstado, setNewEstado] = useState("");
   const [newBairro, setNewBairro] = useState("");
 
-  let role = localStorage.getItem("roles")?.replace(/"/g, "");
-
-  useEffect(() => {
-    setId(localStorage.getItem("id")?.replace(/"/g, "") || "");
-    async function loadUser() {
+  async function loadUser() {
+    if (!token){
+      window.location.reload()
+    }
+    const response = await axios({
+      method: "get",
+      url: `http://localhost:8157/api/auth/me`,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      timeout: 50000,
+    }).then((response) => {
+      loadPerfil()
+      return response.data;
+    });
+    //console.log(response);
+    //console.log(response.tenants[0].roles[0]);
+    localStorage.setItem("roles", JSON.stringify(response.tenants[0].roles[0])); //saves client's data into localStorage:
+    //response.tenants[0].tenant.id);
+    localStorage.setItem(
+      "tenantId",
+      JSON.stringify(response.tenants[0].tenant.id)
+    ); //saves client's data into localStorage:
+    localStorage.setItem("id", JSON.stringify(response.id)); //saves client's data into localStorage:
+    localStorage.setItem("status", JSON.stringify(response.tenants[0].status)); //saves client's data into localStorage:
+  }
+  
+    async function loadPerfil() {
+      setId(localStorage.getItem("id")?.replace(/"/g, "") || "");
       //Perfil pessoa
       if (role === "pessoa") {
         const response = await api
           .get("pessoa-fisica-perfil")
           .then((response) => {
-            console.log(response);
+            console.log("response");
+            console.log(response.data);
             return response.data;
           });
         console.log(response);
-        setEmail(response.email);
+        localStorage.setItem("idPessoa", JSON.stringify(response.id));
+        setEmail(response.user.email);
         setFullName(response.nome);
         setCPF(response.cpf);
         setPhone(response.telefone);
         setLogradouro(response.logradouro + ", " + response.numero);
+        setNewNumero(response.numero);
         setBairro(response.bairro);
         setCEP(response.cep);
         setCidade(response.cidade);
@@ -105,9 +115,9 @@ export default function Profile() {
             "https://www.camaragibe.pe.gov.br/wp-content/uploads/2019/04/default-user-male.png"
           );
         }
-        console.log("avatars");
-        console.log(imagemUser);
-        console.log(response);
+        //console.log("avatars");
+        //console.log(imagemUser);
+        //console.log(response);
       }
       //Perfil empresa
       else if (role === "empresa") {
@@ -131,10 +141,10 @@ export default function Profile() {
             "https://www.camaragibe.pe.gov.br/wp-content/uploads/2019/04/default-user-male.png"
           );
         }
-        console.log("avatars");
-        console.log(imagemUser);
-        console.log("response");
-        console.log(response.rows);
+        //console.log("avatars");
+        //console.log(imagemUser);
+        //console.log("response");
+        //console.log(response.rows);
       }
       //Perfil Admin
       else {
@@ -152,8 +162,8 @@ export default function Profile() {
         setCEP(response.cep);
         setCidade(response.cidade);
         setEstado(response.estado);
-        console.log("response.avatars[0]");
-        console.log(response.avatars[0]);
+        //console.log("response.avatars[0]");
+        //console.log(response.avatars[0]);
         if (
           response.avatars !== undefined &&
           response.avatars[0] !== undefined
@@ -164,14 +174,51 @@ export default function Profile() {
             "https://www.camaragibe.pe.gov.br/wp-content/uploads/2019/04/default-user-male.png"
           );
         }
-        console.log("avatars");
-        console.log(imagemUser);
-        console.log("response");
-        console.log(response.rows);
+        //console.log("avatars");
+        //console.log(imagemUser);
+        //console.log("response");
+        //console.log(response.rows);
       }
     }
 
-    loadUser();
+  function messageCancel() {
+    toast.error(
+      "Ah, que pena. Não conseguimos adicionar o seu endereço na plataforma :("
+    );
+    setShowModal1(false);
+    setShowModal2(false);
+  }
+
+  function messageApprove() {
+    toast.info("Eba, recebemos o seu endereço. :)");
+    setShowModal1(false);
+    setShowModal2(false);
+  }
+ 
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+  }
+
+  function closeModal() {
+    setShowModal1(false);
+    setShowModal2(false);
+  }
+  function closeModalResetSenha() {
+    setShowModalResetSenha(false);
+  }
+
+
+  useEffect(() => {
+    const hash = window.location.hash.replace('http://localhost:3000/constal#/', '');
+    console.log(hash)
+    if(hash){
+      
+      var token = hash.replace('#/meu-perfil/', '');
+      console.log(token)
+      localStorage.setItem("token", JSON.stringify(token));
+      loadUser()
+    }
+    
   }, []);
 
   function clientLocalStorage() {
@@ -180,7 +227,7 @@ export default function Profile() {
     const savedData: string[] = JSON.parse(
       localStorage.getItem("clientDataFromLocalStorage") || "{}"
     );
-    console.log(savedData);
+    //console.log(savedData);
 
     return savedData;
   }
@@ -191,7 +238,7 @@ export default function Profile() {
         user: id,
         email: email,
         password: password,
-        fullName: fullName,
+        nome: fullName,
         cpf: cpf,
         phone: phone,
         logradouro: logradouro,
@@ -206,26 +253,51 @@ export default function Profile() {
       },
     };
     if (email) {
-      console.log("MAOI");
-      // const updatePersonalData = await api.put('pessoa-fisica/' +  id, data)
+      //console.log("MAOI");
+      const updatePersonalData = await api.put('pessoa-fisica/' +  idPessoa, data)
       // console.log(updatePersonalData)
     } else {
-      console.log("hehe");
-      console.log(data);
+      //console.log("hehe");
+      //console.log(data);
       data.data.email = localStorage.getItem("email") || "";
       data.data.password = localStorage.getItem("senha") || "";
 
       const createPersonalData = await api.post("pessoa-fisica/", data);
-      console.log(createPersonalData);
+      //createPersonalData);
     }
     messageApprove();
   }
 
   const [savedData] = useState([]);
 
-  console.log(savedData);
+  //console.log(savedData);
 
   clientLocalStorage();
+
+  async function resetSenha(){
+    setLoading(true)
+    const data = await api.get("user/" + id).then((response) => {
+      update(response.data)
+      return response.data;
+    });
+    console.log(data)
+    
+    async function update(data:any){
+      if(data){
+        data.password = senha
+      const response = await axios.put(`http://${ip}:8157/api/auth/password-reset/`, {
+        token: id,
+        password: senha
+      }).then((response) => {
+        setLoading(false)
+        return response.data;
+      }).catch(error =>{
+        toast.error("Link de redefinição de senha inválido ou expirado")
+        setLoading(false)
+      })
+    }
+  }
+  }
 
   return (
     <>
@@ -310,7 +382,7 @@ export default function Profile() {
             <span>Senha:</span>
             <p>******</p>
           </ContentDetails>
-          <button>Alterar</button>
+          <button onClick={() => setShowModalResetSenha(true)}>Alterar</button>
         </CardDatailsContent>
 
         <CardDatails>
@@ -377,11 +449,12 @@ export default function Profile() {
             <ModalContent>
               <h3>Novo endereço</h3>
               <ContentFormNew>
-                <label htmlFor="">email</label>
+                <label htmlFor="">Nome Completo</label>
                 <input
-                  type="text"
-                  placeholder="CPF"
-                  onChange={(text) => setCPF(text.target.value)}
+                  type="nome"
+                  placeholder="Email"
+                  value={fullName}
+                  onChange={(text) => setFullName(text.target.value)}
                 />
               </ContentFormNew>
 
@@ -390,24 +463,26 @@ export default function Profile() {
                 <input
                   type="text"
                   placeholder="CPF"
+                  value={cpf}
                   onChange={(text) => setCPF(text.target.value)}
                 />
               </ContentFormNew>
 
-              <ContentFormNew>
+              {/*<ContentFormNew>
                 <label htmlFor="">bairro</label>
                 <input
                   type="text"
                   placeholder="bairro"
                   onChange={(text) => setBairro(text.target.value)}
                 />
-              </ContentFormNew>
+              </ContentFormNew>*/}
 
               <ContentFormNew>
-                <label htmlFor="">bairro</label>
+                <label htmlFor="">Bairro</label>
                 <input
                   type="text"
                   placeholder="bairro"
+                  value={bairro}
                   onChange={(text) => setBairro(text.target.value)}
                 />
               </ContentFormNew>
@@ -415,8 +490,9 @@ export default function Profile() {
               <ContentFormNew>
                 <label htmlFor="">CEP</label>
                 <input
-                  type="number"
+                  type="cep"
                   placeholder="CEP"
+                  value={cep}
                   onChange={(text) => setCEP(text.target.value)}
                 />
               </ContentFormNew>
@@ -426,6 +502,7 @@ export default function Profile() {
                 <input
                   type="text"
                   placeholder="Rua"
+                  value={logradouro}
                   onChange={(text) => setLogradouro(text.target.value)}
                 />
               </ContentFormNew>
@@ -435,6 +512,7 @@ export default function Profile() {
                 <input
                   type="number"
                   placeholder="Número"
+                  value={newNumero}
                   onChange={(text) => setNewNumero(text.target.value)}
                 />
               </ContentFormNew>
@@ -462,6 +540,7 @@ export default function Profile() {
                 <input
                   type="text"
                   placeholder="Estado"
+                  value={estado}
                   onChange={(text) => setEstado(text.target.value)}
                 />
               </ContentFormNew>
@@ -471,6 +550,7 @@ export default function Profile() {
                 <input
                   type="text"
                   placeholder="Cidade"
+                  value={cidade}
                   onChange={(text) => setCidade(text.target.value)}
                 />
               </ContentFormNew>
@@ -480,6 +560,48 @@ export default function Profile() {
                   Cancelar
                 </button>
                 <button type="button" onClick={setNewData}>
+                  Adicionar
+                </button>
+              </div>
+            </ModalContent>
+          </div>
+        </Modal>
+      </ModalContainerVendedor>
+
+      <ModalContainerVendedor>
+        <Modal
+          isOpen={showModalResetSenha}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModalResetSenha}
+        >
+          <div>
+            <ModalFlex>
+              <AiOutlineClose onClick={closeModalResetSenha} />
+            </ModalFlex>
+
+            <ModalContent>
+              <h3>Nova Senha</h3>
+              <ContentFormNew>
+                <label htmlFor="">Senha: </label>
+                <input
+                  type="password"
+                  onChange={(text) => setSenha(text.target.value)}
+                />
+              </ContentFormNew>
+              {loading ? (
+              <img
+                width="40px"
+                style={{ margin: "auto" }}
+                height=""
+                src={"https://contribua.org/mb-static/images/loading.gif"}
+                alt="Loading"
+              />
+            ) :false}
+              <div className="buttonsNew">
+                <button type="button" onClick={closeModalResetSenha}>
+                  Cancelar
+                </button>
+                <button type="button" onClick={resetSenha}>
                   Adicionar
                 </button>
               </div>

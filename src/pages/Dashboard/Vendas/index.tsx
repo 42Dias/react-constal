@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { MenuSell, TitleVendas, ContainerMenuSell, SelectInput } from "./styles";
 import { Menu } from "../../../components/Menu";
 import { useEffect, useState } from "react";
-import { api, ip, role } from "../../../services/api";
+import { api, ip, role, status } from "../../../services/api";
 import { Empresa } from "../../../types";
 import { toast } from "react-toastify";
 import { Toast } from "react-toastify/dist/components";
@@ -90,9 +90,14 @@ export default function Vendas() {
 
   useEffect(
     () => {
-      if (role != "admin" && role != "empresa") {
-        // Simulate an HTTP redirect:
-        window.location.replace(`http://${ip}:3000/constal#/erro`);
+      if(!role){
+        window.location.reload()
+      }
+      else{
+        if(role !== "admin" && role !== "empresa" || status === "pendente"){
+          // Simulate an HTTP redirect:
+          window.location.replace(`http://${ip}:3000/constal#/erro`);
+        }
       }
 
       async function loadUser() {

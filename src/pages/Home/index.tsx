@@ -54,9 +54,9 @@ const Home = (): JSX.Element => {
   const [products = [], setProducts] = useState<ProductFormatted[]>([]);
   const [products2 = [], setProducts2] = useState<ProductFormatted[]>([]);
   const [promocoes = [], setPromocoes] = useState<ProductFormatted[]>([]);
-  
   const { addProduct, cart } = useCart();
   
+
   useEffect(() => {
     async function loadProducts() {
       const response = await axios.get("http://"+ip+":8157/api/produtos");

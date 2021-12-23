@@ -41,7 +41,8 @@ export const Card = styled.div`
   }
 
   p {
-    margin: 30px;
+    margin: 20px;
+    margin-top: -10px;
     font-size: 14px;
   }
 

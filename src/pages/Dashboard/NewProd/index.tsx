@@ -216,9 +216,14 @@ export default function NewProd() {
   }
 
   useEffect(() => {
-    if (role != "empresa" && role != "admin") {
-      // Simulate an HTTP redirect:
-      window.location.replace(`http://${ip}:3000/constal#/erro`);
+    if(!role){
+      window.location.reload()
+    }
+    else{
+      if(role !== "admin" && role !== "empresa" || status === "pendente"){
+        // Simulate an HTTP redirect:
+        window.location.replace(`http://${ip}:3000/constal#/erro`);
+      }
     }
     async function loadCategorias() {
       const categoriasResponse = await api.get("categoria");

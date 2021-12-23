@@ -73,7 +73,7 @@ const Header = (): JSX.Element => {
     */
     console.log("email e senha: " + email + " " + password);
 
-    if (email && password && token) {
+    if (token) {
       handleClickLogin();
     } else {
       setIsOpen(true);
@@ -110,7 +110,7 @@ const Header = (): JSX.Element => {
   let history = useHistory();
   function handleClickLogin() {
     if (role === "pessoa") {
-      history.push("/meu-perfil");
+      history.push("/meu-perfil/"+token);
     } else {
       history.push("/dados-pessoais");
     }
@@ -182,9 +182,12 @@ const Header = (): JSX.Element => {
 
   function logof(){
     localStorage.clear();
+    toast.info("Saiu!")
+    window.location.reload();
   }
 
   async function senEmail() {
+    setLoading(true)
     axios.post(`http://${ip}:8157/api/cliente/trocarSenha`,{
       email: email
     }).then((response) => {
@@ -379,14 +382,23 @@ const Header = (): JSX.Element => {
         <ModalContainer>
           <ModalEnter>
             <h2>Insira os seus dados</h2>
-            <FiX size={20} onClick={closeModal} />
+            <FiX size={20} onClick={closeModal2} />
           </ModalEnter>
 
           <PasswordContent>
             <label htmlFor="email">Confirme o seu e-mail</label>
             <input type="email" id="email" placeholder="Email" value={email}
               onChange={(text) => setUser(text.target.value)}/>
-            <button onClick={senEmail}>Verificar</button>
+              {loading ? (
+              <img
+                width="40px"
+                style={{ margin: "0 auto" }}
+                height=""
+                src={"https://contribua.org/mb-static/images/loading.gif"}
+                alt="Loading"
+              />
+            ) :
+            <button onClick={senEmail}>Verificar</button>}
           </PasswordContent>
         </ModalContainer>
       </Modal>
