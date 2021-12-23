@@ -6,6 +6,7 @@ export default function ProdItem() {
 
 
 
+// import { useEffect, useState } from "react";
 // import {
 //   DetailsProdFirts,
 //   ContainerProd,
@@ -24,14 +25,22 @@ export default function ProdItem() {
 //   ModalFlex,
 //   ModalContent,
 //   SelectAdress,
+//   ProdCaracteristicas,
 // } from "./styles";
+// import prod from "../../assets/images/prodfav.png";
 // import { AiFillStar, AiOutlineClose } from "react-icons/ai";
-// import { FiPlus, FiMinus } from "react-icons/fi";
+// import { FiPlus, FiMinus, FiHeart } from "react-icons/fi";
 // import { Link } from "react-router-dom";
 // import Modal from "react-modal";
-// import React, { useState ,useEffect } from "react";
-// import axios from "axios";
-// let token = localStorage.getItem("token")?.replace(/"/g, "");
+// import React from "react";
+// import Header from "../../components/Header";
+// import { toast } from "react-toastify";
+// import { api, role, id } from "../../services/api";
+// import { formatPrice } from "../../util/format";
+// import { Menu } from "../../components/Menu";
+// import { REFUSED } from "dns";
+// import { Btn } from "../Dashboard/PersonalData/styles";
+// import { ContentFormNew } from "../Profile/styles";
 
 // interface RepositoryItemProps {
 //   repository: {
@@ -42,10 +51,53 @@ export default function ProdItem() {
 //     image: string;
 //   };
 // }
-
-// export function RepositoryItem(props: RepositoryItemProps) {
+// export default function Produto() {
 //   const [modalIsOpen, setIsOpen] = React.useState(false);
+//   const [showModal1, setShowModal1] = React.useState(false);
+//   const [showModal2, setShowModal2] = React.useState(false);
 
+//   const [counter, setCounter] = useState(0);
+
+//   function error() {
+//     toast("Não é possível adicionar menos que 0 ", {
+//       position: "top-right",
+//       autoClose: 5000,
+//       hideProgressBar: false,
+//       closeOnClick: true,
+//       pauseOnHover: true,
+//       draggable: true,
+//       progress: undefined,
+//     });
+//   }
+
+//   //BUG AO ADICIONAR MAIS DE UM!!!!!
+//   const favoritos: string[] = JSON.parse(localStorage.getItem("favorito") || "[]");
+
+
+//   function setFavoritos(favoritos: string[], produtoId: string){    
+//       console.log("favoritos")
+//       console.log(favoritos)
+//       console.log("produtoId")
+//       console.log(produtoId)    
+//       favoritos.push(produtoId)
+//       console.log(favoritos)
+//       localStorage.setItem("favorito", JSON.stringify(favoritos))
+//   }
+
+
+
+//   function increment() {
+//     setCounter(counter + 1);
+//   }
+
+//   function withdraw() {
+//     if (counter < 1) {
+//       setCounter(0);
+//       error();
+//     } else {
+//       setCounter(counter - 1);
+//     }
+//   }
 //   function openModal() {
 //     setIsOpen(true);
 //   }
@@ -58,49 +110,137 @@ export default function ProdItem() {
 //     setIsOpen(false);
 //   }
 
-//   useEffect( () => {
-//     async function loadProducts() {
+//   function getHash() {
+//     const hash = window.location.hash.replace(/#\/produto\//g, '');    
+//     return hash
+//   }
+//   const productId = getHash()
+//   function buildUrl(){
+//     const productId = getHash()
+// //  `/tenant/:tenantId/produto/:id`
+//     const requisition = `/produto/${productId}`
+//     return requisition
+//   }
+  
+//   const selectedProduct = buildUrl()
+//   console.log(selectedProduct);
+  
+//   const [prodId, setProdId]=useState('');
+//   const [nome, setNome]=useState('');
+//   const [preco, setPreco]=useState('');
+//   const [publicUrl, setPublicUrl]=useState(''); 
+//   const [codigo, setCodigo]=useState('');
+//   const [marca, setMarca]=useState('');
+//   const [fotos, setFotos]=useState('');
+//   const [modelo, setModelo]=useState('');
+//   const [descricao, setDescricao]=useState('');
+//   const [caracteristicasTecnicas, setCaracteristicasTecnicas]=useState('');
 
-//     function getHash() {
-//       const hash = window.location.hash.replace(/#\/produto\//g, '');    
-//       return hash
-//     }
-    
-//     function buildUrl(){
-//       const productId = getHash()
-//       const tenantId = "fa22705e-cf27-41d0-bebf-9a6ab52948c4";
-//   //  `/tenant/:tenantId/produto/:id`
-//       const requisition = `/tenant/${tenantId}/produto/${productId}`
-//       return requisition
-//     }
-//     const a= buildUrl()
-//     console.log(a);
-    
-//     const instance = axios.create({
-//       baseURL: 'http://localhost:8157/api/',
-//       timeout: 10000,
-//       headers: {'Authorization': 'Bearer '+ token}
-//     });
-    
-//     const response = await instance.get(`tenant/fa22705e-cf27-41d0-bebf-9a6ab52948c4/produto/d5f60210-40b0-4a90-bc3d-04547a94bf0f`)
-//     .then(response => {        
-//         return response.data;
+
+//   const [logradouro, setLogradouro]=useState('');
+//   const [bairro, setBairro]=useState('');
+//   const [cep, setCEP]=useState('');
+//   const [cidade, setCidade]=useState('');
+//   const [estado, setEstado]=useState('');
+
+//   const [resposta, setResposta] = useState('')
+  
+//   const [empresaId, setEmpresaId]=useState('');
+//   const [comentario, setComentario]=useState('');
+
+//   const [comentarios = [] , setComentarios]=useState<any[]>([]);
+  
+//   const userId = id
+
+//   useEffect(() => {
+//   async function loadProduct(){
+//     const response = await api.get(selectedProduct)
+//     .then(response => {
+//         console.log(response.data)
+//         return response.data
 //     })
-//     console.log(response.data)
-//     }
 
-//     loadProducts()
-//     }, [] )
+//     setProdId(response.id)
+//     setNome(response.nome)
+    
+//     if(response.isOferta === true){
+//     setPreco(formatPrice(response.precoOferta))        
+//     }
+//     else{
+//     setPreco(formatPrice(response.preco))
+//     }
+//     setPublicUrl(response.publicUrl)
+//     setCodigo(response.codigo)
+//     setMarca(response.marca)
+//     setFotos(response.fotos[0].downloadUrl)
+//     setModelo(response.modelo);
+//     setDescricao(response.descricao)
+//     setCaracteristicasTecnicas(response.caracteristicasTecnicas)
+//     setEmpresaId(response.empresaId)
+// }
+// async function loadUser() {
+//   const user = await api.get('pessoa-fisica-perfil')
+//   .then(user => {
+//       console.log(user.data);
+    
+//       return user.data;            
+//   })
+// setLogradouro(user.logradouro+", "+user.numero);
+//   setBairro(user.bairro);
+//   setCEP(user.cep)
+//   setCidade(user.cidade);
+//   setEstado(user.estado);
+// }
+//   loadUser()  
+//   loadProduct();
+// console.log(id)
+// }, []);
+
+
+//   useEffect(
+//     () => {
+//       async function loadComments() {
+//         if(prodId){
+//           const response = await api.get(`findByProduto/${prodId}`);
+//           console.log(response)
+//           setComentarios( response.data)
+//         }
+//       }
+//       loadComments()
+//     }, [prodId]
+//   )
+
+//   async function makeCommentary() {
+//     let data = {
+//       data: {
+//         "comentario": comentario ,
+//         "fornecedorEmpresaId": empresaId,
+//         "produtoId": prodId,
+//         "userId": id,
+//       }
+//     }
+//     console.log(data)
+//     const response = await api.post('comentario', data)
+//     console.log(response)
+//   }
+
+//   async function addResposta() {
+//     console.log(resposta)
+//   }
+
+
 //   return (
 //     <>
+//       <Header />
+//       <Menu />
 //       <div className="container">
 //         <ContainerProd>
-//           <img src={props.repository.image} alt="" />
+//           <img src={fotos} alt="" />
 //           <DetailsProdFirts>
 //             <BoxProd>
 //               <BoxProdFirts>
-//                 <span>Nome da marca /*response.nome*/ </span>
-//                 <strong>{props.repository.title}</strong>
+//                 <span>Nome da marca</span>
+//                 <strong>{nome}</strong>
 //                 <span>Código do produto</span>
 //                 <IconsContentStar>
 //                   <AiFillStar size={18} />
@@ -111,7 +251,7 @@ export default function ProdItem() {
 //                   <small>(1)</small>
 //                 </IconsContentStar>
 //                 <br />
-//                 <strong>R$ {props.repository.price /*response.preco*/}</strong>
+//                 <strong>{preco}</strong>
 //                 <span>Variantes (ex: Cor)</span>
 //                 <BoxColors>
 //                   <ColorWhite />
@@ -124,53 +264,138 @@ export default function ProdItem() {
 //               </BoxProdFirts>
 
 //               <AddCartRight>
+//                 <button className="fav" type="button"
+//                 onClick={() => setFavoritos(favoritos, productId)}
+//                 >Favoritar <FiHeart /></button>
 //                 <FlexBtnsProd>
-//                   <IconPlusMinus>
+//                   <IconPlusMinus onClick={increment}>
 //                     <FiPlus />
 //                   </IconPlusMinus>
-//                   <h3>4</h3>
-//                   <IconPlusMinus>
+//                   <h3>{counter}</h3>
+//                   <IconPlusMinus onClick={withdraw}>
 //                     <FiMinus />
 //                   </IconPlusMinus>
 //                 </FlexBtnsProd>
-//                 <Link to="#">Adicionar</Link>
+//                 <Link to="/pagar">Adicionar</Link>
 //               </AddCartRight>
 //             </BoxProd>
 
 //             <BoxProd>
-//               <div className="oi">
+//               <div className="descprod">
+//                 <strong>Descrição do produto</strong>
 //                 <span>
-//                   response.descricao
-//                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-//                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-//                   Ut enim ad minim veniam, quis nostrud exercitation ullamco
-//                   laboris nisi ut aliquip ex ea commodo consequat.
-//                 </span>
-
-//                 <strong>Descrição técnica</strong>
-
-//                 <span>
-//                   Marca: response.marca<br />
-//                   Modelo: response.modelo<br />
-//                   Material: <br />
-//                   Características: response.caracteristicas<br />
-//                   Observações: <br />
-//                   Acabamento: <br />
+//                   {descricao}
 //                 </span>
 //               </div>
 //             </BoxProd>
 //           </DetailsProdFirts>
 //         </ContainerProd>
 
+//         <ProdCaracteristicas>
+//           <div>
+//             <h2>Características Técnicas</h2>
+//             <span>
+//                 {caracteristicasTecnicas}
+//             </span>
+//           </div>
+//         </ProdCaracteristicas>
+
+//         {
+//           role == "pessoa"? (
+//         <form action="submit">
+//           <fieldset>
+//               <input type="text" name="" id="" 
+//               placeholder="digite seu comentario"
+//               onChange={(text) => {
+//                 setComentario(text.target.value)
+//               }}
+//               />
+//               <button 
+//               onClick={
+//                 (e) => {
+//                   e.preventDefault()
+//                   makeCommentary()
+//                 }
+//               }
+//               >
+//                 Fazer Comentario
+//               </button>
+//           </fieldset>
+//         </form>
+//           ):(
+//             <div></div>
+//           )
+//         }
+
+//         {
+//         comentarios.map(
+//           (comentario: any) => (
 //         <ProdSecond>
 //           <div>
-//             <h2>Nome do cliente</h2>
-//             <span>Posso pedir para embrulhar para presente?</span>
+//             <h2>{comentario.firstName}</h2>
+//             <span>{comentario.comentario}</span>
 //           </div>
-
-//           <Link to="#">Responder</Link>
+//           {
+//             role != 'pessoa'? ( 
+//               <Btn
+//               onClick={
+//                 () => console.log('fkdbnldfbnjdfnçbjndfbndjnbndfbjakjfbnjvnbndajkkf')
+//               } 
+//               >Responder</Btn>
+//             ): (
+//               <div></div>
+//              )
+//           }
 //         </ProdSecond>
+
+//           )
+//         )
+//         }
+
 //       </div>
+//       <ModalContainerVendedor>
+//         <Modal
+//           isOpen={showModal1}
+//           onAfterOpen={afterOpenModal}
+//           onRequestClose={closeModal}
+//         >
+//           <div>
+//             <ModalFlex>
+//               <AiOutlineClose onClick={closeModal} />
+//             </ModalFlex>
+
+//             <ModalContent>
+//               <h3>Nova promoção</h3>
+
+//               <ContentFormNew>
+//                 <label htmlFor="">Novo preço</label>
+//                 <input
+//                   required
+//                   type="text"
+//                   placeholder="650"
+//                   onChange={(text) => {
+//                     setResposta(text.target.value);
+   
+//                   }}
+//                 />
+//               </ContentFormNew>
+
+//               <div className="buttonsNew">
+//                 <button type="button" onClick={
+//                   () => console.log('ok')
+//                 }>
+//                   Cancelar
+//                 </button>
+//                 <button type="button" onClick={addResposta}>
+//                   Adicionar
+//                 </button>
+//               </div>
+//             </ModalContent>
+//           </div>
+//         </Modal>
+//       </ModalContainerVendedor>
+
+
 
 //       <ModalContainerVendedor>
 //         <Modal
@@ -189,9 +414,9 @@ export default function ProdItem() {
 
 //               <SelectAdress>
 //                 <div>
-//                   <strong>Rua XXXXXX XXXX XX XXXX, 55</strong>
+//                   <strong>{logradouro}</strong>
 //                   <br />
-//                   <span>CEP: XXXX - SP</span>
+//                   <span>CEP: {cep} - {estado}</span>
 //                 </div>
 //                 <div>
 //                   <small>Selecione outro endereço</small>
@@ -208,6 +433,10 @@ export default function ProdItem() {
 //           </div>
 //         </Modal>
 //       </ModalContainerVendedor>
+
 //     </>
 //   );
+
 // }
+
+

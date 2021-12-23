@@ -9,7 +9,7 @@ import SwiperCore, {
 import "swiper/swiper.scss";
 
 import { SwiperStyles, BarHome, FlexBar, BannerHomeImage } from "./styles";
-import { api } from "../../services/api";
+import { api, ip, role } from "../../services/api";
 import { formatPrice } from "../../util/format";
 import { useCart } from "../../hooks/useCart";
 import Header from "../../components/Header";
@@ -31,17 +31,20 @@ interface Product {
   descricao: string;
   preco: number;
   publicUrl: string;
+  imagemUrl: string;
   isOferta: number;
   precoOferta: any;
   quantidadeNoEstoque: number;
 }
 
 interface ProductFormatted extends Product {
+  promocaoId: any;
+  imagemPromocional: string | undefined;
   priceFormatted: string;
 }
 
 let productCounter: any[] = [];
-
+var prodId = "";
 SwiperCore.use([Autoplay,Pagination,Navigation]);
 
 const Home = (): JSX.Element => {
@@ -49,23 +52,46 @@ const Home = (): JSX.Element => {
   
 
   const [products = [], setProducts] = useState<ProductFormatted[]>([]);
+  const [products2 = [], setProducts2] = useState<ProductFormatted[]>([]);
+  const [promocoes = [], setPromocoes] = useState<ProductFormatted[]>([]);
   const { addProduct, cart } = useCart();
   
 
   useEffect(() => {
     async function loadProducts() {
-      const response = await axios.get("http://189.127.14.11:8157/api/produtos");
-      //console.log(response.data);
+      const response = await axios.get("http://"+ip+":8157/api/produtos");
+      
       const productsFormated = response.data.record.map(function (
         product: Product
       ) {
         return { ...product, preco: formatPrice(product.preco) };
       });
       setProducts(productsFormated);
+      //productCounter = []; 
+      const response2 = await axios.get("http://"+ip+":8157/api/produtosTrue");
+      
+      const productsFormated2 = response2.data.record.map(function (
+        product: Product
+      ) {
+        return { ...product, preco: formatPrice(product.preco) };
+      });
+      setProducts2(productsFormated2);
     }
     loadProducts();
   }, []);
 
+  useEffect(
+    () => {
+      axios.get(`http://${ip}:8157/api/produto-imagens-promocionais/`).then(
+        (response) => {
+          console.log(response.data)
+          setPromocoes(response.data)
+        }
+      )
+    }, [])
+  function filterPromocoes(){
+
+  }
   function handleAddProduct(id: string) {
     addProduct(id);
   }
@@ -89,8 +115,22 @@ const Home = (): JSX.Element => {
           loop={true}
           navigation={true}
         >
+          {
+            promocoes.map(
+              (promocao, index) => (
+                    <SwiperSlide key={index}>
+                      <a href={`http://${ip}:3000/constal#/produtos-promocao/${promocao.promocaoId}`}>
+                        {/* /produtos-promocao/:imagemId */}
+                        <img src={promocao.imagemPromocional}
+                        alt={promocao.precoOferta + " " + promocao.nome} />
+                    </a>
+                    </SwiperSlide>
+              )             
+            )
+          }
           <SwiperSlide><img src={moveis} alt="moveis" /></SwiperSlide>
-          <SwiperSlide><img src={materiais} alt="materiais" /></SwiperSlide>
+          <SwiperSlide><img src={materiais} alt="materiais" />
+          </SwiperSlide>
           <SwiperSlide><img src={eletrodomesticos} alt="eletrodomesticos" /></SwiperSlide>
           <SwiperSlide><img src={cama} alt="cama" /></SwiperSlide>
           <SwiperSlide><img src={modainfantil} alt="moda infantil" /></SwiperSlide>
@@ -129,16 +169,18 @@ const Home = (): JSX.Element => {
       <SwiperStyles>
         <div className="container">
           <h2>Ofertas e promoções</h2>
-          {products.forEach((p) => {
-            if (p.isOferta === 1) {
+          {/*products.forEach((p) => {
+            if (p.isOferta === 1 && prodId != p.id) {
               productCounter.push(p);
+              prodId = p.id;
+              console.log(p);
             }
 
             //console.log(productCounter);
             //console.log(products.length);
-          })}
+          })*/}
 
-          {productCounter.length === 0 ? (
+          {products2.length === 0 ? (
             <p>Nenhum produto em promoção</p>
           ) : (
             <Swiper
@@ -147,15 +189,17 @@ const Home = (): JSX.Element => {
               onSlideChange={() => console.log("slide change")}
               onSwiper={(swiper) => console.log(swiper)}
             >
-              {productCounter.map((product) => (
+              {products2.map((product) => (
                 <SwiperSlide>
-                  {product.isOferta === 1 && (
+                  {(
                     <li key={product.id}>
                       <Link to={`/produto/${product.id}`}>
-                        <img src={product.publicUrl} alt={product.nome} />
+                        <img src={product.imagemUrl} alt={product.nome} />
                       </Link>
                       <strong>{product.nome}</strong>
                       <p>R$ {product.precoOferta}</p>
+                      {
+                      role == "pessoa" ? (
                       <button
                         type="button"
                         data-testid="add-product-button"
@@ -165,9 +209,12 @@ const Home = (): JSX.Element => {
                           <MdAddShoppingCart size={16} color="#FFF" />
                           {product.quantidadeNoEstoque}
                         </div>
-
                         <span>ADICIONAR AO CARRINHO</span>
                       </button>
+                        ):(
+                          <br />
+                        )
+                      }
                     </li>
                   )}
                 </SwiperSlide>
@@ -190,10 +237,12 @@ const Home = (): JSX.Element => {
               <SwiperSlide>
                 <li key={product.id}>
                   <Link to={`/produto/${product.id}`}>
-                    <img src={product.publicUrl} alt={product.nome} />
+                    <img src={product.imagemUrl} alt={product.nome} />
                   </Link>
                   <strong>{product.nome}</strong>
                   <p>{product.preco}</p>
+                  {
+                    role == "pessoa" ? (
                   <button
                     type="button"
                     data-testid="add-product-button"
@@ -203,9 +252,12 @@ const Home = (): JSX.Element => {
                       <MdAddShoppingCart size={16} color="#FFF" />
                       {product.quantidadeNoEstoque}
                     </div>
-
                     <span>ADICIONAR AO CARRINHO</span>
                   </button>
+                    ):(
+                      <br />
+                    )
+                  }
                 </li>
               </SwiperSlide>
             ))}

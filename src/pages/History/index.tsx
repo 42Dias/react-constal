@@ -15,13 +15,15 @@ import {
 import Modal from "react-modal";
 
 import React, { useState, useEffect } from "react";
-import { api } from "../../services/api";
+import { api, ip, role } from "../../services/api";
 
 
 import { formatPrice } from "../../util/format";
 import { Menu } from "../../components/Menu";
 
 interface Product {
+  precoTotal: number | bigint;
+  imagemUrl: string | undefined;
   status: string;
   valorTotal: number;
   nomeProduto: string;
@@ -58,7 +60,10 @@ export default function Histoty() {
   // const [estado, setestado]=useState('');
 
   useEffect(() => {
-
+    if(role != 'pessoa'){
+      // Simulate an HTTP redirect:
+      window.location.replace(`http://${ip}:3000/constal#/erro`);
+    }
     async function loadHistory() {
       console.log("requisição do pedido feita")
       const res = await api.get('pedidoWithProduct')
@@ -79,9 +84,9 @@ export default function Histoty() {
           products.map((product) => (
          <CardDatailsContent key={product.nome}>
               <ContentDetails>
-                <img src={product.publicUrl} alt="" />
-                <span>{product.nomeProduto}</span>
-                <p>{formatPrice( product.valorTotal )}</p>
+                <img src={product.imagemUrl} alt="" />
+                <span>{product.nome}</span>
+                <p>{formatPrice( product.precoTotal)}</p>
               </ContentDetails>
               <strong onClick={openModal} >Ver detalhes</strong>
          </CardDatailsContent>

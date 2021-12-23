@@ -1,13 +1,25 @@
 export interface Product {
-  id: number;
-  /*nome: string;
+  categoria: any;
+  frete: any;
+  prazo: string;
+  imagem: any;
+  caracteristicasTecnicas:string;
+  codigoDaEmpresa:string;
+  id: string;
+  nome: string;
   descricao: string;
   preco: number;
   publicUrl: string;
-  isOferta: number;
-  precoOferta: any;*/
+  isOferta: any;
+  precoOferta: any;
   quantidade: number;
-  produto:{
+  status: string;
+  empresaId: string;
+  fotos: {
+    publicUrl: string;
+  }
+ 
+  produto: {
     id: number;
     nome: string;
     fotos: string;
@@ -20,7 +32,7 @@ export interface Stock {
   quantidade: number;
 }
 
-export interface Empresa{
+export interface Empresa {
   avatars: string;
   telefone: string;
   email: string;
@@ -28,4 +40,6 @@ export interface Empresa{
   id: number;
   razaoSocial: string;
   cnpj: string;
+  status: string;
+  tId: string;
 }

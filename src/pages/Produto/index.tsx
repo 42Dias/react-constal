@@ -15,7 +15,6 @@ import {
   ProdSecond,
   ModalContainerVendedor,
   ModalFlex,
-  ModalContent,
   SelectAdress,
   ProdCaracteristicas,
 } from "./styles";
@@ -27,9 +26,12 @@ import Modal from "react-modal";
 import React from "react";
 import Header from "../../components/Header";
 import { toast } from "react-toastify";
-import { api } from "../../services/api";
+import { api, id, role } from "../../services/api";
 import { formatPrice } from "../../util/format";
 import { Menu } from "../../components/Menu";
+import { FormComents, ProdSecondComents } from "./ProdItem/styles";
+import { Btn } from "../Dashboard/PersonalData/styles";
+import { ContentFormNew, ModalContent } from "../Dashboard/NewProd/styles";
 
 interface RepositoryItemProps {
   repository: {
@@ -42,6 +44,8 @@ interface RepositoryItemProps {
 }
 export default function Produto() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [showModal1, setShowModal1] = React.useState(false);
+  const [showModal2, setShowModal2] = React.useState(false);
 
   const [counter, setCounter] = useState(0);
 
@@ -56,7 +60,6 @@ export default function Produto() {
       progress: undefined,
     });
   }
-
 
   //BUG AO ADICIONAR MAIS DE UM!!!!!
   const favoritos: string[] = JSON.parse(localStorage.getItem("favorito") || "[]");
@@ -96,6 +99,8 @@ export default function Produto() {
 
   function closeModal() {
     setIsOpen(false);
+    setShowModal1(false)
+    setShowModal2(false)
   }
 
   function getHash() {
@@ -105,16 +110,17 @@ export default function Produto() {
   const productId = getHash()
   function buildUrl(){
     const productId = getHash()
-    const tenantId = "fa22705e-cf27-41d0-bebf-9a6ab52948c4";
 //  `/tenant/:tenantId/produto/:id`
-    const requisition = `/tenant/${tenantId}/produto/${productId}`
+    const requisition = `/produto/${productId}`
     return requisition
   }
+  
+  
   
   const selectedProduct = buildUrl()
   console.log(selectedProduct);
   
-  const [id, setId]=useState('');
+  const [prodId, setProdId]=useState('');
   const [nome, setNome]=useState('');
   const [preco, setPreco]=useState('');
   const [publicUrl, setPublicUrl]=useState(''); 
@@ -123,6 +129,7 @@ export default function Produto() {
   const [fotos, setFotos]=useState('');
   const [modelo, setModelo]=useState('');
   const [descricao, setDescricao]=useState('');
+  const [caracteristicasTecnicas, setCaracteristicasTecnicas]=useState('');
 
 
   const [logradouro, setLogradouro]=useState('');
@@ -131,49 +138,94 @@ export default function Produto() {
   const [cidade, setCidade]=useState('');
   const [estado, setEstado]=useState('');
 
+  const [resposta, setResposta] = useState('')
+  
+  const [empresaId, setEmpresaId]=useState('');
+  const [comentario, setComentario]=useState('');
+
+  const [comentarios = [] , setComentarios]=useState<any[]>([]);
+  const [comment , setComment]=useState<any>();
+  
   useEffect(() => {
-  async function loadProduct(){
-    const response = await api.get(selectedProduct)
-    .then(response => {
-        console.log(response.data)
-        return response.data
-    })
+    async function loadProduct() {
+      const response = await api.get(selectedProduct).then((response) => {
+        console.log(response.data);
+        return response.data;
+      });
 
-    setId(response.id)
-    setNome(response.nome)
-    
-    if(response.isOferta === true){
-    setPreco(formatPrice(response.precoOferta))        
+      setProdId(response.id)
+
+      setNome(response.nome);
+
+      if (response.isOferta === true) {
+        setPreco(formatPrice(response.precoOferta));
+      } else {
+        setPreco(formatPrice(response.preco));
+      }
+      setPublicUrl(response.publicUrl);
+      setCodigo(response.codigo);
+      setMarca(response.marca);
+      setFotos(response.fotos[0].downloadUrl);
+      setModelo(response.modelo);
+      setDescricao(response.descricao);
+      setCaracteristicasTecnicas(response.caracteristicasTecnicas)
+      setEmpresaId(response.empresaId)
+
+
     }
-    else{
-    setPreco(formatPrice(response.preco))
+    async function loadUser() {
+      const user = await api.get("pessoa-fisica-perfil").then((user) => {
+        console.log(user.data);
+
+        return user.data;
+      });
+      setLogradouro(user.logradouro + ", " + user.numero);
+      setBairro(user.bairro);
+      setCEP(user.cep);
+      setCidade(user.cidade);
+      setEstado(user.estado);
     }
-    setPublicUrl(response.publicUrl)
-    setCodigo(response.codigo)
-    setMarca(response.marca)
-    setFotos(response.fotos[0].downloadUrl)
-    setModelo(response.modelo);
-    setDescricao(response.descricao)
+    loadUser();
+    loadProduct();
+  }, []);
 
-}
-async function loadUser() {
-  const user = await api.get('pessoa-fisica-perfil')
-  .then(user => {
-      console.log(user.data);
+     async function makeCommentary() {
+        let data = {
+          data: {
+            "comentario": comentario ,
+            "fornecedorEmpresaId": empresaId,
+            "produtoId": prodId,
+            "userId": id,
+          }
+        }
+        console.log(data)
+        const response = await api.post('comentario', data)
+        console.log(response)
+      }
     
-      return user.data;            
-  })
-setLogradouro(user.logradouro+", "+user.numero);
-  setBairro(user.bairro);
-  setCEP(user.cep)
-  setCidade(user.cidade);
-  setEstado(user.estado);
-}
-  loadUser()  
-  loadProduct();
-console.log(id)
-}, []);
+      async function addResposta() {
+        
+        comment.resposta = resposta
+        comment.isRespondido = 1
 
+        const response = await api.put(`comentario/${comment.id}`, comment)
+        console.log(response)
+      }
+    
+    
+
+  useEffect(
+    () => {
+      async function loadComments() {
+        if(prodId){
+          const response = await api.get(`findByProduto/${prodId}`);
+          console.log(response)
+          setComentarios( response.data)
+        }
+      }
+      loadComments()
+    }, [prodId]
+  )
   return (
     <>
       <Header />
@@ -203,16 +255,21 @@ console.log(id)
                   <ColorBlack />
                   <ColorRed />
                 </BoxColors>
-                <a className="vendedor" onClick={openModal}>
+                <a className="vendedor" onClick={
+                  () => setShowModal2(true)
+                }>
                   Opções de frete
                 </a>
               </BoxProdFirts>
 
               <AddCartRight>
-                <button className="fav" type="button"
-                onClick={() => setFavoritos(favoritos, productId)}
-
-                >Favoritar <FiHeart /></button>
+                <button
+                  className="fav"
+                  type="button"
+                  onClick={() => setFavoritos(favoritos, productId)}
+                >
+                  Favoritar <FiHeart />
+                </button>
                 <FlexBtnsProd>
                   <IconPlusMinus onClick={increment}>
                     <FiPlus />
@@ -229,9 +286,7 @@ console.log(id)
             <BoxProd>
               <div className="descprod">
                 <strong>Descrição do produto</strong>
-                <span>
-                  {descricao}
-                </span>
+                <span>{descricao}</span>
               </div>
             </BoxProd>
           </DetailsProdFirts>
@@ -241,52 +296,118 @@ console.log(id)
           <div>
             <h2>Características Técnicas</h2>
             <span>
-              <b>Peso do Produto:</b> 12 Kg
-            </span>
-            <span>
-              <b>Quantidade de Lugares:</b> 6 lugares
-            </span>
-            <span>
-              <b>Formato:</b> Retangular
-            </span>
-            <span>
-              <b>Material do Tampo da Mesa:</b> Plástico
-            </span>
-            <span>
-              <b>Tipo de Material do Tampo da Mesa:</b> Polipropileno
-            </span>
-
-            <span>
-              <b>Material da Estrutura da Mesa:</b> Plástico
-            </span>
-            <span>
-              <b>Tipo de Material da Estrutura da Mesa:</b> Polipropileno
-            </span>
-            <span>
-              <b>Mesa Dobrável:</b> Sim
-            </span>
-            <span>
-              <b>Furo para Ombrelone:</b> Não
-            </span>
-            <span>
-              <b>Dimensão da Mesa (AxLxC):</b> 74x75x180cm
+              {caracteristicasTecnicas}
             </span>
           </div>
         </ProdCaracteristicas>
 
+        {
+        comentarios.map(
+          (comentario: any, index: number) => (
         <ProdSecond>
           <div>
-            <h2>Nome do cliente</h2>
-            <span>Posso pedir para embrulhar para presente?</span>
+            <h2>{comentario.firstName}</h2>
+            <span>{comentario.comentario}</span>
           </div>
-
-          <Link to="#">Responder</Link>
+          {/* 
+          pegar o id do comentátio
+          */}
+          {
+            role != 'pessoa'? ( 
+              <Btn
+              onClick={
+                () => {
+                  setShowModal1(true)
+                  setComment(comentario)
+                }
+              } 
+              >Responder</Btn>
+            ): (
+              <div></div>
+             )
+          }
         </ProdSecond>
+
+          )
+        )
+        }
+        {
+          role != 'pessoa'? (
+            <div></div>
+          ) : (
+            <ProdSecondComents>
+            <FormComents>
+              <h2>Tire a sua dúvida aqui</h2>
+              <select name="" id="">
+                <option value="">Motivo da mensagem</option>
+                <option value="">Reclamação</option>
+                <option value="">Elogio</option>
+                <option value="">Pergunta</option>
+                <option value="">Denuncia</option>
+              </select>
+              <textarea name="" id=""
+              onChange={(text) => {
+                setComentario(text.target.value)
+              }}
+              ></textarea>
+              <input placeholder="Sua mensagem" type="submit" value="Enviar"
+                onClick={
+                (e) => {
+                  e.preventDefault()
+                  makeCommentary()
+                }
+              } />
+            </FormComents>
+          </ProdSecondComents>    
+          )
+        }
       </div>
+
+       <ModalContainerVendedor>
+         <Modal
+          isOpen={showModal1}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+        >
+          <div>
+            <ModalFlex>
+              <AiOutlineClose onClick={closeModal} />
+            </ModalFlex>
+
+            <ModalContent>
+              <h3>Nova resposta</h3>
+
+              <ContentFormNew>
+                <label htmlFor="">Responder</label>
+                <input
+                  required
+                  type="text"
+                  onChange={(text) => {
+                    setResposta(text.target.value);
+                  }}
+                />
+              </ContentFormNew>
+
+              <div className="buttonsNew">
+                <button type="button" onClick={
+                  () => console.log('ok')
+                }>
+                  Cancelar
+                </button>
+                <button type="button" onClick={addResposta}>
+                  Adicionar
+                </button>
+              </div>
+            </ModalContent>
+          </div>
+        </Modal>
+      </ModalContainerVendedor>
+
+
 
       <ModalContainerVendedor>
         <Modal
-          isOpen={modalIsOpen}
+          isOpen={showModal2}
           onAfterOpen={afterOpenModal}
           onRequestClose={closeModal}
         >
@@ -320,10 +441,6 @@ console.log(id)
           </div>
         </Modal>
       </ModalContainerVendedor>
-
     </>
   );
-
 }
-
-
