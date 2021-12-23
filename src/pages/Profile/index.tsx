@@ -62,7 +62,7 @@ export default function Profile() {
     }
     const response = await axios({
       method: "get",
-      url: `http://localhost:8157/api/auth/me`,
+      url: `http://${ip}:8157/api/auth/me`,
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -208,7 +208,7 @@ export default function Profile() {
   }
 
   useEffect(() => {
-    const hash = window.location.hash.replace('http://localhost:3000/constal#/', '');
+    const hash = window.location.hash.replace('http://dev.42dias.com.br/Clientes/constal/#/', '');
     console.log(hash)
     if(hash){
       

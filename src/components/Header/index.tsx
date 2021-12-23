@@ -118,7 +118,7 @@ const Header = (): JSX.Element => {
   async function loadUser() {
     const response = await axios({
       method: "get",
-      url: `http://localhost:8157/api/auth/me`,
+      url: `http://${ip}:8157/api/auth/me`,
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",

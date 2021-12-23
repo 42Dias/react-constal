@@ -11,13 +11,13 @@ import { useEffect, useState } from "react";
 
 
 export default function CheckEmail() {
-  const hash = window.location.hash.replace('http://localhost:3000/constal#/checar-email/', '');
+  const hash = window.location.hash.replace(`http://${ip}:3000/constal#/checar-email/`, '');
   const [loading, setLoading] = useState(false);
 
   function verificaEmail(){
     var id = hash.replace('#/checar-email/', '')
     setLoading(true)
-    axios.post(`http://localhost:8157/api/tenant/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9/userVerificarEmail/${id}`
+    axios.post(`http://${ip}:8157/api/tenant/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9/userVerificarEmail/${id}`
   ).then((response) => {
     if (response.statusText == "OK") {
       toast.info('Email verificado com sucesso!');
