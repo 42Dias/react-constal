@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { MenuSell, TitleVendas, ContainerMenuSell, SelectInput } from "./styles";
 import { Menu } from "../../../components/Menu";
 import { useEffect, useState } from "react";
-import { api, ip, role, status } from "../../../services/api";
+import { api, id, ip, role, status } from "../../../services/api";
 import { Empresa } from "../../../types";
 import { toast } from "react-toastify";
 import { Toast } from "react-toastify/dist/components";
@@ -127,6 +127,9 @@ export default function Vendas() {
         }
         loadPedidos()
         setSinal(1)
+
+        empresaT(id!)
+
       }
     }, []);
   useEffect(
@@ -167,7 +170,8 @@ export default function Vendas() {
       <Menu />
       <div className="container">
         <TitleVendas>Vendas</TitleVendas>
-
+        {
+          role == 'admin' ? (
         <SelectInput>
           <label htmlFor="">Selecionar Empresa: </label>
           <select
@@ -182,6 +186,10 @@ export default function Vendas() {
           </select>
           {loading ? <img width="40px" height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
         </SelectInput>
+          ) : (
+            false
+          )
+        }
         <MenuSell>
           <span><b>Pendentes({pedidosPendentes.length})</b></span>
           <Link to="/confirmadas"><span>Confirmadas({pedidosConfirmados.length})</span></Link>

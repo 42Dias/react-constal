@@ -150,7 +150,7 @@ export default function PersonalData() {
     }
     const response = await api.post('empresa-perfil', data)
     console.log(response)
-    toast.info('Eba, estamos cada dia mais perto da morte! :)')
+    toast.info('Empresa Criada com sucessso! :)')
     closeModal()
   }
   async function resetSenha(){

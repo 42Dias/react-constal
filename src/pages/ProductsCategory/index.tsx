@@ -22,8 +22,10 @@ export default function ProductsCategory() {
   useEffect(
     ()=>{
       async function loadProdutosPesquisados(){
-        const pesquisa = window.location.hash.replace(/#\/produtos\//g, '');
-        const resultadoDaPesquisa = await api.get(`produto?filter%5BcategoriaId%5D=${pesquisa}`)
+        const pesquisa = window.location.hash.replace(/#\/produto-categoria\//g, '');
+        console.log(pesquisa)
+        const resultadoDaPesquisa = await api.get(`produto?filter%5Bcategoria%5D=${pesquisa}`)
+        http://localhost:3000/constal#/produto-categoria/082b6c7e-b525-423e-b04d-d2a0b2777f1a
         setProducts(resultadoDaPesquisa.data.rows)
       }
       loadProdutosPesquisados()
