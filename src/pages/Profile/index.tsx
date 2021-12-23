@@ -317,6 +317,12 @@ export default function Profile() {
           </CardDatas>
         </CardProfile>
 
+
+
+        <Link to={"/historico-de-pedidos"}>
+          Historico de compras
+        </Link>
+
         <CardDatails>
           <h2>Dados da conta</h2>
           <button
