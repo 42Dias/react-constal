@@ -197,8 +197,8 @@ export default function NewProd() {
   async function deleteProduct(prodId: any, index: number) {
     const response = await api.delete(`produtoDeleteOne/${prodId}`);
     if(response.status == 200){
-      const newProds = products.splice(index, 1)
-      setProducts(newProds)
+      products.splice(index, 1)
+      setProducts(products)
     }
 
   }
