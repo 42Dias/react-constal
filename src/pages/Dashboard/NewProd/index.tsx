@@ -543,10 +543,9 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Características técnicas</label>
-                <input
+                <textarea
                   required
-                  type="text"
-                  placeholder="Especificações técnicas"
+                  placeholder="Especificações Aaaaa"
                   onChange={(text) =>
                     setCaracteristicasTecnicas(text.target.value)
                   }
