@@ -255,6 +255,48 @@ export const ModalContent = styled.div`
     max-width: 420px;
     padding: 20px 0;
   }
+  .buttonsNew {
+    display: flex;
+    cursor: pointer;
+  }
+
+  .buttonsNew button {
+    cursor: pointer;
+
+    width: 165px;
+    height: 40px;
+
+    border-radius: 5px;
+    color: black;
+    border: 1px solid rgba(16, 16, 16, 1);
+    text-decoration: none;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 5px;
+
+    @media (max-width: 768px) {
+      width: 50%;
+    }
+  }
+
+  .buttonsNew button:nth-child(2) {
+    width: 165px;
+    height: 40px;
+    cursor: pointer;
+
+    background: #101010;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 5px;
+    border: 0;
+  }
 `;
 
 export const SelectAdress = styled.div`
