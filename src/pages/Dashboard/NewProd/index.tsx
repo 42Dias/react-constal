@@ -27,6 +27,10 @@ import { api, ip, role, status } from "../../../services/api";
 import { Btn } from "./styles";
 
 export default function NewProd() {
+  var uuid = require("uuid");
+
+
+
   const [showModal1, setShowModal1] = React.useState(false);
   const [showModal2, setShowModal2] = React.useState(false);
   const [showModal3, setShowModal3] = React.useState(false);
@@ -54,6 +58,7 @@ export default function NewProd() {
 
   const [newCategoria, setNewCategoria] = useState("");
   const [loading, setLoading] = useState(false);
+  const [dataEncerramento, setDataEncerramento]   =  useState<any>();
 
   function openModal() {
     //setIsOpen(true);
@@ -92,6 +97,7 @@ export default function NewProd() {
   }
 
   function setValues() {
+    console.log(categoria)
     const data = {
       data: {
         nome: nome,
@@ -102,7 +108,8 @@ export default function NewProd() {
         prazo: prazo,
         quantidadeNoEstoque: quantidade,
         frete: frete,
-        categoriaId: categoria.id,
+        categoria: categoria,
+        categoriaId: categoria,
         imagemUrl: imagem,
         status: "pendente",
       },
@@ -117,7 +124,7 @@ export default function NewProd() {
       console.log(response)
       if (response.statusText == "OK") {
         messageApprove();
-
+        closeModal()
         setProducts(prevProducts => {
           return [...new Set([...prevProducts, response.data])]	
            })
@@ -147,24 +154,37 @@ export default function NewProd() {
   }
 
   async function makeRequisitionToChange(data: any) {
-    const response: any = api.put(`produto/${id}`, data).catch(error =>{
-        toast.error("Algo deu errado, tente mais tarde :(");      
-        setLoading(false)
-    });
+    console.log(categoria)
+    setLoading(true)
+
+    const response: any = api.put(`produto/${id}`, data)
+    .then(
+      async (response) => {
     console.log(await response);
     if ((await response.status) == 200) {
       messageApprove();
+      closeModal()
     } else if ((await response.status) == 500) {
       toast.error("Algo deu errado, tente mais tarde :(");
       setLoading(false)
     } else {
-      messageApprove();
+      toast.error("Algo deu errado, tente mais tarde :(");
     }
-    console.log(response);
+    setLoading(false)
+    console.log(response)
+      }
+    )
+    .catch(error =>{
+        toast.error("Algo deu errado, tente mais tarde :(");      
+        setLoading(false)
+
+    });
+
   }
 
   async function changeProduct() {
-    setLoading(true)
+    console.log(categoria)
+
     const data = {
       data: {
         id: id,
@@ -176,7 +196,8 @@ export default function NewProd() {
         prazo: prazo,
         quantidade: quantidade,
         frete: frete,
-        categoriaId: categoria.id,
+        categoria: categoria,
+        categoriaId: categoria,
         imagemUrl: imagem,
         status: "pendente",
       },
@@ -184,6 +205,7 @@ export default function NewProd() {
 
     console.log(data);
     makeRequisitionToChange(data);
+    
   }
   async function addPromotion() {
     setLoading(true)
@@ -198,10 +220,13 @@ export default function NewProd() {
         prazo: prazo,
         quantidade: quantidade,
         frete: frete,
-        categoriaId: categoria.id,
+        categoria: categoria,
+        categoriaId: categoria,
         imagemUrl: imagem,
         isOferta: isOferta,
         precoOferta: precoOferta,
+        promocaoEncerramento: dataEncerramento,
+        promocaoId: uuid.v4(),
       },
     };
     makeRequisitionToChange(data);
@@ -292,6 +317,9 @@ export default function NewProd() {
     loadProducts();
   }, []);
 
+
+
+  console.log(categoria)
 
   return (
     <>
@@ -721,7 +749,6 @@ export default function NewProd() {
 
             <ModalContent>
               <h3>Nova promoção</h3>
-              <fieldset>
 
               
               <ContentFormNew>
@@ -736,6 +763,16 @@ export default function NewProd() {
                   }}
                 />
               </ContentFormNew>
+              <ContentFormNew>
+                <label htmlFor="">Data de encerramento</label>
+                <input
+                  required
+                  type="date"
+                  placeholder="650"
+                  onChange={event => setDataEncerramento(event.target.value)}
+                />
+              </ContentFormNew>
+
               {loading ? (
               <img
                 width="40px"
@@ -753,7 +790,6 @@ export default function NewProd() {
                   Adicionar
                 </button>
               </div>
-              </fieldset>
             </ModalContent>
           </div>
         </Modal>

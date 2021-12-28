@@ -13,6 +13,7 @@ export function Menu() {
   const [materiais, setMateriais ] = useState<any>();
   const [cama, setCama ] = useState<any>();
   const [cursos, setCursos] = useState<any>();
+  const [modaInfantil, setModaInfantil] = useState<any>();
 
   useEffect(
     () => {
@@ -24,6 +25,7 @@ export function Menu() {
           console.log("categoriasDoBack")
           console.log(categoriasDoBack)
           setCategorias(categoriasDoBack)
+
         }
         // setCategorias([])
 
@@ -32,13 +34,15 @@ export function Menu() {
         const eletrodomésticoResponse  = await axios.get('http://'+ip+':8157/api//categoria-name/eletrodoméstico'); 
         const materiaisResponse        = await axios.get('http://'+ip+':8157/api/categoria-name/materiais'); 
         const camaResponse             = await axios.get('http://'+ip+':8157/api/categoria-name/cama'); 
-        const cursosResponse           = await axios.get('http://'+ip+':8157/api/categoria-name/cursos'); 
+        const cursosResponse           = await axios.get('http://'+ip+':8157/api/categoria-name/cursos');
+        const modaInfantilResponse     = await axios.get('http://'+ip+':8157/api/categoria-name/moda'); 
 
         setMoveis(moveisResponse.data[0].id)
         setTeletrodoméstico(eletrodomésticoResponse.data[0].id)
         setMateriais(materiaisResponse.data[0].id)
         setCama(camaResponse.data[0].id)
         setCursos(cursosResponse.data[0].id)
+        // setModaInfantil(modaInfantilResponse.data[0].id)
 
 
         const controller = new AbortController();
@@ -137,7 +141,7 @@ export function Menu() {
             <Link to={`/produto-categoria/${materiais}`}>Materiais de Decoração</Link>
             <Link to={`/produto-categoria/${cama}`}>Cama, Mesa e Banho</Link>
             <Link to={`/produto-categoria/${cursos}`}>Cursos</Link>
-            <Link to={`/produto-categoria/${cursos}`}>Moda infantil</Link>
+            <Link to={`/produto-categoria/${modaInfantil}`}>Moda infantil</Link>
           </div>
         </FlexLink>
       </Container>
