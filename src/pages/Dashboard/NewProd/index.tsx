@@ -53,7 +53,7 @@ export default function NewProd() {
   const [precoOferta, setPrecoOferta] = useState("");
 
   const [newCategoria, setNewCategoria] = useState("");
-
+  const [loading, setLoading] = useState(false);
 
   function openModal() {
     //setIsOpen(true);
@@ -82,6 +82,7 @@ export default function NewProd() {
       "Eba, recebemos o seu pedido. Ele será revisado e logo estará na plataforma :)"
     );
     //setIsOpen(false);
+    setLoading(false) 
   }
 
   function improvements() {
@@ -109,12 +110,29 @@ export default function NewProd() {
   }
 
   async function addProduct() {
+    setLoading(true)
     const data = setValues();
-    const response: any = await api.post("produto", data);
+    const response: any = await api.post("produto", data).then((response) => {
+      console.log(response)
+      if (response.statusText == "OK") {
+        messageApprove();
+
+        setProducts(prevProducts => {
+          return [...new Set([...prevProducts, response.data])]	
+           })
+        //window.location.reload();
+        setLoading(false)
+      }else{
+        toast.error('Algo deu errado, tente mais tarde :(');
+      }
+      }).catch(error => {
+        toast.error("Algo deu errado, tente mais tarde :(");
+        setLoading(false)
+    });
     
     console.log(response);
     
-    if (response.status == 200) {
+    /*if (response.status == 200) {
       messageApprove();
 
       setProducts(prevProducts => {
@@ -122,18 +140,20 @@ export default function NewProd() {
          })
 
     } else{
-      toast.info("Algo deu errado, tente mais tarde :(");
-    }
+      toast.error("Algo deu errado, tente mais tarde :(");
+    }*/ 
     setShowModal2(false)
   }
 
   async function makeRequisitionToChange(data: any) {
-    const response: any = api.put(`produto/${id}`, data);
+    const response: any = api.put(`produto/${id}`, data).catch(error =>{
+        toast.error("Algo deu errado, tente mais tarde :(");      
+    });
     console.log(await response);
     if ((await response.status) == 200) {
       messageApprove();
     } else if ((await response.status) == 500) {
-      toast.info("Algo deu errado, tente mais tarde :(");
+      toast.error("Algo deu errado, tente mais tarde :(");
     } else {
       messageApprove();
     }
@@ -141,6 +161,7 @@ export default function NewProd() {
   }
 
   async function changeProduct() {
+    setLoading(true)
     const data = {
       data: {
         id: id,
@@ -203,7 +224,7 @@ export default function NewProd() {
 
   }
 
-  const [products = [], setProducts] = useState<Product[]>([]);
+  const [products = [], setProducts] = useState<any[]>([]);
   const [categorias = [], setCategorias] = useState<any[]>([]);
 
   function setProductOnClick() {
@@ -282,7 +303,7 @@ export default function NewProd() {
           {products.map((product, index) => (
             <>
               <ProdContainerSingle>
-                <img src={prodone} alt="" />
+                <img src={product.imagemUrl} alt="" />
                 <div>
                   <h5>{product.nome}</h5>
                   <p>{product.descricao}</p>
@@ -459,7 +480,15 @@ export default function NewProd() {
                     ))}
                   </select>
                 </ContentFormNew>
-
+                {loading ? (
+              <img
+                width="40px"
+                style={{ margin: "auto" }}
+                height=""
+                src={"https://contribua.org/mb-static/images/loading.gif"}
+                alt="Loading"
+              />
+            ) : false}
                 <div className="buttonsNew">
                   <button type="button" onClick={messageCancel}>
                     Cancelar
@@ -639,7 +668,15 @@ export default function NewProd() {
                   <option value="gratis">Grátis</option>
                 </select>
               </ContentFormNew>
-
+              {loading ? (
+              <img
+                width="40px"
+                style={{ margin: "auto" }}
+                height=""
+                src={"https://contribua.org/mb-static/images/loading.gif"}
+                alt="Loading"
+              />
+            ) : false}
               <div className="buttonsNew">
                 <button type="button" onClick={messageCancel}>
                   Cancelar
@@ -681,7 +718,15 @@ export default function NewProd() {
                   }}
                 />
               </ContentFormNew>
-
+              {loading ? (
+              <img
+                width="40px"
+                style={{ margin: "auto" }}
+                height=""
+                src={"https://contribua.org/mb-static/images/loading.gif"}
+                alt="Loading"
+              />
+            ) : false}
               <div className="buttonsNew">
                 <button type="button" onClick={messageCancel}>
                   Cancelar
@@ -719,7 +764,15 @@ export default function NewProd() {
                   onChange={(text) => setNewCategoria(text.target.value)}
                 />
               </ContentFormNew>
-
+              {loading ? (
+              <img
+                width="40px"
+                style={{ margin: "auto" }}
+                height=""
+                src={"https://contribua.org/mb-static/images/loading.gif"}
+                alt="Loading"
+              />
+            ) : false}
               <div className="buttonsNew">
                 <button type="button" onClick={messageCancel}>
                   Cancelar
