@@ -40,8 +40,6 @@ const Header = (): JSX.Element => {
 
   const { cart } = useCart();
 
-  //console.log("cart")
-  //console.log(cart)
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [modalIsOpen2, setIsOpen2] = React.useState(false);
@@ -60,7 +58,7 @@ const Header = (): JSX.Element => {
 
   const [email, setUser] = useState("");
   const [password, setPassword] = useState("");
-  const [cartSize, setCartSize] = useState(0);
+  const [cartSize, setCartSize] = useState<any>(0);
   const [loading, setLoading] = useState(false);
 
   function openModal() {
@@ -166,19 +164,14 @@ const Header = (): JSX.Element => {
     });
     
   }
-  useEffect(() => {
-    loadUser();
-  }, []);
-  useEffect(() => {
-    async function loadCart() {
-      //console.log("await cart")
-      //console.log(await cart)
 
-      setCartSize(1);
-    }
-    loadCart();
-    console.log(cartSize);
-  }, []);
+  async function loadCart(){
+      const allCart: any  = await api.get(`carrinho/`)
+      console.log("allCart")
+      console.log(allCart.data.count)
+      // return allCart.data.rows.lenght;
+      setCartSize(allCart.data.count);
+  }
 
   function logof(){
     localStorage.clear();
@@ -199,6 +192,11 @@ const Header = (): JSX.Element => {
       }
     });
   }
+
+  useEffect(() => {
+    loadUser();
+    loadCart()
+  }, []);
 
   return (
     <>
