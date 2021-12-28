@@ -249,6 +249,20 @@ export const ContentFormNew = styled.div`
       width: 100%;
     }
   }
+  
+  textarea {
+    resize: vertical;
+    height: 125px;
+    width: 466px;
+    border-radius: 4px;
+    border: 0;
+    background: #F2F2F2 !important;
+    padding: 0 5px;
+    margin: 10px 0;
+    @media (max-width: 768px) {
+      width: 100%;
+    }
+  }
 
   select {
     height: 48px;
