@@ -112,7 +112,7 @@ const Cart = (): JSX.Element => {
     // atribuir o antigo array a uma variavel fazendo o destruct e atualizando ela
     let updatedProduct = [...products]
     updatedProduct[index].quantidade++
-    console.log("updatedProduct")
+    handleProductIncrement(updatedProduct[index])
     setProducts(updatedProduct)
     
   }
@@ -120,6 +120,7 @@ const Cart = (): JSX.Element => {
   function updateDecrement(index: number) {
     let updatedProduct = [...products]
     updatedProduct[index].quantidade--
+    handleProductIncrement(updatedProduct[index])
     setProducts(updatedProduct)
   
   }
