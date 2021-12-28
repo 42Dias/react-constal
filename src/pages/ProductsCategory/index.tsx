@@ -3,7 +3,7 @@ import Footer from "../../components/Footer";
 
 import { Link } from "react-router-dom";
 import React, { useState ,useEffect, useRef, useCallback } from "react";
-import { api } from "../../services/api";
+import { api, ip } from "../../services/api";
 import { formatPrice } from "../../util/format";
 
 import { useCart } from "../../hooks/useCart";
@@ -12,6 +12,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { Recommended, GridProdsFour, ProdContainerSingle } from "./styles";
 import useInfiniteScroll from '../../hooks/useInfiniteScroll'
 import { Menu } from "../../components/Menu";
+import axios from "axios";
 
 
 
@@ -24,9 +25,14 @@ export default function ProductsCategory() {
       async function loadProdutosPesquisados(){
         const pesquisa = window.location.hash.replace(/#\/produto-categoria\//g, '');
         console.log(pesquisa)
-        const resultadoDaPesquisa = await api.get(`produto?filter%5Bcategoria%5D=${pesquisa}`)
-        http://localhost:3000/constal#/produto-categoria/082b6c7e-b525-423e-b04d-d2a0b2777f1a
-        setProducts(resultadoDaPesquisa.data.rows)
+        const resultadoDaPesquisa2 = await api.get(`produto?filter%5Bcategoria%5D=${pesquisa}`)
+        const resultadoDaPesquisa = await axios.get(`http://${ip}:8157/api/produtos-list?filter%5Bcategoria%5D=${pesquisa}`)
+
+        // console.log(resultadoDaPesquisa)
+        console.log(resultadoDaPesquisa2)
+        console.log(resultadoDaPesquisa)
+
+        setProducts(resultadoDaPesquisa.data.record)
       }
       loadProdutosPesquisados()
     },[]
@@ -68,6 +74,10 @@ export default function ProductsCategory() {
     </>
   );
 }
+
+
+
+
     /*
     =========================
     CÓDIGO A SER IMPLEMENTADO
