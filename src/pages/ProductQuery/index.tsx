@@ -11,7 +11,7 @@ import axios from "axios"
 import { toast } from "react-toastify"
 
 function ProductQuery() {
-  const [produtos = [], setProdutos] = useState<Product[]>([]);
+  const [produtos = [], setProdutos] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
   async function loadUser() {
@@ -91,7 +91,7 @@ function ProductQuery() {
             produtos.map((produto) => (
               <S.CardDatailsContent>
                 <S.ContentDetails>
-                  <img src={prodfav} alt="" />
+                  <img src={produto.imagemUrl} alt="" />
                   <span>{produto.nome}</span>
                   <p>{produto.quantidade}</p>
                   <p>R$ {produto.preco}</p>

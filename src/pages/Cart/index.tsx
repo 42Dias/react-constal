@@ -16,45 +16,43 @@ import { Link } from "react-router-dom";
 
 const Cart = (): JSX.Element => {
   const { cart, removeProduct, updateProductAmount } = useCart();
-  
+  const [products, setProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
 
+  interface Product {
+    id: string;
+    nome: string;
+    descricao: string;
+    preco: number;
+    publicUrl: string;
+    isOferta: number;
+    precoOferta: any;
+    produto: any;
+    quantidade: number;
+    subtotal: number;
+  }
 
-  const [products, setProducts] = useState<Carrinho[]>([]);
-
-    interface Product {
+  interface Carrinho {
+    price: number | bigint;
+    id: string;
+    nome: string;
+    descricao: string;
+    preco: number;
+    publicUrl: string;
+    isOferta: number;
+    precoOferta: any;
+    quantidade: number;
+    subtotal: number;
+    priceFormatted: string;
+    produto: {
+      fotos: string;
       id: string;
       nome: string;
-      descricao: string;
       preco: number;
-      publicUrl:string;
-      isOferta: number;
-      precoOferta: any;
-      produto: any;
       quantidade: number;
-      subtotal: number;
-    }
+    };
+  }
 
-    interface Carrinho {
-      price: number | bigint;
-      id: string;
-      nome: string;
-      descricao: string;
-      preco: number;
-      publicUrl:string;
-      isOferta: number;
-      precoOferta: any;
-      quantidade: number;
-      subtotal: number;
-      priceFormatted: string;
-      produto: {
-        fotos: string;
-        id: string;
-        nome: string;
-        preco: number;
-        quantidade: number;
-      };
-    }
-    
   interface ProductFormatted extends Product {
     priceFormatted: string;
   }
@@ -79,33 +77,36 @@ const Cart = (): JSX.Element => {
       productId: product.produto.id,
       quantidade: product.quantidade - 1,
     };
-    updateProductAmount(IncrementArguments);    
+    updateProductAmount(IncrementArguments);
   }
 
   function handleRemoveProduct(productId: string, index: number) {
+    setLoading(true)
     removeProduct(productId);
     products.splice(index, 1)
     setProducts(products)
-    
+    setLoading(false)
   }
 
   useEffect(() => {
-    if(role != 'pessoa'){
+    if (role != 'pessoa') {
       // Simulate an HTTP redirect:
       window.location.replace(`http://${ip}:3000/constal#/erro`);
     }
     async function loadProducts() {
+      setLoading(true)
       const response = await api.get('carrinho/')
-      .then(response => {
-          return response.data.rows;          
-      })
+        .then(response => {
+          return response.data.rows;
+        })
 
-     console.log("cart");
-     console.log(response);
+      console.log("cart");
+      console.log(response);
 
       setProducts(response);
+      setLoading(false)
     }
-    
+
     loadProducts();
   }, []);
 
@@ -116,19 +117,19 @@ const Cart = (): JSX.Element => {
     updatedProduct[index].quantidade++
     handleProductIncrement(updatedProduct[index])
     setProducts(updatedProduct)
-    
+
   }
-  
+
   function updateDecrement(index: number) {
     let updatedProduct = [...products]
     updatedProduct[index].quantidade--
     handleProductIncrement(updatedProduct[index])
     setProducts(updatedProduct)
-  
+
   }
   /*Possível useEfect para alterar os valores dos produtos?*/
 
-//Está sendo alterado o useState mas não está sendo mostrado na
+  //Está sendo alterado o useState mas não está sendo mostrado na
 
   return (
     <>
@@ -146,11 +147,11 @@ const Cart = (): JSX.Element => {
               </tr>
             </thead>
             <tbody>
-              {products.map((product: Carrinho, index) => (
+              {products.map((product: any, index) => (
                 <tr data-testid="product" key={product.produto.id}
                 >
                   <td>
-                    <img src={product.produto.fotos} alt={product.produto.nome} />
+                    <img src={product.imagemUrl} alt={product.produto.nome} />
                   </td>
                   <td>
                     <strong>{product.produto.nome}</strong>
@@ -191,17 +192,18 @@ const Cart = (): JSX.Element => {
                   <td>
                     <strong>
                       {
-                      formatPrice( product.produto.preco * product.quantidade )
+                        formatPrice(product.produto.preco * product.quantidade)
                       }</strong>
                   </td>
                   <td>
+                  {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : 
                     <button
                       type="button"
                       data-testid="remove-product"
                       onClick={() => handleRemoveProduct(product.produto.id, index)}
                     >
                       <MdDelete size={20} />
-                    </button>
+                    </button>}
                   </td>
                 </tr>
               ))}
@@ -210,7 +212,7 @@ const Cart = (): JSX.Element => {
 
           <footer>
             <Link to="/pagar">Finalizar pedido</Link>
-
+            {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
             <Total>
               <span>TOTAL</span>
               <strong>{total}</strong>

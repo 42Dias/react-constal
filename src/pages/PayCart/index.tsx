@@ -7,6 +7,7 @@ import axios from 'axios';
 import { Menu } from "../../components/Menu";
 import { useEffect, useState } from "react";
 import { Btn } from "../Dashboard/PersonalData/styles";
+import { toast } from "react-toastify";
 
 let token = localStorage.getItem("token")?.replace(/"/g, "");
 const tenantId = "fa22705e-cf27-41d0-bebf-9a6ab52948c4";
@@ -15,7 +16,7 @@ const tenantId = "fa22705e-cf27-41d0-bebf-9a6ab52948c4";
 export default function PayCart() {
   const [produtosDosFornecedores, setProdutosDosFornecedores] = useState([]);
   const [ids = [], setIds] = useState<any[]>([]);
-  
+  const [loading, setLoading] = useState(false);
 
 
   useEffect(() => {
@@ -129,7 +130,8 @@ export default function PayCart() {
         
         
         console.log(response)
-
+        setLoading(false)
+        toast.info("Abrindo fatura...")
       }
     ) 
       /*
@@ -193,6 +195,7 @@ export default function PayCart() {
     }
     
     async function makeMagic() {
+      setLoading(true)
       await gerarPedido()
       // createNewFatura()
       
@@ -254,13 +257,14 @@ export default function PayCart() {
               </div>
             </CenterPay>
             <BtnFinish>
+            {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : 
               <Btn
               onClick={
                 () => {
                   makeMagic()
                 }
               }
-              >Finalizar</Btn>
+              >Finalizar</Btn>}
             </BtnFinish>
           </div>
         <FooterContainer>

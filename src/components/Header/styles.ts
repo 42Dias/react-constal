@@ -77,7 +77,7 @@ nav li a {
   display: none;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
 
   header {
     padding: 0px 10px;
