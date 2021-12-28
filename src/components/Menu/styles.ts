@@ -20,9 +20,8 @@ img {
 `;
 
 export const FlexLink = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 3.55fr;
   padding: 12px 0;
 
   .category-fix {
@@ -55,7 +54,7 @@ export const FlexLink = styled.div`
     align-items: center;
     justify-content: space-between;
     background: #f2f2f2;
-    
+    margin-left: 15px;
     span {
       margin-left: 10px;
       font-weight: 500;
