@@ -7,6 +7,47 @@ import axios from "axios";
 
 export function Menu() {
   let role = localStorage.getItem("roles")?.replace(/"/g, "");
+  const [categorias = [], setCategorias] = useState<any[]>([]);
+  const [moveis, setMoveis ] = useState<any>();
+  const [eletrodoméstico, setTeletrodoméstico ] = useState<any>();
+  const [materiais, setMateriais ] = useState<any>();
+  const [cama, setCama ] = useState<any>();
+  const [cursos, setCursos] = useState<any>();
+
+  useEffect(
+    () => {
+      async function loadCategorias() {
+        if(role == 'pessoa'){
+          const categoriasResponse = await axios.get('http://'+ip+':8157/api/categoria-aprovados');
+          const categoriasDoBack = categoriasResponse.data
+          console.log("categoriasDoBack")
+          console.log("categoriasDoBack")
+          console.log(categoriasDoBack)
+          setCategorias(categoriasDoBack)
+        }
+        // setCategorias([])
+
+
+        const moveisResponse           = await axios.get('http://'+ip+':8157/api/categoria-name/moveis'); 
+        const eletrodomésticoResponse  = await axios.get('http://'+ip+':8157/api//categoria-name/eletrodoméstico'); 
+        const materiaisResponse        = await axios.get('http://'+ip+':8157/api/categoria-name/materiais'); 
+        const camaResponse             = await axios.get('http://'+ip+':8157/api/categoria-name/cama'); 
+        const cursosResponse           = await axios.get('http://'+ip+':8157/api/categoria-name/cursos'); 
+
+        setMoveis(moveisResponse.data[0].id)
+        setTeletrodoméstico(eletrodomésticoResponse.data[0].id)
+        setMateriais(materiaisResponse.data[0].id)
+        setCama(camaResponse.data[0].id)
+        setCursos(cursosResponse.data[0].id)
+
+
+        const controller = new AbortController();
+        return () => { controller.abort(); }
+      }
+      loadCategorias()
+    }, [])
+ 
+
   function Empresa() {
     return (
       <Container>
@@ -60,43 +101,8 @@ export function Menu() {
   }
 
   function Cliente() {
-    const [categorias = [], setCategorias] = useState<any[]>([]);
-    const [moveis, setMoveis ] = useState<any>();
-    const [eletrodoméstico, setTeletrodoméstico ] = useState<any>();
-    const [materiais, setMateriais ] = useState<any>();
-    const [cama, setCama ] = useState<any>();
-    const [cursos, setCursos] = useState<any>();
-
-    useEffect(
-      () => {
-        async function loadCategorias() {
-          const categoriasResponse = await axios.get('http://'+ip+':8157/api/categoria-aprovados');
-          const categoriasDoBack = categoriasResponse.data
-          console.log("categoriasDoBack")
-          console.log("categoriasDoBack")
-          console.log(categoriasDoBack)
-          setCategorias(categoriasDoBack)
-          // setCategorias([])
-
-
-          const moveisResponse           = await axios.get('http://'+ip+':8157/api/categoria-name/moveis'); 
-          const eletrodomésticoResponse  = await axios.get('http://'+ip+':8157/api//categoria-name/eletrodoméstico'); 
-          const materiaisResponse        = await axios.get('http://'+ip+':8157/api/categoria-name/materiais'); 
-          const camaResponse             = await axios.get('http://'+ip+':8157/api/categoria-name/cama'); 
-          const cursosResponse           = await axios.get('http://'+ip+':8157/api/categoria-name/cursos'); 
-
-          setMoveis(moveisResponse.data[0].id)
-          setTeletrodoméstico(eletrodomésticoResponse.data[0].id)
-          setMateriais(materiaisResponse.data[0].id)
-          setCama(camaResponse.data[0].id)
-          setCursos(cursosResponse.data[0].id)
-
-
-          const controller = new AbortController();
-          return () => { controller.abort(); }
-        }
-        loadCategorias()
-      }, [])
+   
+    
     return (
       <Container>
         <FlexLink>
