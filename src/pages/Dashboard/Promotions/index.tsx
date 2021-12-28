@@ -62,6 +62,7 @@ export default function Promotions() {
         console.log(await response)
         if( await response.status == 200){
           toast.info('Eba, recebemos o sua promoção. Ela será revisada e logo estará na plataforma :)')
+          closeModal()
         }
         else if( await response.status != 200){
           toast.error('Algo deu errado, tente mais tarde :(')
