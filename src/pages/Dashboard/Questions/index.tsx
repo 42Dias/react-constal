@@ -11,6 +11,7 @@ import React from "react";
 import { Btn } from "../PersonalData/styles";
 import { ContentFormNew, ModalContainerVendedor, ModalContent, ModalFlex } from "../NewProd/styles";
 import { AiOutlineClose } from "react-icons/ai";
+import { toast } from "react-toastify";
 
 
 export default function Questions() {
@@ -74,9 +75,6 @@ export default function Questions() {
     setShowModal1(false)
     setShowModal2(false)
   }
-  console.log(
-    comentarios
-  )
 
   function afterOpenModal() {
     // references are now sync'd and can be accessed.
@@ -88,7 +86,15 @@ export default function Questions() {
     comment.isRespondido = 1
 
     const response = await api.put(`comentario/${comment.id}`, comment)
-    console.log(response)
+
+    if (response.status == 200){
+      toast.info("Ação realizada com sucesso!")
+      closeModal()
+    }
+    else{
+      toast.error("Algo deu errado :(")
+      console.log(response.status)
+    }
   }
 
   return (
