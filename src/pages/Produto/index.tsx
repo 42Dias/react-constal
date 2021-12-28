@@ -145,7 +145,12 @@ export default function Produto() {
 
   const [comentarios = [] , setComentarios]=useState<any[]>([]);
   const [comment , setComment]=useState<any>();
+  const [user , setUser]=useState<any>();
+
   
+  const [loading, setLoading] = useState(false);
+
+
   useEffect(() => {
     async function loadProduct() {
       const response = await api.get(selectedProduct).then((response) => {
@@ -165,7 +170,7 @@ export default function Produto() {
       setPublicUrl(response.publicUrl);
       setCodigo(response.codigo);
       setMarca(response.marca);
-      setFotos(response.fotos[0].downloadUrl);
+      setFotos(response.imagemUrl || response.fotos[0].downloadUrl );
       setModelo(response.modelo);
       setDescricao(response.descricao);
       setCaracteristicasTecnicas(response.caracteristicasTecnicas)
@@ -176,7 +181,7 @@ export default function Produto() {
     async function loadUser() {
       const user = await api.get("pessoa-fisica-perfil").then((user) => {
         console.log(user.data);
-
+        setUser(user.data)
         return user.data;
       });
       setLogradouro(user.logradouro + ", " + user.numero);
@@ -190,6 +195,7 @@ export default function Produto() {
   }, []);
 
      async function makeCommentary() {
+       setLoading(true)
         let data = {
           data: {
             "comentario": comentario ,
@@ -199,8 +205,24 @@ export default function Produto() {
           }
         }
         console.log(data)
+
         const response = await api.post('comentario', data)
-        console.log(response)
+
+        // console.log(response.data)
+        
+        // let nwe = response.data
+
+        // console.log("-------------------------------")
+        // console.log("nwe")
+        // console.log(nwe)
+        
+        setComentarios(prevProducts => {
+          return [...new Set([...prevProducts,  response.data])]	
+        })
+        
+        window.location.reload()
+        
+        setLoading(false)
       }
     
       async function addResposta() {
@@ -337,6 +359,15 @@ export default function Produto() {
           ) : (
             <ProdSecondComents>
             <FormComents>
+              {loading ? (
+              <img
+                width="40px"
+                style={{ margin: "auto" }}
+                height=""
+                src={"https://contribua.org/mb-static/images/loading.gif"}
+                alt="Loading"
+              />
+            ) : false}
               <h2>Tire a sua dúvida aqui</h2>
               <select name="" id="">
                 <option value="">Motivo da mensagem</option>
@@ -387,6 +418,19 @@ export default function Produto() {
                   }}
                 />
               </ContentFormNew>
+
+              <ContentFormNew>
+                {loading ? (
+              <img
+                width="40px"
+                style={{ margin: "auto" }}
+                height=""
+                src={"https://contribua.org/mb-static/images/loading.gif"}
+                alt="Loading"
+              />
+            ) : false}
+              </ContentFormNew>
+
 
               <div className="buttonsNew">
                 <button type="button" onClick={

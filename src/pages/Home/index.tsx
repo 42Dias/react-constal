@@ -98,6 +98,7 @@ const Home = (): JSX.Element => {
   function handleAddProduct(id: string) {
     if(role == 'pessoa'){
       addProduct(id);
+      toast.info("Produto adicionado ao carrinho com sucesso!")
     }
     else{
       toast.error("Cadastre-se para habilitar o carrinho")
@@ -245,7 +246,7 @@ const Home = (): JSX.Element => {
               <SwiperSlide>
                 <li key={product.id}>
                   <Link to={`/produto/${product.id}`}>
-                    <img src={product.imagemUrl ? semImagem:product.imagemUrl} alt={product.nome} />
+                    <img src={product.imagemUrl ? product.imagemUrl:semImagem} alt={product.nome} />
                   </Link>
                   <strong>{product.nome}</strong>
                   <p>{product.preco}</p>
