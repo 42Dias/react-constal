@@ -29,7 +29,7 @@ export default function ApproveEmpresas() {
 
   useEffect(() => {
     if (!token){
-      window.location.reload()
+      //window.location.reload()
     }
     else{
       if(role !== "admin" && role !== "empresa" || status === "pendente"){

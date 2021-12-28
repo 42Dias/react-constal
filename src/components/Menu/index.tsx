@@ -131,6 +131,7 @@ export function Menu() {
             <Link to={`/produto-categoria/${materiais}`}>Materiais de Decoração</Link>
             <Link to={`/produto-categoria/${cama}`}>Cama, Mesa e Banho</Link>
             <Link to={`/produto-categoria/${cursos}`}>Cursos</Link>
+            <Link to={`/produto-categoria/${cursos}`}>Moda infantil</Link>
           </div>
         </FlexLink>
       </Container>

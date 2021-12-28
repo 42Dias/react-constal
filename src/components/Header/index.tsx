@@ -242,45 +242,42 @@ const Header = (): JSX.Element => {
 
             <div className="input">
               <input type="text" placeholder="Pesquise o seu produto" />
-              <button type="button">
+              <button className="buttonOn" type="button">
                 <FiSearch />
               </button>
             </div>
 
             <ul className={click ? "nav-options active" : "nav-options"}>
-              
-
-
+            
               <IconsContainer>
 
                 <button className="login" onClick={openModal}>
-                  <FiUser size={20} />
+                  <FiUser size={18} />
                   <span>{token ? "Meu Perfil":"Cadastre-se"} </span>
                 </button>
 
                 {role != "pessoa" ? (
                   <div />
-                
                 ) : (
                   <>
                     <Link to="/favoritos">
-                      <FiHeart size={20} />
+                      <FiHeart size={18} />
                     </Link>
                     <Cart to="/cart">
                       <div>
-                        <strong>Meu carrinho</strong>
+                        <span>Meu carrinho</span> <br />
                         <span data-testid="cart-size">
                           {cartSize == 1
                             ? `${cartSize} item`
                             : `${cartSize} itens`}
                         </span>
                       </div>
-                      <FiShoppingBag size={20} />
+                      <FiShoppingBag size={18} />
                     </Cart>
                   </>
                 )}
                 <button className="loggout">
-                  <FiLogOut size={20} onClick={logof}/>Sair
+                  <FiLogOut size={18} onClick={logof}/>Sair
                 </button>
               </IconsContainer>
 
@@ -288,7 +285,7 @@ const Header = (): JSX.Element => {
                 <div className="icons-flex-align">
                   <div className="flex-item" onClick={openModal}>
                     <span>Meu perfil</span>
-                    <FiUser size={20} />
+                    <FiUser size={18} />
                   </div>
                   {role != "pessoa" ? (
                     <div />
@@ -297,7 +294,7 @@ const Header = (): JSX.Element => {
                       <div className="flex-item">
                         <span>Meus produtos favoritos</span>
                         <Link to="/favoritos">
-                          <FiHeart size={20} />
+                          <FiHeart size={18} />
                         </Link>
                       </div>
                       <Cart to="/cart">
@@ -309,7 +306,7 @@ const Header = (): JSX.Element => {
                               : `${cartSize} itens`}
                           </span>
                         </div>
-                        <FiShoppingBag size={20} />
+                        <FiShoppingBag size={18} />
                       </Cart>
                     </>
                   )}
