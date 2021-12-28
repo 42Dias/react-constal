@@ -184,10 +184,13 @@ const Header = (): JSX.Element => {
       // return allCart.data.rows.lenght;
       setCartSize(allCart.data.count);
   }
-
+  function handleClickMain() {
+    history.push("/");
+  }
   function logof(){
     localStorage.clear();
     toast.info("Saiu!")
+    history.push("/")
     window.location.reload();
   }
 
