@@ -2,7 +2,7 @@
   "name": "constal-front",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://7dd208931cad.sn.mynetname.net:42080/constal/",
+  "homepage": "http://7dd208931cad.sn.mynetname.net/constal/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
