@@ -116,7 +116,7 @@ export default function PayCart() {
                 }
               )
               .then(
-                () =>  window.location.replace(`http://${ip}:3000/constal#/finalizar`)
+                () =>  window.location.replace(`http://dev.42dias.com.br/Clientes/constal/#//finalizar`)
               )
               console.log(response)
 
