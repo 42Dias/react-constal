@@ -75,6 +75,7 @@ export default function NewProd() {
       "Ah, que pena. o seu produto não foi cadastrado na plataforma. Revise algumas informações :("
     );
     //setIsOpen(false);
+    setLoading(false)
   }
 
   function messageApprove() {
@@ -148,12 +149,14 @@ export default function NewProd() {
   async function makeRequisitionToChange(data: any) {
     const response: any = api.put(`produto/${id}`, data).catch(error =>{
         toast.error("Algo deu errado, tente mais tarde :(");      
+        setLoading(false)
     });
     console.log(await response);
     if ((await response.status) == 200) {
       messageApprove();
     } else if ((await response.status) == 500) {
       toast.error("Algo deu errado, tente mais tarde :(");
+      setLoading(false)
     } else {
       messageApprove();
     }
@@ -183,6 +186,7 @@ export default function NewProd() {
     makeRequisitionToChange(data);
   }
   async function addPromotion() {
+    setLoading(true)
     const data = {
       data: {
         id: id,
@@ -216,10 +220,12 @@ export default function NewProd() {
   }
 
   async function deleteProduct(prodId: any, index: number) {
+    setLoading(true)
     const response = await api.delete(`produtoDeleteOne/${prodId}`);
     if(response.status == 200){
       products.splice(index, 1)
       setProducts(products)
+      setLoading(false)
     }
 
   }
@@ -247,7 +253,7 @@ export default function NewProd() {
 
   useEffect(() => {
     if(!role){
-      window.location.reload()
+      //window.location.reload()
     }
     else{
       if(role !== "admin" && role !== "empresa" || status === "pendente"){
@@ -256,10 +262,12 @@ export default function NewProd() {
       }
     }
     async function loadCategorias() {
+      setLoading(false)
       const categoriasResponse = await api.get("categoria");
       const categoriasDoBack = categoriasResponse.data.rows;
       console.log(categoriasDoBack);
       setCategorias(categoriasDoBack);
+      setLoading(false)
     }
     loadCategorias();
   }, []);
@@ -274,10 +282,12 @@ export default function NewProd() {
     console.log(response.rows);
   }
   useEffect(() => {
+    setLoading(true)
     loadEmpresa();
     async function loadProducts() {
       const response = await api.get("produto");
       setProducts(response.data.rows);
+      setLoading(false)
     }
     loadProducts();
   }, []);
@@ -291,7 +301,15 @@ export default function NewProd() {
 
       <div className="container">
         <ContentNew>
-          <h2>Meus produtos</h2>
+          <h2>Meus produtos</h2> {loading ? (
+              <img
+                width="40px"
+                style={{ margin: "auto" }}
+                height=""
+                src={"https://contribua.org/mb-static/images/loading.gif"}
+                alt="Loading"
+              />
+            ) :false}
           {status == 'active' ?<button onClick={
             () => {
               setShowModal2(true)
@@ -312,7 +330,7 @@ export default function NewProd() {
                   <span>{formatPrice(product.preco)}</span>
 
                   <div className="btn-group">
-                    <button
+                 <button
                       className="delete"
                       onClick={() => deleteProduct(product.id, index)}
                     >
