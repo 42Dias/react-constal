@@ -122,19 +122,22 @@ export default function NewProd() {
     const data = setValues();
     const response: any = await api.post("produto", data).then((response) => {
       console.log(response)
-      if (response.statusText == "OK") {
+      if (response.status == 200) {
         messageApprove();
         closeModal()
         setProducts(prevProducts => {
           return [...new Set([...prevProducts, response.data])]	
            })
+          console.log(response)
         //window.location.reload();
         setLoading(false)
       }else{
         toast.error('Algo deu errado, tente mais tarde :(');
+        console.log(response)
       }
       }).catch(error => {
         toast.error("Algo deu errado, tente mais tarde :(");
+        console.log(error)
         setLoading(false)
     });
     
@@ -160,15 +163,17 @@ export default function NewProd() {
     const response: any = api.put(`produto/${id}`, data)
     .then(
       async (response) => {
-    console.log(await response);
-    if ((await response.status) == 200) {
+    console.log(response);
+    if ((response.status) == 200) {
       messageApprove();
       closeModal()
-    } else if ((await response.status) == 500) {
+    } else if (response.status == 500) {
+      console.log(response)
       toast.error("Algo deu errado, tente mais tarde :(");
       setLoading(false)
     } else {
       toast.error("Algo deu errado, tente mais tarde :(");
+      console.log(response)
     }
     setLoading(false)
     console.log(response)
@@ -183,7 +188,6 @@ export default function NewProd() {
   }
 
   async function changeProduct() {
-    console.log(categoria)
 
     const data = {
       data: {
@@ -260,6 +264,7 @@ export default function NewProd() {
 
   function setProductOnClick() {
     try {
+      console.log(products[index])
       setId(products[index].id);
       setNome(products[index].nome);
       setCodigoDaEmpresa(products[index].codigoDaEmpresa);
@@ -372,7 +377,7 @@ export default function NewProd() {
                         console.log(index);
                         setProductToReq(product.id);
                         setShowModal1(true);
-                        setProductOnClick(); //A implementar
+                        setProductOnClick();
                       }}
                     >
                       <AiOutlinePlus />
