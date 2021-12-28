@@ -53,7 +53,7 @@ export default function NewProd() {
   const [precoOferta, setPrecoOferta] = useState("");
 
   const [newCategoria, setNewCategoria] = useState("");
-
+  const [loading, setLoading] = useState(false);
 
   function openModal() {
     //setIsOpen(true);
@@ -75,6 +75,7 @@ export default function NewProd() {
       "Ah, que pena. o seu produto não foi cadastrado na plataforma. Revise algumas informações :("
     );
     //setIsOpen(false);
+    setLoading(false)
   }
 
   function messageApprove() {
@@ -82,6 +83,7 @@ export default function NewProd() {
       "Eba, recebemos o seu pedido. Ele será revisado e logo estará na plataforma :)"
     );
     //setIsOpen(false);
+    setLoading(false) 
   }
 
   function improvements() {
@@ -109,12 +111,29 @@ export default function NewProd() {
   }
 
   async function addProduct() {
+    setLoading(true)
     const data = setValues();
-    const response: any = await api.post("produto", data);
+    const response: any = await api.post("produto", data).then((response) => {
+      console.log(response)
+      if (response.statusText == "OK") {
+        messageApprove();
+
+        setProducts(prevProducts => {
+          return [...new Set([...prevProducts, response.data])]	
+           })
+        //window.location.reload();
+        setLoading(false)
+      }else{
+        toast.error('Algo deu errado, tente mais tarde :(');
+      }
+      }).catch(error => {
+        toast.error("Algo deu errado, tente mais tarde :(");
+        setLoading(false)
+    });
     
     console.log(response);
     
-    if (response.status == 200) {
+    /*if (response.status == 200) {
       messageApprove();
 
       setProducts(prevProducts => {
@@ -122,18 +141,22 @@ export default function NewProd() {
          })
 
     } else{
-      toast.info("Algo deu errado, tente mais tarde :(");
-    }
+      toast.error("Algo deu errado, tente mais tarde :(");
+    }*/ 
     setShowModal2(false)
   }
 
   async function makeRequisitionToChange(data: any) {
-    const response: any = api.put(`produto/${id}`, data);
+    const response: any = api.put(`produto/${id}`, data).catch(error =>{
+        toast.error("Algo deu errado, tente mais tarde :(");      
+        setLoading(false)
+    });
     console.log(await response);
     if ((await response.status) == 200) {
       messageApprove();
     } else if ((await response.status) == 500) {
-      toast.info("Algo deu errado, tente mais tarde :(");
+      toast.error("Algo deu errado, tente mais tarde :(");
+      setLoading(false)
     } else {
       messageApprove();
     }
@@ -141,6 +164,7 @@ export default function NewProd() {
   }
 
   async function changeProduct() {
+    setLoading(true)
     const data = {
       data: {
         id: id,
@@ -162,6 +186,7 @@ export default function NewProd() {
     makeRequisitionToChange(data);
   }
   async function addPromotion() {
+    setLoading(true)
     const data = {
       data: {
         id: id,
@@ -195,15 +220,17 @@ export default function NewProd() {
   }
 
   async function deleteProduct(prodId: any, index: number) {
+    setLoading(true)
     const response = await api.delete(`produtoDeleteOne/${prodId}`);
     if(response.status == 200){
       products.splice(index, 1)
       setProducts(products)
+      setLoading(false)
     }
 
   }
 
-  const [products = [], setProducts] = useState<Product[]>([]);
+  const [products = [], setProducts] = useState<any[]>([]);
   const [categorias = [], setCategorias] = useState<any[]>([]);
 
   function setProductOnClick() {
@@ -226,7 +253,7 @@ export default function NewProd() {
 
   useEffect(() => {
     if(!role){
-      window.location.reload()
+      //window.location.reload()
     }
     else{
       if(role !== "admin" && role !== "empresa" || status === "pendente"){
@@ -235,10 +262,12 @@ export default function NewProd() {
       }
     }
     async function loadCategorias() {
+      setLoading(false)
       const categoriasResponse = await api.get("categoria");
       const categoriasDoBack = categoriasResponse.data.rows;
       console.log(categoriasDoBack);
       setCategorias(categoriasDoBack);
+      setLoading(false)
     }
     loadCategorias();
   }, []);
@@ -253,10 +282,12 @@ export default function NewProd() {
     console.log(response.rows);
   }
   useEffect(() => {
+    setLoading(true)
     loadEmpresa();
     async function loadProducts() {
       const response = await api.get("produto");
       setProducts(response.data.rows);
+      setLoading(false)
     }
     loadProducts();
   }, []);
@@ -270,7 +301,15 @@ export default function NewProd() {
 
       <div className="container">
         <ContentNew>
-          <h2>Meus produtos</h2>
+          <h2>Meus produtos</h2> {loading ? (
+              <img
+                width="40px"
+                style={{ margin: "auto" }}
+                height=""
+                src={"https://contribua.org/mb-static/images/loading.gif"}
+                alt="Loading"
+              />
+            ) :false}
           {status == 'active' ?<button onClick={
             () => {
               setShowModal2(true)
@@ -282,7 +321,7 @@ export default function NewProd() {
           {products.map((product, index) => (
             <>
               <ProdContainerSingle>
-                <img src={prodone} alt="" />
+                <img src={product.imagemUrl} alt="" />
                 <div>
                   <h5>{product.nome}</h5>
                   <p>{product.descricao}</p>
@@ -291,7 +330,7 @@ export default function NewProd() {
                   <span>{formatPrice(product.preco)}</span>
 
                   <div className="btn-group">
-                    <button
+                 <button
                       className="delete"
                       onClick={() => deleteProduct(product.id, index)}
                     >
@@ -459,7 +498,15 @@ export default function NewProd() {
                     ))}
                   </select>
                 </ContentFormNew>
-
+                {loading ? (
+              <img
+                width="40px"
+                style={{ margin: "auto" }}
+                height=""
+                src={"https://contribua.org/mb-static/images/loading.gif"}
+                alt="Loading"
+              />
+            ) : false}
                 <div className="buttonsNew">
                   <button type="button" onClick={messageCancel}>
                     Cancelar
@@ -639,7 +686,15 @@ export default function NewProd() {
                   <option value="gratis">Grátis</option>
                 </select>
               </ContentFormNew>
-
+              {loading ? (
+              <img
+                width="40px"
+                style={{ margin: "auto" }}
+                height=""
+                src={"https://contribua.org/mb-static/images/loading.gif"}
+                alt="Loading"
+              />
+            ) : false}
               <div className="buttonsNew">
                 <button type="button" onClick={messageCancel}>
                   Cancelar
@@ -681,7 +736,15 @@ export default function NewProd() {
                   }}
                 />
               </ContentFormNew>
-
+              {loading ? (
+              <img
+                width="40px"
+                style={{ margin: "auto" }}
+                height=""
+                src={"https://contribua.org/mb-static/images/loading.gif"}
+                alt="Loading"
+              />
+            ) : false}
               <div className="buttonsNew">
                 <button type="button" onClick={messageCancel}>
                   Cancelar
@@ -719,7 +782,15 @@ export default function NewProd() {
                   onChange={(text) => setNewCategoria(text.target.value)}
                 />
               </ContentFormNew>
-
+              {loading ? (
+              <img
+                width="40px"
+                style={{ margin: "auto" }}
+                height=""
+                src={"https://contribua.org/mb-static/images/loading.gif"}
+                alt="Loading"
+              />
+            ) : false}
               <div className="buttonsNew">
                 <button type="button" onClick={messageCancel}>
                   Cancelar

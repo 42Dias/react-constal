@@ -51,7 +51,7 @@ export const ProdContainerSingle = styled.div`
     width: 222px;
     height: 140px;
     border-radius: 10px 10px 0 0;
-    object-fit: cover;
+    object-fit: contain;
 
     @media (max-width: 768px) {
       width: 100%;

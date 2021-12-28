@@ -128,6 +128,7 @@ export default function PersonalData() {
     )
 
   async function criarOuAtualizarEmpresa() {
+    setLoading(true)
     const data = {
       data: {
         nome : newNome, 
@@ -136,7 +137,6 @@ export default function PersonalData() {
         cnpj : newCnpj,
         telefone : newTelefone,
         ramal : newRamal,
-        email : newEmail,
         website : newWebsite,
         cep : newCep,
         logradouro : newLogradouro,
@@ -150,16 +150,37 @@ export default function PersonalData() {
         status : "pendente",
       }
     }
-    const response = await api.post('empresa-perfil', data)
-    console.log(response)
-    if(response.status == 200){
-      toast.info('Empresa Criada com sucessso! :)')
-      closeModal()
-    }
-    else{
-      toast.info('Algo deu errado :(')
-      console.log(response) 
-    }
+
+    const response = await api.post('empresa-perfil', data).then(
+      (response) => {
+        console.log(response)
+        if(response.status == 200){
+          toast.info('Empresa Criada com sucessso! :)')
+          closeModal()
+          setLoading(false)
+
+        }
+        else{
+          toast.info('Algo deu errado :(')
+          console.log(response) 
+          setLoading(false)
+
+        }
+      }
+    )
+    .catch(
+      (response) => {
+        if(response.data){
+          toast.info(response.data.status)
+        }
+        else{
+          toast.info("Algo deu errado com o servidor tente mais tarde")
+        }
+        setLoading(false)
+
+      }
+    )
+  
   }
   async function resetSenha(){
     setLoading(true)
@@ -192,6 +213,9 @@ export default function PersonalData() {
   }
 
   async function changePlace(){
+
+    setLoading(true)
+
     const data = {
       data: {
         cep : newCep,
@@ -204,7 +228,41 @@ export default function PersonalData() {
         bairro : newBairro,
       }
     }
+    console.log("heaha")
+    const response = await api.post('empresa-perfil', data)
+    .then(
+      (response) => {
+        console.log(response)
+        if(response.status == 200){
+          toast.info('Empresa Criada com sucessso! :)')
+          closeModal()
+          setLoading(false)
+
+        }
+        else{
+          toast.info('Algo deu errado :(')
+          console.log(response) 
+          setLoading(false)
+
+        }
+      }
+    )
+    .catch(
+      (response) => {
+        console.log(response)
+        if(response.data){
+          toast.info(response.data.status)
+        }
+        else{
+          toast.info("Algo deu errado com o servidor tente mais tarde")
+        }
+        setLoading(false)
+
+      }
+    )
   }
+
+
 
   return (
     <>
@@ -364,13 +422,6 @@ export default function PersonalData() {
                     </ContentFormNew>
 
                     <ContentFormNew>
-                    <label htmlFor="">Novo Email</label>
-                    <input type="text" placeholder="Novo Email"
-                    onChange={(text) => setNewEmail(text.target.value)}
-                    />
-                    </ContentFormNew>
-
-                    <ContentFormNew>
                     <label htmlFor="">Novo Website</label>
                     <input type="text" placeholder="Website"
                     onChange={(text) => setNewWebsite(text.target.value)}
@@ -438,6 +489,19 @@ export default function PersonalData() {
                     <input type="text" placeholder="Pix"
                     onChange={(text) => setNewPix(text.target.value)}
                     />
+
+                    <ContentFormNew>
+                    {loading ? (
+              <img
+                width="40px"
+                style={{ margin: "auto" }}
+                height=""
+                src={"https://contribua.org/mb-static/images/loading.gif"}
+                alt="Loading"
+              />
+            ) : false}
+                    </ContentFormNew>
+
                     </ContentFormNew>
                     <NewBtn>
                       <button type="button" onClick={() => setShowModal1(false)}>Cancelar</button>
@@ -517,7 +581,18 @@ export default function PersonalData() {
                   (text) => setCidade(text.target.value)
                 } />
               </ContentFormNew>
-
+              <ContentFormNew>
+                    {loading ? (
+              <img
+                width="40px"
+                style={{ margin: "auto" }}
+                height=""
+                src={"https://contribua.org/mb-static/images/loading.gif"}
+                alt="Loading"
+              />
+            ) : false}
+                    </ContentFormNew>
+                    
               <NewBtn>
                 <button type="button" onClick={messageCancel}>Cancelar</button>
                 <button type="button" onClick={changePlace}>Adicionar</button>
@@ -546,15 +621,18 @@ export default function PersonalData() {
            onChange={(text) => setSenha(text.target.value)}
          />
        </ContentFormNew>
-       {loading ? (
-       <img
-         width="40px"
-         style={{ margin: "auto" }}
-         height=""
-         src={"https://contribua.org/mb-static/images/loading.gif"}
-         alt="Loading"
-       />
-     ) :false}
+       <ContentFormNew>
+                    {loading ? (
+              <img
+                width="40px"
+                style={{ margin: "auto" }}
+                height=""
+                src={"https://contribua.org/mb-static/images/loading.gif"}
+                alt="Loading"
+              />
+            ) : false}
+                    </ContentFormNew>
+                    
        <div className="buttonsNew">
          <button type="button" onClick={closeModalResetSenha}>
            Cancelar
