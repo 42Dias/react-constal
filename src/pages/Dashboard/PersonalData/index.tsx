@@ -84,10 +84,11 @@ export default function PersonalData() {
   const [senha, setSenha] = useState("");
 
     useEffect(
+      
       () => {
         console.log(role +" "+ status)
         if(!role){
-          window.location.reload()
+          //window.location.reload()
         }
         else{
           if(role !== "admin" && role !== "empresa"){
@@ -122,6 +123,7 @@ export default function PersonalData() {
         }
         loadData()
       }
+      
       , []
     )
 

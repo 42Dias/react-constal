@@ -36,6 +36,7 @@ import Error from "./pages/Error";
 import CheckEmail from "./pages/CheckEmail";
 import ApproveCategorias from "./pages/Dashboard/ApproveCategorias";
 import ApproveEmpresas from "./pages/Dashboard/ApproveEmpresas";
+import ResetarSenha from "./pages/Dashboard/ResetarSenha";
 
 const Routes = (): JSX.Element => {
   return (
@@ -59,6 +60,7 @@ const Routes = (): JSX.Element => {
         <Route exact path="/promocoes" component={Promotions} />
         <Route exact path="/dados-pessoais" component={PersonalData} />
         <Route exact path="/perguntas" component={Questions} />
+        <Route exact path="/resetar-senha/:token" component={ResetarSenha} />
         <Route exact path="/detalhes-da-venda/:id" component={SaleDetails} />
         <Route exact path="/novo-plano" component={NewPlan} />
         <Route exact path="/consultar-produtos" component={ProductQuery} />

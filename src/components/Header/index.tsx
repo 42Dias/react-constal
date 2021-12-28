@@ -116,7 +116,7 @@ const Header = (): JSX.Element => {
   async function loadUser() {
     const response = await axios({
       method: "get",
-      url: `http://localhost:8157/api/auth/me`,
+      url: `http://${ip}:8157/api/auth/me`,
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -236,7 +236,7 @@ const Header = (): JSX.Element => {
               </div>
 
               <IconsContainer>
-                <FiUser onClick={openModal} size={20} />
+                <FiUser onClick={openModal} size={20} />{token ? "Meu Perfil":"Login"}
                 {role != "pessoa" ? (
                   <div />
                 ) : (
@@ -258,7 +258,7 @@ const Header = (): JSX.Element => {
                   </>
                 )}
                 <button className="loggout">
-                  <FiLogOut size={20} onClick={logof}/>
+                  <FiLogOut size={20} onClick={logof}/>Sair
                 </button>
               </IconsContainer>
 
