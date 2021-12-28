@@ -120,6 +120,7 @@ export default function NewProd() {
     } else {
       messageApprove();
     }
+    setShowModal2(false)
   }
 
   async function makeRequisitionToChange(data: any) {
@@ -189,9 +190,13 @@ export default function NewProd() {
     // console.log(newCategoria)
   }
 
-  async function deleteProduct(prodId: any) {
+  async function deleteProduct(prodId: any, index: number) {
     const response = await api.delete(`produtoDeleteOne/${prodId}`);
-    console.log(response.status);
+    if(response.status == 200){
+      const newProds = products.splice(index, 1)
+      setProducts(newProds)
+    }
+
   }
 
   const [products = [], setProducts] = useState<Product[]>([]);
@@ -285,7 +290,7 @@ export default function NewProd() {
                   <div className="btn-group">
                     <button
                       className="delete"
-                      onClick={() => deleteProduct(product.id)}
+                      onClick={() => deleteProduct(product.id, index)}
                     >
                       <FiTrash2 />
                     </button>
