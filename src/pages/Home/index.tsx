@@ -24,6 +24,9 @@ import modafeminina from "../../assets/images/modafeminina.png";
 import modamasculina from "../../assets/images/modamasculina.png";
 import axios from "axios";
 import { Menu } from "../../components/Menu";
+import { toast } from "react-toastify";
+
+
 
 interface Product {
   id: string;
@@ -93,7 +96,12 @@ const Home = (): JSX.Element => {
 
   }
   function handleAddProduct(id: string) {
-    addProduct(id);
+    if(role == 'pessoa'){
+      addProduct(id);
+    }
+    else{
+      toast.error("Cadastre-se para habilitar o carrinho")
+    }
   }
 
   return (
@@ -199,7 +207,7 @@ const Home = (): JSX.Element => {
                       <strong>{product.nome}</strong>
                       <p>R$ {product.precoOferta}</p>
                       {
-                      role == "pessoa" ? (
+                      role == "pessoa" || !role ? (
                       <button
                         type="button"
                         data-testid="add-product-button"
@@ -242,7 +250,7 @@ const Home = (): JSX.Element => {
                   <strong>{product.nome}</strong>
                   <p>{product.preco}</p>
                   {
-                    role == "pessoa" ? (
+                    role == "pessoa" || !role ?(
                   <button
                     type="button"
                     data-testid="add-product-button"
@@ -263,7 +271,7 @@ const Home = (): JSX.Element => {
             ))}
           </Swiper>
         </div>
-      </SwiperStyles>
+      </SwiperStyles>      
       <Footer />
     </>
   );

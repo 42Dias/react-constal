@@ -35,6 +35,9 @@ import axios from "axios";
 import { margin } from "polished";
 
 const Header = (): JSX.Element => {
+
+
+
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
 
@@ -46,6 +49,10 @@ const Header = (): JSX.Element => {
 
   function openModal2() {
     setIsOpen2(true);
+  }
+
+  function openModalExternaly(){
+    setIsOpen(true)
   }
 
   function afterOpenModal2() {
@@ -159,8 +166,13 @@ const Header = (): JSX.Element => {
       }
 
     }).catch((error) =>{
-      setLoading(false);
-      toast.error("Desculpe, não reconhecemos suas credenciais")
+      if (error.response.data){
+        toast.error(error.response.data);
+      }
+      else{
+        toast.error("Erro no servidor, tente mais tarde :(");
+      }
+      setLoading(false)
     });
     
   }
