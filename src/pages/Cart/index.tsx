@@ -17,9 +17,7 @@ import { Link } from "react-router-dom";
 const Cart = (): JSX.Element => {
   const { cart, removeProduct, updateProductAmount } = useCart();
   
-  let [howMuch , setHowMuch] = useState<any[]>([]);  
 
-  let [price, setPrice] = useState<any[]>([]);
 
   const [products, setProducts] = useState<Carrinho[]>([]);
 
@@ -86,6 +84,7 @@ const Cart = (): JSX.Element => {
 
   function handleRemoveProduct(productId: string) {
     removeProduct(productId);
+    
   }
 
   useEffect(() => {
@@ -96,14 +95,6 @@ const Cart = (): JSX.Element => {
     async function loadProducts() {
       const response = await api.get('carrinho/')
       .then(response => {
-          response.data.rows.map((product: Carrinho) => 
-          {setHowMuch(prevValues => {
-            return [...new Set([...prevValues, product.quantidade])] 
-          })
-          setPrice(prevValues => {
-            return [...new Set([...prevValues, (product.quantidade * product.produto.preco )])] 
-        })
-        })
           return response.data.rows;          
       })
 
@@ -116,36 +107,25 @@ const Cart = (): JSX.Element => {
     loadProducts();
   }, []);
 
-  function updateIncrement(q: number, Productprice: number, index: number, product: any) {
-    console.log(q)
-    console.log(q + 1 )
-    howMuch[index] = q + 1 //isso deveria ser feito
-    price[index] = Productprice * (q + 1)
-    setHowMuch(howMuch)
-    setPrice(price)
-    console.log(howMuch)
-    console.log(price)
-    handleProductIncrement(product)
+  function updateIncrement(index: number) {
+
+    // atribuir o antigo array a uma variavel fazendo o destruct e atualizando ela
+    let updatedProduct = [...products]
+    updatedProduct[index].quantidade++
+    console.log("updatedProduct")
+    setProducts(updatedProduct)
     
   }
   
-  function updateDecrement(q: number, Productprice: number, index: number, product: any) {
-    console.log(q)
-    console.log(q - 1)
-    howMuch[index] = q - 1 //isso deveria ser feito
-    price[index] = Productprice * (q - 1)
-    setHowMuch(howMuch)
-    setPrice(price)
-    console.log(howMuch)
-    console.log(price)
-    handleProductDecrement(product)
-    
+  function updateDecrement(index: number) {
+    let updatedProduct = [...products]
+    updatedProduct[index].quantidade--
+    setProducts(updatedProduct)
+  
   }
   /*Possível useEfect para alterar os valores dos produtos?*/
 
 //Está sendo alterado o useState mas não está sendo mostrado na
-console.log(howMuch)
-console.log(price)
 
   return (
     <>
@@ -180,7 +160,7 @@ console.log(price)
                         data-testid="decrement-product"
                         disabled={product.quantidade <= 1}
                         onClick={() => {
-                          updateDecrement(howMuch[index], product.produto.preco, index, product)
+                          updateDecrement(index)
                         }}
                       >
                         <MdRemoveCircleOutline size={20} />
@@ -198,7 +178,7 @@ console.log(price)
                         type="button"
                         data-testid="increment-product"
                         onClick={() => {
-                          updateIncrement(howMuch[index], product.produto.preco, index, product)
+                          updateIncrement(index)
                         }}
                       >
                         <MdAddCircleOutline size={20} />
@@ -208,8 +188,7 @@ console.log(price)
                   <td>
                     <strong>
                       {
-                      // formatPrice( product.produto.preco )
-                      formatPrice( price[index] )
+                      formatPrice( product.produto.preco * product.quantidade )
                       }</strong>
                   </td>
                   <td>
