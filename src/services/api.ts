@@ -11,7 +11,8 @@ export const semImagem = "https://upload.wikimedia.org/wikipedia/commons/thumb/e
 export let ip = "localhost";
 
 export const api = axios.create({
-  baseURL: 'http://'+ip+':8157/api/tenant/'+tenantId+"/",
+  baseURL: 'http://'+ip+':8157/api/tenant/'+tenantId +"/",
+  // baseURL: 'http://'+ip+':8157/api/tenant/'+tenantId || "fa22705e-cf27-41d0-bebf-9a6ab52948c4" +"/",
   timeout: 50000,
   headers: {'Authorization': 'Bearer '+ token}
 });
