@@ -1,4 +1,12 @@
-// import {  } from "./styles";
+/*
+
+**************************************************************
+ADICIONAR PROMOÇÃO ENCERRAMENTO NO PRODUTO INDIVIDUAL !!!!!!!!
+**************************************************************
+
+
+
+*/
 import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import {
