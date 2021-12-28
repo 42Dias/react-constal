@@ -103,7 +103,7 @@ export default function ResetarSenha() {
   )
   async function loadUser() {
     if (!token){
-      window.location.reload()
+      //window.location.reload()
     }
     const response = await axios({
       method: "get",
