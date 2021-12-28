@@ -45,8 +45,9 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
     const cart = async () =>{
       const allCart: any  = await api.get(`carrinho/`)
       console.log("allCart")
-      console.log(allCart)
-      return allCart.data.rows.length;
+      console.log(allCart.data.count)
+      // return allCart.data.rows.lenght;
+      return allCart.data.count;
       }
       
 
@@ -229,11 +230,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
         },              
         timeout: 50000,
         data   : productAlreadyInCart
-      }).then(
-        () => {
-          window.location.reload(); 
-        }
-      )              
+      })              
 
     } catch {
       toast.error('Erro na remoção do produto');
@@ -302,7 +299,6 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
       })              
 
       console.log(response)
-      window.location.reload(); 
 
 
     } catch {

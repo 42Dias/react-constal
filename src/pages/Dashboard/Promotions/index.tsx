@@ -1,4 +1,12 @@
-// import {  } from "./styles";
+/*
+
+**************************************************************
+ADICIONAR PROMOÇÃO ENCERRAMENTO NO PRODUTO INDIVIDUAL !!!!!!!!
+**************************************************************
+
+
+
+*/
 import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import {
@@ -61,7 +69,8 @@ export default function Promotions() {
         const response: any = api.put(`produto/${id}`, data)
         console.log(await response)
         if( await response.status == 200){
-          toast.info('Eba, recebemos o sua promoção. Ele será revisado e logo estará na plataforma :)')
+          toast.info('Eba, recebemos o sua promoção. Ela será revisada e logo estará na plataforma :)')
+          closeModal()
         }
         else if( await response.status != 200){
           toast.error('Algo deu errado, tente mais tarde :(')

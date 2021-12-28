@@ -14,6 +14,8 @@ import { Product } from '../../types';
 import { api, ip, role } from "../../services/api";
 import { formatPrice } from "../../util/format";
 import { Menu } from "../../components/Menu";
+import { Btn } from "../Dashboard/PersonalData/styles";
+import { useCart } from "../../hooks/useCart";
 
 export default function Favorites() {
 
@@ -30,6 +32,12 @@ export default function Favorites() {
 //         localStorage.setItem("favorito", JSON.stringify([produtoId]))
 //     }
 // }
+const { addProduct, cart } = useCart();
+
+
+function handleAddProduct(id: string) {
+  addProduct(id);
+}
 
   useEffect(() => {
     if(role != 'pessoa'){
@@ -83,7 +91,13 @@ export default function Favorites() {
                 <span>{product.nome}</span>
                 <p>{formatPrice(product.preco)}</p>
               </ContentDetails>
-              <Link to="">Comprar</Link>
+              <Btn
+              onClick={
+                () => {
+                  handleAddProduct(product.id)
+                }
+              }
+              >Comprar</Btn>
             </CardDatailsContent>  
             )
             )

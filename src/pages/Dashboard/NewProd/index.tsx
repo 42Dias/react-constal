@@ -54,7 +54,6 @@ export default function NewProd() {
 
   const [newCategoria, setNewCategoria] = useState("");
 
-  console.log(categoria);
 
   function openModal() {
     //setIsOpen(true);
@@ -111,15 +110,21 @@ export default function NewProd() {
 
   async function addProduct() {
     const data = setValues();
-    const response: any = api.post("produto", data);
-    console.log(await response);
+    const response: any = await api.post("produto", data);
+    
+    console.log(response);
+    
     if (response.status == 200) {
       messageApprove();
-    } else if (response.status == 500) {
+
+      setProducts(prevProducts => {
+        return [...new Set([...prevProducts, response.data])]	
+         })
+
+    } else{
       toast.info("Algo deu errado, tente mais tarde :(");
-    } else {
-      messageApprove();
     }
+    setShowModal2(false)
   }
 
   async function makeRequisitionToChange(data: any) {
@@ -189,9 +194,13 @@ export default function NewProd() {
     // console.log(newCategoria)
   }
 
-  async function deleteProduct(prodId: any) {
+  async function deleteProduct(prodId: any, index: number) {
     const response = await api.delete(`produtoDeleteOne/${prodId}`);
-    console.log(response.status);
+    if(response.status == 200){
+      products.splice(index, 1)
+      setProducts(products)
+    }
+
   }
 
   const [products = [], setProducts] = useState<Product[]>([]);
@@ -252,7 +261,6 @@ export default function NewProd() {
     loadProducts();
   }, []);
 
-  console.log(newCategoria);
 
   return (
     <>
@@ -285,7 +293,7 @@ export default function NewProd() {
                   <div className="btn-group">
                     <button
                       className="delete"
-                      onClick={() => deleteProduct(product.id)}
+                      onClick={() => deleteProduct(product.id, index)}
                     >
                       <FiTrash2 />
                     </button>
@@ -535,10 +543,9 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Características técnicas</label>
-                <input
+                <textarea
                   required
-                  type="text"
-                  placeholder="Especificações técnicas"
+                  placeholder="Especificações Aaaaa"
                   onChange={(text) =>
                     setCaracteristicasTecnicas(text.target.value)
                   }

@@ -152,8 +152,14 @@ export default function PersonalData() {
     }
     const response = await api.post('empresa-perfil', data)
     console.log(response)
-    toast.info('Empresa Criada com sucessso! :)')
-    closeModal()
+    if(response.status == 200){
+      toast.info('Empresa Criada com sucessso! :)')
+      closeModal()
+    }
+    else{
+      toast.info('Algo deu errado :(')
+      console.log(response) 
+    }
   }
   async function resetSenha(){
     setLoading(true)
@@ -171,6 +177,8 @@ export default function PersonalData() {
         password: senha
       }).then((response) => {
         setLoading(false)
+        closeModal()
+        toast.info("Ação realizada com sucesso")
         return response.data;
       }).catch(error =>{
         toast.error("Link de redefinição de senha inválido ou expirado")
@@ -182,6 +190,22 @@ export default function PersonalData() {
   function closeModalResetSenha() {
     setShowModalResetSenha(false);
   }
+
+  async function changePlace(){
+    const data = {
+      data: {
+        cep : newCep,
+        logradouro : newLogradouro,
+        numero : newNumero,
+        complemento : newComplemento,
+        pontoReferencia : newPontoReferencia,
+        cidade : newCidade,
+        estado : newEstado,
+        bairro : newBairro,
+      }
+    }
+  }
+
   return (
     <>
       <Header />
@@ -266,7 +290,7 @@ export default function PersonalData() {
               onClick={
                 () => setShowModal2(true)}
               >Alterar</Btn>
-              <Btn//estava como link
+              <Btn //estava como link
               onClick={
                 () => setShowModal2(false)}
               >Cancelar</Btn>
@@ -440,42 +464,63 @@ export default function PersonalData() {
 
               <ContentFormNew>
                 <label htmlFor="">CEP</label>
-                <input type="number" placeholder="CEP" />
+                <input type="number" placeholder="CEP"
+                onChange={
+                  (text) => setCep(text.target.value)
+                } />
               </ContentFormNew>
 
               <ContentFormNew>
-                <label htmlFor="">Rua</label>
-                <input type="text" placeholder="Rua" />
+                <label htmlFor="">Logradouro</label>
+                <input type="text" placeholder="Logradouro"
+                onChange={
+                  (text) => setLogradouro(text.target.value)
+                } />
               </ContentFormNew>
 
               <ContentFormNew>
                 <label htmlFor="">Número</label>
-                <input type="number" placeholder="Número" />
+                <input type="number" placeholder="Número"
+                onChange={
+                  (text) => setNumero(text.target.value)
+                } />
               </ContentFormNew>
 
               <ContentFormNew>
                 <label htmlFor="">Complemento</label>
-                <input type="text" placeholder="Complemento" />
+                <input type="text" placeholder="Complemento"
+                onChange={
+                  (text) => setComplemento(text.target.value)
+                } />
               </ContentFormNew>
 
               <ContentFormNew>
                 <label htmlFor="">Referência</label>
-                <input type="text" placeholder="Referência" />
+                <input type="text" placeholder="Referência"
+                onChange={
+                  (text) => setPontoReferencia(text.target.value)
+                } />
               </ContentFormNew> 
 
               <ContentFormNew>
                 <label htmlFor="">Estado</label>
-                <input type="text" placeholder="Estado" />
+                <input type="text" placeholder="Estado"
+                onChange={
+                  (text) => setEstado(text.target.value)
+                } />
               </ContentFormNew>
 
               <ContentFormNew>
-                <label htmlFor="">UF</label>
-                <input type="text" placeholder="Cidade" />
+                <label htmlFor="">Cidade</label>
+                <input type="text" placeholder="Cidade"
+                onChange={
+                  (text) => setCidade(text.target.value)
+                } />
               </ContentFormNew>
 
               <NewBtn>
                 <button type="button" onClick={messageCancel}>Cancelar</button>
-                <button type="button" onClick={messageApprove}>Adicionar</button>
+                <button type="button" onClick={changePlace}>Adicionar</button>
               </NewBtn>
             </ModalContent>
           </div>

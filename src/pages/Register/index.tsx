@@ -96,8 +96,12 @@ export default function Register() {
           setLoading(false)
         }
   }).catch(res => {
-    console.log(responser); 
-    toast.error("O email já está sendo usado!");
+    if (res.response.data){
+      toast.error(res.response.data);
+    }
+    else{
+      toast.error("Erro no servidor, tente mais tarde :(");
+    }
     setLoading(false)
   })
     

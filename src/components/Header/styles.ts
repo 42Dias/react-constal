@@ -2,7 +2,11 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const Container = styled.header`
-header {
+  /* max-width: 1020px;
+  margin: 0 auto; */
+
+
+.header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -27,7 +31,7 @@ nav li a {
   color: #303030;
 }
 
-header ul {
+.header ul {
   display: flex;
   align-items: center;
 }
@@ -57,11 +61,6 @@ header ul {
   justify-content: center;
 }
 
-.logo {
-  width: 50px;
-  height: 50px;
-}
-
 .nav-options {
   display: flex;
 }
@@ -78,16 +77,11 @@ header ul {
   display: none;
 }
 
-@media (max-width: 648px) {
+@media (max-width: 1024px) {
 
   header {
     padding: 0px 10px;
     overflow: hidden;
-  }
-
-  .logo {
-    width: 45px;
-    height: 45px;
   }
 
   .option a {
@@ -173,43 +167,47 @@ header ul {
     }
   }
 
-  img {
-    max-width: 180px;
-  }
+  .logo {
+    max-width: 170px;
+  } 
 
 `;
 
 export const InputCenter = styled.div`
-  nav.header {
+  .header {
     display: grid;
-    grid-template-columns: 1fr 1.55fr;
+    grid-template-columns: repeat(3, 1fr);
 
     .input
     {
       display: flex;
       align-items: center;
+      margin-right: 220px;
+      @media (max-width: 1024px) {
+        display: none;
+      }
+
     }
+
   }
 
   input[type=text] {
-    width: 280px;
-    height: 46px;
+    width: 220px;
+    height: 40px;
 
     background: white;
     border-radius: 5px 0 0 5px;
     border: 0;
     padding: 0 8px;
+
   }
 
-  button {
+  .buttonOn {
     width: 64px;
-    height: 46px;
-    left: 926px;
-    top: 34px;
+    height: 40px;
 
     background: #58A4B0;
     border-radius: 0px 5px 5px 0px;
-
     border: 0;
 
     svg {
@@ -221,7 +219,8 @@ export const InputCenter = styled.div`
   @media (max-width: 768px) {
     input[type=text] {
       width: 180px;
-      height: 46px;
+      height: 40px;
+
     }
 
   }
@@ -272,8 +271,9 @@ export const IconsContainerMenu = styled.div`
 
 export const IconsContainer = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;  
+  justify-content: center;
+  position: absolute;
+  right: 190px;
 
   button {
     display: flex;
@@ -281,11 +281,19 @@ export const IconsContainer = styled.div`
     justify-content: center;  
     width: 80px;
     background: transparent;  
+    font-size: 12px;
+
     svg {
-      color: black;
+      color: black !important;
     }
 
-    &:hover
+    &.login {
+      width: 180px;
+    }
+
+    span {
+      font-size: 12px;
+    }
   }
 
   svg {
@@ -303,7 +311,6 @@ export const Cart = styled(Link)`
   display: flex;
   align-items: center;
   text-decoration: none;
-  margin-top: 30px;
 
   @media (max-width: 768px) {
     svg {
@@ -313,7 +320,6 @@ export const Cart = styled(Link)`
 
   div {
     text-align: right;
-
     strong {
       display: block;
       color: black;

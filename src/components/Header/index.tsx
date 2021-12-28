@@ -35,19 +35,24 @@ import axios from "axios";
 import { margin } from "polished";
 
 const Header = (): JSX.Element => {
+
+
+
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
 
   const { cart } = useCart();
 
-  //console.log("cart")
-  //console.log(cart)
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [modalIsOpen2, setIsOpen2] = React.useState(false);
 
   function openModal2() {
     setIsOpen2(true);
+  }
+
+  function openModalExternaly(){
+    setIsOpen(true)
   }
 
   function afterOpenModal2() {
@@ -60,7 +65,7 @@ const Header = (): JSX.Element => {
 
   const [email, setUser] = useState("");
   const [password, setPassword] = useState("");
-  const [cartSize, setCartSize] = useState(0);
+  const [cartSize, setCartSize] = useState<any>(0);
   const [loading, setLoading] = useState(false);
 
   function openModal() {
@@ -161,28 +166,31 @@ const Header = (): JSX.Element => {
       }
 
     }).catch((error) =>{
-      setLoading(false);
-      toast.error("Desculpe, não reconhecemos suas credenciais")
+      if (error.response.data){
+        toast.error(error.response.data);
+      }
+      else{
+        toast.error("Erro no servidor, tente mais tarde :(");
+      }
+      setLoading(false)
     });
     
   }
-  useEffect(() => {
-    loadUser();
-  }, []);
-  useEffect(() => {
-    async function loadCart() {
-      //console.log("await cart")
-      //console.log(await cart)
 
-      setCartSize(1);
-    }
-    loadCart();
-    console.log(cartSize);
-  }, []);
-
+  async function loadCart(){
+      const allCart: any  = await api.get(`carrinho/`)
+      console.log("allCart")
+      console.log(allCart.data.count)
+      // return allCart.data.rows.lenght;
+      setCartSize(allCart.data.count);
+  }
+  function handleClickMain() {
+    history.push("/");
+  }
   function logof(){
     localStorage.clear();
     toast.info("Saiu!")
+    history.push("/")
     window.location.reload();
   }
 
@@ -199,6 +207,11 @@ const Header = (): JSX.Element => {
       }
     });
   }
+
+  useEffect(() => {
+    loadUser();
+    loadCart()
+  }, []);
 
   return (
     <>
@@ -223,44 +236,51 @@ const Header = (): JSX.Element => {
 
         <InputCenter>
           <nav className="header">
+            
             <div>
               <Link to="/">
-                <img src={logo} alt="Constal" />
+                <img className="logo" src={logo} alt="Constal" />
               </Link>
             </div>
 
-            <ul className={click ? "nav-options active" : "nav-options"}>
-              <div className="input">
-                <input type="text" placeholder="Pesquise o seu produto" />
-                <button type="button">
-                  <FiSearch />
-                </button>
-              </div>
+            <div className="input">
+              <input type="text" placeholder="Pesquise o seu produto" />
+              <button className="buttonOn" type="button">
+                <FiSearch />
+              </button>
+            </div>
 
+            <ul className={click ? "nav-options active" : "nav-options"}>
+            
               <IconsContainer>
-                <FiUser onClick={openModal} size={20} />{token ? "Perfil":"Login"}
+
+                <button className="login" onClick={openModal}>
+                  <FiUser size={18} />
+                  <span>{token ? "Meu Perfil":"Cadastre-se"} </span>
+                </button>
+
                 {role != "pessoa" ? (
                   <div />
                 ) : (
                   <>
                     <Link to="/favoritos">
-                      <FiHeart size={20} />
+                      <FiHeart size={18} />
                     </Link>
                     <Cart to="/cart">
                       <div>
-                        <strong>Meu carrinho</strong>
+                        <span>Meu carrinho</span> <br />
                         <span data-testid="cart-size">
                           {cartSize == 1
                             ? `${cartSize} item`
                             : `${cartSize} itens`}
                         </span>
                       </div>
-                      <FiShoppingBag size={20} />
+                      <FiShoppingBag size={18} />
                     </Cart>
                   </>
                 )}
                 <button className="loggout">
-                  <FiLogOut size={20} onClick={logof}/>Sair
+                  <FiLogOut size={18} onClick={logof}/>Sair
                 </button>
               </IconsContainer>
 
@@ -268,7 +288,7 @@ const Header = (): JSX.Element => {
                 <div className="icons-flex-align">
                   <div className="flex-item" onClick={openModal}>
                     <span>Meu perfil</span>
-                    <FiUser size={20} />
+                    <FiUser size={18} />
                   </div>
                   {role != "pessoa" ? (
                     <div />
@@ -277,7 +297,7 @@ const Header = (): JSX.Element => {
                       <div className="flex-item">
                         <span>Meus produtos favoritos</span>
                         <Link to="/favoritos">
-                          <FiHeart size={20} />
+                          <FiHeart size={18} />
                         </Link>
                       </div>
                       <Cart to="/cart">
@@ -289,7 +309,7 @@ const Header = (): JSX.Element => {
                               : `${cartSize} itens`}
                           </span>
                         </div>
-                        <FiShoppingBag size={20} />
+                        <FiShoppingBag size={18} />
                       </Cart>
                     </>
                   )}

@@ -28,7 +28,7 @@ export default function ApproveCategorias() {
 
   useEffect(() => {
     if(!role){
-      window.location.reload()
+      //window.location.reload()
     }
     else{
     if(role !== "admin" && role !== "empresa" || status === "pendente"){
