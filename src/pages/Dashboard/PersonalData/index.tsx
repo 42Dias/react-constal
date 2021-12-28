@@ -169,6 +169,8 @@ export default function PersonalData() {
         password: senha
       }).then((response) => {
         setLoading(false)
+        closeModal()
+        toast.info("Ação realizada com sucesso")
         return response.data;
       }).catch(error =>{
         toast.error("Link de redefinição de senha inválido ou expirado")
@@ -264,7 +266,7 @@ export default function PersonalData() {
               onClick={
                 () => setShowModal2(true)}
               >Alterar</Btn>
-              <Btn//estava como link
+              <Btn //estava como link
               onClick={
                 () => setShowModal2(false)}
               >Cancelar</Btn>
