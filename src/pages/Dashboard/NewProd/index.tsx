@@ -54,7 +54,6 @@ export default function NewProd() {
 
   const [newCategoria, setNewCategoria] = useState("");
 
-  console.log(categoria);
 
   function openModal() {
     //setIsOpen(true);
@@ -111,14 +110,19 @@ export default function NewProd() {
 
   async function addProduct() {
     const data = setValues();
-    const response: any = api.post("produto", data);
-    console.log(await response);
+    const response: any = await api.post("produto", data);
+    
+    console.log(response);
+    
     if (response.status == 200) {
       messageApprove();
-    } else if (response.status == 500) {
+
+      setProducts(prevProducts => {
+        return [...new Set([...prevProducts, response.data])]	
+         })
+
+    } else{
       toast.info("Algo deu errado, tente mais tarde :(");
-    } else {
-      messageApprove();
     }
     setShowModal2(false)
   }
@@ -257,7 +261,6 @@ export default function NewProd() {
     loadProducts();
   }, []);
 
-  console.log(newCategoria);
 
   return (
     <>
