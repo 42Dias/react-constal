@@ -35,6 +35,9 @@ import axios from "axios";
 import { margin } from "polished";
 
 const Header = (): JSX.Element => {
+
+
+
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
 
@@ -46,6 +49,10 @@ const Header = (): JSX.Element => {
 
   function openModal2() {
     setIsOpen2(true);
+  }
+
+  function openModalExternaly(){
+    setIsOpen(true)
   }
 
   function afterOpenModal2() {
