@@ -166,8 +166,13 @@ const Header = (): JSX.Element => {
       }
 
     }).catch((error) =>{
-      setLoading(false);
-      toast.error("Desculpe, não reconhecemos suas credenciais")
+      if (error.response.data){
+        toast.error(error.response.data);
+      }
+      else{
+        toast.error("Erro no servidor, tente mais tarde :(");
+      }
+      setLoading(false)
     });
     
   }
