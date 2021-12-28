@@ -88,7 +88,7 @@ export default function PersonalData() {
       () => {
         console.log(role +" "+ status)
         if(!role){
-          window.location.reload()
+          //window.location.reload()
         }
         else{
           if(role !== "admin" && role !== "empresa"){

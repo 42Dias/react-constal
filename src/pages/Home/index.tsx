@@ -9,7 +9,7 @@ import SwiperCore, {
 import "swiper/swiper.scss";
 
 import { SwiperStyles, BarHome, FlexBar, BannerHomeImage } from "./styles";
-import { api, ip, role } from "../../services/api";
+import { api, ip, role, semImagem } from "../../services/api";
 import { formatPrice } from "../../util/format";
 import { useCart } from "../../hooks/useCart";
 import Header from "../../components/Header";
@@ -194,7 +194,7 @@ const Home = (): JSX.Element => {
                   {(
                     <li key={product.id}>
                       <Link to={`/produto/${product.id}`}>
-                        <img src={product.imagemUrl} alt={product.nome} />
+                        <img src={product.imagemUrl || semImagem} alt={product.nome} />
                       </Link>
                       <strong>{product.nome}</strong>
                       <p>R$ {product.precoOferta}</p>
@@ -237,7 +237,7 @@ const Home = (): JSX.Element => {
               <SwiperSlide>
                 <li key={product.id}>
                   <Link to={`/produto/${product.id}`}>
-                    <img src={product.imagemUrl} alt={product.nome} />
+                    <img src={product.imagemUrl ? semImagem:product.imagemUrl} alt={product.nome} />
                   </Link>
                   <strong>{product.nome}</strong>
                   <p>{product.preco}</p>

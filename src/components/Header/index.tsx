@@ -238,7 +238,7 @@ const Header = (): JSX.Element => {
               </div>
 
               <IconsContainer>
-                <FiUser onClick={openModal} size={20} />
+                <FiUser onClick={openModal} size={20} />{token ? "Perfil":"Login"}
                 {role != "pessoa" ? (
                   <div />
                 ) : (
@@ -260,7 +260,7 @@ const Header = (): JSX.Element => {
                   </>
                 )}
                 <button className="loggout">
-                  <FiLogOut size={20} onClick={logof}/>
+                  <FiLogOut size={20} onClick={logof}/>Sair
                 </button>
               </IconsContainer>
 
