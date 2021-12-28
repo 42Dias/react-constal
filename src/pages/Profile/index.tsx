@@ -553,7 +553,7 @@ export default function Profile() {
               </ContentFormNew>
 
               <ContentFormNew>
-                <label htmlFor="">UF</label>
+                <label htmlFor="">Cidade</label>
                 <input
                   type="text"
                   placeholder="Cidade"
