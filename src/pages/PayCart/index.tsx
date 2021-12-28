@@ -12,9 +12,6 @@ let token = localStorage.getItem("token")?.replace(/"/g, "");
 const tenantId = "fa22705e-cf27-41d0-bebf-9a6ab52948c4";
 
 
-/*          PARA CRIAR A FATURA!!!
-            /tenant/:tenantId/pedido/:id/fatura
-*/
 export default function PayCart() {
   const [produtosDosFornecedores, setProdutosDosFornecedores] = useState([]);
   const [ids = [], setIds] = useState<any[]>([]);
@@ -24,8 +21,6 @@ export default function PayCart() {
   useEffect(() => {
     if(role != 'pessoa'){
       window.location.replace(`http://${ip}:3000/constal#/erro`);
-      //
-      // window.location.replace(`http://${ip}:3000/constal#/finalizar`);
     }
     
     async function gerarFornecedores(){
@@ -145,6 +140,14 @@ export default function PayCart() {
       
   }
   async function reduceStock(){
+    /*
+    
+    para reduzir no estoque?
+    fazer uma nova rota??
+
+    
+    
+    */
     // ids.map(
     //   async (id) => {
     //     const response = await axios({
@@ -201,11 +204,6 @@ export default function PayCart() {
       <>
         <Header />
         <Menu />
-        {/* 
-
-        Pegar a forma de pagamento, salvar em uma variavel e passar ela dentro do body da requisição
-        
-        */}
           <div className="container">
             <Titleh2>Como prefere pagar?</Titleh2>
             <CenterPay>
