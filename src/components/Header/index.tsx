@@ -228,24 +228,34 @@ const Header = (): JSX.Element => {
 
         <InputCenter>
           <nav className="header">
+            
             <div>
               <Link to="/">
-                <img src={logo} alt="Constal" />
+                <img className="logo" src={logo} alt="Constal" />
               </Link>
             </div>
 
+            <div className="input">
+              <input type="text" placeholder="Pesquise o seu produto" />
+              <button type="button">
+                <FiSearch />
+              </button>
+            </div>
+
             <ul className={click ? "nav-options active" : "nav-options"}>
-              <div className="input">
-                <input type="text" placeholder="Pesquise o seu produto" />
-                <button type="button">
-                  <FiSearch />
-                </button>
-              </div>
+              
+
 
               <IconsContainer>
-                <FiUser onClick={openModal} size={20} />{token ? "Meu Perfil":"Login"}
+
+                <button className="login" onClick={openModal}>
+                  <FiUser size={20} />
+                  <span>{token ? "Meu Perfil":"Cadastre-se"} </span>
+                </button>
+
                 {role != "pessoa" ? (
                   <div />
+                
                 ) : (
                   <>
                     <Link to="/favoritos">

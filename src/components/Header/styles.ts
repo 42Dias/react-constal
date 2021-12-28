@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const Container = styled.header`
-header {
+.header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -27,7 +27,7 @@ nav li a {
   color: #303030;
 }
 
-header ul {
+.header ul {
   display: flex;
   align-items: center;
 }
@@ -55,11 +55,6 @@ header ul {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.logo {
-  width: 50px;
-  height: 50px;
 }
 
 .nav-options {
@@ -174,15 +169,16 @@ header ul {
   }
 
   img {
-    max-width: 180px;
+    max-width: 230px;
   }
 
 `;
 
 export const InputCenter = styled.div`
-  nav.header {
+  .header {
     display: grid;
-    grid-template-columns: 1fr 1.55fr;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 45px;
 
     .input
     {
@@ -204,8 +200,6 @@ export const InputCenter = styled.div`
   button {
     width: 64px;
     height: 46px;
-    left: 926px;
-    top: 34px;
 
     background: #58A4B0;
     border-radius: 0px 5px 5px 0px;
@@ -282,7 +276,11 @@ export const IconsContainer = styled.div`
     width: 80px;
     background: transparent;  
     svg {
-      color: black;
+      color: black !important;
+    }
+
+    &.login {
+      width: 180px;
     }
 
     &:hover
