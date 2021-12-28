@@ -96,7 +96,10 @@ export const ContentDetails = styled.div`
   }
 
   img {
-    padding: 0 40px;
+    width: 222px;
+    height: 140px;
+    border-radius: 10px 10px 0 0;
+    object-fit: contain;
   }
 
   p {
