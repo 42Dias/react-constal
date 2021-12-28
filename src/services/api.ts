@@ -9,7 +9,7 @@ export let status = localStorage.getItem("status")?.replace(/"/g, "");
 export let Email = localStorage.getItem("email")?.replace(/"/g, "");
 export const semImagem = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Item_sem_imagem.svg/1024px-Item_sem_imagem.svg.png"
 //export let ip = "localhost";//teste local
-export let ip = "http://7dd208931cad.sn.mynetname.net:42080/";//servidor
+export let ip = "http://7dd208931cad.sn.mynetname.net/";//servidor
 
 export const api = axios.create({
   baseURL: 'http://'+ip+':8157/api/tenant/'+tenantId+"/",
