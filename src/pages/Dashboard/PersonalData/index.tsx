@@ -50,6 +50,7 @@ export default function PersonalData() {
   const [razaoSocial, setRazaoSocial] = useState('')
   const [cnpj, setCnpj] = useState('')
   const [telefone, setTelefone] = useState('')
+  const [celular, setCelular] = useState('')
   const [ramal, setRamal] = useState('')
   const [email, setEmail] = useState('')
   const [website, setWebsite] = useState('')
@@ -63,23 +64,6 @@ export default function PersonalData() {
   const [bairro, setBairro] = useState('')
   const [pix, setPix] = useState('')
   const [showModalResetSenha, setShowModalResetSenha] = React.useState(false);
-  const [newNome, setNewNome]=useState('');  
-  const [newMarca, setNewMarca] = useState('')
-  const [newRazaoSocial, setNewRazaoSocial] = useState('')
-  const [newCnpj, setNewCnpj] = useState('')
-  const [newTelefone, setNewTelefone] = useState('')
-  const [newRamal, setNewRamal] = useState('')
-  const [newEmail, setNewEmail] = useState('')
-  const [newWebsite, setNewWebsite] = useState('')
-  const [newCep, setNewCep] = useState('')
-  const [newLogradouro, setNewLogradouro] = useState('')
-  const [newNumero, setNewNumero] = useState('')
-  const [newComplemento, setNewComplemento] = useState('')
-  const [newPontoReferencia, setNewPontoReferencia] = useState('')
-  const [newCidade, setNewCidade] = useState('')
-  const [newEstado, setNewEstado] = useState('')
-  const [newBairro, setNewBairro] = useState('')
-  const [newPix, setNewPix] = useState('')
   const [loading, setLoading] = useState(false);
   const [senha, setSenha] = useState("");
 
@@ -107,6 +91,7 @@ export default function PersonalData() {
             setRazaoSocial(response.razaoSocial)
             setCnpj(response.cnpj)
             setTelefone(response.telefone)
+            setCelular(response.celular)
             setRamal(response.ramal)
             setEmail(Email!)
             setWebsite(response.website)
@@ -136,6 +121,7 @@ export default function PersonalData() {
         razaoSocial : razaoSocial,
         cnpj : cnpj,
         telefone : telefone,
+        celular : celular,
         ramal : ramal,
         website : website,
         cep : cep,
@@ -327,7 +313,12 @@ export default function PersonalData() {
           <CardDatailsContent>
             <ContentDetails>
               <h3>Telefone: <span> {telefone}</span></h3>
-              
+            </ContentDetails>
+          </CardDatailsContent>
+
+          <CardDatailsContent>
+            <ContentDetails>
+              <h3>Celular: <span> {celular}</span></h3>
             </ContentDetails>
           </CardDatailsContent>
 
@@ -410,7 +401,7 @@ export default function PersonalData() {
                     <input type="text" placeholder="Razão Social"
                     value={razaoSocial}
 
-                    onChange={(text) => setNewRazaoSocial(text.target.value)}
+                    onChange={(text) => setRazaoSocial(text.target.value)}
                     />
                     </ContentFormNew>
 
@@ -422,6 +413,16 @@ export default function PersonalData() {
                     onChange={(text) => setTelefone(text.target.value)}
                     />
                     </ContentFormNew>
+
+                    <ContentFormNew>
+                    <label htmlFor="">Celular</label>
+                    <input type="text" placeholder="Celular"
+                    value={celular}
+
+                    onChange={(text) => setCelular(text.target.value)}
+                    />
+                    </ContentFormNew>
+
 
                     <ContentFormNew>
                     <label htmlFor="">CNPJ</label>
