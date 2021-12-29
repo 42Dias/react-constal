@@ -63,7 +63,7 @@ export function Menu() {
             </button>
             <div className="dropdown-content">
               <div className="drop-grid">
-                <Link to="/meus-produtos">Novo Produtos</Link>
+                <Link to="/meus-produtos">Meus Produtos</Link>
                 <Link to="/promocoes">Promoções</Link>
                 <Link to="/vendas">Vendas</Link>
                 <Link to="/perguntas">Perguntas</Link>
