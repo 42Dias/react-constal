@@ -128,7 +128,19 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
               },              
               timeout: 50000,
               data   : { product, quantidade: 1 }
-            })              
+            }).then(
+              (response) => {
+                if(response.status == 200){
+                  toast.info("Produto adicionado ao carrinho com sucesso!")
+                }
+                else if(response.status == 500){
+                  toast.error("Problemas com o servidor :(")
+                }
+                else{
+                  toast.error("Erro na adição do produto")
+                }
+              }
+            )              
           console.log(JSON.stringify( { product, quantidade: 1 }))
 
 
@@ -150,6 +162,10 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
           console.log("response")
           console.log(response)
           return;
+        }
+        else{
+          console.log("Erro")
+          toast.error("Quantidade solicitada fora do estoque :(")
         }
       }
 
