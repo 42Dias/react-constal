@@ -102,7 +102,7 @@ export default function Profile() {
         setFullName(response.nome);
         setCPF(response.cpf);
         setPhone(response.telefone);
-        setLogradouro(response.logradouro + ", " + response.numero);
+        setLogradouro(response.logradouro);
         setNewNumero(response.numero);
         setBairro(response.bairro);
         setCEP(response.cep);
@@ -129,7 +129,8 @@ export default function Profile() {
         setFullName(response.nome);
         setCPF(response.cpf);
         setPhone(response.telefone);
-        setLogradouro(response.logradouro + ", " + response.numero);
+        setLogradouro(response.logradouro);
+        setNewNumero(response.numero)
         setBairro(response.bairro);
         setCEP(response.cep);
         setCidade(response.cidade);
@@ -157,7 +158,8 @@ export default function Profile() {
         setFullName(response.fullName);
         setCPF(response.cpf);
         setPhone(response.telefone);
-        setLogradouro(response.logradouro + ", " + response.numero);
+        setLogradouro(response.logradouro + ", ");
+        setNewNumero(response.numero)
         setBairro(response.bairro);
         setCEP(response.cep);
         setCidade(response.cidade);
@@ -182,9 +184,9 @@ export default function Profile() {
     }
 
   function messageCancel() {
-    toast.error(
+    /*toast.error(
       "Ah, que pena. Não conseguimos adicionar o seu endereço na plataforma :("
-    );
+    );*/
     setShowModal1(false);
     setShowModal2(false);
   }
@@ -193,6 +195,7 @@ export default function Profile() {
     toast.info("Eba, recebemos o seu endereço. :)");
     setShowModal1(false);
     setShowModal2(false);
+    setLoading(false)
   }
  
   function afterOpenModal() {
@@ -234,6 +237,7 @@ export default function Profile() {
   }
 
   async function setNewData() {
+    setLoading(true)
     const data = {
       data: {
         user: id,
@@ -351,7 +355,7 @@ export default function Profile() {
                 <h3>Alterar dados</h3>
                 {
                   <ContentFormNew>
-                    <label htmlFor="">Novo Nome</label>
+                    <label htmlFor="">Nome</label>
                     <input
                       type="text"
                       placeholder="Seu novo nome"
@@ -389,10 +393,10 @@ export default function Profile() {
             <span>Senha:</span>
             <p>******</p>
           </ContentDetails>
-          <button onClick={() => setShowModalResetSenha(true)}>Alterar</button>
+          <button onClick={() => setShowModalResetSenha(true)}>Alterar Senha</button>
         </CardDatailsContent>
 
-        <CardDatails>
+        {/*<CardDatails>
           <h2>Cartões</h2>
           <CardDatailsContent>
             <ContentDetails>
@@ -413,14 +417,14 @@ export default function Profile() {
             </ContentDetails>
             <button>Excluir</button>
           </CardDatailsContent>
-        </CardDatails>
+        </CardDatails>*/}
 
         <CardDatails>
           <h2>Endereço</h2>
           <CardDatailsContent className="adress">
             <ContentDetails>
               <small>
-                Endereço: {logradouro} <br />
+                Endereço: {logradouro + ", " + newNumero} <br />
                 Bairro: {bairro} <br />
                 CEP: {cep} <br />
                 Cidade: {cidade + " - " + estado}
@@ -454,7 +458,7 @@ export default function Profile() {
             </ModalFlex>
 
             <ModalContent>
-              <h3>Novo endereço</h3>
+              <h3>Alterar dados</h3>
               <ContentFormNew>
                 <label htmlFor="">Nome Completo</label>
                 <input
@@ -561,7 +565,7 @@ export default function Profile() {
                   onChange={(text) => setCidade(text.target.value)}
                 />
               </ContentFormNew>
-
+              {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
               <div className="buttonsNew">
                 <button type="button" onClick={messageCancel}>
                   Cancelar
