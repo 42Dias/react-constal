@@ -151,6 +151,10 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
           console.log(response)
           return;
         }
+        else{
+          console.log("Erro")
+          toast.error("Quantidade solicitada fora do estoque :(")
+        }
       }
 
       else if(productAlreadyInCart) {
