@@ -21,7 +21,7 @@ export default function PayCart() {
 
   useEffect(() => {
     if(role != 'pessoa'){
-      window.location.replace(`http://${ip}:3000/constal#/erro`);
+      window.location.replace(`http://${ip}/constal#/erro`);
     }
     
     async function gerarFornecedores(){
@@ -208,38 +208,40 @@ export default function PayCart() {
         <Header />
         <Menu />
           <div className="container">
-            <Titleh2>Como prefere pagar?</Titleh2>
+            <Titleh2>Formas de pagamentos</Titleh2>
             <CenterPay>
               <div className="input">
-                <input type="checkbox" name="" id=""
+                {/*<input type="checkbox" name="" id=""
                   onClick={
                     () => {
                       formaDePagamento = 'pix'
                     console.log(formaDePagamento)
                     }
                   }
-                />
+                />*/}
+                <img src="https://jsaonthego.com/wp-content/uploads/2021/08/pre-start-onthego-transparent-256px.png" style={{width: '30px'}}></img>
                 <div>
                   <h2>Pix</h2>
                   <p>Aprovação imediata</p>
                 </div>
               </div>
               <div className="input">
-                <input type="checkbox" name="" id="" 
+                {/*<input type="checkbox" name="" id="" 
                 onClick={
                   () => {
                     formaDePagamento = 'cartao'
                     console.log(formaDePagamento)
                   }
                 }
-                />
+              />*/}
+              <img src="https://jsaonthego.com/wp-content/uploads/2021/08/pre-start-onthego-transparent-256px.png" style={{width: '30px'}}></img>
                 <div>
                   <h2>Cartão de crédito</h2>
                   <p>Aprovação imediata</p>
                 </div>
               </div>
               <div className="input">
-                <input type="checkbox" name="" id=""
+                {/*<input type="checkbox" name="" id=""
                   onClick={
                     () => {
                       formaDePagamento = 'boleto'
@@ -249,7 +251,8 @@ export default function PayCart() {
                     }
                   }
                 
-                />
+                />*/}
+                <img src="https://jsaonthego.com/wp-content/uploads/2021/08/pre-start-onthego-transparent-256px.png" style={{width: '30px'}}></img>
                 <div>
                   <h2>Boleto</h2>
                   <p>Aprovado em 1 ou 2 dias úteis após pagamento</p>
