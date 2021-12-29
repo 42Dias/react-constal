@@ -17,11 +17,12 @@ import {
   ModalFlex,
   ModalContent,
   ContentFormNew,
+  NewBtnFeatured,
 } from "./styles";
 import prodone from "../../../assets/images/prodone.png";
 import Header from "../../../components/Header";
 import { AiOutlineClose } from "react-icons/ai";
-import { FiCheck } from "react-icons/fi";
+import { FiCheck, FiPlus } from "react-icons/fi";
 import { Menu } from "../../../components/Menu";
 import { Product } from "../../../types";
 import { api, ip, role, status } from "../../../services/api";
@@ -35,6 +36,8 @@ export default function Promotions() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [imagemPromocional, setImagemPromocional] = useState<any>();
   const [dataEncerramento, setDataEncerramento]   =  useState<any>();
+  const [indexs, setIndexs]   =  useState<any>([]);
+  
 
   function openModal() {
     setIsOpen(true);
@@ -55,12 +58,14 @@ export default function Promotions() {
   const [products = [], setProducts] = useState<Product[]>([]);
   const [ids = [], setIds] = useState<any[]>([]);
 
-  function addNewId(newId: string){
+  function addNewId(newId: string, index: number){
     console.log(newId)
     setIds((prevValues: any[]) => {
-      console.log(prevValues)
       return [...new Set([...prevValues, newId])]	
        })
+    setIndexs((prevValues: any[]) => {
+    return [...new Set([...prevValues, index])]	
+      })
 
   }
   async function makeRequisitionToChange(data: any){
@@ -116,8 +121,7 @@ export default function Promotions() {
   console.log(uuid.v4())
 
   console.log(ids)
-  console.log(dataEncerramento)
-  console.log(imagemPromocional)
+  console.log(indexs)
   
   return (
     <>
@@ -129,9 +133,9 @@ export default function Promotions() {
         </ContentNew>
 
         <ContentNew>
-          <Btn onClick={openModal}>
+          <NewBtnFeatured onClick={openModal}>
             Adicionar Promoção
-          </Btn>
+          </NewBtnFeatured>
         </ContentNew>
         
         {products.forEach((p) => {
@@ -148,7 +152,7 @@ export default function Promotions() {
             (product, index) => (
               <>
               <ProdContainerSingle>
-              <img src={prodone} alt="" />
+              <img src={product.imagemUrl} alt="" />
               <h5>{product.nome}</h5>
               <p>{product.descricao}</p>
               <div className="btn-group-add">
@@ -157,9 +161,9 @@ export default function Promotions() {
                 </span>
                 <div
                 onClick={
-                  () => addNewId(product.id)}
+                  () => addNewId(product.id, index)}
                 className="btn-more">
-                  <FiCheck />
+                  <FiPlus />
                 </div>
               </div>
             </ProdContainerSingle>            
@@ -182,6 +186,25 @@ export default function Promotions() {
 
             <ModalContent>
               <h3>Produtos promocionais</h3>
+
+              {indexs.length? (
+            
+                indexs.map(
+                  (index: number) => (
+                    <p>
+                      {productCounter[index].nome} <br />
+                      {formatPrice(productCounter[index].precoOferta)}
+                      <br />
+                      <br />
+                    </p>
+                  )
+                )
+              
+
+
+              ): 'selecione um produto'}
+              
+
               <ContentFormNew>
                 <label htmlFor="">Imagem Promocional</label>
                 <input required type="url" placeholder="https://www.suaImagem.com/imagem" 

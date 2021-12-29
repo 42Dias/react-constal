@@ -23,7 +23,7 @@ import { Menu } from "../../../components/Menu";
 import { formatPrice } from "../../../util/format";
 import axios from "axios";
 import { Empresa, Product } from "../../../types";
-import { api, ip, role, status } from "../../../services/api";
+import { api, id, ip, role, status } from "../../../services/api";
 import { Btn } from "./styles";
 
 export default function NewProd() {
@@ -40,7 +40,7 @@ export default function NewProd() {
 
   const [productToReq, setProductToReq] = useState<any>();
 
-  const [id, setId] = useState("");
+  const [idProd, setId] = useState("");
   const [nome, setNome] = useState("");
   const [codigoDaEmpresa, setCodigoDaEmpresa] = useState("");
   const [descricao, setDescricao] = useState("");
@@ -59,8 +59,8 @@ export default function NewProd() {
 
   const [newCategoria, setNewCategoria] = useState("");
   const [loading, setLoading] = useState(false);
-  const [dataEncerramento, setDataEncerramento]   =  useState<any>();
-  const [categoriaId, setCategoriaId]   =  useState<any>();
+  const [dataEncerramento, setDataEncerramento] = useState<any>();
+  const [categoriaId, setCategoriaId] = useState<any>();
 
   function openModal() {
     //setIsOpen(true);
@@ -90,7 +90,7 @@ export default function NewProd() {
       "Eba, estamos avaliando seu produto. Assim que aprovado estará na plataforma :)"
     );
     //setIsOpen(false);
-    setLoading(false) 
+    setLoading(false)
   }
 
   function improvements() {
@@ -128,23 +128,23 @@ export default function NewProd() {
         messageApprove();
         closeModal()
         setProducts(prevProducts => {
-          return [...new Set([...prevProducts, response.data])]	
-           })
-          console.log(response)
+          return [...new Set([...prevProducts, response.data])]
+        })
+        console.log(response)
         //window.location.reload();
         setLoading(false)
-      }else{
+      } else {
         toast.error('Algo deu errado, tente mais tarde :(');
         console.log(response)
       }
-      }).catch(error => {
-        toast.error("Algo deu errado, tente mais tarde :(");
-        console.log(error)
-        setLoading(false)
+    }).catch(error => {
+      toast.error("Algo deu errado, tente mais tarde :(");
+      console.log(error)
+      setLoading(false)
     });
-    
+
     console.log(response);
-    
+
     /*if (response.status == 200) {
       messageApprove();
 
@@ -154,7 +154,7 @@ export default function NewProd() {
 
     } else{
       toast.error("Algo deu errado, tente mais tarde :(");
-    }*/ 
+    }*/
     setShowModal2(false)
   }
 
@@ -162,37 +162,37 @@ export default function NewProd() {
     console.log(categoria)
     setLoading(true)
 
-    const response: any = api.put(`produto/${id}`, data)
-    .then(
-      async (response) => {
-    console.log(response);
-    if ((response.status) == 200) {
-      messageApprove();
-      closeModal()
-    } else if (response.status == 500) {
-      console.log(response)
-      toast.error("Algo deu errado, tente mais tarde :(");
-      setLoading(false)
-    } else {
-      toast.error("Algo deu errado, tente mais tarde :(");
-      console.log(response)
-    }
-    setLoading(false)
-    console.log(response)
-      }
-    )
-    .catch(error =>{
-        toast.error("Algo deu errado, tente mais tarde :(");      
+    const response: any = api.put(`produto/${idProd}`, data)
+      .then(
+        async (response) => {
+          console.log(response);
+          if ((response.status) == 200) {
+            messageApprove();
+            closeModal()
+          } else if (response.status == 500) {
+            console.log(response)
+            toast.error("Algo deu errado, tente mais tarde :(");
+            setLoading(false)
+          } else {
+            toast.error("Algo deu errado, tente mais tarde :(");
+            console.log(response)
+          }
+          setLoading(false)
+          console.log(response)
+        }
+      )
+      .catch(error => {
+        toast.error("Algo deu errado, tente mais tarde :(");
         setLoading(false)
 
-    });
+      });
 
   }
 
   async function changeProduct() {
     const data = {
       data: {
-        id: id,
+        id: idProd,
         nome: nome,
         codigo: codigoDaEmpresa,
         descricao: descricao,
@@ -208,17 +208,17 @@ export default function NewProd() {
         status: "pendente",
       },
     };
-    
+
     console.log("data")
     console.log(data);
     makeRequisitionToChange(data);
-    
+
   }
   async function addPromotion() {
     setLoading(true)
     const data = {
       data: {
-        id: id,
+        id: idProd,
         nome: nome,
         codigo: codigoDaEmpresa,
         descricao: descricao,
@@ -227,8 +227,9 @@ export default function NewProd() {
         prazo: prazo,
         quantidade: quantidade,
         frete: frete,
-        categoria: categoria,
-        categoriaId: categoria,
+        // categoria: categoria,
+        categoriaId: categoriaId,
+        empresaId: empresaId,
         imagemUrl: imagem,
         isOferta: isOferta,
         precoOferta: precoOferta,
@@ -254,7 +255,7 @@ export default function NewProd() {
   async function deleteProduct(prodId: any, index: number) {
     setLoading(true)
     const response = await api.delete(`produtoDeleteOne/${prodId}`);
-    if(response.status == 200){
+    if (response.status == 200) {
       products.splice(index, 1)
       setProducts(products)
       setLoading(false)
@@ -288,11 +289,12 @@ export default function NewProd() {
   }
 
   useEffect(() => {
-    if(!role){
-      //window.location.reload()
+    toast.info("status:" + status)
+    if (!role) {
+      window.location.reload()
     }
-    else{
-      if(role !== "admin" && role !== "empresa" || status === "pendente"){
+    else {
+      if (role !== "admin" && role !== "empresa" || status === "pendente") {
         // Simulate an HTTP redirect:
         window.location.replace(`http://${ip}:3000/constal#/erro`);
       }
@@ -328,10 +330,6 @@ export default function NewProd() {
     loadProducts();
   }, []);
 
-
-
-  console.log("imagem")
-  console.log(imagem)
   return (
     <>
       <GlobalStyles />
@@ -341,19 +339,19 @@ export default function NewProd() {
       <div className="container">
         <ContentNew>
           <h2>Meus produtos</h2> {loading ? (
-              <img
-                width="40px"
-                style={{ margin: "auto" }}
-                height=""
-                src={"https://contribua.org/mb-static/images/loading.gif"}
-                alt="Loading"
-              />
-            ) :false}
-          {status == 'active' ?<button onClick={
+            <img
+              width="40px"
+              style={{ margin: "auto" }}
+              height=""
+              src={"https://contribua.org/mb-static/images/loading.gif"}
+              alt="Loading"
+            />
+          ) : false}
+          {status === 'active' ? <button onClick={
             () => {
               setShowModal2(true)
             }
-            }>Adicionar</button>: ''}
+          }>Adicionar</button> : ''}
         </ContentNew>
         <GridProdsFour>
           {/* Como pegar os dados dos inputs? => login */}
@@ -372,10 +370,10 @@ export default function NewProd() {
                   <p>{product.descricao}</p>
                 </div>
                 <div className="btn-group-add">
-                  <span>{formatPrice(product.preco)}</span>
+                  <span>{product.preco}</span>
 
                   <div className="btn-group">
-                 <button
+                    <button
                       className="delete"
                       onClick={() => deleteProduct(product.id, index)}
                     >
@@ -443,10 +441,11 @@ export default function NewProd() {
                   <label htmlFor="">Nome do produto</label>
                   <input
                     required
+                    value={nome}
                     type="text"
                     placeholder="Nome do produto"
                     onChange={(text) => setNome(text.target.value)}
-                    // value="5165161"
+                  // value="5165161"
                   />
                 </ContentFormNew>
 
@@ -454,6 +453,7 @@ export default function NewProd() {
                   <label htmlFor="">Código da empresa</label>
                   <input
                     required
+                    value={codigoDaEmpresa}
                     type="text"
                     placeholder="Código da empresa"
                     onChange={(text) => setCodigoDaEmpresa(text.target.value)}
@@ -464,6 +464,7 @@ export default function NewProd() {
                   <label htmlFor="">Descrição</label>
                   <input
                     required
+                    value={descricao}
                     type="text"
                     placeholder="Descrição"
                     onChange={(text) => setDescricao(text.target.value)}
@@ -473,6 +474,7 @@ export default function NewProd() {
                 <ContentFormNew>
                   <label htmlFor="">Características técnicas</label>
                   <input
+                    value={caracteristicasTecnicas}
                     required
                     type="text"
                     placeholder="Especificações técnicas"
@@ -485,9 +487,11 @@ export default function NewProd() {
                 <ContentFormNew>
                   <label htmlFor="">Preço</label>
                   <input
+                    value={preco}
                     required
                     type="number"
                     placeholder="Preço"
+
                     onChange={(text) => setPreco(text.target.value)}
                   />
                 </ContentFormNew>
@@ -495,6 +499,7 @@ export default function NewProd() {
                 <ContentFormNew>
                   <label htmlFor="">URL da imagem</label>
                   <input
+                    value={imagem}
                     required
                     type="text"
                     placeholder="www.imagem/suaimagem.com"
@@ -505,6 +510,7 @@ export default function NewProd() {
                 <ContentFormNew>
                   <label htmlFor="">Prazo de entrega</label>
                   <input
+                    value={prazo}
                     required
                     type="text"
                     placeholder="Prazo de entrega"
@@ -515,6 +521,7 @@ export default function NewProd() {
                 <ContentFormNew>
                   <label htmlFor="">Quantidade</label>
                   <input
+                    value={quantidade}
                     required
                     type="number"
                     placeholder="Quantidade"
@@ -544,14 +551,14 @@ export default function NewProd() {
                   </select>
                 </ContentFormNew>
                 {loading ? (
-              <img
-                width="40px"
-                style={{ margin: "auto" }}
-                height=""
-                src={"https://contribua.org/mb-static/images/loading.gif"}
-                alt="Loading"
-              />
-            ) : false}
+                  <img
+                    width="40px"
+                    style={{ margin: "auto" }}
+                    height=""
+                    src={"https://contribua.org/mb-static/images/loading.gif"}
+                    alt="Loading"
+                  />
+                ) : false}
                 <div className="buttonsNew">
                   <button type="button" onClick={messageCancel}>
                     Cancelar
@@ -584,6 +591,7 @@ export default function NewProd() {
               <ContentFormNew>
                 <label htmlFor="">Nome do produto</label>
                 <input
+                  value={nome}
                   required
                   type="text"
                   placeholder="Nome do produto"
@@ -594,6 +602,7 @@ export default function NewProd() {
               <ContentFormNew>
                 <label htmlFor="">Código da empresa</label>
                 <input
+                  value={codigoDaEmpresa}
                   required
                   type="text"
                   placeholder="Código da empresa"
@@ -604,6 +613,7 @@ export default function NewProd() {
               <ContentFormNew>
                 <label htmlFor="">Descrição</label>
                 <input
+                  value={descricao}
                   required
                   type="text"
                   placeholder="Descrição"
@@ -623,14 +633,14 @@ export default function NewProd() {
 
                 </select>
                 <Btn
-                className="btn-add-category"
-                onClick={() => {
-                  setShowModal2(false);
-                  setShowModal4(true);
-                }}
-              >
-                Não encontrou a sua categoria? adicione uma aqui.
-              </Btn>
+                  className="btn-add-category"
+                  onClick={() => {
+                    setShowModal2(false);
+                    setShowModal4(true);
+                  }}
+                >
+                  Não encontrou a sua categoria? adicione uma aqui.
+                </Btn>
               </ContentFormNew>
 
               <ContentFormNew>
@@ -647,6 +657,7 @@ export default function NewProd() {
               <ContentFormNew>
                 <label htmlFor="">Preço</label>
                 <input
+                  value={preco}
                   required
                   type="number"
                   placeholder="Preço"
@@ -657,6 +668,7 @@ export default function NewProd() {
               <ContentFormNew>
                 <label htmlFor="">URL da imagem</label>
                 <input
+                  value={imagem}
                   required
                   type="text"
                   placeholder="www.imagem/suaimagem.com"
@@ -667,7 +679,8 @@ export default function NewProd() {
               {/* 
               <ContentFormNew>
                 <label htmlFor="">Especificações técnicas</label>
-                <input type="text" placeholder="Especificações técnicas" />
+                <input
+                value={} type="text" placeholder="Especificações técnicas" />
               </ContentFormNew>
 
               <ContentFormNew>
@@ -681,13 +694,15 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Unidades de medida</label>
-                <input type="text" placeholder="Unidades de medida" />
+                <input
+                value={} type="text" placeholder="Unidades de medida" />
               </ContentFormNew>
               */}
 
               <ContentFormNew>
                 <label htmlFor="">Prazo de entrega</label>
                 <input
+                  value={prazo}
                   required
                   type="text"
                   placeholder="Prazo de entrega"
@@ -698,6 +713,7 @@ export default function NewProd() {
               <ContentFormNew>
                 <label htmlFor="">Quantidade</label>
                 <input
+                  value={quantidade}
                   required
                   type="number"
                   placeholder="Quantidade"
@@ -709,13 +725,15 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Peso líquido</label>
-                <input type="text" placeholder="Peso líquido" />
+                <input
+                value={} type="text" placeholder="Peso líquido" />
               </ContentFormNew>
 
 
               <ContentFormNew>
                 <label htmlFor="">Peso bruto</label>
-                <input type="text" placeholder="Peso bruto" />
+                <input
+                value={} type="text" placeholder="Peso bruto" />
               </ContentFormNew> 
               */}
 
@@ -732,14 +750,14 @@ export default function NewProd() {
                 </select>
               </ContentFormNew>
               {loading ? (
-              <img
-                width="40px"
-                style={{ margin: "auto" }}
-                height=""
-                src={"https://contribua.org/mb-static/images/loading.gif"}
-                alt="Loading"
-              />
-            ) : false}
+                <img
+                  width="40px"
+                  style={{ margin: "auto" }}
+                  height=""
+                  src={"https://contribua.org/mb-static/images/loading.gif"}
+                  alt="Loading"
+                />
+              ) : false}
               <div className="buttonsNew">
                 <button type="button" onClick={messageCancel}>
                   Cancelar
@@ -767,10 +785,11 @@ export default function NewProd() {
             <ModalContent>
               <h3>Nova promoção</h3>
 
-              
+
               <ContentFormNew>
                 <label htmlFor="">Novo preço</label>
                 <input
+                  value={precoOferta}
                   required
                   type="number"
                   placeholder="650"
@@ -783,6 +802,7 @@ export default function NewProd() {
               <ContentFormNew>
                 <label htmlFor="">Data de encerramento</label>
                 <input
+                  value={dataEncerramento}
                   required
                   type="date"
                   placeholder="650"
@@ -791,14 +811,14 @@ export default function NewProd() {
               </ContentFormNew>
 
               {loading ? (
-              <img
-                width="40px"
-                style={{ margin: "auto" }}
-                height=""
-                src={"https://contribua.org/mb-static/images/loading.gif"}
-                alt="Loading"
-              />
-            ) : false}
+                <img
+                  width="40px"
+                  style={{ margin: "auto" }}
+                  height=""
+                  src={"https://contribua.org/mb-static/images/loading.gif"}
+                  alt="Loading"
+                />
+              ) : false}
               <div className="buttonsNew">
                 <button type="button" onClick={messageCancel}>
                   Cancelar
@@ -829,6 +849,7 @@ export default function NewProd() {
               <ContentFormNew>
                 <label htmlFor="">Nova Categoria</label>
                 <input
+                  value={categoria}
                   required
                   type="text"
                   placeholder="Computador potente"
@@ -836,14 +857,14 @@ export default function NewProd() {
                 />
               </ContentFormNew>
               {loading ? (
-              <img
-                width="40px"
-                style={{ margin: "auto" }}
-                height=""
-                src={"https://contribua.org/mb-static/images/loading.gif"}
-                alt="Loading"
-              />
-            ) : false}
+                <img
+                  width="40px"
+                  style={{ margin: "auto" }}
+                  height=""
+                  src={"https://contribua.org/mb-static/images/loading.gif"}
+                  alt="Loading"
+                />
+              ) : false}
               <div className="buttonsNew">
                 <button type="button" onClick={messageCancel}>
                   Cancelar

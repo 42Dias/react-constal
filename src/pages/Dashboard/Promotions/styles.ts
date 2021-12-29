@@ -199,3 +199,16 @@ export const ContentFormNew = styled.div`
     margin: 5px 0;
   }
 ` 
+export const NewBtnFeatured = styled.button`
+  margin: 20px 0 !important;
+  width: 182px;
+  height: 33px;
+
+  background: #58A4B0;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
