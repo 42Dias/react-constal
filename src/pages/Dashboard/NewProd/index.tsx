@@ -87,7 +87,7 @@ export default function NewProd() {
 
   function messageApprove() {
     toast.info(
-      "Eba, recebemos o seu pedido. Ele será revisado e logo estará na plataforma :)"
+      "Eba, estamos avaliando seu produto. Assim que aprovado estará na plataforma :)"
     );
     //setIsOpen(false);
     setLoading(false) 
