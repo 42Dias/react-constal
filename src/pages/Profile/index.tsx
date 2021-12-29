@@ -28,6 +28,7 @@ import axios from "axios";
 export default function Profile() {
   const [showModal1, setShowModal1] = React.useState(false);
   const [showModal2, setShowModal2] = React.useState(false);
+  const [showModalEnd, setShowModalEnd] = React.useState(false);
   const [showModalResetSenha, setShowModalResetSenha] = React.useState(false);
   const [id, setId] = useState("");
   const [email, setEmail] = useState("");
@@ -189,12 +190,14 @@ export default function Profile() {
     );*/
     setShowModal1(false);
     setShowModal2(false);
+    setShowModalEnd(false)
   }
 
   function messageApprove() {
     toast.info("Eba, recebemos o seu endereço. :)");
     setShowModal1(false);
     setShowModal2(false);
+    setShowModalEnd(false)
     setLoading(false)
   }
  
@@ -205,6 +208,7 @@ export default function Profile() {
   function closeModal() {
     setShowModal1(false);
     setShowModal2(false);
+    setShowModalEnd(false)
   }
   function closeModalResetSenha() {
     setShowModalResetSenha(false);
@@ -430,18 +434,20 @@ export default function Profile() {
                 Cidade: {cidade + " - " + estado}
               </small>
             </ContentDetails>
-            <div className="flex-btn">
-              <button>Alterar</button>
-              <button>Excluir</button>
-            </div>
+            
+              <button onClick={() => {
+              setShowModalEnd(true); 
+            }}>{logradouro ? 'Alterar':'Adicionar'}</button>
+              {/*<button>Excluir</button>*/} 
+          
           </CardDatailsContent>
-          <button
+          {/*<button
             onClick={() => {
               setShowModal1(true);
             }}
           >
             Novo endereço
-          </button>
+          </button>*/}
         </CardDatails>
       </div>
       <Footer />
@@ -458,7 +464,7 @@ export default function Profile() {
             </ModalFlex>
 
             <ModalContent>
-              <h3>Alterar dados</h3>
+              <h3>Alterar Dados</h3>
               <ContentFormNew>
                 <label htmlFor="">Nome Completo</label>
                 <input
@@ -479,15 +485,34 @@ export default function Profile() {
                 />
               </ContentFormNew>
 
-              {/*<ContentFormNew>
-                <label htmlFor="">bairro</label>
-                <input
-                  type="text"
-                  placeholder="bairro"
-                  onChange={(text) => setBairro(text.target.value)}
-                />
-              </ContentFormNew>*/}
+              
+              {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
+              <div className="buttonsNew">
+                <button type="button" onClick={messageCancel}>
+                  Cancelar
+                </button>
+                <button type="button" onClick={setNewData}>
+                  Adicionar
+                </button>
+              </div>
+            </ModalContent>
+          </div>
+        </Modal>
+      </ModalContainerVendedor>
+      
+      <ModalContainerVendedor>
+        <Modal
+          isOpen={showModalEnd}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+        >
+          <div>
+            <ModalFlex>
+              <AiOutlineClose onClick={closeModal} />
+            </ModalFlex>
 
+            <ModalContent>
+              <h3>Alterar Endereço</h3>
               <ContentFormNew>
                 <label htmlFor="">Bairro</label>
                 <input
@@ -578,7 +603,6 @@ export default function Profile() {
           </div>
         </Modal>
       </ModalContainerVendedor>
-
       <ModalContainerVendedor>
         <Modal
           isOpen={showModalResetSenha}
