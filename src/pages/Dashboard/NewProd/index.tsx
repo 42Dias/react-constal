@@ -296,7 +296,7 @@ export default function NewProd() {
     else {
       if (role !== "admin" && role !== "empresa" || status === "pendente") {
         // Simulate an HTTP redirect:
-        window.location.replace(`http://${ip}:3000/constal#/erro`);
+        window.location.replace(`http://dev.42dias.com.br/constal#/erro`);
       }
     }
     async function loadCategorias() {
