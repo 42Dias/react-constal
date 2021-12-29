@@ -181,7 +181,7 @@ export default function Promotions() {
             </ModalFlex>
 
             <ModalContent>
-              <h3>Novo produto</h3>
+              <h3>Produtos promocionais</h3>
               <ContentFormNew>
                 <label htmlFor="">Imagem Promocional</label>
                 <input required type="url" placeholder="https://www.suaImagem.com/imagem" 
