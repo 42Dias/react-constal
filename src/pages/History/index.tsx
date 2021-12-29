@@ -62,7 +62,7 @@ export default function Histoty() {
   useEffect(() => {
     if(role != 'pessoa'){
       // Simulate an HTTP redirect:
-      window.location.replace(`http://${ip}:3000/constal#/erro`);
+      window.location.replace(`http://dev.42dias.com.br/Clientes/constal/#/erro`);
     }
     async function loadHistory() {
       console.log("requisição do pedido feita")
