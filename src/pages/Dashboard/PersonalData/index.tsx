@@ -98,27 +98,27 @@ export default function PersonalData() {
         }
 
         async function loadData(){          
-          const responseRes = await api.get('empresa-perfil')
-          const response = responseRes.data
-          console.log(responseRes)
+            const responseRes = await api.get('empresa-perfil')
+            const response = responseRes.data
+            console.log(responseRes)
 
-          setNome(response.nome)
-          setMarca(response.marca)
-          setRazaoSocial(response.razaoSocial)
-          setCnpj(response.cnpj)
-          setTelefone(response.telefone)
-          setRamal(response.ramal)
-          setEmail(response.email || Email)
-          setWebsite(response.website)
-          setCep(response.cep)
-          setLogradouro(response.logradouro)
-          setNumero(response.numero)
-          setComplemento(response.complemento)
-          setPontoReferencia(response.pontoReferencia)
-          setCidade(response.cidade)
-          setEstado(response.estado)
-          setBairro(response.bairro)
-          setPix(response.pix)
+            setNome(response.nome)
+            setMarca(response.marca)
+            setRazaoSocial(response.razaoSocial)
+            setCnpj(response.cnpj)
+            setTelefone(response.telefone)
+            setRamal(response.ramal)
+            setEmail(Email!)
+            setWebsite(response.website)
+            setCep(response.cep)
+            setLogradouro(response.logradouro)
+            setNumero(response.numero)
+            setComplemento(response.complemento)
+            setPontoReferencia(response.pontoReferencia)
+            setCidade(response.cidade)
+            setEstado(response.estado)
+            setBairro(response.bairro)
+            setPix(response.pix)
       
         }
         loadData()
@@ -131,21 +131,21 @@ export default function PersonalData() {
     setLoading(true)
     const data = {
       data: {
-        nome : newNome, 
-        marca : newMarca,
-        razaoSocial : newRazaoSocial,
-        cnpj : newCnpj,
-        telefone : newTelefone,
-        ramal : newRamal,
-        website : newWebsite,
-        cep : newCep,
-        logradouro : newLogradouro,
-        numero : newNumero,
-        complemento : newComplemento,
-        pontoReferencia : newPontoReferencia,
-        cidade : newCidade,
-        estado : newEstado,
-        bairro : newBairro,
+        nome : nome, 
+        marca : marca,
+        razaoSocial : razaoSocial,
+        cnpj : cnpj,
+        telefone : telefone,
+        ramal : ramal,
+        website : website,
+        cep : cep,
+        logradouro : logradouro,
+        numero : numero,
+        complemento : complemento,
+        pontoReferencia : pontoReferencia,
+        cidade : cidade,
+        estado : estado,
+        bairro : bairro,
         pix : pix,
         status : "pendente",
       }
@@ -161,7 +161,7 @@ export default function PersonalData() {
 
         }
         else{
-          toast.info('Algo deu errado :(')
+          toast.error('Algo deu errado :(')
           console.log(response) 
           setLoading(false)
 
@@ -174,7 +174,7 @@ export default function PersonalData() {
           toast.info(response.data.status)
         }
         else{
-          toast.info("Algo deu errado com o servidor tente mais tarde")
+          toast.error("Algo deu errado, verifique seus dados ou tente mais tarde")
         }
         setLoading(false)
 
@@ -218,14 +218,14 @@ export default function PersonalData() {
 
     const data = {
       data: {
-        cep : newCep,
-        logradouro : newLogradouro,
-        numero : newNumero,
-        complemento : newComplemento,
-        pontoReferencia : newPontoReferencia,
-        cidade : newCidade,
-        estado : newEstado,
-        bairro : newBairro,
+        cep : cep,
+        logradouro : logradouro,
+        numero : numero,
+        complemento : complemento,
+        pontoReferencia : pontoReferencia,
+        cidade : cidade,
+        estado : estado,
+        bairro : bairro,
       }
     }
     console.log("heaha")
@@ -254,7 +254,7 @@ export default function PersonalData() {
           toast.info(response.data.status)
         }
         else{
-          toast.info("Algo deu errado com o servidor tente mais tarde")
+          toast.error("Algo deu errado, verifique seus dados ou tente mais tarde")
         }
         setLoading(false)
 
@@ -283,13 +283,29 @@ export default function PersonalData() {
               <h3>Senha: <span>******</span></h3>
               
             </ContentDetails>
-            <Btn onClick={() => setShowModalResetSenha(true)}
-            >Alterar</Btn>
+            <Btn style={ {width: "115px"}  }
+             onClick={() => setShowModalResetSenha(true)}
+            >Alterar senha</Btn>
           </CardDatailsContent>
         </CardDatails>
 
+
+
         <CardDatails>
+        
+
+          
           <h2>{nome}</h2>
+        <Btn style={ {width: "170px"}  }
+          onClick={
+          () => {setShowModal1(true)}
+          }>
+            {marca || razaoSocial || cnpj || telefone ? 'Alterar seus dados':'Adicionar seus dados'} 
+          </Btn>
+
+{
+            marca || razaoSocial || cnpj || telefone ? (
+          <>
           <CardDatailsContent>
             <ContentDetails>
               <h3>Marca: <span>{marca}</span></h3>
@@ -317,20 +333,18 @@ export default function PersonalData() {
 
           <CardDatailsContent>
             <ContentDetails>
-              <h3>E-mail: <span> {email}</span></h3>
-            </ContentDetails>
-          </CardDatailsContent>
-
-          <CardDatailsContent>
-            <ContentDetails>
               <h3>Website: <span> {website} </span></h3>
             </ContentDetails>
           </CardDatailsContent>
+          </>    
+            ):
+            (
+            false
+              )
+          }
+          
         </CardDatails>
 
-      <Btn  onClick={
-          () => {setShowModal1(true)}
-          }>Alterar Dados</Btn>
 
         <CardDatails>
           <h2>Endereço</h2>
@@ -343,21 +357,14 @@ export default function PersonalData() {
                 <h3>Cidade: <span>{cidade}</span></h3> 
               </small>
             </ContentDetails>
-            <div className="flex-btn">
               <Btn //estava como link
               onClick={
                 () => setShowModal2(true)}
-              >Alterar</Btn>
-              <Btn //estava como link
-              onClick={
-                () => setShowModal2(false)}
-              >Cancelar</Btn>
-            </div>
+              >
+                {logradouro ? 'Alterar':'Adicionar'} 
+                </Btn>
+
           </CardDatailsContent>
-          <Btn
-          onClick={
-            () => setShowModal2(true)
-          }>Novo endereço</Btn>
         </CardDatails>
       </div>
 
@@ -381,113 +388,147 @@ export default function PersonalData() {
                 </ModalFlex>
                 <ModalContent>
                   <img  alt="" />
-                  <h3>Alterar seus dados</h3>
+                  <h3>
+                  {marca || razaoSocial || cnpj || telefone ? 'Alterar seus dados':'Cadastrar seus dados'} 
+                    </h3>
                     <ContentFormNew>
-                    <label htmlFor="">Novo Nome da Empresa</label>
-                    <input type="text" placeholder="Novo Empresa"
-                    onChange={(text) => setNewNome(text.target.value)}
+                    <label htmlFor="">Nome da Empresa</label>
+                    <input type="text" placeholder="Empresa"
+                    value={nome}
+                    onChange={(text) => setNome(text.target.value)}
                     />
                     </ContentFormNew>
                     <ContentFormNew>
-                    <label htmlFor="">Novo Nome da Marca</label>
+                    <label htmlFor="">Marca</label>
+                    <input type="text" placeholder="Marca"
+                    value={marca}
+                    onChange={(text) => setMarca(text.target.value)}
+                    />
+                    </ContentFormNew>
+                    <ContentFormNew>
+                    <label htmlFor="">Razão Social</label>
                     <input type="text" placeholder="Razão Social"
-                    onChange={(text) => setNewMarca(text.target.value)}
-                    />
-                    </ContentFormNew>
-                    <ContentFormNew>
-                    <label htmlFor="">Novo Nome da Razão Social</label>
-                    <input type="text" placeholder="Nova Razão Social"
+                    value={razaoSocial}
+
                     onChange={(text) => setNewRazaoSocial(text.target.value)}
                     />
                     </ContentFormNew>
+
                     <ContentFormNew>
-                    <label htmlFor="">Novo Telefone</label>
-                    <input type="text" placeholder="Novo Telefone"
-                    onChange={(text) => setNewTelefone(text.target.value)}
+                    <label htmlFor="">Telefone</label>
+                    <input type="text" placeholder="Telefone"
+                    value={telefone}
+
+                    onChange={(text) => setTelefone(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
-                    <label htmlFor="">Novo CNPJ</label>
-                    <input type="text" placeholder="Novo CNPJ"
-                    onChange={(text) => setNewCnpj(text.target.value)}
+                    <label htmlFor="">CNPJ</label>
+                    <input type="text" placeholder="CNPJ"
+                    value={cnpj}
+
+                    onChange={(text) => setCnpj(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
-                    <label htmlFor="">Novo Ramal</label>
-                    <input type="text" placeholder="Novo Ramal"
-                    onChange={(text) => setNewRamal(text.target.value)}
+                    <label htmlFor="">Ramal</label>
+                    <input type="text" placeholder="Ramal"
+                    value={ramal}
+
+                    onChange={(text) => setRamal(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
-                    <label htmlFor="">Novo Website</label>
+                    <label htmlFor="">Website</label>
                     <input type="text" placeholder="Website"
-                    onChange={(text) => setNewWebsite(text.target.value)}
+                    value={website}
+
+
+                    onChange={(text) => setWebsite(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
-                    <label htmlFor="">Novo Cep</label>
+                    <label htmlFor="">Cep</label>
                     <input type="text" placeholder="Cep"
-                    onChange={(text) => setNewCep(text.target.value)}
+                    value={cep}
+
+                    onChange={(text) => setCep(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
-                    <label htmlFor="">Novo Logradouro</label>
+                    <label htmlFor="">Logradouro</label>
                     <input type="text" placeholder="Logradouro"
-                    onChange={(text) => setNewLogradouro(text.target.value)}
+                    value={logradouro}
+
+                    onChange={(text) => setLogradouro(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
-                    <label htmlFor="">Novo Numero</label>
+                    <label htmlFor="">Numero</label>
                     <input type="text" placeholder="Numero"
-                    onChange={(text) => setNewNumero(text.target.value)}
+                    value={numero}
+
+                    onChange={(text) => setNumero(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
-                    <label htmlFor="">Novo Complemento</label>
+                    <label htmlFor="">Complemento</label>
                     <input type="text" placeholder="Complemento"
-                    onChange={(text) => setNewComplemento(text.target.value)}
+                    value={complemento}
+
+                    onChange={(text) => setComplemento(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
-                    <label htmlFor="">Novo PontoReferencia</label>
+                    <label htmlFor="">Ponto de Referência</label>
                     <input type="text" placeholder="PontoReferencia"
-                    onChange={(text) => setNewPontoReferencia(text.target.value)}
+                    value={pontoReferencia}
+
+                    onChange={(text) => setPontoReferencia(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
-                    <label htmlFor="">Novo Cidade</label>
+                    <label htmlFor="">Cidade</label>
                     <input type="text" placeholder="Cidade"
-                    onChange={(text) => setNewCidade(text.target.value)}
+                    value={cidade}
+
+                    onChange={(text) => setCidade(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
-                    <label htmlFor="">Novo Estado</label>
+                    <label htmlFor="">Estado</label>
                     <input type="text" placeholder="Estado"
-                    onChange={(text) => setNewEstado(text.target.value)}
+                    value={estado}
+
+                    onChange={(text) => setEstado(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
-                    <label htmlFor="">Novo Bairro</label>
+                    <label htmlFor="">Bairro</label>
                     <input type="text" placeholder="Bairro"
-                    onChange={(text) => setNewBairro(text.target.value)}
+                    value={bairro}
+
+                    onChange={(text) => setBairro(text.target.value)}
                     />
                     </ContentFormNew>
 
                     <ContentFormNew>
-                    <label htmlFor="">Novo Pix</label>
+                    <label htmlFor="">Pix</label>
                     <input type="text" placeholder="Pix"
-                    onChange={(text) => setNewPix(text.target.value)}
+                    value={pix}
+
+                    onChange={(text) => setPix(text.target.value)}
                     />
 
                     <ContentFormNew>
@@ -524,11 +565,14 @@ export default function PersonalData() {
             </ModalFlex>
 
             <ModalContent>
-              <h3>Novo endereço</h3>
+              <h3>
+              {logradouro ? 'Alterar ':'Adicionar '} 
+               endereço</h3>
 
               <ContentFormNew>
                 <label htmlFor="">CEP</label>
                 <input type="number" placeholder="CEP"
+                value={cep}
                 onChange={
                   (text) => setCep(text.target.value)
                 } />
@@ -537,6 +581,8 @@ export default function PersonalData() {
               <ContentFormNew>
                 <label htmlFor="">Logradouro</label>
                 <input type="text" placeholder="Logradouro"
+                value={logradouro}
+
                 onChange={
                   (text) => setLogradouro(text.target.value)
                 } />
@@ -545,6 +591,8 @@ export default function PersonalData() {
               <ContentFormNew>
                 <label htmlFor="">Número</label>
                 <input type="number" placeholder="Número"
+                value={numero}
+
                 onChange={
                   (text) => setNumero(text.target.value)
                 } />
@@ -553,6 +601,8 @@ export default function PersonalData() {
               <ContentFormNew>
                 <label htmlFor="">Complemento</label>
                 <input type="text" placeholder="Complemento"
+                value={complemento}
+
                 onChange={
                   (text) => setComplemento(text.target.value)
                 } />
@@ -561,6 +611,8 @@ export default function PersonalData() {
               <ContentFormNew>
                 <label htmlFor="">Referência</label>
                 <input type="text" placeholder="Referência"
+                value={pontoReferencia}
+
                 onChange={
                   (text) => setPontoReferencia(text.target.value)
                 } />
@@ -569,6 +621,8 @@ export default function PersonalData() {
               <ContentFormNew>
                 <label htmlFor="">Estado</label>
                 <input type="text" placeholder="Estado"
+                value={estado}
+
                 onChange={
                   (text) => setEstado(text.target.value)
                 } />
@@ -577,6 +631,8 @@ export default function PersonalData() {
               <ContentFormNew>
                 <label htmlFor="">Cidade</label>
                 <input type="text" placeholder="Cidade"
+                value={cidade}
+
                 onChange={
                   (text) => setCidade(text.target.value)
                 } />
@@ -601,6 +657,7 @@ export default function PersonalData() {
           </div>
         </Modal>
       </ModalContainerVendedor>
+      
  <ModalContainerVendedor>
  <Modal
    isOpen={showModalResetSenha}
@@ -645,6 +702,9 @@ export default function PersonalData() {
    </div>
  </Modal>
 </ModalContainerVendedor>
+
+
+
     </>
   );
 }
