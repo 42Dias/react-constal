@@ -55,10 +55,12 @@ export default function NewProd() {
 
   const [isOferta, setIsOferta] = useState(false);
   const [precoOferta, setPrecoOferta] = useState("");
+  const [empresaId, setEmpresaId] = useState("");
 
   const [newCategoria, setNewCategoria] = useState("");
   const [loading, setLoading] = useState(false);
   const [dataEncerramento, setDataEncerramento]   =  useState<any>();
+  const [categoriaId, setCategoriaId]   =  useState<any>();
 
   function openModal() {
     //setIsOpen(true);
@@ -188,7 +190,6 @@ export default function NewProd() {
   }
 
   async function changeProduct() {
-
     const data = {
       data: {
         id: id,
@@ -200,13 +201,15 @@ export default function NewProd() {
         prazo: prazo,
         quantidade: quantidade,
         frete: frete,
-        categoria: categoria,
+        empresaId: empresaId,
+        // categoria: categoria,
         categoriaId: categoria,
         imagemUrl: imagem,
         status: "pendente",
       },
     };
-
+    
+    console.log("data")
     console.log(data);
     makeRequisitionToChange(data);
     
@@ -264,6 +267,7 @@ export default function NewProd() {
 
   function setProductOnClick() {
     try {
+      console.log("products[index]")
       console.log(products[index])
       setId(products[index].id);
       setNome(products[index].nome);
@@ -271,11 +275,13 @@ export default function NewProd() {
       setDescricao(products[index].descricao);
       setCaracteristicasTecnicas(products[index].caracteristicasTecnicas);
       setPreco(products[index].preco);
-      setImagem(products[index].imagem);
+      setImagem(products[index].imagemUrl);
       setPrazo(products[index].prazo);
       setQuantidade(products[index].quantidade);
       setFrete(products[index].frete);
       setCategoria(products[index].categoria);
+      setCategoriaId(products[index].categoriaId)
+      setEmpresaId(products[index].empresaId);
     } catch (e) {
       console.log(e);
     }
@@ -324,8 +330,8 @@ export default function NewProd() {
 
 
 
-  console.log(categoria)
-
+  console.log("imagem")
+  console.log(imagem)
   return (
     <>
       <GlobalStyles />
@@ -354,6 +360,12 @@ export default function NewProd() {
           {products.map((product, index) => (
             <>
               <ProdContainerSingle>
+                {/* {
+                  console.log("product")
+                }
+                {
+                  console.log(product)
+                } */}
                 <img src={product.imagemUrl} alt="" />
                 <div>
                   <h5>{product.nome}</h5>
