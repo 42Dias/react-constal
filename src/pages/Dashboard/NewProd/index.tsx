@@ -53,7 +53,7 @@ export default function NewProd() {
   const [codigoDaEmpresa, setCodigoDaEmpresa] = useState("");
   const [descricao, setDescricao] = useState("");
   const [caracteristicasTecnicas, setCaracteristicasTecnicas] = useState("");
-  const [preco, setPreco] = useState<any>("");
+  const [preco, setPreco] = useState<any>();
   const [prazo, setPrazo] = useState("");
   const [quantidade, setQuantidade] = useState<any>();
   const [frete, setFrete] = useState("");
@@ -62,7 +62,7 @@ export default function NewProd() {
   const [empresas = [], setEmpresas] = useState<Empresa[]>([]);
 
   const [isOferta, setIsOferta] = useState(false);
-  const [precoOferta, setPrecoOferta] = useState("");
+  const [precoOferta, setPrecoOferta] = useState<any>();
   const [empresaId, setEmpresaId] = useState("");
 
   const [newCategoria, setNewCategoria] = useState("");
@@ -178,6 +178,8 @@ export default function NewProd() {
     if ((response.status) == 200) {
       messageApprove();
       closeModal()
+      window.location.hash = '#/promocoes'
+
     } else if (response.status == 500) {
       console.log(response)
       toast.error("Algo deu errado, tente mais tarde :(");
@@ -197,6 +199,7 @@ export default function NewProd() {
     });
 
   }
+
 
   async function changeProduct() {
     const data = {
@@ -275,7 +278,7 @@ export default function NewProd() {
   const [products = [], setProducts] = useState<any[]>([]);
   const [categorias = [], setCategorias] = useState<any[]>([]);
 
-  function setProductOnClick() {
+  function setProductOnClick(index: number ) {
     try {
       console.log("products[index]")
       console.log(products[index])
@@ -421,14 +424,24 @@ export default function NewProd() {
                         console.log(index);
                         setProductToReq(product.id);
                         setShowModal1(true);
-                        setProductOnClick();
+                        setProductOnClick(index);
                       }}
                     >
-                      <AiOutlinePlus />
+                    <AiOutlinePlus />
                     </div>                    
-                      {/* <img
-                      style={{ width: "50px" }}  
-                      src="https://i.pinimg.com/474x/a4/5c/b4/a45cb4438a2de6d562abfae5f6960efd--free-flat-icons-free-icon.jpg" alt="" /> */}
+                    <img
+                    onClick={() => {
+                      setIndex(index);
+                      console.log(index);
+
+                      setProductToReq(product.id);
+                      setShowModal3(true);
+                      setProductOnClick(index);
+
+                    }}
+                    style={{ width: "50px", height: '40px', transform: 'translateY(19%)' }}  
+
+                    src="https://colorfitas.com.br/image/cache/catalog/Produtos/Papelaria/Cartazes%20e%20Splashs/SPLASH%20N4-500x500.png" alt="" /> 
                   </div>
                 </div>
               </ProdContainerSingle>
@@ -462,14 +475,6 @@ export default function NewProd() {
               <ModalFlex>
                 <AiOutlineClose onClick={() => setShowModal1(false)} />
               </ModalFlex>
-              <div
-                onClick={() => {
-                  setShowModal1(false);
-                  setShowModal3(true);
-                }}
-              >
-                Colocar este produto em promoção
-              </div>
               <ModalContent>
                 <img src={upload} alt="" />
                 <h3>Alterar produto</h3>
@@ -842,6 +847,20 @@ export default function NewProd() {
                   }}
                 />
               </ContentFormNew>
+
+              <ContentFormNew>
+                <label htmlFor="">Porcentagem</label>
+                <input required type="number" placeholder="10%" 
+                onChange={event => {
+                    // @ts-ignore
+                    var newValue = preco - (event.target.value * 100)
+
+                    setPrecoOferta(newValue)
+                }
+                }
+                />
+              </ContentFormNew>
+
               <ContentFormNew>
                 <label htmlFor="">Data de encerramento</label>
                 <input
