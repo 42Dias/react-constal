@@ -77,7 +77,7 @@ export default function PersonalData() {
         else{
           if(role !== "admin" && role !== "empresa"){
             // Simulate an HTTP redirect:
-            window.location.replace(`http://${ip}:3000/constal#/erro`);
+            window.location.replace(`http://dev.42dias.com.br/Clientes/constal/#/erro`);
           }
         }
 
