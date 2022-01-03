@@ -33,6 +33,7 @@ import { toast } from "react-toastify";
 import { api, id, ip, role, token } from "../../services/api";
 import axios from "axios";
 import { margin } from "polished";
+import styled from "styled-components";
 
 const Header = (): JSX.Element => {
 
@@ -67,6 +68,7 @@ const Header = (): JSX.Element => {
   const [password, setPassword] = useState("");
   const [cartSize, setCartSize] = useState<any>(0);
   const [loading, setLoading] = useState(false);
+  const [pesquisa, setPesquisa] = useState("");
 
   function openModal() {
     let email = localStorage.getItem("email");
@@ -234,6 +236,7 @@ const Header = (): JSX.Element => {
         </header> 
       */}
 
+       
         <InputCenter>
           <nav className="header">
             
@@ -243,12 +246,28 @@ const Header = (): JSX.Element => {
               </Link>
             </div>
 
+            {
+          role == 'empresa' || role == 'admin'? (
+            false
+          ) : (
             <div className="input">
-              <input type="text" placeholder="Pesquise o seu produto" />
-              <button className="buttonOn" type="button">
+              <input type="text" placeholder="Pesquise o seu produto"
+              onChange={event => setPesquisa(event.target.value)}
+                  />
+              <button className="buttonOn" type="button"
+              onClick={
+                () => {
+                  window.location.hash = `#/produtos/${pesquisa}`
+                  console.log("click")
+                }
+              }
+              >
                 <FiSearch />
               </button>
-            </div>
+            </div>   
+          )
+        }
+         
 
             <ul className={click ? "nav-options active" : "nav-options"}>
             
