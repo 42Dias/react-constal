@@ -407,7 +407,7 @@ export default function NewProd() {
                   <p>{product.descricao}</p>
                 </div>
                 <div className="btn-group-add">
-                  <span>{product.preco}</span>
+                  <span> {formatPrice(product.preco)} </span>
 
                   <div className="btn-group">
                  <button
