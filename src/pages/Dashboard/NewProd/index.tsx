@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import GlobalStyles from '../../../styles/global'
 import Modal from "react-modal";
 import {
@@ -25,6 +25,14 @@ import axios from "axios";
 import { Empresa, Product } from "../../../types";
 import { api, id, ip, role, status } from "../../../services/api";
 import { Btn } from "./styles";
+import Input from '../../../util/Input'
+
+// @ts-ignore
+import CurrencyInput from 'react-currency-masked-input'
+
+// @ts-ignore
+import { default as NumberFormat } from 'react-number-format';
+import { Link } from "react-router-dom";
 
 export default function NewProd() {
   var uuid = require("uuid");
@@ -54,7 +62,7 @@ export default function NewProd() {
   const [empresas = [], setEmpresas] = useState<Empresa[]>([]);
 
   const [isOferta, setIsOferta] = useState(false);
-  const [precoOferta, setPrecoOferta] = useState("");
+  const [precoOferta, setPrecoOferta] = useState<any>();
   const [empresaId, setEmpresaId] = useState("");
 
   const [newCategoria, setNewCategoria] = useState("");
@@ -99,7 +107,6 @@ export default function NewProd() {
   }
 
   function setValues() {
-    console.log(categoria)
     const data = {
       data: {
         nome: nome,
@@ -116,6 +123,8 @@ export default function NewProd() {
         status: "pendente",
       },
     };
+    console.log(data)
+
     return data;
   }
 
@@ -163,31 +172,34 @@ export default function NewProd() {
     setLoading(true)
 
     const response: any = api.put(`produto/${idProd}`, data)
-      .then(
-        async (response) => {
-          console.log(response);
-          if ((response.status) == 200) {
-            messageApprove();
-            closeModal()
-          } else if (response.status == 500) {
-            console.log(response)
-            toast.error("Algo deu errado, tente mais tarde :(");
-            setLoading(false)
-          } else {
-            toast.error("Algo deu errado, tente mais tarde :(");
-            console.log(response)
-          }
-          setLoading(false)
-          console.log(response)
-        }
-      )
-      .catch(error => {
-        toast.error("Algo deu errado, tente mais tarde :(");
+    .then(
+      async (response) => {
+    console.log(response);
+    if ((response.status) == 200) {
+      messageApprove();
+      closeModal()
+      window.location.hash = '#/promocoes'
+
+    } else if (response.status == 500) {
+      console.log(response)
+      toast.error("Algo deu errado, tente mais tarde :(");
+      setLoading(false)
+    } else {
+      toast.error("Algo deu errado, tente mais tarde :(");
+      console.log(response)
+    }
+    setLoading(false)
+    console.log(response)
+      }
+    )
+    .catch(error =>{
+        toast.error("Algo deu errado, tente mais tarde :(");      
         setLoading(false)
 
       });
 
   }
+
 
   async function changeProduct() {
     const data = {
@@ -266,7 +278,7 @@ export default function NewProd() {
   const [products = [], setProducts] = useState<any[]>([]);
   const [categorias = [], setCategorias] = useState<any[]>([]);
 
-  function setProductOnClick() {
+  function setProductOnClick(index: number ) {
     try {
       console.log("products[index]")
       console.log(products[index])
@@ -330,12 +342,34 @@ export default function NewProd() {
     loadProducts();
   }, []);
 
+
+  const [usuario, setUsuario] = useState<any>({} as any);
+
+  const handleChange = useCallback(
+    (e: React.FormEvent<HTMLInputElement>) => {
+      setUsuario({
+        ...usuario,
+        [e.currentTarget.name]: e.currentTarget.value,
+      })
+      // ele é atualizado dentro mas não fora
+      setTimeout(() => {
+
+        const value = parseFloat(localStorage.getItem("preco")!.replace(/\./g, ""))
+        // const value = e.currentTarget.value.replace(/\./g, "")
+        setPreco(value)
+        
+        
+      }, 1000);
+      
+    },
+    [usuario]
+  );
+
   return (
     <>
       <GlobalStyles />
       <Header />
       <Menu />
-
       <div className="container">
         <ContentNew>
           <h2>Meus produtos</h2> {loading ? (
@@ -364,13 +398,17 @@ export default function NewProd() {
                 {
                   console.log(product)
                 } */}
+              <Link to={`/produto/${product.id}`}>
                 <img src={product.imagemUrl} alt="" />
+              </Link>
+
+              
                 <div>
                   <h5>{product.nome}</h5>
                   <p>{product.descricao}</p>
                 </div>
                 <div className="btn-group-add">
-                  <span>{product.preco}</span>
+                  <span> {formatPrice(product.preco)} </span>
 
                   <div className="btn-group">
                     <button
@@ -387,11 +425,24 @@ export default function NewProd() {
                         console.log(index);
                         setProductToReq(product.id);
                         setShowModal1(true);
-                        setProductOnClick();
+                        setProductOnClick(index);
                       }}
                     >
-                      <AiOutlinePlus />
-                    </div>
+                    <AiOutlinePlus />
+                    </div>                    
+                    <img
+                    onClick={() => {
+                      setIndex(index);
+                      console.log(index);
+
+                      setProductToReq(product.id);
+                      setShowModal3(true);
+                      setProductOnClick(index);
+
+                    }}
+                    style={{ width: "50px", height: '40px', transform: 'translateY(19%)' }}  
+
+                    src="https://colorfitas.com.br/image/cache/catalog/Produtos/Papelaria/Cartazes%20e%20Splashs/SPLASH%20N4-500x500.png" alt="" /> 
                   </div>
                 </div>
               </ProdContainerSingle>
@@ -425,14 +476,6 @@ export default function NewProd() {
               <ModalFlex>
                 <AiOutlineClose onClick={() => setShowModal1(false)} />
               </ModalFlex>
-              <div
-                onClick={() => {
-                  setShowModal1(false);
-                  setShowModal3(true);
-                }}
-              >
-                Colocar este produto em promoção
-              </div>
               <ModalContent>
                 <img src={upload} alt="" />
                 <h3>Alterar produto</h3>
@@ -486,13 +529,12 @@ export default function NewProd() {
 
                 <ContentFormNew>
                   <label htmlFor="">Preço</label>
-                  <input
-                    value={preco}
-                    required
-                    type="number"
-                    placeholder="Preço"
-
-                    onChange={(text) => setPreco(text.target.value)}
+                  <Input
+                  name="price"
+                  mask="currency"
+                  prefix="R$"
+                  placeholder="0,01"
+                  onChange={handleChange}
                   />
                 </ContentFormNew>
 
@@ -656,13 +698,20 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Preço</label>
-                <input
-                  value={preco}
+                {/* <input
+                value={preco}
                   required
                   type="number"
                   placeholder="Preço"
                   onChange={(text) => setPreco(text.target.value)}
-                />
+                /> */}
+                <Input
+                  name="price"
+                  mask="currency"
+                  prefix="R$"
+                  placeholder="0,01"
+                  onChange={handleChange}
+                  />
               </ContentFormNew>
 
               <ContentFormNew>
@@ -799,6 +848,20 @@ export default function NewProd() {
                   }}
                 />
               </ContentFormNew>
+
+              <ContentFormNew>
+                <label htmlFor="">Porcentagem</label>
+                <input required type="number" placeholder="10%" 
+                onChange={event => {
+                    // @ts-ignore
+                    var newValue = preco - (event.target.value * 100)
+
+                    setPrecoOferta(newValue)
+                }
+                }
+                />
+              </ContentFormNew>
+
               <ContentFormNew>
                 <label htmlFor="">Data de encerramento</label>
                 <input

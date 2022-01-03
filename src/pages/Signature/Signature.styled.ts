@@ -23,14 +23,19 @@ export const Cards = styled.div`
 `
 
 export const Card = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
   width: 300px;
   height: 300px;
-  background: #000000;
+  background: #181a18;
   border-radius: 5px;
   color: #FAFAFA;
   margin: 0 20px 60px 10px;
   position: relative;
-
+  text-align: center;
+  
+  
   @media (max-width: 768px) {
     width: 100%;
   }

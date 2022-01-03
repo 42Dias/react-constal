@@ -72,17 +72,21 @@ export default function Promotions() {
     ids.map(
       async (id) => {        
         const response: any = api.put(`produto/${id}`, data)
-        console.log(await response)
-        if( await response.status == 200){
-          toast.info('Eba, recebemos o sua promoção. Ela será revisada e logo estará na plataforma :)')
-          closeModal()
+        .then(
+          (response) => {
+            if(  response.status == 200){
+              toast.info('Eba, recebemos o sua promoção. Ela será revisada e logo estará na plataforma :)')
+              closeModal()
+            }
+            else if(  response.status != 200){
+              toast.error('Algo deu errado, tente mais tarde :(')
+            }
+            console.log(response)
+          }
+          )
+          console.log(await response)
         }
-        else if( await response.status != 200){
-          toast.error('Algo deu errado, tente mais tarde :(')
-        }
-        console.log(response)
-      }
-    )
+        )
   }
 
   let productCounter: any[] = [];
@@ -113,15 +117,17 @@ export default function Promotions() {
         "promocaoCriacao": new Date(),
         "promocaoEncerramento": dataEncerramento,
         "promocaoId": uuid.v4(),
+        "empresaId": productCounter[1].empresaId
       }
     }
+    console.log(data)
     makeRequisitionToChange(data)
   }
 
   console.log(uuid.v4())
 
   console.log(ids)
-  console.log(indexs)
+
   
   return (
     <>
@@ -151,13 +157,13 @@ export default function Promotions() {
           productCounter.map(
             (product, index) => (
               <>
-              <ProdContainerSingle>
+              <ProdContainerSingle>  
               <img src={product.imagemUrl} alt="" />
               <h5>{product.nome}</h5>
               <p>{product.descricao}</p>
               <div className="btn-group-add">
                 <span>
-                  {formatPrice(product.preco)}
+                  Em oferta: {formatPrice(product.precoOferta)}
                 </span>
                 <div
                 onClick={

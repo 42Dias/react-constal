@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const BoxRegister = styled.form`
   width: 100%;
-  height: 500px;
+  height: auto;
   background: white;
   border-radius: 5px;
   display: flex;

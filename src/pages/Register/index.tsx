@@ -7,6 +7,7 @@ import Axios from 'axios';
 import { Menu } from "../../components/Menu";
 import { api, id, ip, token } from "../../services/api";
 import axios from "axios";
+import * as S from '../Signature/Signature.styled'
 
 export default function Register() {
   const [nome, setNome] = useState('');
@@ -160,7 +161,18 @@ export default function Register() {
               </select> 
             </div>
           </GridRegister>
-
+          {category === "2"?
+        <S.Container style={{margin:"0 auto"}} >
+        <S.Title>Planos de cobrança da plataforma</S.Title>
+        <S.Cards>
+          <S.Card>
+            <h3>Free</h3>
+            <p style={{color: "#58A4B0"}}>Taxa de 5% por venda finalizada</p>
+            <strong>R$ 00,00/mês</strong>
+            {/*<button type="button">Adquirir</button>*/}
+          </S.Card>
+        </S.Cards>
+      </S.Container>:false} 
           <Terms>
             <input type="checkbox" />
             <span>

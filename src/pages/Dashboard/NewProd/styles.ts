@@ -91,7 +91,7 @@ export const ProdContainerSingle = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 10px;
+      margin: 0 5px;
 
       svg {
         color: white;
@@ -116,6 +116,7 @@ export const ProdContainerSingle = styled.div`
       align-items: center;
       justify-content: center;
       background: #58A4B0;
+      margin: 0 5px;
       border-radius: 5px;
       @media (max-width: 768px) {
         width: 40px;
