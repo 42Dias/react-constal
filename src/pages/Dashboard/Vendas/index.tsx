@@ -195,9 +195,22 @@ export default function Vendas() {
         }
         <MenuSell>
           <span><b>Pendentes({pedidosPendentes.length})</b></span>
-          <Link to={`/confirmadas/${empresaIdParaRequisicao}`}><span>Confirmadas({pedidosConfirmados.length})</span></Link>
-          <Link to={`/devolvidas/${empresaIdParaRequisicao}`}><span>Devolvidas({pedidosDevolvidos.length})</span></Link>
-          <Link to={`/denunciadas/${empresaIdParaRequisicao}`}><span>Denunciadas({pedidosDenunciador.length})</span></Link>
+          {
+            role == 'admin' ? (
+              <>
+              <Link to={`/confirmadas/${empresaIdParaRequisicao}`}><span>Confirmadas({pedidosConfirmados.length})</span></Link>
+              <Link to={`/devolvidas/${empresaIdParaRequisicao}`}><span>Devolvidas({pedidosDevolvidos.length})</span></Link>
+              <Link to={`/denunciadas/${empresaIdParaRequisicao}`}><span>Denunciadas({pedidosDenunciador.length})</span></Link>
+              </>
+            ) : (
+              <>
+              <Link to={`/confirmadas/`}><span>Confirmadas({pedidosConfirmados.length})</span></Link>
+              <Link to={`/devolvidas/`}><span>Devolvidas({pedidosDevolvidos.length})</span></Link>
+              <Link to={`/denunciadas/`}><span>Denunciadas({pedidosDenunciador.length})</span></Link>
+              </>              
+            )
+          }
+          
         </MenuSell>
         {loading2 ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
         {
