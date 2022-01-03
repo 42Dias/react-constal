@@ -160,20 +160,19 @@ export default function Register() {
                   <option value={"3"}>Admin</option>
               </select> 
             </div>
-            {category === "2"?
-            <S.Container >
+          </GridRegister>
+          {category === "2"?
+        <S.Container style={{margin:"0 auto"}} >
         <S.Title>Planos de cobrança da plataforma</S.Title>
         <S.Cards>
           <S.Card>
             <h3>Free</h3>
-            <p style={{color: "green"}}>Taxa de 5% por pedido finalizado</p>
+            <p style={{color: "#58A4B0"}}>Taxa de 5% por venda finalizada</p>
             <strong>R$ 00,00/mês</strong>
             {/*<button type="button">Adquirir</button>*/}
           </S.Card>
         </S.Cards>
       </S.Container>:false} 
-          </GridRegister>
-
           <Terms>
             <input type="checkbox" />
             <span>
