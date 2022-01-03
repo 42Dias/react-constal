@@ -207,11 +207,11 @@ export const ProdSecond = styled.div`
   height: 168px;
   background: white;
   border-radius: 5px;
-  padding: 0 30px;
+  padding: 0 30px 0 30px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 20px 0;
+  margin-top: 20px;
 
   h2 {
     margin: -5px 0 20px 0;  
@@ -229,6 +229,17 @@ export const ProdSecond = styled.div`
     text-decoration: none;
   }
 `;
+
+export const Right = styled.h2`
+  background: white;  
+  border-radius: 5px;
+  padding: 20px 60px;
+  text-align: left;
+  margin-bottom: 20px;
+  transform: translateY(-50px);
+  z-index: -1
+`;
+
 
 export const ModalContainerVendedor = styled.div`
   display: flex;
