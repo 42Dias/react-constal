@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import GlobalStyles from '../../../styles/global'
 import Modal from "react-modal";
 import {
@@ -25,6 +25,14 @@ import axios from "axios";
 import { Empresa, Product } from "../../../types";
 import { api, id, ip, role, status } from "../../../services/api";
 import { Btn } from "./styles";
+import Input from '../../../util/Input'
+
+// @ts-ignore
+import CurrencyInput from 'react-currency-masked-input'
+
+// @ts-ignore
+import { default as NumberFormat } from 'react-number-format';
+import { Link } from "react-router-dom";
 
 export default function NewProd() {
   var uuid = require("uuid");
@@ -45,7 +53,7 @@ export default function NewProd() {
   const [codigoDaEmpresa, setCodigoDaEmpresa] = useState("");
   const [descricao, setDescricao] = useState("");
   const [caracteristicasTecnicas, setCaracteristicasTecnicas] = useState("");
-  const [preco, setPreco] = useState<any>();
+  const [preco, setPreco] = useState<any>("");
   const [prazo, setPrazo] = useState("");
   const [quantidade, setQuantidade] = useState<any>();
   const [frete, setFrete] = useState("");
@@ -99,7 +107,6 @@ export default function NewProd() {
   }
 
   function setValues() {
-    console.log(categoria)
     const data = {
       data: {
         nome: nome,
@@ -116,6 +123,8 @@ export default function NewProd() {
         status: "pendente",
       },
     };
+    console.log(data)
+
     return data;
   }
 
@@ -329,12 +338,34 @@ export default function NewProd() {
     loadProducts();
   }, []);
 
+
+  const [usuario, setUsuario] = useState<any>({} as any);
+
+  const handleChange = useCallback(
+    (e: React.FormEvent<HTMLInputElement>) => {
+      setUsuario({
+        ...usuario,
+        [e.currentTarget.name]: e.currentTarget.value,
+      })
+      // ele é atualizado dentro mas não fora
+      setTimeout(() => {
+
+        const value = parseFloat(localStorage.getItem("preco")!.replace(/\./g, ""))
+        // const value = e.currentTarget.value.replace(/\./g, "")
+        setPreco(value)
+        
+        
+      }, 1000);
+      
+    },
+    [usuario]
+  );
+
   return (
     <>
       <GlobalStyles />
       <Header />
       <Menu />
-
       <div className="container">
         <ContentNew>
           <h2>Meus produtos</h2> {loading ? (
@@ -363,7 +394,11 @@ export default function NewProd() {
                 {
                   console.log(product)
                 } */}
+              <Link to={`/produto/${product.id}`}>
                 <img src={product.imagemUrl} alt="" />
+              </Link>
+
+              
                 <div>
                   <h5>{product.nome}</h5>
                   <p>{product.descricao}</p>
@@ -390,7 +425,10 @@ export default function NewProd() {
                       }}
                     >
                       <AiOutlinePlus />
-                    </div>
+                    </div>                    
+                      {/* <img
+                      style={{ width: "50px" }}  
+                      src="https://i.pinimg.com/474x/a4/5c/b4/a45cb4438a2de6d562abfae5f6960efd--free-flat-icons-free-icon.jpg" alt="" /> */}
                   </div>
                 </div>
               </ProdContainerSingle>
@@ -485,13 +523,12 @@ export default function NewProd() {
 
                 <ContentFormNew>
                   <label htmlFor="">Preço</label>
-                  <input
-                  value={preco}
-                    required
-                    type="number"
-                    placeholder="Preço"
-
-                    onChange={(text) => setPreco(text.target.value)}
+                  <Input
+                  name="price"
+                  mask="currency"
+                  prefix="R$"
+                  placeholder="0,01"
+                  onChange={handleChange}
                   />
                 </ContentFormNew>
 
@@ -655,13 +692,20 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Preço</label>
-                <input
+                {/* <input
                 value={preco}
                   required
                   type="number"
                   placeholder="Preço"
                   onChange={(text) => setPreco(text.target.value)}
-                />
+                /> */}
+                <Input
+                  name="price"
+                  mask="currency"
+                  prefix="R$"
+                  placeholder="0,01"
+                  onChange={handleChange}
+                  />
               </ContentFormNew>
 
               <ContentFormNew>
