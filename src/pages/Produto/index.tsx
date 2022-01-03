@@ -17,6 +17,7 @@ import {
   ModalFlex,
   SelectAdress,
   ProdCaracteristicas,
+  Right
 } from "./styles";
 import prod from "../../assets/images/prodfav.png";
 import { AiFillStar, AiOutlineClose } from "react-icons/ai";
@@ -326,6 +327,7 @@ export default function Produto() {
         {
         comentarios.map(
           (comentario: any, index: number) => (
+            <>
         <ProdSecond>
           <div>
             <h2>{comentario.firstName}</h2>
@@ -349,7 +351,15 @@ export default function Produto() {
              )
           }
         </ProdSecond>
+        {
+            comentario.isRespondido? (
+              <>
+                <Right>↳ {comentario.resposta}</Right>
+              </>
 
+            ) : (<Right/>)
+          }
+        </>
           )
         )
         }
