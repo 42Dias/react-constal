@@ -261,7 +261,6 @@ export default function Produto() {
     function handleAddProduct(id: string) {
       if(role == 'pessoa'){
         addProduct(id, counter);
-        console.log("fjvikdjdjgvjdfifgfdijgijfiojijf")
       }
       else{
         toast.error("Cadastre-se para habilitar o carrinho")
