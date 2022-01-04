@@ -33,7 +33,7 @@ export default function Register() {
     console.log();
   }
   async function senEmail() {
-    Axios.post(`http://${ip}:8157/api/cliente/${id}/${token}/verificarEmail`,{
+    Axios.post(`${ip}:8157/api/cliente/${id}/${token}/verificarEmail`,{
       email: email
     }).then((response) => {
       if (response.statusText == "OK") {
@@ -48,7 +48,7 @@ export default function Register() {
   async function loadUser(token:any) {
     const response = await axios({
       method: 'get',
-      url: `http://${ip}:8157/api/auth/me`,
+      url: `${ip}:8157/api/auth/me`,
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ export default function Register() {
   }
   async function Cadastro() {
       setLoading(true)
-      let responser = Axios.post('http://'+ip+':8157/api/auth/sign-up', {   
+      let responser = Axios.post(''+ip+':8157/api/auth/sign-up', {   
         fullName: nome,   
         email: email,
         password: senha,

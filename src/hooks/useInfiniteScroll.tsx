@@ -32,7 +32,7 @@ export default function useInfiniteScroll(number: number){
 
 	axios({
 		method: 'GET',
-	  url: `http://${ip}:8157/api/produto/${number}`,
+	  url: `${ip}:8157/api/produto/${number}`,
 	  timeout: 50000
 
 	}).then(res => {

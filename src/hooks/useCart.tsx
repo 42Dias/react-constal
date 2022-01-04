@@ -120,7 +120,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
 
           const response = await axios({
               method: 'post',
-              url: `http://${ip}:8157/api/tenant/${tenantId}/carrinho/`,
+              url: `${ip}:8157/api/tenant/${tenantId}/carrinho/`,
               headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
@@ -148,7 +148,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
           /* para mudar a quantidade
 
           const response = await fetch(
-            `http://localhost:8157/api/tenant/${tenantId}/carrinho/${cartId}`, {
+            `localhost:8157/api/tenant/${tenantId}/carrinho/${cartId}`, {
               method: "PUT",
               headers: {
                 'Accept': 'application/json',
@@ -179,7 +179,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
           
           const response = await axios({
             method: 'put',
-            url: `http://${ip}:8157/api/tenant/${tenantId}/carrinhoProduto/`,
+            url: `${ip}:8157/api/tenant/${tenantId}/carrinhoProduto/`,
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
@@ -238,7 +238,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
   
       const response = await axios({
         method: 'delete',
-        url: `http://${ip}:8157/api/tenant/${tenantId}/carrinhoProduto/`,
+        url: `${ip}:8157/api/tenant/${tenantId}/carrinhoProduto/`,
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -304,7 +304,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
 
       const response = await axios({
         method: 'put',
-        url: `http://${ip}:8157/api/tenant/${tenantId}/carrinhoProduto/`,
+        url: `${ip}:8157/api/tenant/${tenantId}/carrinhoProduto/`,
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',

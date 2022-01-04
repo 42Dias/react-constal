@@ -21,7 +21,7 @@ export default function PayCart() {
 
   useEffect(() => {
     if(role != 'pessoa'){
-      window.location.replace(`http://${ip}/constal#/erro`);
+      window.location.replace(`${ip}/constal#/erro`);
     }
     
     async function gerarFornecedores(){
@@ -68,7 +68,7 @@ export default function PayCart() {
         }
         )
         setProdutosDosFornecedores(containerDeObjetos)
-        
+        makeMagic()
         
       }
       gerarFornecedores()  
@@ -89,7 +89,7 @@ export default function PayCart() {
         produtoDoFornecedor.formaPagemento = formaDePagamento
         const response = await axios({
           method: 'post',
-          url: `http://${ip}:8157/api/tenant/${tenantId}/pedido`,
+          url: `${ip}:8157/api/tenant/${tenantId}/pedido`,
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -102,7 +102,7 @@ export default function PayCart() {
             setTimeout(() => {
               axios({
                 method: 'post',
-                url: `http://${ip}:8157/api/tenant/${tenantId}/pedido/${response.data.id}/fatura`,
+                url: `${ip}:8157/api/tenant/${tenantId}/pedido/${response.data.id}/fatura`,
                 headers: {
                   'Accept': 'application/json',
                   'Content-Type': 'application/json',
@@ -116,7 +116,7 @@ export default function PayCart() {
                 }
               )
               .then(
-                () =>  window.location.replace(`http://dev.42dias.com.br/Clientes/constal/#/finalizar`)
+                () =>  window.location.replace(`dev.42dias.com.br/Clientes/constal/#/finalizar`)
               )
               console.log(response)
 
@@ -154,7 +154,7 @@ export default function PayCart() {
     //   async (id) => {
     //     const response = await axios({
     //       method: 'get',
-    //       url: `http://${ip}:8157/api/tenant/${tenantId}/produto/${id}`,
+    //       url: `${ip}:8157/api/tenant/${tenantId}/produto/${id}`,
     //       headers: {
     //         'Accept': 'application/json',
     //         'Content-Type': 'application/json',
@@ -177,7 +177,7 @@ export default function PayCart() {
       async (id) => {
         const response = await axios({
           method: 'post',
-          url: `http://${ip}:8157/api/tenant/${tenantId}/pedido/${id}/fatura`,
+          url: `${ip}:8157/api/tenant/${tenantId}/pedido/${id}/fatura`,
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -210,7 +210,9 @@ export default function PayCart() {
           <div className="container">
             <Titleh2>Formas de pagamentos</Titleh2>
             <CenterPay>
-              <div className="input">
+              <div>Carregando formas de pagamentos...{loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : 
+             false}</div>
+              {/*<div className="input">
                 {/*<input type="checkbox" name="" id=""
                   onClick={
                     () => {
@@ -218,13 +220,13 @@ export default function PayCart() {
                     console.log(formaDePagamento)
                     }
                   }
-                />*/}
+                />
                 <img src="https://jsaonthego.com/wp-content/uploads/2021/08/pre-start-onthego-transparent-256px.png" style={{width: '30px'}}></img>
                 <div>
                   <h2>Pix</h2>
                   <p>Aprovação imediata</p>
                 </div>
-              </div>
+              </div> 
               <div className="input">
                 {/*<input type="checkbox" name="" id="" 
                 onClick={
@@ -233,7 +235,7 @@ export default function PayCart() {
                     console.log(formaDePagamento)
                   }
                 }
-              />*/}
+              />
               <img src="https://jsaonthego.com/wp-content/uploads/2021/08/pre-start-onthego-transparent-256px.png" style={{width: '30px'}}></img>
                 <div>
                   <h2>Cartão de crédito</h2>
@@ -251,23 +253,23 @@ export default function PayCart() {
                     }
                   }
                 
-                />*/}
+                />
                 <img src="https://jsaonthego.com/wp-content/uploads/2021/08/pre-start-onthego-transparent-256px.png" style={{width: '30px'}}></img>
                 <div>
                   <h2>Boleto</h2>
                   <p>Aprovado em 1 ou 2 dias úteis após pagamento</p>
                 </div>
-              </div>
+              </div>*/}
             </CenterPay>
             <BtnFinish>
-            {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : 
-              <Btn
+            {/*loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : 
+              /*<Btn
               onClick={
                 () => {
                   makeMagic()
                 }
               }
-              >Finalizar</Btn>}
+            >Finalizar</Btn> false*/}
             </BtnFinish>
           </div>
         <FooterContainer>

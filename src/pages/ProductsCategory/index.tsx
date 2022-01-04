@@ -26,7 +26,7 @@ export default function ProductsCategory() {
         const pesquisa = window.location.hash.replace(/#\/produto-categoria\//g, '');
         console.log(pesquisa)
         const resultadoDaPesquisa2 = await api.get(`produto?filter%5Bcategoria%5D=${pesquisa}`)
-        const resultadoDaPesquisa = await axios.get(`http://${ip}:8157/api/produtos-list?filter%5Bcategoria%5D=${pesquisa}`)
+        const resultadoDaPesquisa = await axios.get(`${ip}:8157/api/produtos-list?filter%5Bcategoria%5D=${pesquisa}`)
 
         // console.log(resultadoDaPesquisa)
         console.log(resultadoDaPesquisa2)

@@ -86,7 +86,7 @@ export default function ResetarSenha() {
   useEffect(() => {
       console.log(role + " " + status)
      
-      const hash = window.location.hash.replace('http://dev.42dias.com.br/Clientes/constal/#/', '');
+      const hash = window.location.hash.replace('dev.42dias.com.br/Clientes/constal/#/', '');
       console.log(hash)
       if(hash){
         
@@ -107,7 +107,7 @@ export default function ResetarSenha() {
     }
     const response = await axios({
       method: "get",
-      url: `http://${ip}:8157/api/auth/me`,
+      url: `${ip}:8157/api/auth/me`,
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -141,7 +141,7 @@ export default function ResetarSenha() {
     async function update(data: any) {
       if (data) {
         data.password = senha
-        const response = await axios.put(`http://${ip}:8157/api/auth/password-reset/`, {
+        const response = await axios.put(`${ip}:8157/api/auth/password-reset/`, {
           token: id,
           password: senha
         }).then((response) => {

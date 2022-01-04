@@ -93,7 +93,7 @@ export default function Denounced() {
 //       else{
 //         if(role !== "admin" && role !== "empresa" || status === "pendente"){
 //           // Simulate an HTTP redirect:
-//           window.location.replace(`http://dev.42dias.com.br/Clientes/constal/#/erro`);
+//           window.location.replace(`dev.42dias.com.br/Clientes/constal/#/erro`);
 //         }
 //       }
 
@@ -305,7 +305,7 @@ useEffect(
   else{
     if(role !== "admin" && role !== "empresa" || status === "pendente"){
       // Simulate an HTTP redirect:
-      window.location.replace(`http://dev.42dias.com.br/Clientes/constal/#/erro`);
+      window.location.replace(`dev.42dias.com.br/Clientes/constal/#/erro`);
     }
   }
 
