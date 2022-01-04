@@ -4,7 +4,7 @@ export const DetailsProdFirts = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 40px;
-`;
+`
 
 export const Recommended = styled.div`
   width: 100%;
@@ -282,4 +282,4 @@ export const Btn = styled.button`
   &:hover {
     text-decoration: underline;
   }
-`;
+`
