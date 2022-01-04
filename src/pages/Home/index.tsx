@@ -97,7 +97,7 @@ const Home = (): JSX.Element => {
   }
   function handleAddProduct(id: string) {
     if(role == 'pessoa'){
-      addProduct(id);
+      addProduct(id, 1);
     }
     else{
       toast.error("Cadastre-se para habilitar o carrinho")

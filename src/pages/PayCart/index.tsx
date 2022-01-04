@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 
 let token = localStorage.getItem("token")?.replace(/"/g, "");
 const tenantId = "fa22705e-cf27-41d0-bebf-9a6ab52948c4";
-
+const containerDeObjetos: any = []
 
 export default function PayCart() {
   const [produtosDosFornecedores, setProdutosDosFornecedores] = useState([]);
@@ -26,8 +26,8 @@ export default function PayCart() {
     
     async function gerarFornecedores(){
       const fornecedoresNoCarrinho: string[] = []
-      const produtosNoCarrinhoResponse: any = await api.get('/carrinho/') 
-      const produtosNoCarrinho = produtosNoCarrinhoResponse.data.rows
+      const produtosNoCarrinhoResponse: any = await api.get('/carrinho/').then((response)=>{
+        const produtosNoCarrinho = response.data.rows
       
       produtosNoCarrinho.filter(
         async (produtoNoCarrinho: any) => {
@@ -36,7 +36,7 @@ export default function PayCart() {
           }
         }
       )
-      const containerDeObjetos: any = []
+      
 
       fornecedoresNoCarrinho.map(
         (fornecedor) =>{ 
@@ -45,8 +45,8 @@ export default function PayCart() {
         }
       )
     
+      console.log("containerDeObjetos")
       console.log(containerDeObjetos)
-
 
       console.log(produtosNoCarrinho)
       console.log(fornecedoresNoCarrinho)
@@ -71,7 +71,9 @@ export default function PayCart() {
         makeMagic()
         
       }
-      gerarFornecedores()  
+     
+      )} 
+       gerarFornecedores() 
     }, []
     )
     
@@ -84,7 +86,8 @@ export default function PayCart() {
   async function gerarPedido() {
     /*PASSA O CARRINHO COMO PARÂMETRO DO AXIOS COMO POST*/
     console.log("Começou, VAI!")
-    produtosDosFornecedores.map(
+    console.log(produtosDosFornecedores)
+    containerDeObjetos.map(
       async (produtoDoFornecedor: any) => {
         produtoDoFornecedor.formaPagemento = formaDePagamento
         const response = await axios({
@@ -116,7 +119,7 @@ export default function PayCart() {
                 }
               )
               .then(
-                () =>  window.location.replace(`dev.42dias.com.br/Clientes/constal/#/finalizar`)
+                () =>  window.location.replace(`https://projetos.42dias.com.br/constal/#/finalizar`)
               )
               console.log(response)
 
@@ -125,8 +128,9 @@ export default function PayCart() {
             // setIds(prevValues => {
             //   return [...new Set([...prevValues,  response.data.id])]	
             // })
-          }
-          )
+          }).catch((error)=>{
+            toast.error(error)
+          })
         
         
         console.log(response)
@@ -196,7 +200,7 @@ export default function PayCart() {
     
     async function makeMagic() {
       setLoading(true)
-      await gerarPedido()
+      gerarPedido()
       // createNewFatura()
       
     }
