@@ -391,13 +391,10 @@ export default function NewProd() {
           {/* Como pegar os dados dos inputs? => login */}
           {products.map((product, index) => (
             <>
-              <ProdContainerSingle>
-                {/* {
-                  console.log("product")
-                }
-                {
-                  console.log(product)
-                } */}
+              <ProdContainerSingle
+              style={{opacity: product.status != 'aprovado' ?  0.65 :  1}}
+              // style={{opacity: 0.65}}
+              >
               <Link to={`/produto/${product.id}`}>
                 <img src={product.imagemUrl} alt="" />
               </Link>
