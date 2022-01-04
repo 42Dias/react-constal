@@ -122,9 +122,12 @@ export default function Vendas() {
       else {
         async function loadPedidos() {
           console.log("requisição do pedido feita")
-          const res = await api.get('pedido')
+          const data = {
+            userId: id
+          }
+          const res = await api.post(`findPedidoWithProductToEmpresa`, data)
           console.log(res.data)
-          setPedidos(res.data.rows)
+          setPedidos(res.data)
         }
         loadPedidos()
         setSinal(1)
@@ -154,16 +157,18 @@ export default function Vendas() {
       setLoading2(true)
       setEmpresaId(empresaId)
       console.log("requisição do pedido feita")
-      const res = await api.get('pedido?filter%5BfornecedorEmpresa%5D=' + empresaId)
-      // const res = await api.get('pedido')
-      //console.log(res.data);
+      const data = {
+        userId: id
+      }
+      const res = await api.post(`findPedidoWithProductToEmpresa`, data)
+      console.log(res.data)
       setLoading2(false)
-      setPedidos(res.data.rows);
+      setPedidos(res.data);
       setSinal(1)
     }
   }
 
-  //console.log(pedidosPendentes)
+  console.log(pedidosPendentes)
   //console.log(pedidosConfirmados)
   //console.log(pedidosDevolvidos)
 
@@ -218,19 +223,19 @@ export default function Vendas() {
             (pedidos) => (
               <ContainerMenuSell>
                 <div>
-                  <span>Nome do cliente: {pedidos.compradorUser.pessoaFisica[0].nome} </span>
+                  <span>Nome do cliente: {pedidos.fullname} </span>
                   <h3>Quantidade de produtos: {pedidos.quantidadeProdutos}</h3>
                   <h3>Endereço para envio: {
-                    pedidos.compradorUser.pessoaFisica[0].logradouro + " " +
-                    pedidos.compradorUser.pessoaFisica[0].bairro}</h3>
+                    pedidos.logradouro + " " +
+                    pedidos.bairro}</h3>
                   <h3>{
-                    pedidos.compradorUser.pessoaFisica[0].cidade + " " +
-                    pedidos.compradorUser.pessoaFisica[0].estado}</h3>
+                    pedidos.cidade + " " +
+                    pedidos.estado}</h3>
                 </div>
 
                 <div>
                   <Link to={`/detalhes-da-venda/${pedidos.id}`}>Ver detalhes</Link>
-                  <h3>Valor Total: {formatPrice(pedidos.valorTotal)}</h3>
+                  <h3>Valor Total: {formatPrice(pedidos.precoTotal)}</h3>
                   <h3>Status: <b>{pedidos.status}</b></h3>
                 </div>
               </ContainerMenuSell>
