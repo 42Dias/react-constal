@@ -1,4 +1,5 @@
 export interface Product {
+  empresa: any;
   categoria: any;
   frete: any;
   prazo: string;

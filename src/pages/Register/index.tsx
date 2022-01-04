@@ -172,6 +172,8 @@ export default function Register() {
             <h3>Free</h3>
             <p style={{color: "#58A4B0"}}>Taxa de 5% por venda finalizada</p>
             <strong>R$ 00,00/mês</strong>
+            
+
             {/*<button type="button">Adquirir</button>*/}
           </S.Card>
         </S.Cards>
@@ -179,7 +181,11 @@ export default function Register() {
           <Terms>
             <input type="checkbox" />
             <span>
-              Aceito os <a href="">Termos e condições.</a>
+              Aceito os <a href="">Termos e condições
+              {
+                category == '2' ? ' e plano de assinatura': ''
+              }
+              .</a>
             </span>
           </Terms>
           <LinkContent>

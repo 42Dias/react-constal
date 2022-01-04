@@ -69,7 +69,7 @@ export const CardDatailsContent = styled.div`
   background: white;
   width: 100%;
   height: 200px;
-  margin: 20px 0;
+  margin-top: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
