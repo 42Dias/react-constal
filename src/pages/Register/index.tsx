@@ -87,6 +87,9 @@ export default function Register() {
         console.log(response);  
         if(response.statusText === "OK"){
           toast.info('Opa, recebemos o seu registro :)');
+          if(category == '2'){
+            toast.info('Obrigado pela sua adesão');
+          }
           handleLocalStorage(email, senha);
           handleLocalStorageToken(response.data);
         }else if(response.statusText === "Forbidden"){
