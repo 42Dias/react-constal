@@ -66,6 +66,10 @@ export const ProdContainerSingle = styled.div`
       font-size: 16px;
     }
   }
+  
+  .prodNome{
+    overflow-wrap: anywhere;
+  }
 
   p {
     color: #CBCBCB;
