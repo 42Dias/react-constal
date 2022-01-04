@@ -36,7 +36,7 @@ const { addProduct, cart } = useCart();
 
 
 function handleAddProduct(id: string) {
-  addProduct(id);
+  addProduct(id, 1);
 }
 
   useEffect(() => {
