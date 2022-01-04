@@ -168,7 +168,7 @@ nav li a {
   }
 
   .logo {
-    max-width: 170px;
+    max-width: 220px;
   } 
 
 `;
