@@ -392,20 +392,23 @@ export default function NewProd() {
           {products.map((product, index) => (
             <>
               <ProdContainerSingle
-              style={{opacity: product.status != 'aprovado' ?  0.65 :  1}}
               // style={{opacity: 0.65}}
               >
-              <Link to={`/produto/${product.id}`}>
+              <Link
+              style={{opacity: product.status != 'aprovado' ?  0.3 :  1}} 
+              to={`/produto/${product.id}`}>
                 <img src={product.imagemUrl} alt="" />
               </Link>
 
               
-                <div>
+                <div
+                style={{opacity: product.status != 'aprovado' ?  0.3 :  1}}>
                   <h5>{product.nome}</h5>
                   <p>{product.descricao}</p>
                 </div>
-                <div className="btn-group-add">
-                  <span> {formatPrice(product.preco)} </span>
+                <div 
+                className="btn-group-add">
+                  <span style={{opacity: product.status != 'aprovado' ?  0.3 :  1}} > {formatPrice(product.preco)} </span>
 
                   <div className="btn-group">
                     <button
