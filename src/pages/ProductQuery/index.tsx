@@ -111,7 +111,7 @@ function ProductQuery() {
               <S.CardDatailsContent>
                 <S.ContentDetails>
                   <img src={produto.imagemUrl} alt="" />
-                  <span>{produto.nome}</span>
+                  <span className="prodNome" >{produto.nome}</span>
                   <p>{produto.quantidade}</p>
                   <p>R$ {produto.preco}</p>
                 </S.ContentDetails>
@@ -122,7 +122,7 @@ function ProductQuery() {
               </S.CardDatailsContent>
                 <ContentFormNew 
                 style={{backgroundColor: 'white', padding: 15}}>
-                  <label htmlFor="">Se caso recusado, por quê?</label>
+                  <label style={{color: 'black'}}  htmlFor="">Se recusar, envie um Email para empresa</label>
                   <textarea
                     required
                     placeholder="Resposta"
