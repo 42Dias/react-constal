@@ -273,9 +273,10 @@ export const IconsContainer = styled.div`
   display: flex;
   justify-content: center;
   position: absolute;
-  right: 190px;
+  right: calc(50% - 470px);
 
   button {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;  
