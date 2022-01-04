@@ -31,7 +31,7 @@ interface UpdateProductAmount {
 
 interface CartContextData {
   cart: () => Promise<number>;
-  addProduct:    (productId: string) => Promise<void>;
+  addProduct:    (productId: string, quantidade: number) => Promise<void>;
   removeProduct: (productId: string) => void;
   updateProductAmount: ({ productId, quantidade }: UpdateProductAmount) => void;
 }
@@ -42,7 +42,7 @@ const tenantId = "fa22705e-cf27-41d0-bebf-9a6ab52948c4";
 const CartContext = createContext<CartContextData>({} as CartContextData);
 
 export function CartProvider({ children }: CartProviderProps): JSX.Element {
-    const cart = async () =>{
+    const cart = async () => {
       const allCart: any  = await api.get(`carrinho/`)
       console.log("allCart")
       console.log(allCart.data.count)
@@ -51,7 +51,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
       }
       
 
-  const addProduct = async (productId: string) => {
+  const addProduct = async (productId: string, quantidade: number) => {
     console.log("productId")
     console.log(productId)
 
@@ -127,7 +127,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
                 'Authorization': 'Bearer '+ token
               },              
               timeout: 50000,
-              data   : { product, quantidade: 1 }
+              data   : { product, 'quantidade': quantidade }
             }).then(
               (response) => {
                 if(response.status == 200){
@@ -141,7 +141,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
                 }
               }
             )              
-          console.log(JSON.stringify( { product, quantidade: 1 }))
+          console.log(JSON.stringify( { product, quantidade: quantidade }))
 
 
           
@@ -175,7 +175,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
         console.log(productAlreadyInCart)
         if (stock > productAlreadyInCart.quantidade) {
 
-        productAlreadyInCart.quantidade++;
+        productAlreadyInCart.quantidade = productAlreadyInCart.quantidade + quantidade;
           
           const response = await axios({
             method: 'put',
@@ -285,6 +285,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
       const  product  = productResponse.data;
       console.log(product)
       let  stock: number | null = product.quantidadeNoEstoque;
+
       if( stock == null ){
         stock = 999
       }

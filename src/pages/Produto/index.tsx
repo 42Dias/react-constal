@@ -33,6 +33,7 @@ import { Menu } from "../../components/Menu";
 import { FormComents, ProdSecondComents } from "./ProdItem/styles";
 import { Btn } from "../Dashboard/PersonalData/styles";
 import { ContentFormNew, ModalContent } from "../Dashboard/NewProd/styles";
+import { useCart } from "../../hooks/useCart";
 
 interface RepositoryItemProps {
   repository: {
@@ -48,18 +49,19 @@ export default function Produto() {
   const [showModal1, setShowModal1] = React.useState(false);
   const [showModal2, setShowModal2] = React.useState(false);
 
-  const [counter, setCounter] = useState(0);
+  const [counter, setCounter] = useState(1);
 
   function error() {
-    toast("Não é possível adicionar menos que 0 ", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+    // toast("Não é possível adicionar menos que 1", {
+    //   position: "top-right",
+    //   autoClose: 5000,
+    //   hideProgressBar: false,
+    //   closeOnClick: true,
+    //   pauseOnHover: true,
+    //   draggable: true,
+    //   progress: undefined,
+    // });
+    toast.error("Não é possível adicionar menos que 1")
   }
 
   //BUG AO ADICIONAR MAIS DE UM!!!!!
@@ -79,13 +81,25 @@ export default function Produto() {
 
 
   function increment() {
-    setCounter(counter + 1);
+    console.log("counter dentro")
+    console.log(counter)
+    if(counter < estoque){
+      setCounter(counter + 1)
+    }
+    else{
+      toast.error("Quantidade solicitada fora do estoque")
+    }
   }
-
+  console.log("counter fora")
+  console.log(counter)
   function withdraw() {
-    if (counter < 1) {
-      setCounter(0);
+    console.log("counter dentro")
+    console.log(counter)
+    if (counter < 2 || counter == 0) {
+      setCounter(1);
       error();
+      console.log("counter dentro que passou")
+      console.log(counter)
     } else {
       setCounter(counter - 1);
     }
@@ -124,14 +138,20 @@ export default function Produto() {
   const [prodId, setProdId]=useState('');
   const [nome, setNome]=useState('');
   const [preco, setPreco]=useState('');
+  const [estoque, setEstoque]=useState(0);
   const [publicUrl, setPublicUrl]=useState(''); 
   const [codigo, setCodigo]=useState('');
   const [marca, setMarca]=useState('');
   const [fotos, setFotos]=useState('');
-  const [modelo, setModelo]=useState('');
+  const [categoria, setCategoria]=useState('');
   const [descricao, setDescricao]=useState('');
   const [caracteristicasTecnicas, setCaracteristicasTecnicas]=useState('');
 
+  /*
+  1 Esquema do carrinho
+  2 checagem do produto se estiver no carrinho
+  3 counter = quantidade do produto no carrinho
+  */
 
   const [logradouro, setLogradouro]=useState('');
   const [bairro, setBairro]=useState('');
@@ -150,6 +170,8 @@ export default function Produto() {
 
   
   const [loading, setLoading] = useState(false);
+  
+  const { addProduct, cart } = useCart();
 
 
   useEffect(() => {
@@ -171,11 +193,12 @@ export default function Produto() {
       setPublicUrl(response.publicUrl);
       setCodigo(response.codigo);
       setMarca(response.marca);
+      setCategoria(response.categoria.nome);
       setFotos(response.imagemUrl || response.fotos[0].downloadUrl );
-      setModelo(response.modelo);
       setDescricao(response.descricao);
       setCaracteristicasTecnicas(response.caracteristicasTecnicas)
       setEmpresaId(response.empresaId)
+      setEstoque(response.quantidadeNoEstoque)
 
 
     }
@@ -234,8 +257,15 @@ export default function Produto() {
         const response = await api.put(`comentario/${comment.id}`, comment)
         console.log(response)
       }
-    
-    
+
+    function handleAddProduct(id: string) {
+      if(role == 'pessoa'){
+        addProduct(id, counter);
+      }
+      else{
+        toast.error("Cadastre-se para habilitar o carrinho")
+      }
+    }
 
   useEffect(
     () => {
@@ -259,25 +289,25 @@ export default function Produto() {
           <DetailsProdFirts>
             <BoxProd>
               <BoxProdFirts>
-                <span>Nome da marca</span>
+                <span>{categoria}</span>
                 <strong>{nome}</strong>
-                <span>Código do produto</span>
-                <IconsContentStar>
+                <span>{codigo}</span>
+                {/* <IconsContentStar>
                   <AiFillStar size={18} />
                   <AiFillStar size={18} />
                   <AiFillStar size={18} />
                   <AiFillStar size={18} />
                   <AiFillStar size={18} />
                   <small>(1)</small>
-                </IconsContentStar>
+                </IconsContentStar> */}
                 <br />
                 <strong>{preco}</strong>
-                <span>Variantes (ex: Cor)</span>
-                <BoxColors>
+                <span>quantidade no estoque {estoque}</span>
+                {/* <BoxColors>
                   <ColorWhite />
                   <ColorBlack />
                   <ColorRed />
-                </BoxColors>
+                </BoxColors> */}
                 <a className="vendedor" onClick={
                   () => setShowModal2(true)
                 }>
@@ -302,7 +332,9 @@ export default function Produto() {
                     <FiMinus />
                   </IconPlusMinus>
                 </FlexBtnsProd>
-                <Link to="/pagar">Adicionar</Link>
+                <Btn
+                onClick={() => handleAddProduct(productId)}
+                >Adicionar</Btn>
               </AddCartRight>
             </BoxProd>
 
