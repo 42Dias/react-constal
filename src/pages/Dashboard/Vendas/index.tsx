@@ -147,26 +147,29 @@ export default function Vendas() {
   )
 
   async function empresaT(empresaId: string) {
-    setSinal(0)
-    console.log("Entrou empresaT");
-    console.log(empresaId);
-    setEmpresaIdParaRequisicao(empresaId)
-
-
-    if (empresaId != "" && empresaId !== empresaIds) {
-      setLoading2(true)
-      setEmpresaId(empresaId)
-      console.log("requisição do pedido feita")
-      const data = {
-        userId: id
-      }
-      const res = await api.post(`findPedidoWithProductToEmpresa`, data)
-      //const res = await api.get(`pedido?filter%5BfornecedorEmpresa%5D=${empresaId}`)
-      // PROBLEMA: ESSA FUNÇÃO ESTÁ SENDO CHAMADA MESMO CASO A ROLE NÃO SEJA ADMIN !!!!!!!!
-      console.log(res.data)
-      setLoading2(false)
-      setPedidos(res.data);
-      setSinal(1)
+    if(role == 'admin'){
+      setSinal(0)
+      console.log("Entrou empresaT");
+      console.log(empresaId);
+      setEmpresaIdParaRequisicao(empresaId)
+  
+  
+      if (empresaId != "" && empresaId !== empresaIds) {
+        setLoading2(true)
+        setEmpresaId(empresaId)
+        console.log("requisição do pedido feita")
+        const data = {
+          userId: id
+        }
+        // const res = await api.post(`findPedidoWithProductToEmpresa`, data)
+        const res = await api.post(`findPedidoWithProductToEmpresa?filter%5Brole%5D=${empresaId}`, data)
+        // PROBLEMA: ESSA FUNÇÃO ESTÁ SENDO CHAMADA MESMO CASO A ROLE NÃO SEJA ADMIN !!!!!!!!
+        console.log("res.data")
+        console.log(res.data)
+        setLoading2(false)
+        setPedidos(res.data);
+        setSinal(1)
+    }
     }
   }
 
