@@ -194,7 +194,7 @@ export default function Produto() {
       setCodigo(response.codigo);
       setMarca(response.marca);
       setCategoria(response.categoria.nome);
-      setFotos(response.imagemUrl || response.fotos[0].downloadUrl );
+      setFotos(response.imagemUrl/*|| response.fotos[0].downloadUrl*/);
       setDescricao(response.descricao);
       setCaracteristicasTecnicas(response.caracteristicasTecnicas)
       setEmpresaId(response.empresaId)
