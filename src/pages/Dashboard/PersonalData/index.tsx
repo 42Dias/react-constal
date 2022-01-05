@@ -77,7 +77,7 @@ export default function PersonalData() {
         else{
           if(role !== "admin" && role !== "empresa"){
             // Simulate an HTTP redirect:
-            window.location.replace(`http://dev.42dias.com.br/Clientes/constal/#/erro`);
+            window.location.replace(`dev.42dias.com.br/Clientes/constal/#/erro`);
           }
         }
 
@@ -179,7 +179,7 @@ export default function PersonalData() {
     async function update(data:any){
       if(data){
         data.password = senha
-      const response = await axios.put(`http://${ip}:8157/api/auth/password-reset/`, {
+      const response = await axios.put(`${ip}:8157/api/auth/password-reset/`, {
         token: id,
         password: senha
       }).then((response) => {

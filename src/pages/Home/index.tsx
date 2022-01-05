@@ -62,7 +62,7 @@ const Home = (): JSX.Element => {
 
   useEffect(() => {
     async function loadProducts() {
-      const response = await axios.get("http://"+ip+":8157/api/produtos");
+      const response = await axios.get(""+ip+":8157/api/produtos");
       
       const productsFormated = response.data.record.map(function (
         product: Product
@@ -71,7 +71,7 @@ const Home = (): JSX.Element => {
       });
       setProducts(productsFormated);
       //productCounter = []; 
-      const response2 = await axios.get("http://"+ip+":8157/api/produtosTrue");
+      const response2 = await axios.get(""+ip+":8157/api/produtosTrue");
       
       const productsFormated2 = response2.data.record.map(function (
         product: Product
@@ -85,7 +85,7 @@ const Home = (): JSX.Element => {
 
   useEffect(
     () => {
-      axios.get(`http://${ip}:8157/api/produto-imagens-promocionais/`).then(
+      axios.get(`${ip}:8157/api/produto-imagens-promocionais/`).then(
         (response) => {
           console.log(response.data)
           setPromocoes(response.data)
@@ -127,7 +127,7 @@ const Home = (): JSX.Element => {
             promocoes.map(
               (promocao, index) => (
                     <SwiperSlide key={index}>
-                      <a href={`http://${ip}:3000/constal#/produtos-promocao/${promocao.promocaoId}`}>
+                      <a href={`${ip}:3000/constal#/produtos-promocao/${promocao.promocaoId}`}>
                         {/* /produtos-promocao/:imagemId */}
                         <img src={promocao.imagemPromocional}
                         alt={promocao.precoOferta + " " + promocao.nome} />

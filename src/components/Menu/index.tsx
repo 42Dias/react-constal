@@ -19,7 +19,7 @@ export function Menu() {
     () => {
       async function loadCategorias() {
         if(role == 'pessoa'){
-          const categoriasResponse = await axios.get('http://'+ip+':8157/api/categoria-aprovados');
+          const categoriasResponse = await axios.get(''+ip+':8157/api/categoria-aprovados');
           const categoriasDoBack = categoriasResponse.data
           console.log("categoriasDoBack")
           console.log("categoriasDoBack")
@@ -30,12 +30,12 @@ export function Menu() {
         // setCategorias([])
 
 
-        const moveisResponse           = await axios.get('http://'+ip+':8157/api/categoria-name/moveis'); 
-        const eletrodomésticoResponse  = await axios.get('http://'+ip+':8157/api//categoria-name/eletrodoméstico'); 
-        const materiaisResponse        = await axios.get('http://'+ip+':8157/api/categoria-name/materiais'); 
-        const camaResponse             = await axios.get('http://'+ip+':8157/api/categoria-name/cama'); 
-        const cursosResponse           = await axios.get('http://'+ip+':8157/api/categoria-name/cursos');
-        const modaInfantilResponse     = await axios.get('http://'+ip+':8157/api/categoria-name/moda'); 
+        const moveisResponse           = await axios.get(''+ip+':8157/api/categoria-name/moveis'); 
+        const eletrodomésticoResponse  = await axios.get(''+ip+':8157/api//categoria-name/eletrodoméstico'); 
+        const materiaisResponse        = await axios.get(''+ip+':8157/api/categoria-name/materiais'); 
+        const camaResponse             = await axios.get(''+ip+':8157/api/categoria-name/cama'); 
+        const cursosResponse           = await axios.get(''+ip+':8157/api/categoria-name/cursos');
+        const modaInfantilResponse     = await axios.get(''+ip+':8157/api/categoria-name/moda'); 
 
         setMoveis(moveisResponse.data[0].id)
         setTeletrodoméstico(eletrodomésticoResponse.data[0].id)
