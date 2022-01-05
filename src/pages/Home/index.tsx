@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { MdAddShoppingCart } from "react-icons/md";
@@ -52,8 +52,6 @@ SwiperCore.use([Autoplay,Pagination,Navigation]);
 
 const Home = (): JSX.Element => {
 
-  
-
   const [products = [], setProducts] = useState<ProductFormatted[]>([]);
   const [products2 = [], setProducts2] = useState<ProductFormatted[]>([]);
   const [promocoes = [], setPromocoes] = useState<ProductFormatted[]>([]);
@@ -97,6 +95,7 @@ const Home = (): JSX.Element => {
   }
   function handleAddProduct(id: string) {
     if(role == 'pessoa'){
+      
       addProduct(id, 1);
     }
     else{
@@ -104,11 +103,11 @@ const Home = (): JSX.Element => {
     }
   }
 
+
   return (
     <>
       <Header />
       <Menu />
-      
       <BannerHomeImage>
         <Swiper
           spaceBetween={30}
