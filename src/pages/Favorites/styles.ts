@@ -119,6 +119,8 @@ export const ContentDetails = styled.div`
 
   img {
     padding: 0 40px;
+    width: 200px;
+    height: 120px;
     @media (max-width: 768px) {
       padding: 0 0;
       width: 155px;
