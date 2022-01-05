@@ -174,7 +174,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
         console.log("PRODUTO ESTÁ EN EL CARIÑO")
         const  stock: number  = product.quantidadeNoEstoque;
         console.log(productAlreadyInCart)
-        if (stock > productAlreadyInCart.quantidade) {
+        if (stock > productAlreadyInCart.quantidade + quantidade) {
 
         productAlreadyInCart.quantidade = productAlreadyInCart.quantidade + quantidade;
           
