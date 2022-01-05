@@ -122,6 +122,7 @@ function ProductQuery() {
               </S.CardDatailsContent>
                 <ContentFormNew 
                 style={{backgroundColor: 'white', padding: 15}}>
+                  nome da empresa: {produto.empresa.nome}
                   <label style={{color: 'black'}}  htmlFor="">Se recusar, envie um Email para empresa</label>
                   <textarea
                     required
@@ -130,6 +131,7 @@ function ProductQuery() {
                   // value="5165161"
                   />
                 </ContentFormNew>
+
               </>
             ))
 
