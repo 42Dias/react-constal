@@ -77,6 +77,7 @@ export default function ApproveEmpresas() {
       console.log(response)
       if (response.statusText == "OK") {
         toast.info('Empresa recusado com sucesso! :)');
+        loadEmpresa();
         //window.location.reload();
         setLoading(false)
       }else{
