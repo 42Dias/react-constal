@@ -27,13 +27,14 @@ import Modal from "react-modal";
 import React from "react";
 import Header from "../../components/Header";
 import { toast } from "react-toastify";
-import { api, id, role } from "../../services/api";
+import { api, id, ip, role } from "../../services/api";
 import { formatPrice } from "../../util/format";
 import { Menu } from "../../components/Menu";
 import { FormComents, ProdSecondComents } from "./ProdItem/styles";
 import { Btn } from "../Dashboard/PersonalData/styles";
 import { ContentFormNew, ModalContent } from "../Dashboard/NewProd/styles";
 import { useCart } from "../../hooks/useCart";
+import axios from "axios";
 
 interface RepositoryItemProps {
   repository: {
@@ -177,9 +178,11 @@ export default function Produto() {
 
   useEffect(() => {
     async function loadProduct() {
-      const response = await api.get(selectedProduct).then((response) => {
-        console.log(response.data);
-        return response.data;
+      const response = await axios.get(`${ip}:8157/api/produtos-list?filter%5Bid%5D=${productId}`)
+      // const response = await api.get(selectedProduct)
+      .then((response) => {
+        console.log(response.data.record[0]);
+        return response.data.record[0];
       });
 
       setProdId(response.id)
@@ -311,14 +314,20 @@ export default function Produto() {
                   <ColorBlack />
                   <ColorRed />
                 </BoxColors> */}
-                <a className="vendedor" onClick={
-                  () => setShowModal2(true)
-                }>
-                  Opções de frete
-                </a>
-              </BoxProdFirts>
+                {
+                role == 'empresa' || role == 'admin' ? (false): (
+                  <a className="vendedor" onClick={
+                    () => setShowModal2(true)
+                  }>
+                    Opções de frete
+                  </a>
+                )
+                }
 
-              <AddCartRight>
+              </BoxProdFirts>
+              {
+                role == 'empresa' || role == 'admin' ? (false): (
+                  <AddCartRight>
                 <button
                   className="fav"
                   type="button"
@@ -339,6 +348,9 @@ export default function Produto() {
                 onClick={() => handleAddProduct(productId)}
                 >Adicionar</Btn>
               </AddCartRight>
+                )
+              }
+              
             </BoxProd>
 
             <BoxProd>
