@@ -138,6 +138,9 @@ const Cart = (): JSX.Element => {
 
   //Está sendo alterado o useState mas não está sendo mostrado na
 
+  console.log("products.length")
+  console.log(products.length)
+
   return (
     <>
       <Header />
@@ -219,7 +222,9 @@ const Cart = (): JSX.Element => {
           </ProductTable>
 
           <footer>
-            <Link to="/pagar">Finalizar pedido</Link>
+            {
+              products.length > 0 ? <Link to="/pagar">Finalizar pedido</Link> : false
+            }
             {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
             <Total>
               <span>TOTAL</span>
