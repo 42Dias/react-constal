@@ -211,8 +211,8 @@ export default function NewProd() {
         caracteristicasTecnicas: caracteristicasTecnicas,
         preco: preco,
         prazo: prazo,
-        quantidade: quantidade,
         frete: frete,
+        quantidade: quantidade,
         empresaId: empresaId,
         // categoria: categoria,
         categoriaId: categoria,
@@ -237,8 +237,8 @@ export default function NewProd() {
         caracteristicasTecnicas: caracteristicasTecnicas,
         preco: preco,
         prazo: prazo,
-        quantidade: quantidade,
         frete: frete,
+        quantidade: quantidade,
         // categoria: categoria,
         categoriaId: categoriaId,
         empresaId: empresaId,
@@ -429,8 +429,10 @@ export default function NewProd() {
                       }}
                     >
                     <AiOutlinePlus />
-                    </div>                    
-                    <img
+                    </div>      
+                    {                    
+                    product.status == 'aprovado' ?  (
+                      <img
                     onClick={() => {
                       setIndex(index);
                       console.log(index);
@@ -443,6 +445,8 @@ export default function NewProd() {
                     style={{ width: "50px", height: '40px', transform: 'translateY(19%)' }}  
 
                     src="https://colorfitas.com.br/image/cache/catalog/Produtos/Papelaria/Cartazes%20e%20Splashs/SPLASH%20N4-500x500.png" alt="" /> 
+                    ) :  false              
+                    }
                   </div>
                 </div>
               </ProdContainerSingle>
