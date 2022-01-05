@@ -72,7 +72,7 @@ export default function NewProd() {
   const [dataEncerramento, setDataEncerramento] = useState<any>();
   const [categoriaId, setCategoriaId] = useState<any>();
   
-  const [handleChangePrice, setHandleChangePrice] = useState("");
+  const [handleChangePrice, setHandleChangePrice] = useState<any>();
 
   function openModal() {
     //setIsOpen(true);
@@ -378,18 +378,63 @@ export default function NewProd() {
         // const value = e.currentTarget.value.replace(/\./g, "")
         setPreco(value)
         
-        
+
       }, 1000);
       
     },
     [usuario]
   );
 
+    // @ts-ignore
+    String.prototype.replaceAt = function(index: number, replacement: string) {
+      if (index >= this.length) {
+          return this.valueOf();
+      }
+   
+      var chars = this.split('');
+      chars[index] = replacement;
+      return chars.join('');
+  }
+
+  function handlePriceOnMask(text: any){
+    let newText = text.target.value
+        .replaceAt(text.target.value.length-3, '*')
+        .replace(/\./g, "")
+        .replace(/R\$/g, "")
+        .replace(/\*/g, ".");
+
+        //checa se o preco passado é nan
+        if(Number.isNaN(parseFloat(newText))){
+          console.log(text.target.value)
+          newText = text.target.value
+        .replace(/\./g, "")
+        .replace(/R/g, "")
+        .replace(/\*/g, ".");
+          console.log("nanannaanaanaa")
+          console.log(newText)
+          newText = 0.00
+        }
+        var numero = parseFloat(newText).toLocaleString('pt-BR',{ style: 'currency', currency: 'BRL' });
+        setHandleChangePrice(numero)
+  }
+  //apenas fazer outra funçãozinha para setar o esse input com o valor quando for alterado!!!
+
   return (
     <>
       <GlobalStyles />
       <Header />
       <Menu />
+
+      <input 
+      type="text"
+      value={handleChangePrice}
+      // type='number'
+      pattern="[0-9]+"
+      
+      onChange={(text: any) => {
+        handlePriceOnMask(text)
+      }} />
+
       <div className="container">
         <ContentNew>
           <h2>Meus produtos</h2> {loading ? (
@@ -893,7 +938,7 @@ export default function NewProd() {
                   value={dataEncerramento}
                   required
                   type="date"
-                  placeholder="650"
+                  placeholder="01/03/2024"
                   onChange={event => setDataEncerramento(event.target.value)}
                 />
               </ContentFormNew> 
