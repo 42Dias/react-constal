@@ -887,7 +887,7 @@ export default function NewProd() {
                 />
               </ContentFormNew>
 
-              {/* <ContentFormNew>
+               <ContentFormNew>
                 <label htmlFor="">Data de encerramento</label>
                 <input
                   value={dataEncerramento}
@@ -896,7 +896,7 @@ export default function NewProd() {
                   placeholder="650"
                   onChange={event => setDataEncerramento(event.target.value)}
                 />
-              </ContentFormNew> */}
+              </ContentFormNew> 
 
               {loading ? (
                 <img
