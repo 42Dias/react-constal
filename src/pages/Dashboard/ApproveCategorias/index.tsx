@@ -45,6 +45,7 @@ export default function ApproveCategorias() {
     setIsOpen(false);
   }
   function aprovarCategoria(categoria: any) {
+    console.log(categoria)
     categoria.status = "active";
     setLoading2(true)
     let response = api.put('categoria/' + categoria.id, {
@@ -53,7 +54,7 @@ export default function ApproveCategorias() {
     }).then((response) => {
       console.log(response)
       if (response.statusText == "OK") {
-        toast.info('Categoria aprovado com sucesso! :)');
+        toast.info('Categoria aprovada com sucesso! :)');
         //window.location.reload();
         setLoading2(false)
         loadCategoria();
@@ -66,9 +67,10 @@ export default function ApproveCategorias() {
     })
   }
   function recusarCategoria(categoria: any) {
+    console.log(categoria)
     categoria.status = "inative";
     setLoading(true)
-    let response = api.put('categoria/' + categoria.tId, {
+    let response = api.put('categoria/' + categoria.id, {
       id: categoria.id,
       data: categoria,
     }).then((response) => {
@@ -77,6 +79,7 @@ export default function ApproveCategorias() {
         toast.info('Categoria recusado com sucesso! :)');
         //window.location.reload();
         setLoading(false)
+        loadCategoria()
       }else{
         toast.error('Ops, não foi possivel recusado a categoria! :(');
       }
