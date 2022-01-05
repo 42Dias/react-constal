@@ -161,6 +161,8 @@ export default function Vendas() {
         userId: id
       }
       const res = await api.post(`findPedidoWithProductToEmpresa`, data)
+      //const res = await api.get(`pedido?filter%5BfornecedorEmpresa%5D=${empresaId}`)
+      // PROBLEMA: ESSA FUNÇÃO ESTÁ SENDO CHAMADA MESMO CASO A ROLE NÃO SEJA ADMIN !!!!!!!!
       console.log(res.data)
       setLoading2(false)
       setPedidos(res.data);
