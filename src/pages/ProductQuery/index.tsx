@@ -10,27 +10,78 @@ import { Product } from "../../types"
 import axios from "axios"
 import { toast } from "react-toastify"
 import { ContentFormNew } from "../Profile/styles"
+/*
 
+
+  */
 function ProductQuery() {
   const [produtos = [], setProdutos] = useState<any[]>([]);
   const [produtoRecusado = [], setProdutoRecusado] = useState<any>();
   const [emailContent = [], setEmailContent] = useState<any>();
   const [loading, setLoading] = useState(false);
+  const containerDeObjetos: any = []
+  const [produtosDosFornecedores, setProdutosDosFornecedores] = useState([]);
+  const fornecedoresNoCarrinho: string[] = []
 
   async function loadUser() {
     setLoading(true)
     const response = await api.get('produto?filter%5Bstatus%5D=pendente')
       .then(response => {
         setLoading(false)
-        return response.data;
+        console.log(response)
+        return response.data.rows;
       })
-    setProdutos(response.rows)
+    setProdutos(response)
     console.log("Produtos");
-    console.log(response.rows);
+    console.log(response);
+    const produtosNoCarrinho = response
+      
+    //adiciona os nomes dos fornecedores numa variavel
+      produtosNoCarrinho.filter(
+        async (produtoNoCarrinho: any) => {
+          if(!fornecedoresNoCarrinho.includes(produtoNoCarrinho.empresa.nome)){
+            fornecedoresNoCarrinho.push(produtoNoCarrinho.empresa.nome)
+          }
+        }
+      )
+      
+    //cria um objeto com o fornecedor e adiciona ao container
+      fornecedoresNoCarrinho.map(
+        (fornecedor) =>{ 
+          const novoObj =  { "fornecedorId": fornecedor, "produtos": [] }
+          containerDeObjetos.push(novoObj)
+        }
+      )
+    
+      console.log("containerDeObjetos")
+      console.log(containerDeObjetos)
+
+      console.log(produtosNoCarrinho)
+      console.log(fornecedoresNoCarrinho)
+
+      //responsável por filtrar cada um em si
+      containerDeObjetos.map( (fornecedor: any, index: number )=>{
+        produtosNoCarrinho.filter(
+          (produtoNoCarrinho: any) => {
+            if (fornecedor.fornecedorId == produtoNoCarrinho.empresa.nome){
+              fornecedor.produtos.push(produtoNoCarrinho)
+              fornecedor.produtos.map(
+                (produtoDoFornecedor: any) => {
+                  produtoDoFornecedor.empresa.nome = fornecedor.fornecedorId
+                }
+              )
+            }
+          }
+          )
+          console.log(fornecedor, index)
+        }
+        )
+        setProdutosDosFornecedores(containerDeObjetos)
 
     /*produtos.map((produto)=>(
       console.log(produto)  
   ))*/
+  console.log(produtosDosFornecedores)
   }
   useEffect(() => {
     if(role !== "admin" && role !== "empresa" || status === "pendente"){
@@ -97,6 +148,7 @@ function ProductQuery() {
       console.log(error)
     })
   }
+  console.log(produtosDosFornecedores)
   return (
     <>
       <Header />
