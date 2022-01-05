@@ -193,7 +193,9 @@ export default function Produto() {
       setPublicUrl(response.publicUrl);
       setCodigo(response.codigo);
       setMarca(response.marca);
-      setCategoria(response.categoria.nome);
+      if(response.categoria){
+        setCategoria(response.categoria.nome);
+      }
       setFotos(response.imagemUrl/*|| response.fotos[0].downloadUrl*/);
       setDescricao(response.descricao);
       setCaracteristicasTecnicas(response.caracteristicasTecnicas)
