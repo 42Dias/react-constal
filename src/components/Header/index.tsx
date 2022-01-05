@@ -35,6 +35,7 @@ import axios from "axios";
 import { margin } from "polished";
 import styled from "styled-components";
 
+
 const Header = (): JSX.Element => {
 
 
@@ -42,7 +43,7 @@ const Header = (): JSX.Element => {
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
 
-  const { cart } = useCart();
+  const { cart, update } = useCart();
 
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -214,7 +215,7 @@ const Header = (): JSX.Element => {
   useEffect(() => {
     loadUser();
     loadCart()
-  }, []);
+  }, [update]);
 
   return (
     <>
@@ -289,11 +290,11 @@ const Header = (): JSX.Element => {
                     <Cart to="/cart">
                       <div>
                         <span>Meu carrinho</span> <br />
-                        <span data-testid="cart-size">
+                        {/* <span data-testid="cart-size">
                           {cartSize == 1
                             ? `${cartSize} item`
                             : `${cartSize} itens`}
-                        </span>
+                        </span> */}
                       </div>
                       <FiShoppingBag size={18} />
                     </Cart>
