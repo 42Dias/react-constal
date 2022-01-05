@@ -59,16 +59,20 @@ export default function NewProd() {
   const [frete, setFrete] = useState("");
   const [imagem, setImagem] = useState("");
   const [categoria, setCategoria] = useState<any>();
+  const [statusProd, setStatusProd] = useState<any>();
+  
   const [empresas = [], setEmpresas] = useState<Empresa[]>([]);
-
+  
   const [isOferta, setIsOferta] = useState(false);
   const [precoOferta, setPrecoOferta] = useState<any>();
   const [empresaId, setEmpresaId] = useState("");
-
+  
   const [newCategoria, setNewCategoria] = useState("");
   const [loading, setLoading] = useState(false);
   const [dataEncerramento, setDataEncerramento] = useState<any>();
   const [categoriaId, setCategoriaId] = useState<any>();
+  
+  const [handleChangePrice, setHandleChangePrice] = useState("");
 
   function openModal() {
     //setIsOpen(true);
@@ -95,7 +99,7 @@ export default function NewProd() {
 
   function messageApprove() {
     toast.info(
-      "Eba, estamos avaliando seu produto. Assim que aprovado estará na plataforma :)"
+      "Ação efetuada com sucesso! :)"
     );
     //setIsOpen(false);
     setLoading(false)
@@ -135,6 +139,9 @@ export default function NewProd() {
       console.log(response)
       if (response.status == 200) {
         messageApprove();
+        toast.info(
+          "Eba, estamos avaliando seu produto. Assim que aprovado estará na plataforma :)"
+        );
         closeModal()
         setProducts(prevProducts => {
           return [...new Set([...prevProducts, response.data])]
@@ -178,7 +185,6 @@ export default function NewProd() {
     if ((response.status) == 200) {
       messageApprove();
       closeModal()
-      window.location.hash = '#/promocoes'
 
     } else if (response.status == 500) {
       console.log(response)
@@ -215,9 +221,9 @@ export default function NewProd() {
         quantidadeNoEstoque: quantidade,
         empresaId: empresaId,
         // categoria: categoria,
-        categoriaId: categoria,
+        categoriaId: categoriaId,
         imagemUrl: imagem,
-        status: "pendente",
+        status: statusProd,
       },
     };
 
@@ -249,17 +255,28 @@ export default function NewProd() {
         promocaoId: uuid.v4(),
       },
     };
-    makeRequisitionToChange(data);
+    makeRequisitionToChange(data).then(
+      () => {
+        window.location.hash = '#/promocoes'
+      }
+    );
   }
 
   async function addCategoria() {
+    setLoading(true)
     const data = {
       data: {
         nome: newCategoria,
         status: "pendente",
       },
     };
-    const response = await api.post("categoria", data);
+    const response = await api.post("categoria", data).then(
+      (response) => {
+        console.log(response)
+        response.status == 200 ? toast.info("A sua categoria será revisada e logo entrará no sistema :)"): toast.error("Algo deu errado, tente mais tarde :(")
+        setLoading(false)
+      }
+    )
     console.log(response);
     // console.log(newCategoria)
   }
@@ -284,7 +301,7 @@ export default function NewProd() {
       console.log(products[index])
       setId(products[index].id);
       setNome(products[index].nome);
-      setCodigoDaEmpresa(products[index].codigoDaEmpresa);
+      setCodigoDaEmpresa(products[index].codigo);
       setDescricao(products[index].descricao);
       setCaracteristicasTecnicas(products[index].caracteristicasTecnicas);
       setPreco(products[index].preco);
@@ -295,6 +312,7 @@ export default function NewProd() {
       setCategoria(products[index].categoria);
       setCategoriaId(products[index].categoriaId)
       setEmpresaId(products[index].empresaId);
+      setStatusProd(products[index].status);
     } catch (e) {
       console.log(e);
     }
@@ -354,6 +372,7 @@ export default function NewProd() {
       // ele é atualizado dentro mas não fora
       setTimeout(() => {
 
+        // setHandleChangePrice(localStorage.getItem("preco")!)
         const value = parseFloat(localStorage.getItem("preco")!.replace(/\./g, ""))
         // const value = e.currentTarget.value.replace(/\./g, "")
         setPreco(value)
@@ -538,6 +557,7 @@ export default function NewProd() {
                   mask="currency"
                   prefix="R$"
                   placeholder="0,01"
+                  // value={preco}
                   onChange={handleChange}
                   />
                 </ContentFormNew>
@@ -590,7 +610,7 @@ export default function NewProd() {
 
                 <ContentFormNew>
                   <label htmlFor="">Tipo de categoria</label>
-                  <select onChange={(text) => setCategoria(text.target.value)}>
+                  <select onChange={(text) => {setCategoria(text.target.value); console.log(text.target.value);setCategoriaId(text.target.value);}}>
                     {categorias.map((categoria) => (
                       <option value={categoria.id}>{categoria.nome}</option>
                     ))}
@@ -916,7 +936,7 @@ export default function NewProd() {
               <ContentFormNew>
                 <label htmlFor="">Nova Categoria</label>
                 <input
-                  value={categoria}
+                  value={newCategoria}
                   required
                   type="text"
                   placeholder="Computador potente"
