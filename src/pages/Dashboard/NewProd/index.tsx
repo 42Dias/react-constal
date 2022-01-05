@@ -274,6 +274,7 @@ export default function NewProd() {
       (response) => {
         console.log(response)
         response.status == 200 ? toast.info("A sua categoria será revisada e logo entrará no sistema :)"): toast.error("Algo deu errado, tente mais tarde :(")
+        closeModal()
         setLoading(false)
       }
     )
@@ -331,8 +332,8 @@ export default function NewProd() {
     }
     async function loadCategorias() {
       setLoading(false)
-      const categoriasResponse = await api.get("categoria");
-      const categoriasDoBack = categoriasResponse.data.rows;
+      const categoriasResponse = await axios.get(''+ip+':8157/api/categoria-aprovados');
+      const categoriasDoBack = categoriasResponse.data;
       console.log(categoriasDoBack);
       setCategorias(categoriasDoBack);
       setLoading(false)
