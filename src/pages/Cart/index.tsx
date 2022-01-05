@@ -81,10 +81,17 @@ const Cart = (): JSX.Element => {
   }
 
   function handleRemoveProduct(productId: string, index: number) {
+    console.log("nbjkvnbvfnklbnvkjbnckjvnbkjcvnbkncvjbnkcvnjv")
     setLoading(true)
     removeProduct(productId);
-    products.splice(index, 1)
-    setProducts(products)
+    
+    let newProd = [...products]
+    newProd.splice(index, 1)
+    setProducts(newProd)
+
+    console.log("newProd")
+    console.log(newProd)
+    
     setLoading(false)
   }
 
@@ -202,7 +209,8 @@ const Cart = (): JSX.Element => {
                       data-testid="remove-product"
                       onClick={() => handleRemoveProduct(product.produto.id, index)}
                     >
-                      <MdDelete size={20} />
+                      <MdDelete 
+                      size={20} />
                     </button>}
                   </td>
                 </tr>
