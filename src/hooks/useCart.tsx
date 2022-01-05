@@ -34,6 +34,7 @@ interface CartContextData {
   addProduct:    (productId: string, quantidade: number) => Promise<void>;
   removeProduct: (productId: string) => void;
   updateProductAmount: ({ productId, quantidade }: UpdateProductAmount) => void;
+  update: number
 }
 
 const tenantId = "fa22705e-cf27-41d0-bebf-9a6ab52948c4";
@@ -49,7 +50,8 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
       // return allCart.data.rows.lenght;
       return allCart.data.count;
       }
-      
+    
+      let update = 0
 
   const addProduct = async (productId: string, quantidade: number) => {
     toast.info("Carregando...")
@@ -133,6 +135,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
               (response) => {
                 if(response.status == 200){
                   toast.info("Produto adicionado ao carrinho com sucesso!")
+                  update ++
                 }
                 else if(response.status == 500){
                   toast.error("Problemas com o servidor :(")
@@ -341,7 +344,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
 
   return (
     <CartContext.Provider
-      value={{ cart, addProduct, removeProduct, updateProductAmount }}
+      value={{ cart, addProduct, removeProduct, updateProductAmount, update }}
     >
       {children}
     </CartContext.Provider>
