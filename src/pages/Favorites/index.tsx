@@ -88,6 +88,7 @@ function handleAddProduct(id: string) {
             favorito.map((product: any) => (
               <CardDatailsContent>
               <ContentDetails>
+                <img src={product.imagemUrl} alt="" />
                 <span>{product.nome}</span>
                 <p>{formatPrice(product.preco)}</p>
               </ContentDetails>
