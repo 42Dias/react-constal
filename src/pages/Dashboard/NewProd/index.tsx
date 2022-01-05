@@ -212,7 +212,7 @@ export default function NewProd() {
         preco: preco,
         prazo: prazo,
         frete: frete,
-        quantidade: quantidade,
+        quantidadeNoEstoque: quantidade,
         empresaId: empresaId,
         // categoria: categoria,
         categoriaId: categoria,
@@ -238,7 +238,7 @@ export default function NewProd() {
         preco: preco,
         prazo: prazo,
         frete: frete,
-        quantidade: quantidade,
+        quantidadeNoEstoque: quantidade,
         // categoria: categoria,
         categoriaId: categoriaId,
         empresaId: empresaId,
@@ -290,7 +290,7 @@ export default function NewProd() {
       setPreco(products[index].preco);
       setImagem(products[index].imagemUrl);
       setPrazo(products[index].prazo);
-      setQuantidade(products[index].quantidade);
+      setQuantidade(products[index].quantidadeNoEstoque);
       setFrete(products[index].frete);
       setCategoria(products[index].categoria);
       setCategoriaId(products[index].categoriaId)
@@ -858,7 +858,7 @@ export default function NewProd() {
                 <input required type="number" placeholder="10%" 
                 onChange={event => {
                     // @ts-ignore
-                    var newValue = preco - (event.target.value / 100)
+                    var newValue = preco - (event.target.value / 100) * preco
                     console.log(newValue)
                     setPrecoOferta(newValue)
                 }
