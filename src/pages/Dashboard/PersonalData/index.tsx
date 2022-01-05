@@ -300,6 +300,12 @@ export default function PersonalData() {
 
           <CardDatailsContent>
             <ContentDetails>
+              <h3>Ramal: <span>{ramal}</span></h3>
+            </ContentDetails>
+          </CardDatailsContent>
+
+          <CardDatailsContent>
+            <ContentDetails>
               <h3>Razão Social: <span>{razaoSocial}</span></h3>
             </ContentDetails>
           </CardDatailsContent>
