@@ -148,6 +148,10 @@ export default function Produto() {
   const [categoria, setCategoria]=useState('');
   const [descricao, setDescricao]=useState('');
   const [caracteristicasTecnicas, setCaracteristicasTecnicas]=useState('');
+  const [isOferta, setIsOferta]=useState('');
+  const [precoOferta, setPrecoOferta]=useState<any>();
+  
+  
 
   /*
   1 Esquema do carrinho
@@ -202,6 +206,8 @@ export default function Produto() {
       setCaracteristicasTecnicas(response.caracteristicasTecnicas)
       setEmpresaId(response.empresaId)
       setEstoque(response.quantidadeNoEstoque)
+      setIsOferta(response.isOferta)
+      setPrecoOferta(response.precoOferta)
       if(response.categoria){
         setCategoria(response.categoria.nome);
       }
@@ -298,16 +304,22 @@ export default function Produto() {
                 <span>{categoria}</span>
                 <strong>{nome}</strong>
                 <span>{codigo}</span>
-                {/* <IconsContentStar>
+                 {/* <IconsContentStar>
                   <AiFillStar size={18} />
                   <AiFillStar size={18} />
                   <AiFillStar size={18} />
                   <AiFillStar size={18} />
                   <AiFillStar size={18} />
                   <small>(1)</small>
-                </IconsContentStar> */}
+                </IconsContentStar>  */}
                 <br />
-                <strong>{preco}</strong>
+                {
+                  isOferta ? (
+                    <strong>{formatPrice(precoOferta)}</strong>
+                  ) : (
+                    <strong>{preco}</strong>
+                  )  
+                }
                 <span>quantidade no estoque {estoque}</span>
                 {/* <BoxColors>
                   <ColorWhite />
