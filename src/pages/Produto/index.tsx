@@ -76,6 +76,7 @@ export default function Produto() {
       favoritos.push(produtoId)
       console.log(favoritos)
       localStorage.setItem("favorito", JSON.stringify(favoritos))
+      toast.info("Adicionado aos favoritos!")
   }
 
 
@@ -193,14 +194,14 @@ export default function Produto() {
       setPublicUrl(response.publicUrl);
       setCodigo(response.codigo);
       setMarca(response.marca);
-      if(response.categoria){
-        setCategoria(response.categoria.nome);
-      }
       setFotos(response.imagemUrl/*|| response.fotos[0].downloadUrl*/);
       setDescricao(response.descricao);
       setCaracteristicasTecnicas(response.caracteristicasTecnicas)
       setEmpresaId(response.empresaId)
       setEstoque(response.quantidadeNoEstoque)
+      if(response.categoria){
+        setCategoria(response.categoria.nome);
+      }
 
 
     }
