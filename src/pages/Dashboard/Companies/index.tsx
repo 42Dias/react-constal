@@ -122,6 +122,12 @@ export default function Companies() {
                     Telefone: {empresa.telefone}
                     <br />
                     E-mail: {empresa.email}
+                    <br />
+                    <b>
+                      Status: {
+                      empresa.status == 'active' ? 'ativa' : 'inativa'
+                                        }
+                    </b>
                   </small>
                 </ContentDetails>
               </CardDatailsContent>
