@@ -52,6 +52,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
       
 
   const addProduct = async (productId: string, quantidade: number) => {
+    toast.info("Carregando...")
     console.log("productId")
     console.log(productId)
 
@@ -187,7 +188,20 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
             },              
             timeout: 50000,
             data   : productAlreadyInCart
-          })              
+          })
+          .then(
+            (response) => {
+              if(response.status == 200){
+                toast.info("Produto adicionado ao carrinho com sucesso!")
+              }
+              else if(response.status == 500){
+                toast.error("Problemas com o servidor :(")
+              }
+              else{
+                toast.error("Erro na adição do produto")
+              }
+            }
+          )              
             console.log(JSON.stringify( productAlreadyInCart ))
             console.log(response)
           return;
@@ -263,6 +277,8 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
         toast.error('Erro na alteração de quantidade do produto');
         return
       }
+      toast.info("Carregando...")
+
 
       const cartResponse = await api.get(`carrinho/`)
       const cart = cartResponse.data.rows;
