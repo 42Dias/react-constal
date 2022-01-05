@@ -168,7 +168,7 @@ const Header = (): JSX.Element => {
       }
 
     }).catch((error) =>{
-      if (error.response.data){
+      if (error.response){
         toast.error(error.response.data);
       }
       else{
