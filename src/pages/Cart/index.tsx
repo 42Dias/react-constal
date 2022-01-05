@@ -223,8 +223,11 @@ const Cart = (): JSX.Element => {
 
           <footer>
             {
-              products.length > 0 ? <Link to="/pagar">Finalizar pedido</Link> : false
+              products.length > 0 ? (
+                <Link to="/pagar">Finalizar pedido</Link>
+              ) : false
             }
+            {console.log(products.length)}
             {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
             <Total>
               <span>TOTAL</span>
