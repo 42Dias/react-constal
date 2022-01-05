@@ -35,7 +35,7 @@ function ProductQuery() {
   useEffect(() => {
     if(role !== "admin" && role !== "empresa" || status === "pendente"){
       // Simulate an HTTP redirect:
-      window.location.replace(`http://dev.42dias.com.br/Clientes/constal/#/erro`);
+      window.location.replace(`dev.42dias.com.br/Clientes/constal/#/erro`);
     }  
     loadUser();
 
@@ -74,7 +74,7 @@ function ProductQuery() {
         toast.info('Produto recusado com sucesso! :)');
         loadUser()
         console.log(response)
-        axios.post('http://'+ip+':8157/api/produto/enviarEmailRecusado', {
+        axios.post(''+ip+':8157/api/produto/enviarEmailRecusado', {
           userId: produto.empresa.userId,
           product: produto, 
           emailContent: emailContent

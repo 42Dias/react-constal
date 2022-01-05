@@ -81,17 +81,24 @@ const Cart = (): JSX.Element => {
   }
 
   function handleRemoveProduct(productId: string, index: number) {
+    console.log("nbjkvnbvfnklbnvkjbnckjvnbkjcvnbkncvjbnkcvnjv")
     setLoading(true)
     removeProduct(productId);
-    products.splice(index, 1)
-    setProducts(products)
+    
+    let newProd = [...products]
+    newProd.splice(index, 1)
+    setProducts(newProd)
+
+    console.log("newProd")
+    console.log(newProd)
+    
     setLoading(false)
   }
 
   useEffect(() => {
     if (role != 'pessoa') {
       // Simulate an HTTP redirect:
-      window.location.replace(`http://dev.42dias.com.br/Clientes/constal/#/erro`);
+      window.location.replace(`dev.42dias.com.br/Clientes/constal/#/erro`);
     }
     async function loadProducts() {
       setLoading(true)
@@ -202,7 +209,8 @@ const Cart = (): JSX.Element => {
                       data-testid="remove-product"
                       onClick={() => handleRemoveProduct(product.produto.id, index)}
                     >
-                      <MdDelete size={20} />
+                      <MdDelete 
+                      size={20} />
                     </button>}
                   </td>
                 </tr>

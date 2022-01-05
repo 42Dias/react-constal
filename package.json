@@ -2,7 +2,11 @@
   "name": "constal-front",
   "version": "0.1.0",
   "private": true,
+<<<<<<< HEAD
   "homepage": "http://dev.42dias.com.br/Clientes/constal/",
+=======
+  "homepage": "https://projetos.42dias.com.br/constal/#/",
+>>>>>>> d398f209b9501c5f6bef148641518d2e36c55161
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",

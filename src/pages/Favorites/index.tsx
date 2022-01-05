@@ -36,13 +36,13 @@ const { addProduct, cart } = useCart();
 
 
 function handleAddProduct(id: string) {
-  addProduct(id);
+  addProduct(id, 1);
 }
 
   useEffect(() => {
     if(role != 'pessoa'){
       // Simulate an HTTP redirect:
-      window.location.replace(`http://dev.42dias.com.br/Clientes/constal/#/erro`);
+      window.location.replace(`dev.42dias.com.br/Clientes/constal/#/erro`);
     }
     async function loadFavoritos(favoritos: string[]){
       console.log("favoritos");

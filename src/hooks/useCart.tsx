@@ -31,7 +31,7 @@ interface UpdateProductAmount {
 
 interface CartContextData {
   cart: () => Promise<number>;
-  addProduct:    (productId: string) => Promise<void>;
+  addProduct:    (productId: string, quantidade: number) => Promise<void>;
   removeProduct: (productId: string) => void;
   updateProductAmount: ({ productId, quantidade }: UpdateProductAmount) => void;
 }
@@ -42,7 +42,7 @@ const tenantId = "fa22705e-cf27-41d0-bebf-9a6ab52948c4";
 const CartContext = createContext<CartContextData>({} as CartContextData);
 
 export function CartProvider({ children }: CartProviderProps): JSX.Element {
-    const cart = async () =>{
+    const cart = async () => {
       const allCart: any  = await api.get(`carrinho/`)
       console.log("allCart")
       console.log(allCart.data.count)
@@ -51,7 +51,8 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
       }
       
 
-  const addProduct = async (productId: string) => {
+  const addProduct = async (productId: string, quantidade: number) => {
+    toast.info("Carregando...")
     console.log("productId")
     console.log(productId)
 
@@ -120,14 +121,14 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
 
           const response = await axios({
               method: 'post',
-              url: `http://${ip}:8157/api/tenant/${tenantId}/carrinho/`,
+              url: `${ip}:8157/api/tenant/${tenantId}/carrinho/`,
               headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer '+ token
               },              
               timeout: 50000,
-              data   : { product, quantidade: 1 }
+              data   : { product, 'quantidade': quantidade }
             }).then(
               (response) => {
                 if(response.status == 200){
@@ -141,14 +142,14 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
                 }
               }
             )              
-          console.log(JSON.stringify( { product, quantidade: 1 }))
+          console.log(JSON.stringify( { product, quantidade: quantidade }))
 
 
           
           /* para mudar a quantidade
 
           const response = await fetch(
-            `http://localhost:8157/api/tenant/${tenantId}/carrinho/${cartId}`, {
+            `localhost:8157/api/tenant/${tenantId}/carrinho/${cartId}`, {
               method: "PUT",
               headers: {
                 'Accept': 'application/json',
@@ -175,11 +176,11 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
         console.log(productAlreadyInCart)
         if (stock > productAlreadyInCart.quantidade) {
 
-        productAlreadyInCart.quantidade++;
+        productAlreadyInCart.quantidade = productAlreadyInCart.quantidade + quantidade;
           
           const response = await axios({
             method: 'put',
-            url: `http://${ip}:8157/api/tenant/${tenantId}/carrinhoProduto/`,
+            url: `${ip}:8157/api/tenant/${tenantId}/carrinhoProduto/`,
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
@@ -187,7 +188,20 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
             },              
             timeout: 50000,
             data   : productAlreadyInCart
-          })              
+          })
+          .then(
+            (response) => {
+              if(response.status == 200){
+                toast.info("Produto adicionado ao carrinho com sucesso!")
+              }
+              else if(response.status == 500){
+                toast.error("Problemas com o servidor :(")
+              }
+              else{
+                toast.error("Erro na adição do produto")
+              }
+            }
+          )              
             console.log(JSON.stringify( productAlreadyInCart ))
             console.log(response)
           return;
@@ -238,7 +252,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
   
       const response = await axios({
         method: 'delete',
-        url: `http://${ip}:8157/api/tenant/${tenantId}/carrinhoProduto/`,
+        url: `${ip}:8157/api/tenant/${tenantId}/carrinhoProduto/`,
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -263,6 +277,8 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
         toast.error('Erro na alteração de quantidade do produto');
         return
       }
+      toast.info("Carregando...")
+
 
       const cartResponse = await api.get(`carrinho/`)
       const cart = cartResponse.data.rows;
@@ -285,6 +301,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
       const  product  = productResponse.data;
       console.log(product)
       let  stock: number | null = product.quantidadeNoEstoque;
+
       if( stock == null ){
         stock = 999
       }
@@ -304,7 +321,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
 
       const response = await axios({
         method: 'put',
-        url: `http://${ip}:8157/api/tenant/${tenantId}/carrinhoProduto/`,
+        url: `${ip}:8157/api/tenant/${tenantId}/carrinhoProduto/`,
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',

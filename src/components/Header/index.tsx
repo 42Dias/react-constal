@@ -125,7 +125,7 @@ const Header = (): JSX.Element => {
   async function loadUser() {
     const response = await axios({
       method: "get",
-      url: `http://${ip}:8157/api/auth/me`,
+      url: `${ip}:8157/api/auth/me`,
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -148,7 +148,7 @@ const Header = (): JSX.Element => {
   }
   async function Login() {
     setLoading(true);
-    let response = Axios.post("http://" + ip + ":8157/api/auth/sign-in", {
+    let response = Axios.post(ip + ":8157/api/auth/sign-in", {
       email: email,
       password: password,
     }).then((response) => {
@@ -186,6 +186,7 @@ const Header = (): JSX.Element => {
       // return allCart.data.rows.lenght;
       setCartSize(allCart.data.count);
   }
+
   function handleClickMain() {
     history.push("/");
   }
@@ -198,7 +199,7 @@ const Header = (): JSX.Element => {
 
   async function senEmail() {
     setLoading(true)
-    axios.post(`http://${ip}:8157/api/cliente/trocarSenha`,{
+    axios.post(`${ip}:8157/api/cliente/trocarSenha`,{
       email: email
     }).then((response) => {
       if (response.statusText == "OK") {
