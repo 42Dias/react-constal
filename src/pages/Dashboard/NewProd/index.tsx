@@ -854,15 +854,15 @@ export default function NewProd() {
                 <input required type="number" placeholder="10%" 
                 onChange={event => {
                     // @ts-ignore
-                    var newValue = preco - (event.target.value * 100)
-
+                    var newValue = preco - (event.target.value / 100)
+                    console.log(newValue)
                     setPrecoOferta(newValue)
                 }
                 }
                 />
               </ContentFormNew>
 
-              <ContentFormNew>
+              {/* <ContentFormNew>
                 <label htmlFor="">Data de encerramento</label>
                 <input
                   value={dataEncerramento}
@@ -871,7 +871,7 @@ export default function NewProd() {
                   placeholder="650"
                   onChange={event => setDataEncerramento(event.target.value)}
                 />
-              </ContentFormNew>
+              </ContentFormNew> */}
 
               {loading ? (
                 <img
