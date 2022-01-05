@@ -25,6 +25,7 @@ export default function PayCart() {
     }
     
     async function gerarFornecedores(){
+      setLoading(true)
       const fornecedoresNoCarrinho: string[] = []
       const produtosNoCarrinhoResponse: any = await api.get('/carrinho/').then((response)=>{
         const produtosNoCarrinho = response.data.rows
@@ -115,12 +116,24 @@ export default function PayCart() {
               }).then(
                 (response) => {
                   let url = response.data.urlFaturaIugu
-                  window.open(url, '_blank')?.focus();
+                 console.log('url') 
+                 console.log(url)
+                 
+                  if(url === undefined){
+                    toast.error("Não foi possivel gerar a fatura, confira os seu dados pessoais!")
+                  }else{
+                    window.open(url, '_blank')?.focus();
+                    window.location.replace(`https://projetos.42dias.com.br/constal/#/finalizar`)
+                  }
+                  setLoading(false)
                 }
-              )
-              .then(
+              ).catch((error)=>{
+                toast.error(error)
+                setLoading(false)
+              })
+              /*.then(
                 () =>  window.location.replace(`https://projetos.42dias.com.br/constal/#/finalizar`)
-              )
+              )*/
               console.log(response)
 
             }, 3000);
@@ -130,12 +143,14 @@ export default function PayCart() {
             // })
           }).catch((error)=>{
             toast.error(error)
+            setLoading(false)
           })
         
         
         console.log(response)
-        setLoading(false)
-        toast.info("Abrindo fatura...")
+        toast.info("Gerando fatura...")
+        
+        
       }
     ) 
       /*
