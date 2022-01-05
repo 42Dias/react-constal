@@ -10,18 +10,21 @@ import { Product } from "../../types"
 import axios from "axios"
 import { toast } from "react-toastify"
 import { ContentFormNew } from "../Profile/styles"
+import { SelectInput } from "../Dashboard/Vendas/styles"
 /*
 
 
   */
 function ProductQuery() {
   const [produtos = [], setProdutos] = useState<any[]>([]);
+  const [produtosHelp = [], setProdutosHelp] = useState<any[]>([]);
   const [produtoRecusado = [], setProdutoRecusado] = useState<any>();
   const [emailContent = [], setEmailContent] = useState<any>();
   const [loading, setLoading] = useState(false);
   const containerDeObjetos: any = []
   const [produtosDosFornecedores, setProdutosDosFornecedores] = useState([]);
   const fornecedoresNoCarrinho: string[] = []
+
 
   async function loadUser() {
     setLoading(true)
@@ -32,6 +35,7 @@ function ProductQuery() {
         return response.data.rows;
       })
     setProdutos(response)
+    setProdutosHelp(response)
     console.log("Produtos");
     console.log(response);
     const produtosNoCarrinho = response
@@ -148,7 +152,25 @@ function ProductQuery() {
       console.log(error)
     })
   }
-  console.log(produtosDosFornecedores)
+
+  function filterProductsBySelect(text: any) {
+    if(text != 'selecione'){
+      produtosDosFornecedores.map(
+        (produtoDoFornecedor: any) => {
+          if(produtoDoFornecedor.fornecedorId == text){
+            setProdutos(produtoDoFornecedor.produtos)
+            console.log(produtoDoFornecedor.produtos)
+          }
+        }
+      )
+    }
+    else{
+      setProdutos([...produtosHelp])
+      console.log(produtosHelp)
+
+    }
+  }
+  console.log(produtosHelp)
   return (
     <>
       <Header />
@@ -157,6 +179,39 @@ function ProductQuery() {
         <S.CardDatails>
           <S.Title>Aprovar Produtos  {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}</S.Title>
          
+          {
+              role == 'admin' ? (
+            <SelectInput>
+              <label htmlFor="">Selecionar Empresa: </label>
+              <select
+                onChange={(text) => {
+                  
+                  console.log(text.target.value)
+                  if(!text){
+                  }
+                  filterProductsBySelect(text.target.value)
+                }
+                  // setProdutos(text.target.value)
+                }
+              >
+                <option value={"selecione"} key={"Selecione"} >Selecione</option>
+                {produtosDosFornecedores.map(
+                  (empresa: any) => (
+                    <option 
+                    value={empresa.fornecedorId} 
+                    key={empresa.fornecedorId} >
+                        {empresa.fornecedorId || empresa.fornecedorId}
+                    </option>
+                  )
+                )}
+              </select>
+              {loading ? <img width="40px" height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
+            </SelectInput>
+              ) : (
+                false
+              )
+            }
+
           {
             produtos.map((produto) => (
               <>
