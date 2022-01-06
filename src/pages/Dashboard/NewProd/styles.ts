@@ -61,6 +61,7 @@ export const ProdContainerSingle = styled.div`
 
   h5 {
     font-size: 14px;
+    overflow-wrap: anywhere;
     padding: 3px 7px;
     @media (max-width: 768px) {
       font-size: 16px;
@@ -73,6 +74,7 @@ export const ProdContainerSingle = styled.div`
 
   p {
     color: #CBCBCB;
+    overflow-wrap: anywhere;
     font-size: 12px;
     padding: 6px 7px;
     @media (max-width: 768px) {
@@ -135,7 +137,7 @@ export const ProdContainerSingle = styled.div`
       display: flex;
       align-items: flex-end;
       justify-content: flex-end;
-      margin-left: 40px;
+      margin-left: 15px;
     }
   }
 `;
