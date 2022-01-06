@@ -220,8 +220,7 @@ export default function NewProd() {
       compararProd.nome != nome ||
       compararProd.descricao != descricao ||
       compararProd.caracteristicasTecnicas != caracteristicasTecnicas ||
-      compararProd.imagemUrl != imagem ||
-      compararProd.preco != preco 
+      compararProd.imagemUrl != imagem
     ){
       data = {
         data: {
