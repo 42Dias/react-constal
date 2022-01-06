@@ -422,7 +422,7 @@ export default function NewProd() {
   function handlePriceOnMask(text: any){
     
     //pega a string de "R$ 0,00" e tenta transforma-la em um float
-    let newText = parseAFormatedNumber(text.target.value)
+    let newText = parseAFormatedNumber(text)
 
     //Transforma o numero novamente em string, para devolver ao input
 
@@ -613,8 +613,8 @@ export default function NewProd() {
                   pattern="[0-9]+"
                   onChange={(text: any) => {
                     // ESTÁ MANDANDO COM ESPAÇO NO PRIMEIRO CARACTER
-                    setHandleChangePrice(handlePriceOnMask(text))
-                    setPreco(parseAFormatedNumber(handlePriceOnMask(text)))
+                    setHandleChangePrice(handlePriceOnMask(text.target.value))
+                    setPreco(parseAFormatedNumber(handlePriceOnMask(text.target.value)))
                   }} />
                 </ContentFormNew>
 
@@ -786,8 +786,8 @@ export default function NewProd() {
                   pattern="[0-9]+"
                   onChange={(text: any) => {
                     // ESTÁ MANDANDO COM ESPAÇO NO PRIMEIRO CARACTER
-                    setHandleChangePrice(handlePriceOnMask(text))
-                    setPreco(parseAFormatedNumber(handlePriceOnMask(text)))
+                    setHandleChangePrice(handlePriceOnMask(text.target.value))
+                    setPreco(parseAFormatedNumber(handlePriceOnMask(text.target.value)))
                   }} />
               </ContentFormNew>
 
@@ -922,8 +922,9 @@ export default function NewProd() {
                   pattern="[0-9]+"
                   onChange={(text: any) => {
                     // ESTÁ MANDANDO COM ESPAÇO NO PRIMEIRO CARACTER
-                    setHandleChangePrice(handlePriceOnMask(text))
-                    setPreco(parseAFormatedNumber(handlePriceOnMask(text)))
+                    setHandleChangePrice(handlePriceOnMask(text.target.value))
+                    setPrecoOferta(parseAFormatedNumber(handlePriceOnMask(text.target.value)))
+                    console.log(precoOferta)
                   }} />
               </ContentFormNew>
 
@@ -931,11 +932,14 @@ export default function NewProd() {
                 <label htmlFor="">Porcentagem</label>
                 <input required type="number" placeholder="10%" 
                 onChange={event => {
-                    // @ts-ignore
-                    var newValue = preco - (event.target.value / 100) * preco
-                    console.log(newValue)
-                    setPrecoOferta(newValue)
-                }
+                    if(event.target.value){
+                      // @ts-ignore
+                      var newPreco = preco - (event.target.value / 100) * preco
+                      console.log(newPreco)
+                      setHandleChangePrice(formatPrice(newPreco))
+                      setPrecoOferta(newPreco)
+                    }
+                  }
                 }
                 />
               </ContentFormNew>
