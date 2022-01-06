@@ -204,7 +204,7 @@ const Home = (): JSX.Element => {
                         <img src={product.imagemUrl || semImagem} alt={product.nome} />
                       </Link>
                       <strong>{product.nome}</strong>
-                      <p>R$ {product.precoOferta}</p>
+                      <p>{ formatPrice(product.precoOferta)}</p>
                       {
                       role == "pessoa" || !role ? (
                       <button
