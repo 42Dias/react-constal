@@ -314,6 +314,7 @@ export default function NewProd() {
       setCategoriaId(products[index].categoriaId)
       setEmpresaId(products[index].empresaId);
       setStatusProd(products[index].status);
+      setHandleChangePrice(formatPrice(products[index].preco))
     } catch (e) {
       console.log(e);
     }
@@ -402,22 +403,29 @@ export default function NewProd() {
         .replaceAt(text.length-3, '*')
         .replace(/\./g, "")
         .replace(/R\$/g, "")
-        .replace(/\*/g, ".");
+        .replace(/\*/g, ".")
+        .replaceAll(" ", "")
+
+        console.log(parseFloat(newText))
+
 
         //checa se a conversão é NaN, ocasionado quando se é passado um caracter que não seja numero
         if(Number.isNaN(parseFloat(newText))){
           console.log(newText)
           newText = 0.00 // transforma o numero para ser devolvido ao input
         }
-        return newText
+
+
+        return parseFloat(newText)
   }
 
   function handlePriceOnMask(text: any){
+    
     //pega a string de "R$ 0,00" e tenta transforma-la em um float
     let newText = parseAFormatedNumber(text.target.value)
 
     //Transforma o numero novamente em string, para devolver ao input
-    console.log(formatPrice(newText))
+
     return formatPrice(newText)
   }
   //apenas fazer outra funçãozinha para setar o esse input com o valor quando for alterado!!!
@@ -427,16 +435,7 @@ export default function NewProd() {
       <GlobalStyles />
       <Header />
       <Menu />
-
-      <input 
-      type="text"
-      value={handleChangePrice}
-      // type='number'
-      pattern="[0-9]+"
       
-      onChange={(text: any) => {
-        setHandleChangePrice(handlePriceOnMask(text))
-      }} />
 
       <div className="container">
         <ContentNew>
@@ -542,7 +541,9 @@ export default function NewProd() {
           <Modal
             isOpen={showModal1}
             onAfterOpen={afterOpenModal}
-            onRequestClose={() => setShowModal1(false)}
+            onRequestClose={() => {
+              setShowModal1(false)
+            }}
           >
             <div>
               <ModalFlex>
@@ -601,14 +602,17 @@ export default function NewProd() {
 
                 <ContentFormNew>
                   <label htmlFor="">Preço</label>
-                  <Input
-                  name="price"
-                  mask="currency"
-                  prefix="R$"
-                  placeholder="0,01"
-                  // value={preco}
-                  onChange={handleChange}
-                  />
+                  <input 
+                  type="text"
+                  placeholder="R$ 00,00"
+                  value={handleChangePrice}
+                  // type='number'
+                  pattern="[0-9]+"
+                  onChange={(text: any) => {
+                    // ESTÁ MANDANDO COM ESPAÇO NO PRIMEIRO CARACTER
+                    setHandleChangePrice(handlePriceOnMask(text))
+                    setPreco(parseAFormatedNumber(handlePriceOnMask(text)))
+                  }} />
                 </ContentFormNew>
 
                 <ContentFormNew>
@@ -771,20 +775,17 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Preço</label>
-                {/* <input
-                value={preco}
-                  required
-                  type="number"
-                  placeholder="Preço"
-                  onChange={(text) => setPreco(text.target.value)}
-                /> */}
-                <Input
-                  name="price"
-                  mask="currency"
-                  prefix="R$"
-                  placeholder="0,01"
-                  onChange={handleChange}
-                  />
+                <input 
+                  type="text"
+                  placeholder="R$ 00,00"
+                  value={handleChangePrice}
+                  // type='number'
+                  pattern="[0-9]+"
+                  onChange={(text: any) => {
+                    // ESTÁ MANDANDO COM ESPAÇO NO PRIMEIRO CARACTER
+                    setHandleChangePrice(handlePriceOnMask(text))
+                    setPreco(parseAFormatedNumber(handlePriceOnMask(text)))
+                  }} />
               </ContentFormNew>
 
               <ContentFormNew>
@@ -910,16 +911,17 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Novo preço</label>
-                <input
-                  value={precoOferta}
-                  required
-                  type="number"
-                  placeholder="650"
-                  onChange={(text) => {
-                    setPrecoOferta(text.target.value);
-                    setIsOferta(true);
-                  }}
-                />
+                <input 
+                  type="text"
+                  placeholder="R$ 00,00"
+                  value={handleChangePrice}
+                  // type='number'
+                  pattern="[0-9]+"
+                  onChange={(text: any) => {
+                    // ESTÁ MANDANDO COM ESPAÇO NO PRIMEIRO CARACTER
+                    setHandleChangePrice(handlePriceOnMask(text))
+                    setPreco(parseAFormatedNumber(handlePriceOnMask(text)))
+                  }} />
               </ContentFormNew>
 
               <ContentFormNew>
