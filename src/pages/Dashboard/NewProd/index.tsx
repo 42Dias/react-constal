@@ -411,8 +411,8 @@ export default function NewProd() {
         }
 
         //Transforma o numero novamente em string, para devolver ao input
-        var numero = parseFloat(newText).toLocaleString('pt-BR',{ style: 'currency', currency: 'BRL' });
-        setHandleChangePrice(numero)
+        console.log(formatPrice(newText))
+        return formatPrice(newText)
   }
   //apenas fazer outra funçãozinha para setar o esse input com o valor quando for alterado!!!
 
@@ -429,7 +429,7 @@ export default function NewProd() {
       pattern="[0-9]+"
       
       onChange={(text: any) => {
-        handlePriceOnMask(text)
+        setHandleChangePrice(handlePriceOnMask(text))
       }} />
 
       <div className="container">
