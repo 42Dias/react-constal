@@ -397,23 +397,20 @@ export default function NewProd() {
   }
 
   function handlePriceOnMask(text: any){
+    //pega a string de "R$ 0,00" e tenta transforma-la em um float
     let newText = text.target.value
         .replaceAt(text.target.value.length-3, '*')
         .replace(/\./g, "")
         .replace(/R\$/g, "")
         .replace(/\*/g, ".");
 
-        //checa se o preco passado é nan
+        //checa se a conversão é NaN, ocasionado quando se é passado um caracter que não seja numero
         if(Number.isNaN(parseFloat(newText))){
-          console.log(text.target.value)
-          newText = text.target.value
-        .replace(/\./g, "")
-        .replace(/R/g, "")
-        .replace(/\*/g, ".");
-          console.log("nanannaanaanaa")
           console.log(newText)
-          newText = 0.00
+          newText = 0.00 // transforma o numero para ser devolvido ao input
         }
+
+        //Transforma o numero novamente em string, para devolver ao input
         var numero = parseFloat(newText).toLocaleString('pt-BR',{ style: 'currency', currency: 'BRL' });
         setHandleChangePrice(numero)
   }
