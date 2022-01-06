@@ -185,6 +185,7 @@ export default function NewProd() {
     if ((response.status) == 200) {
       messageApprove();
       closeModal()
+      return response.data
 
     } else if (response.status == 500) {
       console.log(response)
@@ -196,6 +197,8 @@ export default function NewProd() {
     }
     setLoading(false)
     console.log(response)
+
+    return response
       }
     )
     .catch(error =>{
@@ -203,7 +206,7 @@ export default function NewProd() {
         setLoading(false)
 
       });
-
+      return response
   }
 
 
@@ -229,8 +232,17 @@ export default function NewProd() {
 
     console.log("data")
     console.log(data);
-    makeRequisitionToChange(data);
+    const prod = await makeRequisitionToChange(data);
+    let updatedProducts = [...products]
+    console.log(prod)
+    updatedProducts[index].nome = prod.nome
+    updatedProducts[index].codigo = prod.codigo
+    updatedProducts[index].descricao = prod.descricao
+    updatedProducts[index].preco = prod.preco
+    updatedProducts[index].quantidadeNoEstoque = prod.quantidadeNoEstoque
+    updatedProducts[index].imagemUrl = prod.imagemUrl
 
+    setProducts(updatedProducts)
   }
   async function addPromotion() {
     setLoading(true)
@@ -321,7 +333,6 @@ export default function NewProd() {
   }
 
   useEffect(() => {
-    toast.info("status:" + status)
     if (!role) {
       window.location.reload()
     }
