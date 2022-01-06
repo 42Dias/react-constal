@@ -143,7 +143,6 @@ const Header = (): JSX.Element => {
       return response.data;
     });
     console.log(response);
-    toast.info(role)
     console.log(response.tenants[0].roles[0]);
     localStorage.setItem("roles", JSON.stringify(response.tenants[0].roles[0])); //saves client's data into localStorage:
     console.log(response.tenants[0].tenant.id);
