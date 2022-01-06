@@ -37,6 +37,7 @@ import CheckEmail from "./pages/CheckEmail";
 import ApproveCategorias from "./pages/Dashboard/ApproveCategorias";
 import ApproveEmpresas from "./pages/Dashboard/ApproveEmpresas";
 import ResetarSenha from "./pages/Dashboard/ResetarSenha";
+import SendBanner from "./pages/Dashboard/SendBanner";
 
 const Routes = (): JSX.Element => {
   return (
@@ -82,6 +83,7 @@ const Routes = (): JSX.Element => {
         <Route exact path="/erro" component={Error} />
         <Route exact path="/assinaturas" component={Signature} />
         <Route exact path="/checar-email/:id" component={CheckEmail} />
+        <Route exact path="/enviar-banner" component={SendBanner} />
         <Route
           exact
           path="/pagamentos-empresas"
