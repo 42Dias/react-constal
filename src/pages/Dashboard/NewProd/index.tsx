@@ -74,6 +74,9 @@ export default function NewProd() {
   
   const [handleChangePrice, setHandleChangePrice] = useState<any>();
 
+  const [compararProd, setCompararProd] = useState<any>();
+  
+
   function openModal() {
     //setIsOpen(true);
   }
@@ -211,24 +214,54 @@ export default function NewProd() {
 
 
   async function changeProduct() {
-    const data = {
-      data: {
-        id: idProd,
-        nome: nome,
-        codigo: codigoDaEmpresa,
-        descricao: descricao,
-        caracteristicasTecnicas: caracteristicasTecnicas,
-        preco: preco,
-        prazo: prazo,
-        frete: frete,
-        quantidadeNoEstoque: quantidade,
-        empresaId: empresaId,
-        // categoria: categoria,
-        categoriaId: categoriaId,
-        imagemUrl: imagem,
-        status: statusProd,
-      },
-    };
+    let data;
+    console.log(compararProd.nome != nome)
+    if(
+      compararProd.nome != nome ||
+      compararProd.descricao != descricao ||
+      compararProd.caracteristicasTecnicas != caracteristicasTecnicas ||
+      compararProd.imagemUrl != imagem ||
+      compararProd.preco != preco 
+    ){
+      data = {
+        data: {
+          id: idProd,
+          nome: nome,
+          codigo: codigoDaEmpresa,
+          descricao: descricao,
+          caracteristicasTecnicas: caracteristicasTecnicas,
+          preco: preco,
+          prazo: prazo,
+          frete: frete,
+          quantidadeNoEstoque: quantidade,
+          empresaId: empresaId,
+          // categoria: categoria,
+          categoriaId: categoriaId,
+          imagemUrl: imagem,
+          status: 'pendente',
+        },
+      };
+    }
+    else{
+      data = {
+        data: {
+          id: idProd,
+          nome: nome,
+          codigo: codigoDaEmpresa,
+          descricao: descricao,
+          caracteristicasTecnicas: caracteristicasTecnicas,
+          preco: preco,
+          prazo: prazo,
+          frete: frete,
+          quantidadeNoEstoque: quantidade,
+          empresaId: empresaId,
+          // categoria: categoria,
+          categoriaId: categoriaId,
+          imagemUrl: imagem,
+          status: statusProd,
+        },
+      };
+    }
 
     console.log("data")
     console.log(data);
@@ -241,6 +274,7 @@ export default function NewProd() {
     updatedProducts[index].preco = prod.preco
     updatedProducts[index].quantidadeNoEstoque = prod.quantidadeNoEstoque
     updatedProducts[index].imagemUrl = prod.imagemUrl
+    updatedProducts[index].status = prod.status
 
     setProducts(updatedProducts)
   }
@@ -504,6 +538,7 @@ export default function NewProd() {
                       onClick={() => {
                         setIndex(index);
                         console.log(index);
+                        setCompararProd(products[index])
                         setProductToReq(product.id);
                         setShowModal1(true);
                         setProductOnClick(index);
