@@ -67,7 +67,7 @@ const Cart = (): JSX.Element => {
   function handleProductIncrement(product: Product) {
     const IncrementArguments = {
       productId: product.produto.id,
-      quantidade: product.quantidade + 1,
+      quantidade: product.quantidade 
     };
     updateProductAmount(IncrementArguments);
   }
@@ -75,7 +75,7 @@ const Cart = (): JSX.Element => {
   function handleProductDecrement(product: Product) {
     const IncrementArguments = {
       productId: product.produto.id,
-      quantidade: product.quantidade - 1,
+      quantidade: product.quantidade
     };
     updateProductAmount(IncrementArguments);
   }
@@ -130,7 +130,7 @@ const Cart = (): JSX.Element => {
   function updateDecrement(index: number) {
     let updatedProduct = [...products]
     updatedProduct[index].quantidade--
-    handleProductIncrement(updatedProduct[index])
+    handleProductDecrement(updatedProduct[index])
     setProducts(updatedProduct)
 
   }
