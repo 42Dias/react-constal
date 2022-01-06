@@ -52,6 +52,11 @@ export default function SendBanner() {
               <button>
                 <FiTrash />
               </button>
+
+              
+              <button>
+                <span>Deixar inativa</span>
+              </button>
             </div>
           </CardDatailsContent>
 
@@ -72,6 +77,10 @@ export default function SendBanner() {
             <div className="flex-btn">
               <button>
                 <FiTrash />
+              </button>
+
+              <button>
+                <span>Deixar inativa</span>
               </button>
             </div>
           </CardDatailsContent>
@@ -94,6 +103,11 @@ export default function SendBanner() {
               <button>
                 <FiTrash />
               </button>
+
+              
+              <button>
+                <span>Deixar inativa</span>
+              </button>
             </div>
           </CardDatailsContent>
 
@@ -114,6 +128,11 @@ export default function SendBanner() {
             <div className="flex-btn">
               <button>
                 <FiTrash />
+              </button>
+
+              
+              <button>
+                <span>Deixar inativa</span>
               </button>
             </div>
           </CardDatailsContent>

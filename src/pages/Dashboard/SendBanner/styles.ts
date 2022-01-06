@@ -126,6 +126,12 @@ export const CardDatailsContent = styled.div`
     border-radius: 5px;
   }
 
+  button:last-child {
+    background: black;
+    width: 120px;
+    margin-left: 20px;
+  }
+
   .flex-btn {
     display: flex;
   }
