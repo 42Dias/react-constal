@@ -472,6 +472,9 @@ export default function NewProd() {
                 style={{opacity: product.status != 'aprovado' ?  0.3 :  1}}>
                   <h5>{product.nome}</h5>
                   <p>{product.descricao}</p>
+                  <p>
+                     <b>QTD: {product.quantidadeNoEstoque}</b>
+                  </p>
                 </div>
                 <div 
                 className="btn-group-add">
