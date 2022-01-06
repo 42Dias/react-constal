@@ -201,6 +201,7 @@ export default function Vendas() {
               <Link to={`/confirmadas/${empresaIdParaRequisicao}`}><span>Confirmadas({pedidosConfirmados.length})</span></Link>
               <Link to={`/devolvidas/${empresaIdParaRequisicao}`}><span>Devolvidas({pedidosDevolvidos.length})</span></Link>
               <Link to={`/denunciadas/${empresaIdParaRequisicao}`}><span>Denunciadas({pedidosDenunciador.length})</span></Link>
+              <Link to=''><span>Listar pedidos</span></Link>
               </>
             ) : (
               <>
