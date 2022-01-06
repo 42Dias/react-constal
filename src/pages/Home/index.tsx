@@ -219,7 +219,9 @@ const Home = (): JSX.Element => {
                         <span>ADICIONAR AO CARRINHO</span>
                       </button>
                         ):(
-                          <br />
+                          <strong>
+                            QTD: {product.quantidadeNoEstoque}
+                          </strong>
                         )
                       }
                     </li>
@@ -261,8 +263,10 @@ const Home = (): JSX.Element => {
                     </div>
                     <span>ADICIONAR AO CARRINHO</span>
                   </button>
-                    ):(
-                      <br />
+                    ):(                   
+                    <strong>
+                      QTD: {product.quantidadeNoEstoque}
+                    </strong>
                     )
                   }
                 </li>
