@@ -14,6 +14,7 @@ import logo from "../../assets/images/logo.png";
 import { FiLogOut } from "react-icons/fi";
 import loading from "../../assets/images/loading.gif";
 
+
 import {
   ModalContainer,
   Container,
@@ -70,6 +71,7 @@ const Header = (): JSX.Element => {
   const [cartSize, setCartSize] = useState<any>(0);
   const [loading, setLoading] = useState(false);
   const [pesquisa, setPesquisa] = useState("");
+
 
   function openModal() {
     let email = localStorage.getItem("email");
@@ -134,9 +136,14 @@ const Header = (): JSX.Element => {
       },
       timeout: 50000,
     }).then((response) => {
+      if(role == undefined && token){
+          // @ts-ignore
+          document.location.reload(true);
+      }
       return response.data;
     });
     console.log(response);
+    toast.info(role)
     console.log(response.tenants[0].roles[0]);
     localStorage.setItem("roles", JSON.stringify(response.tenants[0].roles[0])); //saves client's data into localStorage:
     console.log(response.tenants[0].tenant.id);
@@ -159,7 +166,8 @@ const Header = (): JSX.Element => {
         handleLocalStorage(email, password);
         handleLocalStorageToken(response.data);
         closeModal();
-        window.location.reload();
+        // @ts-ignore
+        document.location.reload(true);
       } else if (response.statusText == "Forbidden") {
         setLoading(false);
         toast.error("Ops, Não tem permisão!");
@@ -214,8 +222,11 @@ const Header = (): JSX.Element => {
 
   useEffect(() => {
     loadUser();
-    loadCart()
+    if(role == 'pessoa'){
+      loadCart()
+    }
   }, [update]);
+
 
   return (
     <>
@@ -392,7 +403,16 @@ const Header = (): JSX.Element => {
                 alt="Loading"
               />
             ) : (
-              <button className="btn-enter" onClick={Login}>
+              <button className="btn-enter" onClick={
+                () => {
+                  Login()
+                  // .then( 
+                  //   () => window.location.reload()
+                  // )
+                }
+
+
+                }>
                 Entrar
               </button>
             )}
