@@ -396,10 +396,10 @@ export default function NewProd() {
       return chars.join('');
   }
 
-  function handlePriceOnMask(text: any){
-    //pega a string de "R$ 0,00" e tenta transforma-la em um float
-    let newText = text.target.value
-        .replaceAt(text.target.value.length-3, '*')
+  function parseAFormatedNumber(text: any){
+        //pega a string de "R$ 0,00" e tenta transforma-la em um float
+        let newText = text
+        .replaceAt(text.length-3, '*')
         .replace(/\./g, "")
         .replace(/R\$/g, "")
         .replace(/\*/g, ".");
@@ -409,10 +409,16 @@ export default function NewProd() {
           console.log(newText)
           newText = 0.00 // transforma o numero para ser devolvido ao input
         }
+        return newText
+  }
 
-        //Transforma o numero novamente em string, para devolver ao input
-        console.log(formatPrice(newText))
-        return formatPrice(newText)
+  function handlePriceOnMask(text: any){
+    //pega a string de "R$ 0,00" e tenta transforma-la em um float
+    let newText = parseAFormatedNumber(text.target.value)
+
+    //Transforma o numero novamente em string, para devolver ao input
+    console.log(formatPrice(newText))
+    return formatPrice(newText)
   }
   //apenas fazer outra funçãozinha para setar o esse input com o valor quando for alterado!!!
 
