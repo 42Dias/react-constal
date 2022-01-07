@@ -44,6 +44,7 @@ export default function PersonalData() {
     toast.info('Eba, recebemos o seu pedido. Ele será revisado e logo estará na plataforma :)')
     //setIsOpen(false);
   }
+  const [bancos, setBancos]=useState<any>([]);  
 
   const [nome, setNome]=useState('');  
   const [marca, setMarca] = useState('')
@@ -61,6 +62,10 @@ export default function PersonalData() {
   const [pontoReferencia, setPontoReferencia] = useState('')
   const [cidade, setCidade] = useState('')
   const [estado, setEstado] = useState('')
+  const [banco, setBanco]=useState<any>();
+  const [tipoDeConta, setTipoDeConta]=useState<any>();
+  const [numeroCartao, setNumeroCartao]=useState<any>();
+
   const [bairro, setBairro] = useState('')
   const [pix, setPix] = useState('')
   const [showModalResetSenha, setShowModalResetSenha] = React.useState(false);
@@ -107,8 +112,9 @@ export default function PersonalData() {
       
         }
         loadData()
+        setBancos(['Itaú', 'Bradesco', 'Caixa Econômica', 'Banco do Brasil', 'Santander', 'Banrisul', 'Sicredi', 'Sicoob', 'Inter', 'BRB', 'Via Credi', 'Neon', 'Votorantim', 'Nubank', 'Pagseguro', 'Banco Original', 'Safra', 'Modal', 'Banestes','Unicred','Money Plus','Mercantil do Brasil','JP Morgan','Gerencianet Pagamentos do Brasil', 'Banco C6', 'BS2', 'Banco Topazio', 'Uniprime', 'Stone', 'Banco Daycoval', 'Rendimento', 'Banco do Nordeste', 'Citibank', 'PJBank', 'Cooperativa Central de Credito Noroeste Brasileiro', 'Uniprime Norte do Paraná', 'Global SCM', 'Next', 'Cora', 'Mercado Pago', 'Banco da Amazonia', 'BNP Paribas Brasil', 'Juno','Cresol','BRL Trust DTVM','Banco Banese','Banco BTG Pactual','Banco Omni','Acesso Soluções de Pagamento','CCR de São Miguel do Oeste','Polocred','Ótimo']
+        )
       }
-      
       , []
     )
 
@@ -342,7 +348,6 @@ export default function PersonalData() {
           
         </CardDatails>
 
-
         <CardDatails>
           <h2>Endereço</h2>
           <CardDatailsContent className="adress">
@@ -529,6 +534,43 @@ export default function PersonalData() {
                     onChange={(text) => setBairro(text.target.value)}
                     />
                     </ContentFormNew>
+
+                  <ContentFormNew>
+                  <label htmlFor="">Seu Banco</label>
+                  <select onChange={(text) => {setBanco(text.target.value); console.log(text.target.value)}}>
+                    {bancos.map((banco: any) => (
+                      <option value={banco}>{banco}</option>
+                    ))}
+                  </select>
+                </ContentFormNew>
+
+                <ContentFormNew>
+                    <label htmlFor="">Numero do cartão</label>
+                    <input type="number" placeholder="0000111122223333"
+                    
+                    maxLength={10} 
+                     
+                    value={numeroCartao}
+
+                    onChange={(text) => setNumeroCartao(text.target.value)}
+                    />
+                </ContentFormNew>
+
+                <ContentFormNew>
+                  <label htmlFor="">Tipo De Conta</label>
+                    
+                  <select onChange={(text) => {setTipoDeConta(text.target.value); console.log(text.target.value)}}>
+                  <option value='Poupança'>Conta Poupança</option>
+                  <option value='Corrente'>Conta Corrente</option>
+                  
+                  
+                  </select>
+
+                </ContentFormNew>
+
+
+{/* numero do cartão e tipo de conta */}
+
 
                     <ContentFormNew>
                     <label htmlFor="">Pix</label>
