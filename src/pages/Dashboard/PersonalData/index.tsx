@@ -65,6 +65,7 @@ export default function PersonalData() {
   const [banco, setBanco]=useState<any>();
   const [tipoDeConta, setTipoDeConta]=useState<any>();
   const [numeroCartao, setNumeroCartao]=useState<any>();
+  const [cartaoAgencia, setCartaoAgencia] = useState<any>();
 
   const [bairro, setBairro] = useState('')
   const [pix, setPix] = useState('')
@@ -109,7 +110,10 @@ export default function PersonalData() {
             setEstado(response.estado)
             setBairro(response.bairro)
             setPix(response.pix)
-      
+            setNumeroCartao(response.cartaoNumero)
+            setTipoDeConta(response.cartaoTipo)
+            setBanco(response.cartaoBanco)
+            setCartaoAgencia(response.cartaoAgencia)
         }
         loadData()
         setBancos(['Itaú', 'Bradesco', 'Caixa Econômica', 'Banco do Brasil', 'Santander', 'Banrisul', 'Sicredi', 'Sicoob', 'Inter', 'BRB', 'Via Credi', 'Neon', 'Votorantim', 'Nubank', 'Pagseguro', 'Banco Original', 'Safra', 'Modal', 'Banestes','Unicred','Money Plus','Mercantil do Brasil','JP Morgan','Gerencianet Pagamentos do Brasil', 'Banco C6', 'BS2', 'Banco Topazio', 'Uniprime', 'Stone', 'Banco Daycoval', 'Rendimento', 'Banco do Nordeste', 'Citibank', 'PJBank', 'Cooperativa Central de Credito Noroeste Brasileiro', 'Uniprime Norte do Paraná', 'Global SCM', 'Next', 'Cora', 'Mercado Pago', 'Banco da Amazonia', 'BNP Paribas Brasil', 'Juno','Cresol','BRL Trust DTVM','Banco Banese','Banco BTG Pactual','Banco Omni','Acesso Soluções de Pagamento','CCR de São Miguel do Oeste','Polocred','Ótimo']
@@ -117,6 +121,7 @@ export default function PersonalData() {
       }
       , []
     )
+    
 
   async function criarOuAtualizarEmpresa() {
     setLoading(true)
@@ -124,6 +129,7 @@ export default function PersonalData() {
       data: {
         nome : nome, 
         marca : marca,
+        email: email,
         razaoSocial : razaoSocial,
         cnpj : cnpj,
         telefone : telefone,
@@ -138,10 +144,15 @@ export default function PersonalData() {
         cidade : cidade,
         estado : estado,
         bairro : bairro,
+        cartaoTipo: tipoDeConta,
+        cartaoNumero: numeroCartao,
+        cartaoBanco: banco,
+        cartaoAgencia: cartaoAgencia, 
         pix : pix,
         status : "pendente",
       }
     }
+    console.log(data)
 
     const response = await api.post('empresa-perfil', data).then(
       (response) => {
@@ -150,14 +161,14 @@ export default function PersonalData() {
           toast.info('Empresa Criada com sucessso! :)')
           closeModal()
           setLoading(false)
-
         }
+
         else{
           toast.error('Algo deu errado :(')
           console.log(response) 
           setLoading(false)
-
         }
+        
       }
     )
     .catch(
@@ -559,12 +570,29 @@ export default function PersonalData() {
                 <ContentFormNew>
                   <label htmlFor="">Tipo De Conta</label>
                     
-                  <select onChange={(text) => {setTipoDeConta(text.target.value); console.log(text.target.value)}}>
+                  <select onChange={(text) => {
+                    setTipoDeConta(text.target.value);
+                    console.log(text.target.value)
+                    }}>
                   <option value='Poupança'>Conta Poupança</option>
                   <option value='Corrente'>Conta Corrente</option>
                   
                   
                   </select>
+
+                </ContentFormNew>
+
+                <ContentFormNew>
+                  <label htmlFor="">Agência</label>
+                    
+                  <input type="number" placeholder="0000111122223333"
+                    
+                    maxLength={10} 
+                     
+                    value={cartaoAgencia}
+
+                    onChange={(text) => setCartaoAgencia(text.target.value)}
+                    />
 
                 </ContentFormNew>
 
