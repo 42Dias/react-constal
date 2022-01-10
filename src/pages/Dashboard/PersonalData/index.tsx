@@ -73,6 +73,11 @@ export default function PersonalData() {
   const [loading, setLoading] = useState(false);
   const [senha, setSenha] = useState("");
 
+
+  const [formatCartao, setFormatCartao] = useState("99999999-D");
+  const [formatAgencia, setFormatAgencia] = useState("9999-D");
+
+
     useEffect(
       
       () => {
@@ -264,7 +269,171 @@ export default function PersonalData() {
       }
     )
   }
+  function checkAccountType(accountType: any) {
 
+
+switch (accountType) {
+  /*
+  Banco	Agência	Conta
+  Banco do Brasil	9999-D	99999999-D
+  */
+  case 'Santander':
+  case 'Pagseguro':
+  case 'Safra':
+  case 'Banestes':
+  case 'Unicred':
+  case 'Gerencianet Pagamentos do Brasil':
+  case 'Mercantil do Brasil':
+  case 'Banco C6':
+  case 'Picpay':
+  case "Banco do Brasil":
+    setFormatAgencia('9999')
+    setFormatCartao('99999999-D')
+    break;
+
+  case "Banco do Brasil":
+  case 'Sicoob'	:                          
+  case 'Itaú'	:                            
+  case 'Banpará'	:                          
+  case 'Inter'	:                            
+  case 'BRB'	:                              
+  case 'Neon/Votorantim' :
+  case 'Modal'	:         
+    setFormatAgencia('9999')
+    setFormatCartao('999999999-D')
+    break;
+
+  case 'Bradesco'	:                          
+  case 'Next'	:              
+    setFormatAgencia('9999-D')
+    setFormatCartao('9999999-D')
+    break;
+
+
+  case 'Nubank':                          
+  case 'PJBank':
+  case 'Mercado Pago':                          
+  case 'Juno':              	
+    setFormatAgencia('9999')
+    setFormatCartao('9999999999-D')
+    break;
+    
+  case 'Banco Original' :
+  case 'BS2' :
+  case 'Stone' :
+  case 'Cooperativa Central de Credito Noroeste Brasileiro' :
+  case 'Cora' :       
+    setFormatAgencia('9999')
+    setFormatCartao('9999999-D')
+    break;
+
+  
+  case 'Via Credi':
+  case 'JP Morgan':
+    setFormatAgencia('9999')
+    setFormatCartao('99999999999-D')
+    break;
+
+  case 'Uniprime':
+  case 'Banco Genial':
+    setFormatAgencia('9999')
+    setFormatCartao('9999-D')
+    break;
+
+  case 'Uniprime Norte do Paraná':
+  case 'Banco da Amazonia':
+  case 'Banco Daycoval':
+  case 'Banco Omni':
+  case 'Polocred':	
+    setFormatAgencia('9999')
+    setFormatCartao('999999-D')
+    break;
+
+  case 'Banco do Nordeste':	
+  case 'BRL Trust DTVM':	  
+    setFormatAgencia('999')
+    setFormatCartao('999999-D')
+    break;
+  
+  case 'Caixa Econômica':	  
+      setFormatAgencia('9999')
+      setFormatCartao('XXXX999999999-D (X: Operação - Novo formato CP)')
+      break;
+
+  case 'Agibank':	  
+      setFormatAgencia('9999')
+      setFormatCartao('9999999999')
+      break;
+
+  case 'Agibank':	  
+      setFormatAgencia('9999')
+      setFormatCartao('999999D')
+      break;
+
+  case 'Money Plus':	  
+      setFormatAgencia('9')
+      setFormatCartao('99999999-D')
+      break;
+
+  case 'Rendimento':	  
+      setFormatAgencia('9999-D')
+      setFormatCartao('9999999999')
+      break;
+
+  case 'Citibank':	  
+      setFormatAgencia('9999')
+      setFormatCartao('99999999')
+      break;
+
+  case 'Citibank':	  
+      setFormatAgencia('9999')
+      setFormatCartao('99999999999')
+      break;
+
+  case 'BNP Paribas Brasil':	  
+      setFormatAgencia('999')
+      setFormatCartao('999999-DDD')
+      break;
+
+
+  case 'Cresol':	  
+      setFormatAgencia('9999-D')
+      setFormatCartao('99999-D')
+      break;
+
+
+  case 'Banco Banese':	  
+      setFormatAgencia('999')
+      setFormatCartao('99999999-D')
+      break;
+
+
+  case 'Acesso Soluções de pagamento':	  
+      setFormatAgencia('9999')
+      setFormatCartao('99999999')
+      break;
+
+  case 'CCR de São Miguel do Oeste':	  
+      setFormatAgencia('9999')
+      setFormatCartao('99999')
+      break;
+
+  case 'Banco Capital S.A':	  
+      setFormatAgencia('9999')
+      setFormatCartao('999999999')
+      break;
+
+  case 'Caixa Econômica':	  
+      setFormatAgencia('9999')
+      setFormatCartao('XXX99999999-D (X: Operação)')
+      break;
+  
+  } 
+  }
+
+  /*
+  Bradesco
+  Next*/
 
 
   return (
@@ -557,7 +726,7 @@ export default function PersonalData() {
 
                 <ContentFormNew>
                     <label htmlFor="">Numero do cartão</label>
-                    <input type="number" placeholder="0000111122223333"
+                    <input type="number" placeholder={formatAgencia}
                     
                     maxLength={10} 
                      
@@ -573,6 +742,7 @@ export default function PersonalData() {
                   <select onChange={(text) => {
                     setTipoDeConta(text.target.value);
                     console.log(text.target.value)
+                    checkAccountType(text.target.value)
                     }}>
                   <option value='Poupança'>Conta Poupança</option>
                   <option value='Corrente'>Conta Corrente</option>
@@ -585,8 +755,9 @@ export default function PersonalData() {
                 <ContentFormNew>
                   <label htmlFor="">Agência</label>
                     
-                  <input type="number" placeholder="0000111122223333"
-                    
+                  <input type="number" 
+                  // placeholder="0000111122223333"
+                    placeholder={formatAgencia}
                     maxLength={10} 
                      
                     value={cartaoAgencia}
