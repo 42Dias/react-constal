@@ -84,25 +84,25 @@ export default function ResetarSenha() {
   const [senha, setSenha] = useState("");
 
   useEffect(() => {
-      console.log(role + " " + status)
-     
-      const hash = window.location.hash.replace('dev.42dias.com.br/Clientes/constal/#/', '');
-      console.log(hash)
-      if(hash){
-        
-        var token = hash.replace('#/resetar-senha/', '');
-        console.log(token)
-        if(token){
+    console.log(role + " " + status)
+
+    const hash = window.location.hash.replace('${ip}/#/errodias.com.br/Clientes/constal/#/', '');
+    console.log(hash)
+    if (hash) {
+
+      var token = hash.replace('#/resetar-senha/', '');
+      console.log(token)
+      if (token) {
         localStorage.setItem("token", JSON.stringify(token));
         loadUser()
-        }
       }
     }
+  }
 
     , []
   )
   async function loadUser() {
-    if (!token){
+    if (!token) {
       //window.location.reload()
     }
     const response = await axios({
@@ -119,7 +119,11 @@ export default function ResetarSenha() {
     });
     //console.log(response);
     //console.log(response.tenants[0].roles[0]);
-    localStorage.setItem("roles", JSON.stringify(response.tenants[0].roles[0])); //saves client's data into localStorage:
+    let setRole = response.tenants[0].roles
+    const roleHelper = JSON.parse(setRole)
+    console.log(roleHelper[0])
+    localStorage.setItem("roles", JSON.stringify(roleHelper[0])); //saves client's data into localStorage:
+
     //response.tenants[0].tenant.id);
     localStorage.setItem(
       "tenantId",

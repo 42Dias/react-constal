@@ -13,7 +13,7 @@ export default function FinishBuy() {
     () => {
       if(role != 'pessoa'){
         // Simulate an HTTP redirect:
-        window.location.replace(`dev.42dias.com.br/Clientes/constal/#/erro`);
+        window.location.replace(`${ip}/#/errodias.com.br/Clientes/constal/#/erro`);
       }
     }, []
   )

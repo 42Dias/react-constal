@@ -54,7 +54,7 @@ const Header = (): JSX.Element => {
     setIsOpen2(true);
   }
 
-  function openModalExternaly(){
+  function openModalExternaly() {
     setIsOpen(true)
   }
 
@@ -120,7 +120,7 @@ const Header = (): JSX.Element => {
   let history = useHistory();
   function handleClickLogin() {
     if (role === "pessoa") {
-      history.push("/meu-perfil/"+token);
+      history.push("/meu-perfil/" + token);
     } else {
       history.push("/dados-pessoais");
     }
@@ -136,15 +136,19 @@ const Header = (): JSX.Element => {
       },
       timeout: 50000,
     }).then((response) => {
-      if(role == undefined && token){
-          // @ts-ignore
-          document.location.reload(true);
+      if (role == undefined && token) {
+        // @ts-ignore
+        document.location.reload(true);
       }
       return response.data;
     });
     console.log(response);
     console.log(response.tenants[0].roles[0]);
-    localStorage.setItem("roles", JSON.stringify(response.tenants[0].roles[0])); //saves client's data into localStorage:
+    let setRole = response.tenants[0].roles
+    const roleHelper = JSON.parse(setRole)
+    console.log(roleHelper[0])
+    localStorage.setItem("roles", JSON.stringify(roleHelper[0])); //saves client's data into localStorage:
+
     console.log(response.tenants[0].tenant.id);
     localStorage.setItem(
       "tenantId",
@@ -175,30 +179,30 @@ const Header = (): JSX.Element => {
         toast.error("Ops, Dados Incorretos!");
       }
 
-    }).catch((error) =>{
-      if (error.response){
+    }).catch((error) => {
+      if (error.response) {
         toast.error(error.response.data);
       }
-      else{
+      else {
         toast.error("Erro no servidor, tente mais tarde :(");
       }
       setLoading(false)
     });
-    
+
   }
 
-  async function loadCart(){
-      const allCart: any  = await api.get(`carrinho/`)
-      console.log("allCart")
-      console.log(allCart.data.count)
-      // return allCart.data.rows.lenght;
-      setCartSize(allCart.data.count);
+  async function loadCart() {
+    const allCart: any = await api.get(`carrinho/`)
+    console.log("allCart")
+    console.log(allCart.data.count)
+    // return allCart.data.rows.lenght;
+    setCartSize(allCart.data.count);
   }
 
   function handleClickMain() {
     history.push("/");
   }
-  function logof(){
+  function logof() {
     localStorage.clear();
     toast.info("Saiu!")
     history.push("/")
@@ -207,13 +211,13 @@ const Header = (): JSX.Element => {
 
   async function senEmail() {
     setLoading(true)
-    axios.post(`${ip}:8157/api/cliente/trocarSenha`,{
+    axios.post(`${ip}:8157/api/cliente/trocarSenha`, {
       email: email
     }).then((response) => {
       if (response.statusText == "OK") {
         toast.info('Email enviado com sucesso!');
         setLoading(false)
-      }else{
+      } else {
         toast.error('Email não enviado com sucesso!');
       }
     });
@@ -221,7 +225,7 @@ const Header = (): JSX.Element => {
 
   useEffect(() => {
     loadUser();
-    if(role == 'pessoa'){
+    if (role == 'pessoa') {
       loadCart()
     }
   }, [update]);
@@ -248,10 +252,10 @@ const Header = (): JSX.Element => {
         </header> 
       */}
 
-       
+
         <InputCenter>
           <nav className="header">
-            
+
             <div>
               <Link to="/">
                 <img className="logo" src={logo} alt="Constal" />
@@ -259,35 +263,35 @@ const Header = (): JSX.Element => {
             </div>
 
             {
-          role == 'empresa' || role == 'admin'? (
-            false
-          ) : (
-            <div className="input">
-              <input type="text" placeholder="Pesquise o seu produto"
-              onChange={event => setPesquisa(event.target.value)}
+              role == 'empresa' || role == 'admin' ? (
+                false
+              ) : (
+                <div className="input">
+                  <input type="text" placeholder="Pesquise o seu produto"
+                    onChange={event => setPesquisa(event.target.value)}
                   />
-              <button className="buttonOn" type="button"
-              onClick={
-                () => {
-                  window.location.hash = `#/produtos/${pesquisa}`
-                  console.log("click")
-                }
-              }
-              >
-                <FiSearch />
-              </button>
-            </div>   
-          )
-        }
-         
+                  <button className="buttonOn" type="button"
+                    onClick={
+                      () => {
+                        window.location.hash = `#/produtos/${pesquisa}`
+                        console.log("click")
+                      }
+                    }
+                  >
+                    <FiSearch />
+                  </button>
+                </div>
+              )
+            }
+
 
             <ul className={click ? "nav-options active" : "nav-options"}>
-            
+
               <IconsContainer>
 
                 <button className="login" onClick={openModal}>
                   <FiUser size={18} />
-                  <span>{token ? "Meu Perfil":"Cadastre-se"} </span>
+                  <span>{token ? "Meu Perfil" : "Cadastre-se"} </span>
                 </button>
 
                 {role != "pessoa" ? (
@@ -311,7 +315,7 @@ const Header = (): JSX.Element => {
                   </>
                 )}
                 <button className="loggout">
-                  <FiLogOut size={18} onClick={logof}/>Sair
+                  <FiLogOut size={18} onClick={logof} />Sair
                 </button>
               </IconsContainer>
 
@@ -411,7 +415,7 @@ const Header = (): JSX.Element => {
                 }
 
 
-                }>
+              }>
                 Entrar
               </button>
             )}
@@ -427,7 +431,7 @@ const Header = (): JSX.Element => {
           </Form>
 
           <strong>
-            Esqueceu a senha? 
+            Esqueceu a senha?
             <span onClick={openModal2}> Clique aqui</span>
           </strong>
         </ModalContainer>
@@ -448,8 +452,8 @@ const Header = (): JSX.Element => {
           <PasswordContent>
             <label htmlFor="email">Confirme o seu e-mail</label>
             <input type="email" id="email" placeholder="Email" value={email}
-              onChange={(text) => setUser(text.target.value)}/>
-              {loading ? (
+              onChange={(text) => setUser(text.target.value)} />
+            {loading ? (
               <img
                 width="40px"
                 style={{ margin: "0 auto" }}
@@ -458,7 +462,7 @@ const Header = (): JSX.Element => {
                 alt="Loading"
               />
             ) :
-            <button onClick={senEmail}>Verificar</button>}
+              <button onClick={senEmail}>Verificar</button>}
           </PasswordContent>
         </ModalContainer>
       </Modal>
