@@ -372,7 +372,7 @@ export default function NewProd() {
     else {
       if (role !== "admin" && role !== "empresa" || status === "pendente") {
         // Simulate an HTTP redirect:
-        window.location.replace(`${ip}/#/errodias.com.br/Clientes/constal/#/erro`);
+        window.location.replace(`${ip}/#/erro`);
       }
     }
     async function loadCategorias() {

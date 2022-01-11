@@ -62,7 +62,7 @@ export default function Histoty() {
   useEffect(() => {
     if(role != 'pessoa'){
       // Simulate an HTTP redirect:
-      window.location.replace(`${ip}/#/errodias.com.br/Clientes/constal/#/erro`);
+      window.location.replace(`${ip}/#/erro`);
     }
     async function loadHistory() {
       console.log("requisição do pedido feita")
