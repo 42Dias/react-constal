@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import mastercard from "../../assets/images/master-card.png";
-import visa from "../../assets/images/visa.png";
 import Modal from "react-modal";
 import { AiOutlineClose } from "react-icons/ai";
 import { toast } from "react-toastify";
