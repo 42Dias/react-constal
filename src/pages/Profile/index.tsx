@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import mastercard from "../../assets/images/master-card.svg";
-import visa from "../../assets/images/visa.svg";
+import mastercard from "../../assets/images/master-card.png";
+import visa from "../../assets/images/visa.png";
 import Modal from "react-modal";
 import { AiOutlineClose } from "react-icons/ai";
 import { toast } from "react-toastify";
@@ -22,7 +22,7 @@ import {
 import { Link } from "react-router-dom";
 import { api, idPessoa, ip, role, token } from "../../services/api";
 import { Menu } from "../../components/Menu";
-import upload from "../../assets/images/upload.svg";
+import upload from "../../assets/images/upload.png";
 import axios from "axios";
 
 export default function Profile() {

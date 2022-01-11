@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header"
 import * as S from './Error.styled'
-import error from '../../assets/images/error.svg'
+import error from '../../assets/images/error.png'
 import { Link } from 'react-router-dom'
 import { Menu } from "../../components/Menu"
 
