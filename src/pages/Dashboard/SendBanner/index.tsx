@@ -56,6 +56,12 @@ export default function SendBanner() {
       if(response.status == 200){
         toast.info("Novo banner adicionado com sucesso!")
 
+        setImagens((prevValues: any[]) => {
+          //console.log(prevValues)
+          return [...new Set([...prevValues, response.data])]
+        })
+        filterImagens(imagens)
+
       }
       else if(response.status == 500){
         toast.error("Problemas com o servidor :(")
@@ -93,18 +99,22 @@ export default function SendBanner() {
         toast.info("Imagem Válida!")
       }
       else{
-        toast.error("Imagem inválida, ou problemas com o servidor :(")
+        toast.info("Imagem inválida, ou problemas com o servidor :(")
       }
 
     }).catch((err) => {
       if(err.response){
         console.log(err)
-      }else{
+        toast.error("Erro: Tente mais tarde :(")
+
+      }
+      else{
         setStatus({
           type: 'error',
-          mensagem: "Erro: Tente mais tarde!"
+          mensagem: "Erro: Tente mais tarde :("
         });
       }
+      toast.error("Erro: Tente mais tarde :(")
     });
   }
 
@@ -168,15 +178,16 @@ export default function SendBanner() {
     )
   }
 
+  async function loadImagens(){
+    const imagensResponse = await api.get("banner")
+    console.log(imagensResponse.data.rows)
+    setImagens(imagensResponse.data.rows)
+    setImagensDisplayed(imagensResponse.data.rows)
+    filterImagens(imagensResponse.data.rows)
+  }
+
   useEffect(
     () => {
-      async function loadImagens(){
-        const imagensResponse = await api.get("banner")
-        console.log(imagensResponse.data.rows)
-        setImagens(imagensResponse.data.rows)
-        setImagensDisplayed(imagensResponse.data.rows)
-        filterImagens(imagensResponse.data.rows)
-      }
       loadImagens()
     }, []
   )
@@ -279,7 +290,8 @@ export default function SendBanner() {
 
           <SelectInput>
             <select
-            onChange={(text) => {
+            onChange={
+              (text) => {
                   
               console.log(text.target.value)
               if(!text){
@@ -291,17 +303,14 @@ export default function SendBanner() {
             >
 
               <option 
-              // onClick={setDisplyedStatus}
                value='todos'>Todos
                </option>
               
               <option 
-              // onClick={setDisplyedStatus}
                value='ativo'>Ativas
                </option>
               
               <option 
-              // onClick={setDisplyedStatus}
                value='inativo'>Inativas
                </option>
 
