@@ -55,6 +55,7 @@ export default function SendBanner() {
       console.log(response)
       if(response.status == 200){
         toast.info("Novo banner adicionado com sucesso!")
+
       }
       else if(response.status == 500){
         toast.error("Problemas com o servidor :(")
@@ -119,7 +120,31 @@ export default function SendBanner() {
     else{
       throw 'deve ser ativo ou inativo!'
     }
-    console.log(imagemStatus)
+
+    const body ={
+      data: {
+        imagemUrl: imagem.imagemUrl,
+        nome: imagem.nome, 
+        status: imagemStatus,
+      }
+    }
+
+    api.put(`banner/${imagem.id}`, body).then(
+      (response) => {
+        console.log(response)
+        if(response.status == 200){
+          toast.info("Atualização do banner feita com sucesso!")
+  
+        }
+        else if(response.status == 500){
+          toast.error("Problemas com o servidor :(")
+        }
+
+        else{
+          toast.error("Erro :(")
+        }
+      }
+    )
 
     
   }
@@ -132,7 +157,6 @@ export default function SendBanner() {
         setImagens(imagensResponse.data.rows)
         setImagensDisplayed(imagensResponse.data.rows)
         filterImagens(imagensResponse.data.rows)
-        
       }
       loadImagens()
     }, []
