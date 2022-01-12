@@ -32,7 +32,7 @@ export default function SendBanner() {
 
 
   const [imagemNova, setImagemNova] = useState<any>();
-  const [name, setName] = useState<any>();
+  const [name, setName] = useState<any>("");
   const [image, setImage] = useState('');
 
   const [status, setStatus] = useState({
@@ -42,6 +42,8 @@ export default function SendBanner() {
 
   async function makeRequisition(e: any){
     e.preventDefault()
+    e.target.reset();
+
     toast.info("Carregando...")
     let body = {
       data: {
@@ -61,7 +63,7 @@ export default function SendBanner() {
           //console.log(prevValues)
           return [...new Set([...prevValues, response.data])]
         })
-        filterImagens(imagens)
+        loadImagens()
 
       }
       else if(response.status == 500){
@@ -75,11 +77,11 @@ export default function SendBanner() {
     )
    }
 
-   const uploadImage = async () => {
+   const uploadImage = async (imagemNova: string | Blob) => {
     
     const formData = new FormData();
 
-    formData.append('image', image);
+    formData.append('image', imagemNova);
     
     console.log(...formData)
 
@@ -121,6 +123,7 @@ export default function SendBanner() {
   }
 
   function updateImagemStatus(imagemStatus: any, imagem: any){
+    toast.info("Carregando...")
     console.log(imagemStatus)
     console.log(imagem)
     if(imagemStatus == 'inativo'){
@@ -146,6 +149,8 @@ export default function SendBanner() {
         console.log(response)
         if(response.status == 200){
           toast.info("Atualização do banner feita com sucesso!")
+          loadImagens()
+
   
         }
         else if(response.status == 500){
@@ -161,13 +166,15 @@ export default function SendBanner() {
   }
 
   function deleteBanner(id: string){
+    toast.info("Carregando...")
     api.delete(`bannerDeleteOne/${id}`)
     .then(
       (response) => {
         console.log(response)
         if(response.status == 200){
           toast.info("Banner apagado com sucesso!")
-  
+          loadImagens()
+          
         }
         else if(response.status == 500){
           toast.error("Problemas com o servidor :(")
@@ -264,7 +271,8 @@ export default function SendBanner() {
             <h2>Faça upload</h2>
 
 
-          <input type="file" name="image" 
+          <input type="file"
+          name="image"
           onChange={e => {
           console.log(e)
 
@@ -274,8 +282,10 @@ export default function SendBanner() {
           setName(e.target.files[0].name)
           //@ts-ignore
           setImage(e.target.files[0])
-
-          uploadImage()
+          
+          //@ts-ignore
+          uploadImage(e.target.files[0])
+            
 
         }
         } 
@@ -333,10 +343,10 @@ export default function SendBanner() {
                   >
                     Ver
                   </a>
-                  <p>
-                    TESTE!
-                  </p>
                 </small>
+                  <p>
+                    {imagem.nome}
+                  </p>
               </ContentDetails>
             </CardDatailsContent>
             <div className="flex-btn">
@@ -364,7 +374,7 @@ export default function SendBanner() {
                 <span>
                   Deixar
                   {
-                    imagem.status == 'ativo' ? ' ativa':' inativa'
+                    imagem.status == 'ativo' ? ' inativa': ' ativa'
                   }
                   </span>
               </button>
