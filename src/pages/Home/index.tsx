@@ -55,8 +55,20 @@ const Home = (): JSX.Element => {
   const [products = [], setProducts] = useState<ProductFormatted[]>([]);
   const [products2 = [], setProducts2] = useState<ProductFormatted[]>([]);
   const [promocoes = [], setPromocoes] = useState<ProductFormatted[]>([]);
+  const [banners = [], setBanners] = useState<ProductFormatted[]>([]);
+
   const { addProduct, cart } = useCart();
   
+
+  async function loadBanners(){
+    const bannerResponse = await axios.get(""+ip+":8157/api/banner");
+
+    console.log("bannerResponse.data.rows")
+
+    console.log(bannerResponse.data.record)
+
+    setBanners(bannerResponse.data.record)
+  }
 
   useEffect(() => {
     async function loadProducts() {
@@ -79,6 +91,7 @@ const Home = (): JSX.Element => {
       setProducts2(productsFormated2);
     }
     loadProducts();
+    loadBanners()
   }, []);
 
   useEffect(
@@ -123,6 +136,22 @@ const Home = (): JSX.Element => {
           navigation={true}
         >
           {
+          console.log(banners)
+          }
+          {
+
+            banners.map(
+              (banner, index ) => 
+              (
+                <SwiperSlide key={index}>
+                        {/* /produtos-promocao/:imagemId */}
+                        <img src={banner.imagemUrl}
+                        alt={banner.nome} />
+                    </SwiperSlide>
+              ) 
+            )
+          }
+          {
             promocoes.map(
               (promocao, index) => (
                     <SwiperSlide key={index}>
@@ -135,6 +164,7 @@ const Home = (): JSX.Element => {
               )             
             )
           }
+          <SwiperSlide><img src={moveis} alt="moveis" /></SwiperSlide>
           <SwiperSlide><img src={moveis} alt="moveis" /></SwiperSlide>
           <SwiperSlide><img src={materiais} alt="materiais" />
           </SwiperSlide>
