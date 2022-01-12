@@ -42,6 +42,7 @@ export default function SendBanner() {
 
   async function makeRequisition(e: any){
     e.preventDefault()
+    toast.info("Carregando...")
     let body = {
       data: {
         imagemUrl: imagemNova,
@@ -69,6 +70,7 @@ export default function SendBanner() {
       else{
         toast.error("Erro :(")
       }
+    setImage('')
     }
     )
    }
