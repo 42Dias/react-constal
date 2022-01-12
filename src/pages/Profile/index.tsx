@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import mastercard from "../../assets/images/master-card.svg";
-import visa from "../../assets/images/visa.svg";
 import Modal from "react-modal";
 import { AiOutlineClose } from "react-icons/ai";
 import { toast } from "react-toastify";
@@ -22,7 +20,7 @@ import {
 import { Link } from "react-router-dom";
 import { api, idPessoa, ip, role, token } from "../../services/api";
 import { Menu } from "../../components/Menu";
-import upload from "../../assets/images/upload.svg";
+import upload from "../../assets/images/upload.png";
 import axios from "axios";
 
 export default function Profile() {
@@ -58,7 +56,7 @@ export default function Profile() {
   const [newBairro, setNewBairro] = useState("");
 
   async function loadUser() {
-    if (!token){
+    if (!token) {
       //window.location.reload()
     }
     const response = await axios({
@@ -76,7 +74,11 @@ export default function Profile() {
     });
     //console.log(response);
     //console.log(response.tenants[0].roles[0]);
-    localStorage.setItem("roles", JSON.stringify(response.tenants[0].roles[0])); //saves client's data into localStorage:
+    let setRole = response.tenants[0].roles
+    const roleHelper = JSON.parse(setRole)
+    console.log(roleHelper[0])
+    localStorage.setItem("roles", JSON.stringify(roleHelper[0])); //saves client's data into localStorage:
+
     //response.tenants[0].tenant.id);
     localStorage.setItem(
       "tenantId",
@@ -85,104 +87,104 @@ export default function Profile() {
     localStorage.setItem("id", JSON.stringify(response.id)); //saves client's data into localStorage:
     localStorage.setItem("status", JSON.stringify(response.tenants[0].status)); //saves client's data into localStorage:
   }
-  
-    async function loadPerfil() {
-      setId(localStorage.getItem("id")?.replace(/"/g, "") || "");
-      //Perfil pessoa
-      if (role === "pessoa") {
-        const response = await api
-          .get("pessoa-fisica-perfil")
-          .then((response) => {
-            console.log("response");
-            console.log(response.data);
-            return response.data;
-          });
-        console.log(response);
-        localStorage.setItem("idPessoa", JSON.stringify(response.id));
-        setEmail(response.user.email);
-        setFullName(response.nome);
-        setCPF(response.cpf);
-        setPhone(response.telefone);
-        setLogradouro(response.logradouro);
-        setNewNumero(response.numero);
-        setBairro(response.bairro);
-        setCEP(response.cep);
-        setCidade(response.cidade);
-        setEstado(response.estado);
-        if (response.fotos !== undefined) {
-          setimagemUser(response.avatars);
-        } else {
-          setimagemUser(
-            "https://www.camaragibe.pe.gov.br/wp-content/uploads/2019/04/default-user-male.png"
-          );
-        }
-        //console.log("avatars");
-        //console.log(imagemUser);
-        //console.log(response);
-      }
-      //Perfil empresa
-      else if (role === "empresa") {
-        const response = await api.get("empresa-perfil").then((response) => {
+
+  async function loadPerfil() {
+    setId(localStorage.getItem("id")?.replace(/"/g, "") || "");
+    //Perfil pessoa
+    if (role === "pessoa") {
+      const response = await api
+        .get("pessoa-fisica-perfil")
+        .then((response) => {
+          console.log("response");
+          console.log(response.data);
           return response.data;
         });
-
-        setEmail(response.email);
-        setFullName(response.nome);
-        setCPF(response.cpf);
-        setPhone(response.telefone);
-        setLogradouro(response.logradouro);
-        setNewNumero(response.numero)
-        setBairro(response.bairro);
-        setCEP(response.cep);
-        setCidade(response.cidade);
-        setEstado(response.estado);
-        if (response.avatars !== undefined) {
-          setimagemUser(response.avatars);
-        } else {
-          setimagemUser(
-            "https://www.camaragibe.pe.gov.br/wp-content/uploads/2019/04/default-user-male.png"
-          );
-        }
-        //console.log("avatars");
-        //console.log(imagemUser);
-        //console.log("response");
-        //console.log(response.rows);
+      console.log(response);
+      localStorage.setItem("idPessoa", JSON.stringify(response.id));
+      setEmail(response.user.email);
+      setFullName(response.nome);
+      setCPF(response.cpf);
+      setPhone(response.telefone);
+      setLogradouro(response.logradouro);
+      setNewNumero(response.numero);
+      setBairro(response.bairro);
+      setCEP(response.cep);
+      setCidade(response.cidade);
+      setEstado(response.estado);
+      if (response.fotos !== undefined) {
+        setimagemUser(response.avatars);
+      } else {
+        setimagemUser(
+          "https://www.camaragibe.pe.gov.br/wp-content/uploads/2019/04/default-user-male.png"
+        );
       }
-      //Perfil Admin
-      else {
-        let id = localStorage.getItem("id")?.replace(/"/g, "");
-        const response = await api.get("user/" + id).then((response) => {
-          return response.data;
-        });
-
-        setEmail(response.email);
-        setFullName(response.fullName);
-        setCPF(response.cpf);
-        setPhone(response.telefone);
-        setLogradouro(response.logradouro + ", ");
-        setNewNumero(response.numero)
-        setBairro(response.bairro);
-        setCEP(response.cep);
-        setCidade(response.cidade);
-        setEstado(response.estado);
-        //console.log("response.avatars[0]");
-        //console.log(response.avatars[0]);
-        if (
-          response.avatars !== undefined &&
-          response.avatars[0] !== undefined
-        ) {
-          setimagemUser(response.avatars);
-        } else {
-          setimagemUser(
-            "https://www.camaragibe.pe.gov.br/wp-content/uploads/2019/04/default-user-male.png"
-          );
-        }
-        //console.log("avatars");
-        //console.log(imagemUser);
-        //console.log("response");
-        //console.log(response.rows);
-      }
+      //console.log("avatars");
+      //console.log(imagemUser);
+      //console.log(response);
     }
+    //Perfil empresa
+    else if (role === "empresa") {
+      const response = await api.get("empresa-perfil").then((response) => {
+        return response.data;
+      });
+
+      setEmail(response.email);
+      setFullName(response.nome);
+      setCPF(response.cpf);
+      setPhone(response.telefone);
+      setLogradouro(response.logradouro);
+      setNewNumero(response.numero)
+      setBairro(response.bairro);
+      setCEP(response.cep);
+      setCidade(response.cidade);
+      setEstado(response.estado);
+      if (response.avatars !== undefined) {
+        setimagemUser(response.avatars);
+      } else {
+        setimagemUser(
+          "https://www.camaragibe.pe.gov.br/wp-content/uploads/2019/04/default-user-male.png"
+        );
+      }
+      //console.log("avatars");
+      //console.log(imagemUser);
+      //console.log("response");
+      //console.log(response.rows);
+    }
+    //Perfil Admin
+    else {
+      let id = localStorage.getItem("id")?.replace(/"/g, "");
+      const response = await api.get("user/" + id).then((response) => {
+        return response.data;
+      });
+
+      setEmail(response.email);
+      setFullName(response.fullName);
+      setCPF(response.cpf);
+      setPhone(response.telefone);
+      setLogradouro(response.logradouro + ", ");
+      setNewNumero(response.numero)
+      setBairro(response.bairro);
+      setCEP(response.cep);
+      setCidade(response.cidade);
+      setEstado(response.estado);
+      //console.log("response.avatars[0]");
+      //console.log(response.avatars[0]);
+      if (
+        response.avatars !== undefined &&
+        response.avatars[0] !== undefined
+      ) {
+        setimagemUser(response.avatars);
+      } else {
+        setimagemUser(
+          "https://www.camaragibe.pe.gov.br/wp-content/uploads/2019/04/default-user-male.png"
+        );
+      }
+      //console.log("avatars");
+      //console.log(imagemUser);
+      //console.log("response");
+      //console.log(response.rows);
+    }
+  }
 
   function messageCancel() {
     /*toast.error(
@@ -200,7 +202,7 @@ export default function Profile() {
     setShowModalEnd(false)
     setLoading(false)
   }
- 
+
   function afterOpenModal() {
     // references are now sync'd and can be accessed.
   }
@@ -215,18 +217,18 @@ export default function Profile() {
   }
 
   useEffect(() => {
-    const hash = window.location.hash.replace('dev.42dias.com.br/Clientes/constal/#/', '');
+    const hash = window.location.hash.replace('${ip}/#/errodias.com.br/Clientes/constal/#/', '');
     console.log(hash)
-    if(hash){
-      
+    if (hash) {
+
       var token = hash.replace('#/meu-perfil/', '');
       console.log(token)
-      if(token){
-      localStorage.setItem("token", JSON.stringify(token));
-      loadUser()
+      if (token) {
+        localStorage.setItem("token", JSON.stringify(token));
+        loadUser()
       }
     }
-    
+
   }, []);
 
   function clientLocalStorage() {
@@ -263,7 +265,7 @@ export default function Profile() {
     };
     if (email) {
       //console.log("MAOI");
-      const updatePersonalData = await api.put('pessoa-fisica/' +  idPessoa, data)
+      const updatePersonalData = await api.put('pessoa-fisica/' + idPessoa, data)
       // console.log(updatePersonalData)
     } else {
       //console.log("hehe");
@@ -283,29 +285,29 @@ export default function Profile() {
 
   clientLocalStorage();
 
-  async function resetSenha(){
+  async function resetSenha() {
     setLoading(true)
     const data = await api.get("user/" + id).then((response) => {
       update(response.data)
       return response.data;
     });
     console.log(data)
-    
-    async function update(data:any){
-      if(data){
+
+    async function update(data: any) {
+      if (data) {
         data.password = senha
-      const response = await axios.put(`${ip}:8157/api/auth/password-reset/`, {
-        token: id,
-        password: senha
-      }).then((response) => {
-        setLoading(false)
-        return response.data;
-      }).catch(error =>{
-        toast.error("Link de redefinição de senha inválido ou expirado")
-        setLoading(false)
-      })
+        const response = await axios.put(`${ip}:8157/api/auth/password-reset/`, {
+          token: id,
+          password: senha
+        }).then((response) => {
+          setLoading(false)
+          return response.data;
+        }).catch(error => {
+          toast.error("Link de redefinição de senha inválido ou expirado")
+          setLoading(false)
+        })
+      }
     }
-  }
   }
 
   return (
@@ -434,12 +436,12 @@ export default function Profile() {
                 Cidade: {cidade + " - " + estado}
               </small>
             </ContentDetails>
-            
-              <button onClick={() => {
-              setShowModalEnd(true); 
-            }}>{logradouro ? 'Alterar':'Adicionar'}</button>
-              {/*<button>Excluir</button>*/} 
-          
+
+            <button onClick={() => {
+              setShowModalEnd(true);
+            }}>{logradouro ? 'Alterar' : 'Adicionar'}</button>
+            {/*<button>Excluir</button>*/}
+
           </CardDatailsContent>
           {/*<button
             onClick={() => {
@@ -485,8 +487,8 @@ export default function Profile() {
                 />
               </ContentFormNew>
 
-              
-              {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
+
+              {loading ? <img width="40px" style={{ margin: 'auto' }} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
               <div className="buttonsNew">
                 <button type="button" onClick={messageCancel}>
                   Cancelar
@@ -499,7 +501,7 @@ export default function Profile() {
           </div>
         </Modal>
       </ModalContainerVendedor>
-      
+
       <ModalContainerVendedor>
         <Modal
           isOpen={showModalEnd}
@@ -590,7 +592,7 @@ export default function Profile() {
                   onChange={(text) => setCidade(text.target.value)}
                 />
               </ContentFormNew>
-              {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
+              {loading ? <img width="40px" style={{ margin: 'auto' }} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
               <div className="buttonsNew">
                 <button type="button" onClick={messageCancel}>
                   Cancelar
@@ -624,14 +626,14 @@ export default function Profile() {
                 />
               </ContentFormNew>
               {loading ? (
-              <img
-                width="40px"
-                style={{ margin: "auto" }}
-                height=""
-                src={"https://contribua.org/mb-static/images/loading.gif"}
-                alt="Loading"
-              />
-            ) :false}
+                <img
+                  width="40px"
+                  style={{ margin: "auto" }}
+                  height=""
+                  src={"https://contribua.org/mb-static/images/loading.gif"}
+                  alt="Loading"
+                />
+              ) : false}
               <div className="buttonsNew">
                 <button type="button" onClick={closeModalResetSenha}>
                   Cancelar

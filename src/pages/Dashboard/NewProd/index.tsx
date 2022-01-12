@@ -15,7 +15,7 @@ import prodone from "../../../assets/images/prodone.png";
 import prodtwo from "../../../assets/images/prodtwo.png";
 import prodthree from "../../../assets/images/prodthree.png";
 import prodfour from "../../../assets/images/prodfour.png";
-import upload from "../../../assets/images/upload.svg";
+import upload from "../../../assets/images/upload.png";
 import Header from "../../../components/Header";
 import { AiOutlinePlus, AiOutlineClose } from "react-icons/ai";
 import { toast } from "react-toastify";
@@ -73,6 +73,9 @@ export default function NewProd() {
   const [categoriaId, setCategoriaId] = useState<any>();
   
   const [handleChangePrice, setHandleChangePrice] = useState<any>();
+
+  const [compararProd, setCompararProd] = useState<any>();
+  
 
   function openModal() {
     //setIsOpen(true);
@@ -185,6 +188,7 @@ export default function NewProd() {
     if ((response.status) == 200) {
       messageApprove();
       closeModal()
+      return response.data
 
     } else if (response.status == 500) {
       console.log(response)
@@ -196,6 +200,8 @@ export default function NewProd() {
     }
     setLoading(false)
     console.log(response)
+
+    return response
       }
     )
     .catch(error =>{
@@ -203,34 +209,73 @@ export default function NewProd() {
         setLoading(false)
 
       });
-
+      return response
   }
 
 
   async function changeProduct() {
-    const data = {
-      data: {
-        id: idProd,
-        nome: nome,
-        codigo: codigoDaEmpresa,
-        descricao: descricao,
-        caracteristicasTecnicas: caracteristicasTecnicas,
-        preco: preco,
-        prazo: prazo,
-        frete: frete,
-        quantidadeNoEstoque: quantidade,
-        empresaId: empresaId,
-        // categoria: categoria,
-        categoriaId: categoriaId,
-        imagemUrl: imagem,
-        status: statusProd,
-      },
-    };
+    let data;
+    console.log(compararProd.nome != nome)
+    if(
+      compararProd.nome != nome ||
+      compararProd.descricao != descricao ||
+      compararProd.caracteristicasTecnicas != caracteristicasTecnicas ||
+      compararProd.imagemUrl != imagem
+    ){
+      data = {
+        data: {
+          id: idProd,
+          nome: nome,
+          codigo: codigoDaEmpresa,
+          descricao: descricao,
+          caracteristicasTecnicas: caracteristicasTecnicas,
+          preco: preco,
+          prazo: prazo,
+          frete: frete,
+          quantidadeNoEstoque: quantidade,
+          empresaId: empresaId,
+          // categoria: categoria,
+          categoriaId: categoriaId,
+          imagemUrl: imagem,
+          status: 'pendente',
+        },
+      };
+    }
+    else{
+      data = {
+        data: {
+          id: idProd,
+          nome: nome,
+          codigo: codigoDaEmpresa,
+          descricao: descricao,
+          caracteristicasTecnicas: caracteristicasTecnicas,
+          preco: preco,
+          prazo: prazo,
+          frete: frete,
+          quantidadeNoEstoque: quantidade,
+          empresaId: empresaId,
+          // categoria: categoria,
+          categoriaId: categoriaId,
+          imagemUrl: imagem,
+          status: statusProd,
+        },
+      };
+    }
 
     console.log("data")
     console.log(data);
-    makeRequisitionToChange(data);
+    const prod = await makeRequisitionToChange(data);
+    let updatedProducts = [...products]
+    console.log(prod)
+    updatedProducts[index].nome = prod.nome
+    updatedProducts[index].codigo = prod.codigo
+    updatedProducts[index].descricao = prod.descricao
+    updatedProducts[index].preco = prod.preco
+    updatedProducts[index].quantidadeNoEstoque = prod.quantidadeNoEstoque
+    updatedProducts[index].imagemUrl = prod.imagemUrl
+    updatedProducts[index].status = prod.status
 
+    setProducts(updatedProducts)
   }
   async function addPromotion() {
     setLoading(true)
@@ -321,14 +366,13 @@ export default function NewProd() {
   }
 
   useEffect(() => {
-    toast.info("status:" + status)
     if (!role) {
       window.location.reload()
     }
     else {
       if (role !== "admin" && role !== "empresa" || status === "pendente") {
         // Simulate an HTTP redirect:
-        window.location.replace(`dev.42dias.com.br/Clientes/constal/#/erro`);
+        window.location.replace(`${ip}/#/erro`);
       }
     }
     async function loadCategorias() {
@@ -493,6 +537,7 @@ export default function NewProd() {
                       onClick={() => {
                         setIndex(index);
                         console.log(index);
+                        setCompararProd(products[index])
                         setProductToReq(product.id);
                         setShowModal1(true);
                         setProductOnClick(index);

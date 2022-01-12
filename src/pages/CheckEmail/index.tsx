@@ -1,6 +1,6 @@
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import check from "../../assets/images/check-icon.svg";
+import check from "../../assets/images/check-icon.png";
 import { Link } from "react-router-dom";
 import { FooterContainer, CenterFinish } from "./styles";
 import { Menu } from "../../components/Menu";

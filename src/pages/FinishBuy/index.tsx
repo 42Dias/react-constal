@@ -1,6 +1,6 @@
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import check from "../../assets/images/check-icon.svg";
+import check from "../../assets/images/check-icon.png";
 import { Link } from "react-router-dom";
 import { FooterContainer, CenterFinish } from "./styles";
 import { Menu } from "../../components/Menu";
@@ -13,7 +13,7 @@ export default function FinishBuy() {
     () => {
       if(role != 'pessoa'){
         // Simulate an HTTP redirect:
-        window.location.replace(`dev.42dias.com.br/Clientes/constal/#/erro`);
+        window.location.replace(`${ip}/#/erro`);
       }
     }, []
   )
