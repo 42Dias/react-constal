@@ -146,7 +146,26 @@ export default function SendBanner() {
       }
     )
 
-    
+  }
+
+  function deleteBanner(id: string){
+    api.delete(`bannerDeleteOne/${id}`)
+    .then(
+      (response) => {
+        console.log(response)
+        if(response.status == 200){
+          toast.info("Banner apagado com sucesso!")
+  
+        }
+        else if(response.status == 500){
+          toast.error("Problemas com o servidor :(")
+        }
+
+        else{
+          toast.error("Erro :(")
+        }
+      }
+    )
   }
 
   useEffect(
@@ -310,7 +329,13 @@ export default function SendBanner() {
               </ContentDetails>
             </CardDatailsContent>
             <div className="flex-btn">
-              <button>
+              <button
+              onClick={
+                () => {
+                  deleteBanner(imagem.id)
+                }
+              }
+              >
                 <FiTrash />
               </button>
 
