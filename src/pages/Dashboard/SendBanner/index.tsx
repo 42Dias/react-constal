@@ -93,7 +93,7 @@ export default function SendBanner() {
       }
     }
 
-    await axios.post("http://localhost:8080/upload-image", formData, headers)
+    await axios.post(`${ip}:8080/upload-image`, formData, headers)
     .then((response) => {
       console.log(response)
       if(response.status == 200){
