@@ -95,6 +95,7 @@ export function Menu() {
                 <Link to="/empresas">Empresas</Link>
                 <Link to="/assinaturas">Pagamentos</Link>
                 <Link to="/vendas">Vendas por Empresa</Link>
+                <Link to="/enviar-banner">Banners</Link>
 
               </div>
             </div>
