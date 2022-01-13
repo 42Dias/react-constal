@@ -356,13 +356,13 @@ export const FlexLink = styled.div`
   padding: 12px 0;
 
   a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  color: black;
-  font-size: 15px;
-  margin-right: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: black;
+    font-size: 15px;
+    margin-right: 35px;
   }
 `;
 
