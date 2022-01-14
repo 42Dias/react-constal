@@ -8,6 +8,7 @@ import axios from "axios";
 export function Menu() {
   let role = localStorage.getItem("roles")?.replace(/"/g, "");
   const [categorias = [], setCategorias] = useState<any[]>([]);
+  const [categoriasFixed = [], setCategoriasFixed] = useState<any[]>([]);
   const [moveis, setMoveis ] = useState<any>();
   const [eletrodoméstico, setTeletrodoméstico ] = useState<any>();
   const [materiais, setMateriais ] = useState<any>();
@@ -15,40 +16,54 @@ export function Menu() {
   const [cursos, setCursos] = useState<any>();
   const [modaInfantil, setModaInfantil] = useState<any>();
 
+  async function loadCategoriasFixed() {
+    const categoriasResponseFixed = await axios.get(''+ip+':8157/api/categoria-aprovados-is-fixed');
+
+    const categoriasDoBack = categoriasResponseFixed.data
+      console.log("categoriasDoBack")
+      console.log(categoriasDoBack)
+      setCategoriasFixed(categoriasDoBack)
+    
+  }
+
+  async function loadCategorias() {
+    if(role == 'pessoa'){
+      const categoriasResponse = await axios.get(''+ip+':8157/api/categoria-aprovados');
+      const categoriasDoBack = categoriasResponse.data
+      console.log("categoriasDoBack")
+      console.log("categoriasDoBack")
+      console.log(categoriasDoBack)
+      setCategorias(categoriasDoBack)
+    }
+
+    // setCategorias([])
+
+
+    // const moveisResponse           = await axios.get(''+ip+':8157/api/categoria-name/moveis'); 
+    // const eletrodomésticoResponse  = await axios.get(''+ip+':8157/api//categoria-name/eletrodoméstico'); 
+    // const materiaisResponse        = await axios.get(''+ip+':8157/api/categoria-name/materiais'); 
+    // const camaResponse             = await axios.get(''+ip+':8157/api/categoria-name/cama'); 
+    // const cursosResponse           = await axios.get(''+ip+':8157/api/categoria-name/cursos');
+    // const modaInfantilResponse     = await axios.get(''+ip+':8157/api/categoria-name/moda'); 
+
+    // setMoveis(moveisResponse.data[0].id)
+    // setTeletrodoméstico(eletrodomésticoResponse.data[0].id)
+    // setMateriais(materiaisResponse.data[0].id)
+    // setCama(camaResponse.data[0].id)
+    // setCursos(cursosResponse.data[0].id)
+    // setModaInfantil(modaInfantilResponse.data[0].id)
+
+
+    const controller = new AbortController();
+    return () => { controller.abort(); }
+  }
+
+
+
   useEffect(
     () => {
-      async function loadCategorias() {
-        if(role == 'pessoa'){
-          const categoriasResponse = await axios.get(''+ip+':8157/api/categoria-aprovados');
-          const categoriasDoBack = categoriasResponse.data
-          console.log("categoriasDoBack")
-          console.log("categoriasDoBack")
-          console.log(categoriasDoBack)
-          setCategorias(categoriasDoBack)
-
-        }
-        // setCategorias([])
-
-
-        const moveisResponse           = await axios.get(''+ip+':8157/api/categoria-name/moveis'); 
-        const eletrodomésticoResponse  = await axios.get(''+ip+':8157/api//categoria-name/eletrodoméstico'); 
-        const materiaisResponse        = await axios.get(''+ip+':8157/api/categoria-name/materiais'); 
-        const camaResponse             = await axios.get(''+ip+':8157/api/categoria-name/cama'); 
-        const cursosResponse           = await axios.get(''+ip+':8157/api/categoria-name/cursos');
-        const modaInfantilResponse     = await axios.get(''+ip+':8157/api/categoria-name/moda'); 
-
-        setMoveis(moveisResponse.data[0].id)
-        setTeletrodoméstico(eletrodomésticoResponse.data[0].id)
-        setMateriais(materiaisResponse.data[0].id)
-        setCama(camaResponse.data[0].id)
-        setCursos(cursosResponse.data[0].id)
-        // setModaInfantil(modaInfantilResponse.data[0].id)
-
-
-        const controller = new AbortController();
-        return () => { controller.abort(); }
-      }
       loadCategorias()
+      loadCategoriasFixed()
     }, [])
  
 
@@ -137,12 +152,20 @@ export function Menu() {
             Categorias fixas
             Categorias do cliente
             */}
-            <Link to={`/produto-categoria/${moveis}`}>Moveis</Link>
+            {            
+            categoriasFixed.map(
+            (categoria, index) => (
+                <Link
+                  key={index}
+                  to={`/produto-categoria/${categoria.id}`}>{categoria.nome}</Link>
+                )
+            )}
+            {/* <Link to={`/produto-categoria/${moveis}`}>Moveis</Link>
             <Link to={`/produto-categoria/${eletrodoméstico}`}>Eletrodoméstico</Link>
             <Link to={`/produto-categoria/${materiais}`}>Materiais de Decoração</Link>
             <Link to={`/produto-categoria/${cama}`}>Cama, Mesa e Banho</Link>
             <Link to={`/produto-categoria/${cursos}`}>Cursos</Link>
-            <Link to={`/produto-categoria/${modaInfantil}`}>Moda infantil</Link>
+            <Link to={`/produto-categoria/${modaInfantil}`}>Moda infantil</Link> */}
           </div>
         </FlexLink>
       </Container>
