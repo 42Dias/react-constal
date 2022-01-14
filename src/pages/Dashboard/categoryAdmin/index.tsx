@@ -116,7 +116,7 @@ export default function Sendcategoria() {
       (response) => {
         console.log(response)
         if(response.status == 200){
-          toast.info("categoria apagado com sucesso!")
+          toast.info("Categoria apagada com sucesso!")
           loadcategorias()
           
         }
