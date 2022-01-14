@@ -15,13 +15,13 @@ import { useCart } from "../../hooks/useCart";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 
-import moveis from "../../assets/images/moveis.png";
-import eletrodomesticos from "../../assets/images/eletrodomesticos.png";
-import materiais from "../../assets/images/materiais.png";
-import cama from "../../assets/images/cama.png";
-import modainfantil from "../../assets/images/modainfantil.png";
-import modafeminina from "../../assets/images/modafeminina.png";
-import modamasculina from "../../assets/images/modamasculina.png";
+// import moveis from "../../assets/images/moveis.png";
+// import eletrodomesticos from "../../assets/images/eletrodomesticos.png";
+// import materiais from "../../assets/images/materiais.png";
+// import cama from "../../assets/images/cama.png";
+// import modainfantil from "../../assets/images/modainfantil.png";
+// import modafeminina from "../../assets/images/modafeminina.png";
+// import modamasculina from "../../assets/images/modamasculina.png";
 import axios from "axios";
 import { Menu } from "../../components/Menu";
 import { toast } from "react-toastify";
@@ -164,7 +164,8 @@ const Home = (): JSX.Element => {
               )             
             )
           }
-          <SwiperSlide><img src={moveis} alt="moveis" /></SwiperSlide>
+          {/* COMENTADO POR OPÇÃO DO CLIENTE, SUBIR LIMPO PARA O SERVIDOR DELE */}
+          {/* <SwiperSlide><img src={moveis} alt="moveis" /></SwiperSlide>
           <SwiperSlide><img src={moveis} alt="moveis" /></SwiperSlide>
           <SwiperSlide><img src={materiais} alt="materiais" />
           </SwiperSlide>
@@ -172,7 +173,8 @@ const Home = (): JSX.Element => {
           <SwiperSlide><img src={cama} alt="cama" /></SwiperSlide>
           <SwiperSlide><img src={modainfantil} alt="moda infantil" /></SwiperSlide>
           <SwiperSlide><img src={modafeminina} alt="moda feminina" /></SwiperSlide>
-          <SwiperSlide><img src={modamasculina} alt="moda masculina" /></SwiperSlide>
+          <SwiperSlide><img src={modamasculina} alt="moda masculina" /></SwiperSlide> 
+          */}
         </Swiper>
       </BannerHomeImage>
 
