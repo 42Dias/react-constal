@@ -46,7 +46,7 @@ export default function ApproveCategorias() {
   }
   function aprovarCategoria(categoria: any) {
     console.log(categoria)
-    categoria.status = "active";
+    categoria.status = "aprovado";
     setLoading2(true)
     let response = api.put('categoria/' + categoria.id, {
       id: categoria.id,
