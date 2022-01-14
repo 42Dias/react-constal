@@ -70,21 +70,21 @@ export default function Sendcategoria() {
     toast.info("Carregando...")
     console.log(categoriaStatus)
     console.log(categoria)
-    if(categoriaStatus == 'inativo'){
-      categoriaStatus = 'ativo'
+    if(categoria.isFixed == null){
+      categoriaStatus = '1'
+      console.log("fixou!")
     }
-    else if(categoriaStatus == 'ativo'){
-      categoriaStatus = 'inativo'
+    else if(categoriaStatus == '1'){
+      categoriaStatus = null
+      console.log("desfixou!")
     }
     else{
       throw 'deve ser ativo ou inativo!'
     }
 
     const body ={
-      data: {
-        categoriaUrl: categoria.categoriaUrl,
-        nome: categoria.nome, 
-        status: categoriaStatus,
+      data: { 
+        isFixed: categoriaStatus,
       }
     }
 
