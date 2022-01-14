@@ -245,7 +245,9 @@ export const BannerHomeImage = styled.div`
 
       @media (max-width: 768px)
       {
-        object-position: -40vw;
+        width: 100%;
+        height: 190px !important;
+        object-fit: cover;
       }
     } 
   }

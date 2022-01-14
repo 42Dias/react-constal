@@ -15,7 +15,6 @@ import { api, ip, token } from "../../../services/api";
 import axios from "axios";
 import React from "react";
 
-import Uploady from "@rpldy/uploady";
 import { toast } from "react-toastify";
 
 export default function SendBanner() {
