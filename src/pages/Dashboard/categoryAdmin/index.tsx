@@ -43,7 +43,7 @@ export default function Sendcategoria() {
     const data = {
       data: {
         nome: name,
-        status: "aprovado",
+        status: "ativo",
       },
     };
 
@@ -68,12 +68,20 @@ export default function Sendcategoria() {
 
   function updatecategoriaStatus(categoriaStatus: any, categoria: any){
     toast.info("Carregando...")
-    console.log(categoriasAtiva.length <= 8 )
+    
+    console.log(categoriasAtiva.length < 8 )
+    
     console.log(categoria)
-    if(categoriasAtiva.length <= 8 ){
+
       if(categoria.isFixed == null){
-        categoriaStatus = '1'
-        console.log("fixou!")
+        if(categoriasAtiva.length < 8 ){
+          categoriaStatus = '1'
+          console.log("fixou!")
+        }
+        else{
+          toast.error("Não é possivel adicionar mais que 8 categorias fixas")
+          return
+        }
       }
       // else (categoriaStatus == '1')
       else{
@@ -105,10 +113,6 @@ export default function Sendcategoria() {
           }
         }
       )  
-    }
-    else{
-      toast.error("Não é possivel adicionar mais que 8 categorias fixas")
-    }
     
 
   }
