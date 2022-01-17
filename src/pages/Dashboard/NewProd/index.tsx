@@ -294,16 +294,16 @@ export default function NewProd() {
         categoriaId: categoriaId,
         empresaId: empresaId,
         imagemUrl: imagem,
-        isOferta: isOferta,
+        isOferta: true,
         precoOferta: precoOferta,
         promocaoEncerramento: dataEncerramento,
         promocaoId: uuid.v4(),
       },
     };
     makeRequisitionToChange(data).then(
-      () => {
-        window.location.hash = '#/promocoes'
-      }
+      // () => {
+      //   window.location.hash = '#/promocoes'
+      // }
     );
   }
 
