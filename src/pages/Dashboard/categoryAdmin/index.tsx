@@ -70,42 +70,46 @@ export default function Sendcategoria() {
     toast.info("Carregando...")
     console.log(categoriaStatus)
     console.log(categoria)
-    if(categoria.isFixed == null){
-      categoriaStatus = '1'
-      console.log("fixou!")
-    }
-    else if(categoriaStatus == '1'){
-      categoriaStatus = null
-      console.log("desfixou!")
+    if(categoriasAtiva.length >= 8 ){
+      if(categoria.isFixed == null){
+        categoriaStatus = '1'
+        console.log("fixou!")
+      }
+      // else (categoriaStatus == '1')
+      else{
+        categoriaStatus = null
+        console.log("desfixou!")
+      }
+  
+      const body ={
+        data: { 
+          isFixed: categoriaStatus,
+        }
+      }
+  
+      api.put(`categoria/${categoria.id}`, body).then(
+        (response) => {
+          console.log(response)
+          if(response.status == 200){
+            toast.info("Atualização do categoria feita com sucesso!")
+            loadcategorias()
+  
+    
+          }
+          else if(response.status == 500){
+            toast.error("Problemas com o servidor :(")
+          }
+  
+          else{
+            toast.error("Erro :(")
+          }
+        }
+      )  
     }
     else{
-      throw 'deve ser ativo ou inativo!'
+      toast.error("Não é possivel adicionar mais que 8 categorias fixas")
     }
-
-    const body ={
-      data: { 
-        isFixed: categoriaStatus,
-      }
-    }
-
-    api.put(`categoria/${categoria.id}`, body).then(
-      (response) => {
-        console.log(response)
-        if(response.status == 200){
-          toast.info("Atualização do categoria feita com sucesso!")
-          loadcategorias()
-
-  
-        }
-        else if(response.status == 500){
-          toast.error("Problemas com o servidor :(")
-        }
-
-        else{
-          toast.error("Erro :(")
-        }
-      }
-    )
+    
 
   }
 
