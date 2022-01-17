@@ -26,6 +26,35 @@ export default function Questions() {
   const [comentarios = [] , setComentarios]=useState<any[]>([]);
 
 
+  async function loadComentarios(){
+    if (role == 'empresa'){
+      async function getEmpresaId() {
+        const empresaIdResponse =  api.get(`empresaUser/${id}`).then(
+          (empresaIdResponse) => {
+            console.log("empresaIdResponse")
+            console.log(empresaIdResponse.data)
+            const response  = api.get(`findByEmpresa/${empresaIdResponse.data.id}`).then(
+              // const response  = api.get(`findByEmpresa/3b386e29-c490-4231-b3f6-bb9b407fc8e9`).then(
+              (response) => {
+                setComentarios(response.data)
+                console.log(response)
+              }
+            )
+          }
+          )
+      }
+  
+      await getEmpresaId()
+    }
+    else{
+      const response  = api.get(`comentario`).then(
+        (response) => {
+          console.log(response)
+          setComentarios(response.data.record)
+        }
+      )
+    }
+  }
 
   useEffect(
     () => {
@@ -37,27 +66,6 @@ export default function Questions() {
           // Simulate an HTTP redirect:
           window.location.replace(`${ip}/#/erro`);
         }
-      }
-
-      async function loadComentarios(){
-        async function getEmpresaId() {
-          const empresaIdResponse =  api.get(`empresaUser/${id}`).then(
-            (empresaIdResponse) => {
-              console.log("empresaIdResponse")
-              console.log(empresaIdResponse.data)
-              const response  = api.get(`findByEmpresa/${empresaIdResponse.data.id}`).then(
-                // const response  = api.get(`findByEmpresa/3b386e29-c490-4231-b3f6-bb9b407fc8e9`).then(
-                (response) => {
-                  setComentarios(response.data)
-                  console.log(response)
-                }
-              )
-            }
-            )
-          
-        }
-
-        await getEmpresaId()
       }
 
       loadComentarios()
