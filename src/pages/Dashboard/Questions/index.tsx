@@ -121,6 +121,8 @@ export default function Questions() {
                   <CardDatailsContent>
                     <ContentDetails>
                       <small>
+                    <small>     
+                      </small>
                         <b>{comentario.firstName}</b>     {
                             comentario.isRespondido != 1? (
                               <span>
@@ -131,7 +133,16 @@ export default function Questions() {
                               ✓
                             </span>
                             )
-
+                            }
+                            {
+                            role == 'admin'? (
+                              <span>
+                                <br />
+                                Nome da empresa: {comentario.nome}
+                                {/* razão Social: {comentario.razaoSocial} */}
+                                {/* <br /> */}
+                              </span>
+                            ) : false
                             }
                         <br />
                         {comentario.comentario}
