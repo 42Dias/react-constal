@@ -112,6 +112,7 @@ export function Menu() {
                 <Link to="/vendas">Vendas por Empresa</Link>
                 <Link to="/enviar-banner">Banners</Link>
                 <Link to="categorias-fixar" >Fixar categorias</Link>
+                <Link to="/perguntas">Perguntas</Link>
               </div>
             </div>
           </div>
