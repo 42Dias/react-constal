@@ -68,9 +68,9 @@ export default function Sendcategoria() {
 
   function updatecategoriaStatus(categoriaStatus: any, categoria: any){
     toast.info("Carregando...")
-    console.log(categoriaStatus)
+    console.log(categoriasAtiva.length <= 8 )
     console.log(categoria)
-    if(categoriasAtiva.length >= 8 ){
+    if(categoriasAtiva.length <= 8 ){
       if(categoria.isFixed == null){
         categoriaStatus = '1'
         console.log("fixou!")
