@@ -20,9 +20,11 @@ img {
 `;
 
 export const FlexLink = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 3.55fr;
-  padding: 12px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
 
   .category-fix {
     display: flex;
