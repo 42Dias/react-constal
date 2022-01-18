@@ -118,7 +118,9 @@ export const ContentDetails = styled.div`
   }
 
   img {
+    object-fit: cover; 
     padding: 0 40px;
+    border-radius: 5px;
     width: 200px;
     height: 120px;
     @media (max-width: 768px) {
