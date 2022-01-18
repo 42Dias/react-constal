@@ -23,6 +23,7 @@ import {
 } from "./styles";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { Field, Form, Formik } from "formik";
 
 export default function PersonalData() {
   const [showModal1, setShowModal1] = React.useState(false);
@@ -430,11 +431,47 @@ switch (accountType) {
   
   } 
   }
+  
+  function onSubmitInput (values: any, actions: any) {
+    // console.log(data)
+    // Cadastro(data)
+    console.log('SUBMIT', values)
+  }
 
-  /*
-  Bradesco
-  Next*/
+  function onBlurCep (ev: any, setFieldValue: any) {
+    const { value } = ev.target
 
+    const cep = value?.replace(/[^0-9]/g, '')
+
+    if (cep?.length !== 8) {
+      return
+    }
+
+    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+      .then((res) => res.json())
+      .then((data) => {
+        setLogradouro(data.logradouro)
+        setBairro(data.bairro)
+        setCidade(data.localidade)
+        setEstado(data.uf)
+      })
+  }
+  type FormData = {
+    cnpj: string;
+    razaoSocial: string;
+    nomeFantasia: string;
+    cep: string;
+    uf: string;
+    cidade: string;
+    bairro: string;
+    logradouro: string;
+    numero: string;
+    complemento: string;
+    values: string;
+    actions: string;
+    ev: any;
+    setFieldValue: any;
+  }
 
   return (
     <>
@@ -460,9 +497,6 @@ switch (accountType) {
             >Alterar senha</Btn>
           </CardDatailsContent>
         </CardDatails>
-
-
-
         <CardDatails>
         
 
@@ -768,7 +802,19 @@ switch (accountType) {
                 </ContentFormNew>
 
 
-{/* numero do cartão e tipo de conta */}
+{/* 
+                    
+                    value={logradouro}
+                    value={numero}
+                    value={complemento}
+                    value={pontoReferencia}
+                    value={cidade}
+                    value={estado}
+                    value={bairro}
+
+
+
+*/}
 
 
                     <ContentFormNew>
@@ -780,6 +826,125 @@ switch (accountType) {
                     />
 
                     <ContentFormNew>
+
+                    <ContentFormNew>
+                    <Formik
+                onSubmit={onSubmitInput}
+                validateOnMount
+                initialValues={{
+                  cep: '',
+                  logradouro: '',
+                  numero: '',
+                  complemento: '',
+                  bairro: '',
+                  cidade: '',
+                  uf: '',
+                }}
+                render={({ isValid, setFieldValue }) => (
+                  <Form>
+                    
+                    <ContentFormNew className='form-control-group'>
+                      <label>Cep</label>
+                      <Field
+                      value={cep}
+                        name='cep' type='text'
+                        onBlur={(ev: any) => onBlurCep(ev, setFieldValue)}
+                        onChange={(text: any) => setCep(text.target.value)}
+                        />
+                        
+                    </ContentFormNew>
+
+                    <ContentFormNew className='form-control-group'>
+                      <label>Logradouro</label>
+                      <Field 
+                      value={logradouro}
+                      name='logradouro'
+                      type='text'
+                      onChange={(text: any) => setLogradouro(text.target.value)} />
+                    </ContentFormNew>
+
+                    <ContentFormNew className='form-control-group'>
+                      <label>Número</label>
+                      <Field 
+                      value={numero}
+                      name='numero' 
+                      type='text'
+                      onChange={(text: any) => setNumero(text.target.value)}
+                       />
+                    </ContentFormNew>
+
+                    <ContentFormNew className='form-control-group'>
+                      <label>Complemento</label>
+                      <Field 
+                      value={complemento}
+                      name='complemento' 
+                      type='text'
+                      onChange={(text: any) => setComplemento(text.target.value)}
+                       />
+                    </ContentFormNew>
+
+                    <ContentFormNew className='form-control-group'>
+                      <label>Bairro</label>
+                      <Field 
+                      value={bairro}
+                      name='bairro' 
+                      type='text'
+                      onChange={(text: any) => setBairro(text.target.value)}
+                       />
+                    </ContentFormNew>
+
+                    <ContentFormNew className='form-control-group'>
+                      <label>Cidade</label>
+                      <Field 
+                      value={cidade}
+                      name='cidade' 
+                      type='text'
+                      onChange={(text: any) => setCidade(text.target.value)}
+                       />
+                    </ContentFormNew>
+
+                    <ContentFormNew className='form-control-group'>
+                      <label>Estado</label>
+                      <Field 
+                      value={estado}
+                      component='select' 
+                      name='uf'
+                      onChange={(text: any) => setEstado(text.target.value)}
+                      >
+                        <option value=''>Selecione o Estado</option>
+                        <option value='AC'>Acre</option>
+                        <option value='AL'>Alagoas</option>
+                        <option value='AP'>Amapá</option>
+                        <option value='AM'>Amazonas</option>
+                        <option value='BA'>Bahia</option>
+                        <option value='CE'>Ceará</option>
+                        <option value='DF'>Distrito Federal</option>
+                        <option value='ES'>Espírito Santo</option>
+                        <option value='GO'>Goiás</option>
+                        <option value='MA'>Maranhão</option>
+                        <option value='MT'>Mato Grosso</option>
+                        <option value='MS'>Mato Grosso do Sul</option>
+                        <option value='MG'>Minas Gerais</option>
+                        <option value='PA'>Pará</option>
+                        <option value='PB'>Paraíba</option>
+                        <option value='PR'>Paraná</option>
+                        <option value='PE'>Pernambuco</option>
+                        <option value='PI'>Piauí</option>
+                        <option value='RJ'>Rio de Janeiro</option>
+                        <option value='RN'>Rio Grande do Norte</option>
+                        <option value='RS'>Rio Grande do Sul</option>
+                        <option value='RO'>Rondônia</option>
+                        <option value='RR'>Roraima</option>
+                        <option value='SC'>Santa Catarina</option>
+                        <option value='SP'>São Paulo</option>
+                        <option value='SE'>Sergipe</option>
+                        <option value='TO'>Tocantins</option>
+                      </Field>
+                    </ContentFormNew>
+                  </Form>
+                )}
+              />
+                    </ContentFormNew>
                     {loading ? (
               <img
                 width="40px"
