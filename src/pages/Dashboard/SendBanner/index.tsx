@@ -281,9 +281,16 @@ export default function SendBanner() {
           setName(e.target.files[0].name)
           //@ts-ignore
           setImage(e.target.files[0])
-          
+
           //@ts-ignore
-          uploadImage(e.target.files[0])
+          if(e.target.files[0].type.includes('image')){
+            //@ts-ignore
+            uploadImage(e.target.files[0])
+          }
+          else{
+            toast.error("Arquivo não suportado")
+          }
+          
             
 
         }
