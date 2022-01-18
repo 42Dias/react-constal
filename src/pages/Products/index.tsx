@@ -75,7 +75,7 @@ export default function Products() {
         }
         else{
           return <ProdContainerSingle key={product.id}>
-                    {/* <img src={product.publicUrl} alt={product.nome} /> */}  
+                    <img src={product.imagemUrl} alt={product.nome} />   
                     <h5>{product.nome}</h5>
                     <p>{product.descricao}</p>
                     <div className="btn-group-add">
