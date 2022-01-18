@@ -80,7 +80,9 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
 
     const productResponse = await api.get<Product>(`produto/${productId}`);//jogar como variavel que abrange todo o escopo da função
     const  product  = productResponse.data;
-    if(product.isOferta == true){
+    if(product.isOferta === true){
+      console.log("product.isOferta == true")
+      console.log(product.isOferta == true)
       product.preco = product.precoOferta
     }
     
