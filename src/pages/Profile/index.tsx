@@ -29,6 +29,7 @@ export default function Profile() {
   const [showModalEnd, setShowModalEnd] = React.useState(false);
   const [showModalResetSenha, setShowModalResetSenha] = React.useState(false);
   const [id, setId] = useState("");
+  // const [id, setId] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
@@ -74,10 +75,10 @@ export default function Profile() {
     });
     //console.log(response);
     //console.log(response.tenants[0].roles[0]);
-    let setRole = response.tenants[0].roles
-    const roleHelper = JSON.parse(setRole)
-    console.log(roleHelper[0])
-    localStorage.setItem("roles", JSON.stringify(roleHelper[0])); //saves client's data into localStorage:
+    // let setRole = response.tenants[0].roles
+    // const roleHelper = JSON.parse(setRole)
+    // console.log(roleHelper[0])
+    localStorage.setItem("roles", JSON.stringify(response.tenants[0].roles[0])); //saves client's data into localStorage:
 
     //response.tenants[0].tenant.id);
     localStorage.setItem(
@@ -264,8 +265,17 @@ export default function Profile() {
       },
     };
     if (email) {
-      //console.log("MAOI");
-      const updatePersonalData = await api.put('pessoa-fisica/' + idPessoa, data)
+      const updatePersonalData = await api.put('pessoa-fisica/' + idPessoa, data).then(
+        (data) => {
+          console.log(data)
+          if(data.status == 200){
+            toast.info("Dados Alterados com sucesso!")
+          }
+          else{
+            toast.info("Erro, algo deu errado :(")
+          }
+        }
+      )
       // console.log(updatePersonalData)
     } else {
       //console.log("hehe");
