@@ -75,6 +75,7 @@ export default function NewProd() {
   const [handleChangePrice, setHandleChangePrice] = useState<any>();
 
   const [compararProd, setCompararProd] = useState<any>();
+  const [porcentagem, setPorcentagem] = useState<any>("");
   
 
   function openModal() {
@@ -992,15 +993,28 @@ export default function NewProd() {
               <ContentFormNew>
                 <label htmlFor="">Porcentagem</label>
                 <input required
-                type="number" min="1" max="100" step="0.1"
+                type="number" 
+                value={porcentagem}
+                min="1" max="100" step="0.1"
+                // type="range" id="points" name="points" min="0" max="100"
                 placeholder="10%" 
                 onChange={event => {
                     if(event.target.value){
                       // @ts-ignore
-                      var newPreco = preco - (event.target.value / 100) * preco
-                      console.log(newPreco)
-                      setHandleChangePrice(formatPrice(newPreco))
-                      setPrecoOferta(newPreco)
+                      let porcentagem:any  = parseInt(event.target.value)
+                      // @ts-ignore
+                      if(porcentagem < 100 && porcentagem >= 0 ){
+                        // @ts-ignore
+                        var newPreco = preco - (event.target.value / 100) * preco
+                        console.log(newPreco)
+                        setPorcentagem(event.target.value)
+                        setHandleChangePrice(formatPrice(newPreco))
+                        setPrecoOferta(newPreco)
+                      }
+                      else{
+                        toast.error("Inválido!")
+                        
+                      }
                     }
                   }
                 }
