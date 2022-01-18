@@ -494,6 +494,22 @@ export default function NewProd() {
           ) : false}
           {status === 'active' ? <button onClick={
             () => {
+              setId("");
+              setNome("");
+              setCodigoDaEmpresa("");
+              setDescricao("");
+              setCaracteristicasTecnicas("");
+              setPreco("");
+              setImagem("");
+              setPrazo("");
+              setQuantidade("");
+              setFrete("");
+              setCategoria("");
+              setCategoriaId("")
+              setEmpresaId("");
+              setStatusProd("");
+              setHandleChangePrice("")
+
               setShowModal2(true)
             }
           }>Adicionar</button> : ''}
@@ -975,7 +991,9 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Porcentagem</label>
-                <input required type="number" placeholder="10%" 
+                <input required
+                type="number" min="1" max="100" step="0.1"
+                placeholder="10%" 
                 onChange={event => {
                     if(event.target.value){
                       // @ts-ignore
