@@ -33,6 +33,7 @@ import CurrencyInput from 'react-currency-masked-input'
 // @ts-ignore
 import { default as NumberFormat } from 'react-number-format';
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 export default function NewProd() {
   var uuid = require("uuid");
@@ -1028,7 +1029,20 @@ export default function NewProd() {
                   required
                   type="date"
                   placeholder="01/03/2024"
-                  onChange={event => setDataEncerramento(event.target.value)}
+                  onChange={event => {
+                    console.log(event.target.value)
+                    let now = new Date
+                    console.log(now)
+                    let dataPassed = new Date(event.target.value)
+                    console.log(dataPassed)
+                    if(dataPassed > now){
+                      setDataEncerramento(event.target.value)
+                      toast.info("Data válida :)")
+                    }
+                    else{
+                      toast.error("Data inválida :(")
+                    }
+                  }}
                 />
               </ContentFormNew> 
 
