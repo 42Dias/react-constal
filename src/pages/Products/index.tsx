@@ -3,7 +3,7 @@ import Footer from "../../components/Footer";
 
 import { Link } from "react-router-dom";
 import React, { useState ,useEffect, useRef, useCallback } from "react";
-import { api } from "../../services/api";
+import { api, semImagem } from "../../services/api";
 import { formatPrice } from "../../util/format";
 
 import { useCart } from "../../hooks/useCart";
@@ -58,7 +58,9 @@ export default function Products() {
     {products.map((product: any, index: number) => {
         if(products.length === index + 1){
           return <ProdContainerSingle ref={lastProdElementRef}  key={product.id}>
-                 <img src={product.publicUrl} alt={product.nome} /> 
+                    <Link to={`/produto/${product.id}`}>
+                        <img src={product.imagemUrl || semImagem} alt={product.nome} />
+                    </Link>
                     <h5>{product.nome}</h5>
                     <p>{product.descricao}</p>
                     <div className="btn-group-add">
@@ -75,7 +77,9 @@ export default function Products() {
         }
         else{
           return <ProdContainerSingle key={product.id}>
-                    <img src={product.imagemUrl} alt={product.nome} />   
+                    <Link to={`/produto/${product.id}`}>
+                        <img src={product.imagemUrl || semImagem} alt={product.nome} />
+                    </Link>
                     <h5>{product.nome}</h5>
                     <p>{product.descricao}</p>
                     <div className="btn-group-add">
