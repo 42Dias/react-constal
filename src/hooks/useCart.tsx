@@ -85,6 +85,9 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
       console.log(product.isOferta == true)
       product.preco = product.precoOferta
     }
+
+    console.log("product.isOferta == true")
+    console.log(product.isOferta == true)
     
 
     console.log("product")
