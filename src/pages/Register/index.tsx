@@ -129,6 +129,7 @@ export default function Register() {
             <div>
               <label htmlFor="nome">Nome completo</label>
               <input
+                required
                 type="text"
                 placeholder="Nome"
                 value={nome}
@@ -138,6 +139,7 @@ export default function Register() {
             <div>
               <label htmlFor="email">E-mail</label>
               <input
+                required
                 type="email"
                 placeholder="Email"
                 value={email}
@@ -148,6 +150,7 @@ export default function Register() {
             <div>
               <label htmlFor="senha">Senha</label>
               <input
+                required
                 type="password"
                 placeholder="Senha"
                 value={senha}
@@ -158,6 +161,7 @@ export default function Register() {
               <label htmlFor="cadastrar">Cadastrar como:</label>
 
               <select
+                required
                 value={category}
                 onChange={event => setCategory(event.target.value)}
               >
@@ -182,7 +186,9 @@ export default function Register() {
               </S.Cards>
             </S.Container> : false}
           <Terms>
-            <input type="checkbox" />
+            <input
+            required 
+            type="checkbox" />
             <span>
               Aceito os <a href="">Termos e condições
                 {
