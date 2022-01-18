@@ -55,6 +55,7 @@ export const CardDatails = styled.div`
 `
 
 export const CardDatailsContent = styled.div`
+  overflow: hidden;
   background: white;
   width: 100%;
   height: 200px;
