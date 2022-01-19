@@ -11,6 +11,10 @@ import { ModalContainerVendedor } from "../../Profile/styles";
 import { ContentFormNew } from "../NewProd/styles";
 import { ModalFlex } from "../Promotions/styles";
 import Modal from "react-modal";
+
+// @ts-ignore
+import InputMask from "react-input-mask";
+
 import {
   Btn,
   // CardProfile,
@@ -479,6 +483,33 @@ switch (accountType) {
       <Menu />
       <div className="container">
         <CardDatails>
+
+        <InputMask mask="99.999.999/9999-99" 
+        // 01.161.734/0001-15
+        onChange={
+          (e: any) => {
+            let telefone = e.target.value
+            console.log(
+              telefone.replace(/\D/g, '')
+              )
+          }
+        }
+         />
+         <InputMask mask="(99) 9999-99999" 
+        // value={props.value} 
+        onChange={
+          (e: any) => {
+            let telefone = e.target.value
+            console.log(
+              telefone.replace(/\D/g, '')
+              )
+            setTelefone(
+              telefone.replace(/[\(\)\.\s-]+/g,'')
+              )
+          }
+        }
+         />
+
           <h2>Dados da conta</h2>
           <CardDatailsContent>
             <ContentDetails>
