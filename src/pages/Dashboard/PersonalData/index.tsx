@@ -145,12 +145,6 @@ export default function PersonalData() {
       }
       , []
     )
-    console.log("-------------------")
-    console.log("maskedCNPJ")
-    console.log(maskedCNPJ)
-    console.log("maskedCNPJ")
-
-    console.log("-------------------")
 
     
 
@@ -506,7 +500,7 @@ switch (accountType) {
         <CardDatails>
 
         <InputMask mask="99.999.999/9999-99" 
-        // value={maskedCNPJ} 
+        value={maskedCNPJ} 
 
         // 01.161.734/0001-15
         onChange={
@@ -518,11 +512,13 @@ switch (accountType) {
             setCnpj(
               cnpj.replace(/\D/g, '')
             )
+            setMaskedCNPJ(e.target.value)
+            console.log(maskedCNPJ)
           }
         }
          />
-         <InputMask mask="(99) 9999-99999" 
-        // value={maskedTelefone}  
+         <InputMask mask="(99) 9999-99999"
+        value={maskedTelefone} 
         onChange={
           (e: any) => {
             let telefone = e.target.value
@@ -532,6 +528,8 @@ switch (accountType) {
             setTelefone(
               telefone.replace(/[\(\)\.\s-]+/g,'')
               )
+              setMaskedTelefone(e.target.value)
+              console.log(maskedTelefone)
           }
         }
          />
