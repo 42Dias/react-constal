@@ -488,10 +488,13 @@ switch (accountType) {
         // 01.161.734/0001-15
         onChange={
           (e: any) => {
-            let telefone = e.target.value
+            let cnpj = e.target.value
             console.log(
-              telefone.replace(/\D/g, '')
+              cnpj.replace(/\D/g, '')
               )
+            setCnpj(
+              cnpj.replace(/\D/g, '')
+            )
           }
         }
          />
