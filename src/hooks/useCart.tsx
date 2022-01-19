@@ -248,6 +248,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
   };
 
   const removeProduct = async (productId: string) => {
+      toast.info("Carregando")
 
       console.log(productId)
 
@@ -292,7 +293,10 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
       }).then(
         (response) => {
           if(response.status == 200){
-            toast.info("Certo!")
+            toast.info("Produto removido com sucesso!")
+            setUpdate(prevValue => {
+              return prevValue-1	
+               })
           }
           else{
             toast.error("Erro :(")
