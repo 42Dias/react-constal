@@ -499,40 +499,6 @@ switch (accountType) {
       <div className="container">
         <CardDatails>
 
-        <InputMask mask="99.999.999/9999-99" 
-        value={maskedCNPJ} 
-
-        // 01.161.734/0001-15
-        onChange={
-          (e: any) => {
-            let cnpj = e.target.value
-            console.log(
-              cnpj.replace(/\D/g, '')
-              )
-            setCnpj(
-              cnpj.replace(/\D/g, '')
-            )
-            setMaskedCNPJ(e.target.value)
-            console.log(maskedCNPJ)
-          }
-        }
-         />
-         <InputMask mask="(99) 9999-99999"
-        value={maskedTelefone} 
-        onChange={
-          (e: any) => {
-            let telefone = e.target.value
-            console.log(
-              telefone.replace(/\D/g, '')
-              )
-            setTelefone(
-              telefone.replace(/[\(\)\.\s-]+/g,'')
-              )
-              setMaskedTelefone(e.target.value)
-              console.log(maskedTelefone)
-          }
-        }
-         />
 
           <h2>Dados da conta</h2>
           <CardDatailsContent>
@@ -697,10 +663,26 @@ switch (accountType) {
 
                     <ContentFormNew>
                     <label htmlFor="">Telefone</label>
-                    <input type="text" placeholder="Telefone"
+                    {/* <input type="text" placeholder="Telefone"
                     value={telefone}
 
                     onChange={(text) => setTelefone(text.target.value)}
+                    /> */}
+                    <InputMask mask="(99) 9999-99999"
+                    value={maskedTelefone} 
+                    onChange={
+                      (e: any) => {
+                        let telefone = e.target.value
+                        console.log(
+                          telefone.replace(/\D/g, '')
+                          )
+                        setTelefone(
+                          telefone.replace(/[\(\)\.\s-]+/g,'')
+                          )
+                          setMaskedTelefone(e.target.value)
+                          console.log(maskedTelefone)
+                      }
+                    }
                     />
                     </ContentFormNew>
 
@@ -712,15 +694,26 @@ switch (accountType) {
                     onChange={(text) => setCelular(text.target.value)}
                     />
                     </ContentFormNew>
-
-
                     <ContentFormNew>
-                    <label htmlFor="">CNPJ</label>
-                    <input type="text" placeholder="CNPJ"
-                    value={cnpj}
+                      <label htmlFor="">CNPJ</label>
+                      <InputMask mask="99.999.999/9999-99" 
+                      value={maskedCNPJ} 
 
-                    onChange={(text) => setCnpj(text.target.value)}
-                    />
+                      // 01.161.734/0001-15
+                      onChange={
+                        (e: any) => {
+                          let cnpj = e.target.value
+                          console.log(
+                            cnpj.replace(/\D/g, '')
+                            )
+                          setCnpj(
+                            cnpj.replace(/\D/g, '')
+                          )
+                          setMaskedCNPJ(e.target.value)
+                          console.log(maskedCNPJ)
+                        }
+                      }
+                      />
                     </ContentFormNew>
 
 
