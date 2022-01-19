@@ -6,6 +6,7 @@ import axios from 'axios';
 let token = localStorage.getItem("token")?.replace(/"/g, "");
 
 
+
 interface Product{
   preco: any;
   precoOferta: any;
@@ -43,6 +44,9 @@ const tenantId = "fa22705e-cf27-41d0-bebf-9a6ab52948c4";
 const CartContext = createContext<CartContextData>({} as CartContextData);
 
 export function CartProvider({ children }: CartProviderProps): JSX.Element {
+    const [update, setUpdate] = useState(0);
+
+
     const cart = async () => {
       const allCart: any  = await api.get(`carrinho/`)
       console.log("allCart")
@@ -51,7 +55,6 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
       return allCart.data.count;
       }
     
-      let update = 0
 
   const addProduct = async (productId: string, quantidade: number) => {
     toast.info("Carregando...")
@@ -97,9 +100,10 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
     
     console.log("stock") 
     console.log(stock) 
+
+    console.log(update)
     
     let somaDeItens: number = 0 
-
     /*
     Está é a quantidade de items em todo o carrinho
     */ 
@@ -109,6 +113,8 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
         )
         return somaDeItens
     }
+
+    console.log(update)
 
     
     console.log("quantidadeDeItemsNoCarrinho")
@@ -140,7 +146,22 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
               (response) => {
                 if(response.status == 200){
                   toast.info("Produto adicionado ao carrinho com sucesso!")
-                  update ++
+                  console.log("update 0")
+                  console.log(update)
+                  setUpdate(prevValue => {
+                    return prevValue+1	
+                     })
+                  console.log("update 1")
+                  console.log(update)
+
+                  console.log("update 2")
+                  console.log(update)
+                  setUpdate(
+                     quantidadeDeItemsNoCarrinho()
+                    )
+                  console.log("update 3")
+                  console.log(update)
+
                 }
                 else if(response.status == 500){
                   toast.error("Problemas com o servidor :(")
