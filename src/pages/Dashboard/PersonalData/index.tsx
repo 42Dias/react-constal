@@ -28,6 +28,7 @@ import {
 import { toast } from "react-toastify";
 import axios from "axios";
 import { Field, Form, Formik } from "formik";
+import { format } from "path";
 
 export default function PersonalData() {
   const [showModal1, setShowModal1] = React.useState(false);
@@ -553,13 +554,17 @@ switch (accountType) {
 
           <CardDatailsContent>
             <ContentDetails>
-              <h3>CNPJ: <span> {cnpj} </span></h3>
+              <h3>CNPJ: <span> {
+                maskedCNPJ
+                } </span></h3>
             </ContentDetails>
           </CardDatailsContent>
 
           <CardDatailsContent>
             <ContentDetails>
-              <h3>Telefone: <span> {telefone}</span></h3>
+              <h3>Telefone: <span> {
+              maskedTelefone
+              }</span></h3>
             </ContentDetails>
           </CardDatailsContent>
 
@@ -571,7 +576,23 @@ switch (accountType) {
 
           <CardDatailsContent>
             <ContentDetails>
-              <h3>Website: <span> {website} </span></h3>
+              <h3>Website: 
+              <span>  
+              <a
+              style={
+                {
+                  backgroundColor: 'transparent',
+                  color: 'rgba(0, 0, 0, 0.65)',
+                  display: 'inline',
+                  fontWeight: 'lighter',
+                }
+              }
+              href={website} 
+              target="_blank">
+                  {website}
+              </a> 
+                 </span>
+              </h3>
             </ContentDetails>
           </CardDatailsContent>
           </>    
