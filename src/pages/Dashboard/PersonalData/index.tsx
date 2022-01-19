@@ -65,7 +65,7 @@ export default function PersonalData() {
   const [estado, setEstado] = useState('')
   const [banco, setBanco]=useState<any>();
   const [tipoDeConta, setTipoDeConta]=useState<any>();
-  const [numeroCartao, setNumeroCartao]=useState<any>();
+  const [numeroCartao, setNumeroCartao]=useState<any>('');
   const [cartaoAgencia, setCartaoAgencia] = useState<any>();
 
   const [bairro, setBairro] = useState('')
@@ -630,6 +630,16 @@ switch (accountType) {
                     />
                     </ContentFormNew>
 
+
+                    <ContentFormNew>
+                    <label htmlFor="">Ramal</label>
+                    <input type="text" placeholder="Ramal"
+                    value={ramal}
+
+                    onChange={(text) => setRamal(text.target.value)}
+                    />
+                    </ContentFormNew>
+
                     <ContentFormNew>
                     <label htmlFor="">Telefone</label>
                     <input type="text" placeholder="Telefone"
@@ -658,14 +668,6 @@ switch (accountType) {
                     />
                     </ContentFormNew>
 
-                    <ContentFormNew>
-                    <label htmlFor="">Ramal</label>
-                    <input type="text" placeholder="Ramal"
-                    value={ramal}
-
-                    onChange={(text) => setRamal(text.target.value)}
-                    />
-                    </ContentFormNew>
 
                     <ContentFormNew>
                     <label htmlFor="">Website</label>
@@ -677,98 +679,18 @@ switch (accountType) {
                     />
                     </ContentFormNew>
 
-                    <ContentFormNew>
-                    <label htmlFor="">Cep</label>
-                    <input type="text" placeholder="Cep"
-                    value={cep}
-
-                    onChange={(text) => setCep(text.target.value)}
-                    />
-                    </ContentFormNew>
-
-                    <ContentFormNew>
-                    <label htmlFor="">Logradouro</label>
-                    <input type="text" placeholder="Logradouro"
-                    value={logradouro}
-
-                    onChange={(text) => setLogradouro(text.target.value)}
-                    />
-                    </ContentFormNew>
-
-                    <ContentFormNew>
-                    <label htmlFor="">Numero</label>
-                    <input type="text" placeholder="Numero"
-                    value={numero}
-
-                    onChange={(text) => setNumero(text.target.value)}
-                    />
-                    </ContentFormNew>
-
-                    <ContentFormNew>
-                    <label htmlFor="">Complemento</label>
-                    <input type="text" placeholder="Complemento"
-                    value={complemento}
-
-                    onChange={(text) => setComplemento(text.target.value)}
-                    />
-                    </ContentFormNew>
-
-                    <ContentFormNew>
-                    <label htmlFor="">Ponto de Referência</label>
-                    <input type="text" placeholder="PontoReferencia"
-                    value={pontoReferencia}
-
-                    onChange={(text) => setPontoReferencia(text.target.value)}
-                    />
-                    </ContentFormNew>
-
-                    <ContentFormNew>
-                    <label htmlFor="">Cidade</label>
-                    <input type="text" placeholder="Cidade"
-                    value={cidade}
-
-                    onChange={(text) => setCidade(text.target.value)}
-                    />
-                    </ContentFormNew>
-
-                    <ContentFormNew>
-                    <label htmlFor="">Estado</label>
-                    <input type="text" placeholder="Estado"
-                    value={estado}
-
-                    onChange={(text) => setEstado(text.target.value)}
-                    />
-                    </ContentFormNew>
-
-                    <ContentFormNew>
-                    <label htmlFor="">Bairro</label>
-                    <input type="text" placeholder="Bairro"
-                    value={bairro}
-
-                    onChange={(text) => setBairro(text.target.value)}
-                    />
-                    </ContentFormNew>
-
                   <ContentFormNew>
                   <label htmlFor="">Seu Banco</label>
-                  <select onChange={(text) => {setBanco(text.target.value); console.log(text.target.value)}}>
+                  <select onChange={(text) => {
+                    setBanco(text.target.value); 
+                    checkAccountType(text.target.value)
+                                      }}>
                     {bancos.map((banco: any) => (
                       <option value={banco}>{banco}</option>
                     ))}
                   </select>
                 </ContentFormNew>
 
-                <ContentFormNew>
-                    <label htmlFor="">Numero do cartão</label>
-                    <input type="number" placeholder={formatAgencia}
-                    
-                    maxLength={10} 
-                     
-                    value={numeroCartao}
-
-                    onChange={(text) => setNumeroCartao(text.target.value)}
-                    />
-                </ContentFormNew>
 
                 <ContentFormNew>
                   <label htmlFor="">Tipo De Conta</label>
@@ -776,7 +698,6 @@ switch (accountType) {
                   <select onChange={(text) => {
                     setTipoDeConta(text.target.value);
                     console.log(text.target.value)
-                    checkAccountType(text.target.value)
                     }}>
                   <option value='Poupança'>Conta Poupança</option>
                   <option value='Corrente'>Conta Corrente</option>
@@ -787,10 +708,33 @@ switch (accountType) {
                 </ContentFormNew>
 
                 <ContentFormNew>
-                  <label htmlFor="">Agência</label>
+                    <label htmlFor="">Numero do cartão</label>
+                    <p>
+                    Formato do Cartão <br />
+                    {formatCartao}
+                    </p>
+                    <input type="text" placeholder={formatCartao}
                     
-                  <input type="number" 
-                  // placeholder="0000111122223333"
+                    maxLength={10} 
+                     
+                    value={numeroCartao}
+
+                    onChange={(text) => {
+                      setNumeroCartao(text.target.value)
+                      console.log("numero do cartão:")
+                      console.log(text.target.value)
+                      console.log(numeroCartao)
+                    }}
+                    />
+                </ContentFormNew>
+                
+                <ContentFormNew>
+                  <label htmlFor="">Agência</label>
+                  <p>
+                    Formato da Agência <br />
+                    {formatAgencia}
+                  </p>
+                  <input type="text" 
                     placeholder={formatAgencia}
                     maxLength={10} 
                      
