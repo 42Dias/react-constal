@@ -154,13 +154,6 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
                   console.log("update 1")
                   console.log(update)
 
-                  console.log("update 2")
-                  console.log(update)
-                  setUpdate(
-                     quantidadeDeItemsNoCarrinho()
-                    )
-                  console.log("update 3")
-                  console.log(update)
 
                 }
                 else if(response.status == 500){
