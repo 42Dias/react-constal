@@ -191,13 +191,6 @@ const Header = (): JSX.Element => {
 
   }
 
-  async function loadCart() {
-    const allCart: any = await api.get(`carrinho/`)
-    console.log("allCart")
-    console.log(allCart.data.count)
-    // return allCart.data.rows.lenght;
-    setCartSize(allCart.data.count);
-  }
 
   function handleClickMain() {
     history.push("/");
@@ -224,18 +217,29 @@ const Header = (): JSX.Element => {
   }
 
   useEffect(() => {
-    loadUser();
-    if (role == 'pessoa') {
-      loadCart()
-    }
-  }, [update]);
+    // loadUser();
+    // if (role == 'pessoa') {
 
+      // }
+      async function loadCart() {
+        const allCart: any = await api.get(`carrinho/`)
+        console.log("allCart")
+        console.log(allCart.data.count)
+        // return allCart.data.rows.lenght;
+        setCartSize(allCart.data.count);
+
+      }
+      loadCart()
+  }, [update]);
+  
 
   return (
     <>
       <GlobalStyles />
       <Container>
+{/*         
         {/* 
+{/*         
         <header>
           <nav>
             <ul className={click ? "nav-options active" : "nav-options"}>
@@ -304,11 +308,11 @@ const Header = (): JSX.Element => {
                     <Cart to="/cart">
                       <div>
                         <span>Meu carrinho</span> <br />
-                        {/* <span data-testid="cart-size">
+                        <span data-testid="cart-size">
                           {cartSize == 1
                             ? `${cartSize} item`
                             : `${cartSize} itens`}
-                        </span> */}
+                        </span>
                       </div>
                       <FiShoppingBag size={18} />
                     </Cart>
