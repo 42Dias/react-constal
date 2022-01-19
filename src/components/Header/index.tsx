@@ -217,10 +217,10 @@ const Header = (): JSX.Element => {
   }
 
   useEffect(() => {
-    // loadUser();
-    // if (role == 'pessoa') {
+    loadUser();
+    if (role == 'pessoa') {
 
-      // }
+      }
       async function loadCart() {
         const allCart: any = await api.get(`carrinho/`)
         console.log("allCart")
@@ -237,8 +237,6 @@ const Header = (): JSX.Element => {
     <>
       <GlobalStyles />
       <Container>
-{/*         
-        {/* 
 {/*         
         <header>
           <nav>
