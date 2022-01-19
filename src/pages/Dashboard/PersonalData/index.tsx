@@ -82,6 +82,18 @@ export default function PersonalData() {
   const [formatCartao, setFormatCartao] = useState("99999999-D");
   const [formatAgencia, setFormatAgencia] = useState("9999-D");
 
+  const [maskedTelefone, setMaskedTelefone] = useState();
+  const [maskedCNPJ, setMaskedCNPJ] = useState();
+
+  function formatarNumero(v: any){
+    v=v.replace(/\D/g,""); //Remove tudo o que não é dígito
+    v=v.replace(/^(\d{2})(\d)/g,"($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
+    v=v.replace(/(\d)(\d{4})$/,"$1-$2"); //Coloca hífen entre o quarto e o quinto dígitos
+    return v;
+}
+  function formatarCnpj(v: any){
+    return v.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5")
+  }
 
     useEffect(
       
@@ -124,6 +136,8 @@ export default function PersonalData() {
             setTipoDeConta(response.cartaoTipo)
             setBanco(response.cartaoBanco)
             setCartaoAgencia(response.cartaoAgencia)
+            setMaskedTelefone(formatarNumero(response.telefone))
+            setMaskedCNPJ(formatarCnpj(response.cnpj))
         }
         loadData()
         setBancos(['Itaú', 'Bradesco', 'Caixa Econômica', 'Banco do Brasil', 'Santander', 'Banrisul', 'Sicredi', 'Sicoob', 'Inter', 'BRB', 'Via Credi', 'Neon', 'Votorantim', 'Nubank', 'Pagseguro', 'Banco Original', 'Safra', 'Modal', 'Banestes','Unicred','Money Plus','Mercantil do Brasil','JP Morgan','Gerencianet Pagamentos do Brasil', 'Banco C6', 'BS2', 'Banco Topazio', 'Uniprime', 'Stone', 'Banco Daycoval', 'Rendimento', 'Banco do Nordeste', 'Citibank', 'PJBank', 'Cooperativa Central de Credito Noroeste Brasileiro', 'Uniprime Norte do Paraná', 'Global SCM', 'Next', 'Cora', 'Mercado Pago', 'Banco da Amazonia', 'BNP Paribas Brasil', 'Juno','Cresol','BRL Trust DTVM','Banco Banese','Banco BTG Pactual','Banco Omni','Acesso Soluções de Pagamento','CCR de São Miguel do Oeste','Polocred','Ótimo']
@@ -131,6 +145,13 @@ export default function PersonalData() {
       }
       , []
     )
+    console.log("-------------------")
+    console.log("maskedCNPJ")
+    console.log(maskedCNPJ)
+    console.log("maskedCNPJ")
+
+    console.log("-------------------")
+
     
 
   async function criarOuAtualizarEmpresa() {
@@ -485,6 +506,8 @@ switch (accountType) {
         <CardDatails>
 
         <InputMask mask="99.999.999/9999-99" 
+        // value={maskedCNPJ} 
+
         // 01.161.734/0001-15
         onChange={
           (e: any) => {
@@ -499,7 +522,7 @@ switch (accountType) {
         }
          />
          <InputMask mask="(99) 9999-99999" 
-        // value={props.value} 
+        // value={maskedTelefone}  
         onChange={
           (e: any) => {
             let telefone = e.target.value
