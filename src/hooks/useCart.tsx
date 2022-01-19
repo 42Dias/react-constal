@@ -289,7 +289,16 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
         },              
         timeout: 50000,
         data   : productAlreadyInCart
-      })              
+      }).then(
+        (response) => {
+          if(response.status == 200){
+            toast.info("Certo!")
+          }
+          else{
+            toast.error("Erro :(")
+          }
+        }
+      )              
 
     } catch {
       toast.error('Erro na remoção do produto');
