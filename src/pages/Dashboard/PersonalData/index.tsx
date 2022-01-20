@@ -570,7 +570,7 @@ switch (accountType) {
 
           <CardDatailsContent>
             <ContentDetails>
-              <h3>Celular: <span> {celular}</span></h3>
+              <h3>Celular: <span> {celular? formatarNumero(celular): false}</span></h3>
             </ContentDetails>
           </CardDatailsContent>
 
@@ -651,21 +651,24 @@ switch (accountType) {
                     </h3>
                     <ContentFormNew>
                     <label htmlFor="">Nome da Empresa</label>
-                    <input type="text" placeholder="Empresa"
+                    <input
+                    required type="text" placeholder="Empresa"
                     value={nome}
                     onChange={(text) => setNome(text.target.value)}
                     />
                     </ContentFormNew>
                     <ContentFormNew>
                     <label htmlFor="">Marca</label>
-                    <input type="text" placeholder="Marca"
+                    <input
+                    required type="text" placeholder="Marca"
                     value={marca}
                     onChange={(text) => setMarca(text.target.value)}
                     />
                     </ContentFormNew>
                     <ContentFormNew>
                     <label htmlFor="">Razão Social</label>
-                    <input type="text" placeholder="Razão Social"
+                    <input
+                    required type="text" placeholder="Razão Social"
                     value={razaoSocial}
 
                     onChange={(text) => setRazaoSocial(text.target.value)}
@@ -675,7 +678,8 @@ switch (accountType) {
 
                     <ContentFormNew>
                     <label htmlFor="">Ramal</label>
-                    <input type="text" placeholder="Ramal"
+                    <input
+                    required type="text" placeholder="Ramal"
                     value={ramal}
 
                     onChange={(text) => setRamal(text.target.value)}
@@ -684,12 +688,14 @@ switch (accountType) {
 
                     <ContentFormNew>
                     <label htmlFor="">Telefone</label>
-                    {/* <input type="text" placeholder="Telefone"
+                    {/* <input
+                    required type="text" placeholder="Telefone"
                     value={telefone}
 
                     onChange={(text) => setTelefone(text.target.value)}
                     /> */}
-                    <InputMask mask="(99) 9999-99999"
+                    <InputMask
+                    required mask="(99) 9999-99999"
                     value={maskedTelefone} 
                     onChange={
                       (e: any) => {
@@ -709,7 +715,8 @@ switch (accountType) {
 
                     <ContentFormNew>
                     <label htmlFor="">Celular</label>
-                    <input type="text" placeholder="Celular"
+                    <input
+                    required type="text" placeholder="Celular"
                     value={celular}
 
                     onChange={(text) => setCelular(text.target.value)}
@@ -717,7 +724,8 @@ switch (accountType) {
                     </ContentFormNew>
                     <ContentFormNew>
                       <label htmlFor="">CNPJ</label>
-                      <InputMask mask="99.999.999/9999-99" 
+                      <InputMask
+                      required mask="99.999.999/9999-99" 
                       value={maskedCNPJ} 
 
                       // 01.161.734/0001-15
@@ -740,7 +748,8 @@ switch (accountType) {
 
                     <ContentFormNew>
                     <label htmlFor="">Website</label>
-                    <input type="text" placeholder="Website"
+                    <input
+                    required type="text" placeholder="Website"
                     value={website}
 
 
@@ -782,7 +791,8 @@ switch (accountType) {
                     Formato do Cartão <br />
                     {formatCartao}
                     </p>
-                    <input type="text" placeholder={formatCartao}
+                    <input
+                    required type="text" placeholder={formatCartao}
                     
                     maxLength={10} 
                      
@@ -803,7 +813,8 @@ switch (accountType) {
                     Formato da Agência <br />
                     {formatAgencia}
                   </p>
-                  <input type="text" 
+                  <input
+                  required type="text" 
                     placeholder={formatAgencia}
                     maxLength={10} 
                      
@@ -832,7 +843,8 @@ switch (accountType) {
 
                     <ContentFormNew>
                     <label htmlFor="">Pix</label>
-                    <input type="text" placeholder="Pix"
+                    <input
+                    required type="text" placeholder="Pix"
                     value={pix}
 
                     onChange={(text) => setPix(text.target.value)}
@@ -859,6 +871,7 @@ switch (accountType) {
                     <ContentFormNew className='form-control-group'>
                       <label>Cep</label>
                       <Field
+                      required
                       value={cep}
                         name='cep' type='text'
                         onBlur={(ev: any) => onBlurCep(ev, setFieldValue)}
@@ -870,6 +883,7 @@ switch (accountType) {
                     <ContentFormNew className='form-control-group'>
                       <label>Logradouro</label>
                       <Field 
+                      required
                       value={logradouro}
                       name='logradouro'
                       type='text'
@@ -879,6 +893,7 @@ switch (accountType) {
                     <ContentFormNew className='form-control-group'>
                       <label>Número</label>
                       <Field 
+                      required
                       value={numero}
                       name='numero' 
                       type='text'
@@ -889,6 +904,7 @@ switch (accountType) {
                     <ContentFormNew className='form-control-group'>
                       <label>Complemento</label>
                       <Field 
+                      required
                       value={complemento}
                       name='complemento' 
                       type='text'
@@ -899,6 +915,7 @@ switch (accountType) {
                     <ContentFormNew className='form-control-group'>
                       <label>Bairro</label>
                       <Field 
+                      required
                       value={bairro}
                       name='bairro' 
                       type='text'
@@ -909,6 +926,7 @@ switch (accountType) {
                     <ContentFormNew className='form-control-group'>
                       <label>Cidade</label>
                       <Field 
+                      required
                       value={cidade}
                       name='cidade' 
                       type='text'
@@ -919,6 +937,7 @@ switch (accountType) {
                     <ContentFormNew className='form-control-group'>
                       <label>Estado</label>
                       <Field 
+                      required
                       value={estado}
                       component='select' 
                       name='uf'
@@ -995,73 +1014,131 @@ switch (accountType) {
               {logradouro ? 'Alterar ':'Adicionar '} 
                endereço</h3>
 
-              <ContentFormNew>
-                <label htmlFor="">CEP</label>
-                <input type="number" placeholder="CEP"
-                value={cep}
-                onChange={
-                  (text) => setCep(text.target.value)
-                } />
-              </ContentFormNew>
 
               <ContentFormNew>
-                <label htmlFor="">Logradouro</label>
-                <input type="text" placeholder="Logradouro"
-                value={logradouro}
+                <Formik
+                onSubmit={onSubmitInput}
+                validateOnMount
+                initialValues={{
+                  cep: '',
+                  logradouro: '',
+                  numero: '',
+                  complemento: '',
+                  bairro: '',
+                  cidade: '',
+                  uf: '',
+                }}
+                render={({ isValid, setFieldValue }) => (
+                  <Form>
+                    
+                    <ContentFormNew className='form-control-group'>
+                      <label>Cep</label>
+                      <Field
+                      required
+                      value={cep}
+                        name='cep' type='text'
+                        onBlur={(ev: any) => onBlurCep(ev, setFieldValue)}
+                        onChange={(text: any) => setCep(text.target.value)}
+                        />
+                        
+                    </ContentFormNew>
 
-                onChange={
-                  (text) => setLogradouro(text.target.value)
-                } />
-              </ContentFormNew>
+                    <ContentFormNew className='form-control-group'>
+                      <label>Logradouro</label>
+                      <Field 
+                      required
+                      value={logradouro}
+                      name='logradouro'
+                      type='text'
+                      onChange={(text: any) => setLogradouro(text.target.value)} />
+                    </ContentFormNew>
 
-              <ContentFormNew>
-                <label htmlFor="">Número</label>
-                <input type="number" placeholder="Número"
-                value={numero}
+                    <ContentFormNew className='form-control-group'>
+                      <label>Número</label>
+                      <Field 
+                      required
+                      value={numero}
+                      name='numero' 
+                      type='text'
+                      onChange={(text: any) => setNumero(text.target.value)}
+                       />
+                    </ContentFormNew>
 
-                onChange={
-                  (text) => setNumero(text.target.value)
-                } />
-              </ContentFormNew>
+                    <ContentFormNew className='form-control-group'>
+                      <label>Complemento</label>
+                      <Field 
+                      required
+                      value={complemento}
+                      name='complemento' 
+                      type='text'
+                      onChange={(text: any) => setComplemento(text.target.value)}
+                       />
+                    </ContentFormNew>
 
-              <ContentFormNew>
-                <label htmlFor="">Complemento</label>
-                <input type="text" placeholder="Complemento"
-                value={complemento}
+                    <ContentFormNew className='form-control-group'>
+                      <label>Bairro</label>
+                      <Field 
+                      required
+                      value={bairro}
+                      name='bairro' 
+                      type='text'
+                      onChange={(text: any) => setBairro(text.target.value)}
+                       />
+                    </ContentFormNew>
 
-                onChange={
-                  (text) => setComplemento(text.target.value)
-                } />
-              </ContentFormNew>
+                    <ContentFormNew className='form-control-group'>
+                      <label>Cidade</label>
+                      <Field 
+                      required
+                      value={cidade}
+                      name='cidade' 
+                      type='text'
+                      onChange={(text: any) => setCidade(text.target.value)}
+                       />
+                    </ContentFormNew>
 
-              <ContentFormNew>
-                <label htmlFor="">Referência</label>
-                <input type="text" placeholder="Referência"
-                value={pontoReferencia}
-
-                onChange={
-                  (text) => setPontoReferencia(text.target.value)
-                } />
-              </ContentFormNew> 
-
-              <ContentFormNew>
-                <label htmlFor="">Estado</label>
-                <input type="text" placeholder="Estado"
-                value={estado}
-
-                onChange={
-                  (text) => setEstado(text.target.value)
-                } />
-              </ContentFormNew>
-
-              <ContentFormNew>
-                <label htmlFor="">Cidade</label>
-                <input type="text" placeholder="Cidade"
-                value={cidade}
-
-                onChange={
-                  (text) => setCidade(text.target.value)
-                } />
+                    <ContentFormNew className='form-control-group'>
+                      <label>Estado</label>
+                      <Field 
+                      required
+                      value={estado}
+                      component='select' 
+                      name='uf'
+                      onChange={(text: any) => setEstado(text.target.value)}
+                      >
+                        <option value=''>Selecione o Estado</option>
+                        <option value='AC'>Acre</option>
+                        <option value='AL'>Alagoas</option>
+                        <option value='AP'>Amapá</option>
+                        <option value='AM'>Amazonas</option>
+                        <option value='BA'>Bahia</option>
+                        <option value='CE'>Ceará</option>
+                        <option value='DF'>Distrito Federal</option>
+                        <option value='ES'>Espírito Santo</option>
+                        <option value='GO'>Goiás</option>
+                        <option value='MA'>Maranhão</option>
+                        <option value='MT'>Mato Grosso</option>
+                        <option value='MS'>Mato Grosso do Sul</option>
+                        <option value='MG'>Minas Gerais</option>
+                        <option value='PA'>Pará</option>
+                        <option value='PB'>Paraíba</option>
+                        <option value='PR'>Paraná</option>
+                        <option value='PE'>Pernambuco</option>
+                        <option value='PI'>Piauí</option>
+                        <option value='RJ'>Rio de Janeiro</option>
+                        <option value='RN'>Rio Grande do Norte</option>
+                        <option value='RS'>Rio Grande do Sul</option>
+                        <option value='RO'>Rondônia</option>
+                        <option value='RR'>Roraima</option>
+                        <option value='SC'>Santa Catarina</option>
+                        <option value='SP'>São Paulo</option>
+                        <option value='SE'>Sergipe</option>
+                        <option value='TO'>Tocantins</option>
+                      </Field>
+                    </ContentFormNew>
+                  </Form>
+                )}
+              />
               </ContentFormNew>
               <ContentFormNew>
                     {loading ? (
@@ -1077,7 +1154,7 @@ switch (accountType) {
                     
               <NewBtn>
                 <button type="button" onClick={messageCancel}>Cancelar</button>
-                <button type="button" onClick={changePlace}>Adicionar</button>
+                <button type="submit" onClick={changePlace}>Adicionar</button>
               </NewBtn>
             </ModalContent>
           </div>
