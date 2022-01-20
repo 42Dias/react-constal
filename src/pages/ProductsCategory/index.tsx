@@ -3,7 +3,7 @@ import Footer from "../../components/Footer";
 
 import { Link } from "react-router-dom";
 import React, { useState ,useEffect, useRef, useCallback } from "react";
-import { api, ip, role } from "../../services/api";
+import { api, ip, role, semImagem } from "../../services/api";
 import { formatPrice } from "../../util/format";
 
 import { useCart } from "../../hooks/useCart";
@@ -63,7 +63,9 @@ export default function ProductsCategory() {
       <GridProdsFour>
     {products.map((product: any, index: number) => {
           return <ProdContainerSingle key={product.id}>
-                    <img src={product.imagemUrl} alt={product.nome} /> 
+                    <Link to={`/produto/${product.id}`}>
+                        <img src={product.imagemUrl || semImagem} alt={product.nome} />
+                    </Link> 
                     <h5>{product.nome}</h5>
                     <p>{product.descricao}</p>
                     <div className="btn-group-add">
