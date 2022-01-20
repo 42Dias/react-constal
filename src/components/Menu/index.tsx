@@ -80,6 +80,7 @@ export function Menu() {
                 <Link to="/promocoes">Promoções</Link>
                 <Link to="/vendas">Vendas</Link>
                 <Link to="/perguntas">Perguntas</Link>
+                <Link to="/contas">Contas a Receber</Link>
                 <Link to="/assinaturas">Planos</Link>
               </div>
             </div>
@@ -111,6 +112,7 @@ export function Menu() {
                 <Link to="/enviar-banner">Banners</Link>
                 <Link to="categorias-fixar" >Fixar categorias</Link>
                 <Link to="/perguntas">Perguntas</Link>
+                <Link to="/contas">Contas a Receber</Link>
                 <Link to="/produtos">Produtos</Link>
               </div>
             </div>
