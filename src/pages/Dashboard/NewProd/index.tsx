@@ -127,7 +127,7 @@ export default function NewProd() {
         quantidadeNoEstoque: quantidade,
         frete: frete,
         categoria: categoria,
-        categoriaId: categoria,
+        categoriaId: categoriaId,
         imagemUrl: imagem,
         status: "pendente",
       },
@@ -137,7 +137,8 @@ export default function NewProd() {
     return data;
   }
 
-  async function addProduct() {
+  async function addProduct(e: any) {
+    e.preventDefault()
     setLoading(true)
     const data = setValues();
     const response: any = await api.post("produto", data).then((response) => {
@@ -215,7 +216,8 @@ export default function NewProd() {
   }
 
 
-  async function changeProduct() {
+  async function changeProduct(e: any) {
+    e.preventDefault()
     let data;
     console.log(compararProd.nome != nome)
     if(
@@ -279,7 +281,8 @@ export default function NewProd() {
 
     setProducts(updatedProducts)
   }
-  async function addPromotion() {
+  async function addPromotion(e: any) {
+    e.preventDefault()
     setLoading(true)
     const data = {
       data: {
@@ -309,7 +312,8 @@ export default function NewProd() {
     );
   }
 
-  async function addCategoria() {
+  async function addCategoria(e: any) {
+    e.preventDefault()
     setLoading(true)
     const data = {
       data: {
@@ -358,6 +362,7 @@ export default function NewProd() {
       setQuantidade(products[index].quantidadeNoEstoque);
       setFrete(products[index].frete);
       setCategoria(products[index].categoria);
+      console.log(products[index].categoria)
       setCategoriaId(products[index].categoriaId)
       setEmpresaId(products[index].empresaId);
       setStatusProd(products[index].status);
@@ -615,7 +620,9 @@ export default function NewProd() {
               <ModalFlex>
                 <AiOutlineClose onClick={() => setShowModal1(false)} />
               </ModalFlex>
-              <ModalContent>
+              <ModalContent
+              onSubmit={(e) => changeProduct(e)}
+              >
                 <img src={upload} alt="" />
                 <h3>Alterar produto</h3>
 
@@ -673,7 +680,7 @@ export default function NewProd() {
                   placeholder="R$ 00,00"
                   value={handleChangePrice}
                   // type='number'
-                  pattern="[0-9]+"
+                  // pattern="[0-9]+"
                   onChange={(text: any) => {
                     // ESTÁ MANDANDO COM ESPAÇO NO PRIMEIRO CARACTER
                     setHandleChangePrice(handlePriceOnMask(text.target.value))
@@ -729,11 +736,36 @@ export default function NewProd() {
 
                 <ContentFormNew>
                   <label htmlFor="">Tipo de categoria</label>
-                  <select onChange={(text) => {setCategoria(text.target.value); console.log(text.target.value);setCategoriaId(text.target.value);}}>
+                  <select
+                  required 
+                  onChange={(text) => {
+                    setCategoria(text.target.value);
+                    console.log(text.target.value);
+                    setCategoriaId(text.target.value);
+                    }
+                    }>
                     {categorias.map((categoria) => (
-                      <option value={categoria.id}>{categoria.nome}</option>
+                      <option
+                      onClick={(text) => {
+                        //@ts-ignore
+                        setCategoria(text.target.value);
+                        //@ts-ignore
+                        console.log(text.target.value);
+                        //@ts-ignore
+                        setCategoriaId(text.target.value);}
+                      } 
+                      value={categoria.id}>{categoria.nome}</option>
                     ))}
                   </select>
+                  <Btn
+                  className="btn-add-category"
+                  onClick={() => {
+                    setShowModal2(false);
+                    setShowModal4(true);
+                  }}
+                >
+                  Não encontrou a sua categoria? adicione uma aqui.
+                </Btn>
                 </ContentFormNew>
                 {loading ? (
                   <img
@@ -748,7 +780,7 @@ export default function NewProd() {
                   <button type="button" onClick={messageCancel}>
                     Cancelar
                   </button>
-                  <button type="button" onClick={() => changeProduct()}>
+                  <button type="submit" onSubmit={(e) => changeProduct(e)}>
                     Adicionar
                   </button>
                 </div>
@@ -769,7 +801,9 @@ export default function NewProd() {
               <AiOutlineClose onClick={closeModal} />
             </ModalFlex>
 
-            <ModalContent>
+            <ModalContent
+            onSubmit={addProduct}
+            >
               <img src={upload} alt="" />
               <h3>Novo produto</h3>
 
@@ -809,14 +843,26 @@ export default function NewProd() {
               <ContentFormNew>
                 <label htmlFor="">Tipo de categoria</label>
                 <select
-                  required
-                  onChange={(text) => setCategoria(text.target.value)}
-                >
-                  {categorias.map((categoria) => (
-                    <option value={categoria.id}>{categoria.nome}</option>
-                  ))}
-
-                </select>
+                  required 
+                  onChange={(text) => {
+                    setCategoria(text.target.value);
+                    console.log(text.target.value);
+                    setCategoriaId(text.target.value);
+                    }
+                    }>
+                    {categorias.map((categoria) => (
+                      <option
+                      onClick={(text) => {
+                        //@ts-ignore
+                        setCategoria(text.target.value);
+                        //@ts-ignore
+                        console.log(text.target.value);
+                        //@ts-ignore
+                        setCategoriaId(text.target.value);}
+                      } 
+                      value={categoria.id}>{categoria.nome}</option>
+                    ))}
+                  </select>
                 <Btn
                   className="btn-add-category"
                   onClick={() => {
@@ -846,7 +892,7 @@ export default function NewProd() {
                   placeholder="R$ 00,00"
                   value={handleChangePrice}
                   // type='number'
-                  pattern="[0-9]+"
+                  // pattern="[0-9]+"
                   onChange={(text: any) => {
                     // ESTÁ MANDANDO COM ESPAÇO NO PRIMEIRO CARACTER
                     setHandleChangePrice(handlePriceOnMask(text.target.value))
@@ -951,7 +997,7 @@ export default function NewProd() {
                 <button type="button" onClick={messageCancel}>
                   Cancelar
                 </button>
-                <button type="button" onClick={addProduct}>
+                <button type="submit" onSubmit={addProduct}>
                   Adicionar
                 </button>
               </div>
@@ -971,18 +1017,21 @@ export default function NewProd() {
               <AiOutlineClose onClick={closeModal} />
             </ModalFlex>
 
-            <ModalContent>
+            <ModalContent
+             onSubmit={addPromotion}
+            >
               <h3>Nova promoção</h3>
 
 
               <ContentFormNew>
                 <label htmlFor="">Novo preço</label>
                 <input 
+                  required
                   type="text"
                   placeholder="R$ 00,00"
                   value={handleChangePrice}
                   // type='number'
-                  pattern="[0-9]+"
+                  // pattern="[0-9]+"
                   onChange={(text: any) => {
                     // ESTÁ MANDANDO COM ESPAÇO NO PRIMEIRO CARACTER
                     setHandleChangePrice(handlePriceOnMask(text.target.value))
@@ -993,7 +1042,8 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Porcentagem</label>
-                <input required
+                <input
+                required
                 type="number" 
                 value={porcentagem}
                 min="1" max="100" step="0.1"
@@ -1059,7 +1109,7 @@ export default function NewProd() {
                 <button type="button" onClick={messageCancel}>
                   Cancelar
                 </button>
-                <button type="button" onClick={addPromotion}>
+                <button type="submit" onSubmit={addPromotion}>
                   Adicionar
                 </button>
               </div>
@@ -1079,14 +1129,16 @@ export default function NewProd() {
               <AiOutlineClose onClick={closeModal} />
             </ModalFlex>
 
-            <ModalContent>
+            <ModalContent
+            onSubmit={addCategoria}
+            >
               <h3>Nova Categoria</h3>
 
               <ContentFormNew>
                 <label htmlFor="">Nova Categoria</label>
                 <input
-                  value={newCategoria}
                   required
+                  value={newCategoria}
                   type="text"
                   placeholder="Computador potente"
                   onChange={(text) => setNewCategoria(text.target.value)}
@@ -1105,7 +1157,7 @@ export default function NewProd() {
                 <button type="button" onClick={messageCancel}>
                   Cancelar
                 </button>
-                <button type="button" onClick={addCategoria}>
+                <button type="submit" onSubmit={addCategoria}>
                   Adicionar
                 </button>
               </div>
