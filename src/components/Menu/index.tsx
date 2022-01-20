@@ -185,7 +185,7 @@ export function Menu() {
       case 'empresa': 
         return <>
          <Cliente/>
-         <Empresa />;
+         <Empresa />
          </>
          
       default:
