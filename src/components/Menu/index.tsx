@@ -27,14 +27,12 @@ export function Menu() {
   }
 
   async function loadCategorias() {
-    if(role == 'pessoa'){
       const categoriasResponse = await axios.get(''+ip+':8157/api/categoria-aprovados');
       const categoriasDoBack = categoriasResponse.data
       console.log("categoriasDoBack")
       console.log("categoriasDoBack")
       console.log(categoriasDoBack)
       setCategorias(categoriasDoBack)
-    }
 
     // setCategorias([])
 
@@ -180,9 +178,16 @@ export function Menu() {
   function renderSwitch(param: any) {
     switch (param) {
       case "admin":
-        return <Adm />
-      case 'empresa':
-        return <Empresa />;
+        return <>
+         <Cliente/>
+         <Adm />
+         </>
+      case 'empresa': 
+        return <>
+         <Cliente/>
+         <Empresa />;
+         </>
+         
       default:
         return <Cliente />
     }
