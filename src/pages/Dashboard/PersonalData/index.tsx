@@ -13,7 +13,7 @@ import { ModalFlex } from "../Promotions/styles";
 import Modal from "react-modal";
 
 // @ts-ignore
-import InputMask from "react-input-mask";
+import InputMask from 'react-input-mask';
 
 import {
   Btn,
