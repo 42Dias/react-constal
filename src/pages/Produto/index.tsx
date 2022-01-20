@@ -275,7 +275,7 @@ export default function Produto() {
         addProduct(id, counter);
       }
       else{
-        toast.error("Cadastre-se para habilitar o carrinho")
+        toast.error("Cadastre-se como cliente para habilitar o carrinho")
       }
     }
 
