@@ -1,8 +1,8 @@
 import Header from "../../../components/Header";
 
 import { Link } from "react-router-dom";
-import { Menu } from "../../../components/Menu";
-import { FiTrash } from "react-icons/fi";
+import { Menu } from "../../../components/MenuAdminOnly";
+import { FiMenu, FiTrash } from "react-icons/fi";
 
 import {
   CardDatails,
@@ -16,28 +16,19 @@ import axios from "axios";
 import React from "react";
 
 import { toast } from "react-toastify";
+import { Container, FlexLink } from "../../../components/Menu/styles";
 
 export default function Sendcategoria() {
 
   const [categorias = [], setcategorias] = useState<any[]>([]);
 
   const [categoriasDisplayed = [], setcategoriasDisplayed] = useState<any[]>([]);
-
+  
   const [categoriasInativa = [], setcategoriasInativa] = useState<any[]>([]);
   const [categoriasAtiva = [], setcategoriasAtiva] = useState<any[]>([]);
-
   
-  const [displyedStatus = [], setDisplyedStatus] = useState<any[]>([]);
-
-
-  const [categoriaNova, setcategoriaNova] = useState<any>();
   const [name, setName] = useState<any>("");
-  const [image, setImage] = useState('');
-
-  const [status, setStatus] = useState({
-    type: '',
-    mensagem: ''
-  });
+  
 
   async function addCategoria() {
     const data = {
@@ -58,6 +49,8 @@ export default function Sendcategoria() {
 
 
   async function makeRequisition(e: any){
+
+
     e.preventDefault()
     e.target.reset();
 
@@ -206,6 +199,41 @@ export default function Sendcategoria() {
   return (
     <>
       <Header />
+      <Container>
+        <FlexLink>
+          <div className="dropdown">
+            <button className="dropbtn">
+              <FiMenu />
+              <span>Categorias</span>
+            </button>
+            <div className="dropdown-content">
+              <div className="drop-grid">
+                {/* categorias do back? */}
+                {
+                  categoriasInativa.map(
+                    (categoria, index) => (
+                      <Link
+                        key={index}
+                        to={`/produto-categoria/${categoria.id}`}>{categoria.nome}</Link>
+                    )
+                  )
+                }
+              </div>
+            </div>
+          </div>
+
+          <div className="category-fix">
+            {            
+            categoriasAtiva.map(
+            (categoria, index) => (
+                <Link
+                  key={index}
+                  to={`/produto-categoria/${categoria.id}`}>{categoria.nome}</Link>
+                )
+            )}
+          </div>
+        </FlexLink>
+      </Container>
       <Menu />
       <div className="container">
         <CardDatails>
