@@ -110,14 +110,16 @@ export default function Promotions() {
     loadProducts();
   }, []);
 
-  function addNewPromotion(){
+  function addNewPromotion(e: any) {
+    e.preventDefault()
+    console.log(productCounter[0].empresaId)
     const data = {
       data: {
         "imagemPromocional": imagemPromocional,
         "promocaoCriacao": new Date(),
         "promocaoEncerramento": dataEncerramento,
         "promocaoId": uuid.v4(),
-        "empresaId": productCounter[1].empresaId
+        "empresaId": productCounter[0].empresaId
       }
     }
     console.log(data)
@@ -190,7 +192,9 @@ export default function Promotions() {
               <AiOutlineClose onClick={closeModal} />
             </ModalFlex>
 
-            <ModalContent>
+            <ModalContent
+            onSubmit={addNewPromotion}
+            >
               <h3>Produtos promocionais</h3>
 
               {indexs.length? (
@@ -213,22 +217,29 @@ export default function Promotions() {
 
               <ContentFormNew>
                 <label htmlFor="">Imagem Promocional</label>
-                <input required type="url" placeholder="https://www.suaImagem.com/imagem" 
-                onChange={event => setImagemPromocional(event.target.value)}
+                <input
+                 required
+                 type="url"
+                 placeholder="https://www.suaImagem.com/imagem" 
+                 onChange={event => setImagemPromocional(event.target.value)}
                 />
               </ContentFormNew>
               
               <ContentFormNew>
                 <label htmlFor="">Data de encerramento</label>
-                <input required type="date" placeholder="12/12/2022" 
+                <input 
+                required
+                type="date"
+                placeholder="12/12/2022" 
                 onChange={event => setDataEncerramento(event.target.value)} 
                 />
               </ContentFormNew>
 
               <div className="buttonsNew">
                 <button >Cancelar</button>
-                <button 
-                onClick={addNewPromotion}
+                <button
+                type="submit" 
+                onSubmit={addNewPromotion}
                 >Adicionar</button>
               </div>
             </ModalContent>
