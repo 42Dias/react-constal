@@ -1,13 +1,31 @@
 import Header from "../../../components/Header";
 import { Link } from "react-router-dom";
+import { Menu } from "../../../components/Menu";
 import { MenuSell, TitleVendas, ContainerMenuSell } from "./styles";
-import MenuEmpresa from "../../../components/MenuEmpresa";
+import { useEffect } from "react";
+import { ip, role, status } from "../../../services/api";
 
 export default function Payments() {
+  useEffect(
+    () => {
+      if(!role){
+        window.location.reload()
+      }
+      else{
+        if(role !== "admin" && role !== "empresa" || status === "pendente"){
+          // Simulate an HTTP redirect:
+          window.location.replace(`${ip}/#/erro`);
+        }
+      }
+  
+    }
+    ,[]
+  )
   return (
     <>
       <Header />
-      <MenuEmpresa />
+      <Menu />
+
       <div className="container">
         <TitleVendas>Pagamentos</TitleVendas>
 

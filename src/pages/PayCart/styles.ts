@@ -20,6 +20,11 @@ export const CenterPay = styled.div`
   flex-direction: column;
   padding: 40px 120px;
 
+  @media (max-width: 768px) {
+    height: 431px;
+    padding: 40px 20px;
+  }
+
   a {
     text-decoration: none;
     width: 244px;

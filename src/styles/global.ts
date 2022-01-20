@@ -20,7 +20,12 @@ export default createGlobalStyle`
   }
 
   body, input, button {
-    font: 14px Roboto, sans-serif;
+    font: 14px 'Poppins', sans-serif;
+  }
+
+  button {
+    cursor: pointer !important;
+    border: 0;
   }
 
   .container {

@@ -4,6 +4,9 @@ export const DetailsProdFirts = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 40px;
+  @media (max-width: 768px) {
+    margin-left: 0;
+  }
 `
 
 export const IconsContentStar = styled.div`
@@ -25,19 +28,20 @@ export const BoxProd = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
-  .oi {
+  .descprod {
     display: flex;
     flex-direction: column;
   }
-
   span {
     color: rgba(16, 16, 16, 0.69);
     font-size: 13px;
   }
-
   strong {
     font-size: 17px;
     padding: 3px 0;
+  }
+  @media (max-width: 768px) {
+    width: 100%;
   }
 `
 
@@ -46,7 +50,6 @@ export const BoxProdFirts = styled.div`
   align-items: flex-start;
   justify-content: center;
   flex-direction: column;
-
   .vendedor {
     text-decoration: underline;
     cursor: pointer;
@@ -58,10 +61,18 @@ export const ContainerProd = styled.div`
   justify-content: space-between;
   margin: 40px 0;
   img { 
-    width: 449px;
+    width: 320px;
     height: 481px;
     object-fit: cover;
     border-radius: 5px;
+  }
+  @media (max-width: 768px) {
+    display: flex;  
+    flex-direction: column;
+    margin: 40px 0;
+    img { 
+      width: 100%;
+    }
   }
 `
 
@@ -101,6 +112,22 @@ export const AddCartRight = styled.div`
   align-items: flex-end;
   flex-direction: column;
   justify-content: space-between;
+  button.fav {
+    width: 120px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    border: 0;
+    background: black;
+    color: white;
+    
+    svg {
+      color: white;
+      margin-left: 10px;
+    }
+  }
   a {
     text-decoration: none;
     color: white;
@@ -111,6 +138,9 @@ export const AddCartRight = styled.div`
     height: 45px;
     background: black;
     border-radius: 5px;
+    @media (max-width: 768px) {
+      width: 120px;
+    }
   }
 `
 
@@ -123,7 +153,7 @@ export const FlexBtnsProd = styled.div`
   }
 `;
 
-export const IconPlusMinus = styled.div`
+export const IconPlusMinus = styled.button`
   background: black;
   width: 30px;
   height: 30px;
@@ -131,13 +161,36 @@ export const IconPlusMinus = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 5px;
+  border: 0;
   svg {
     color: white;
   }
 `;
 
+export const ProdCaracteristicas = styled.div`
+  width: 100%;
+  height: 400px;
+  background: white;
+  border-radius: 5px;
+  padding: 0 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  div {
+    display: flex;
+    flex-direction: column;
+  }
+  span {
+    margin: 5px;
+    b {
+      font-weight: 500;
+    }
+  }
+`;
+
 export const ProdSecond = styled.div`
-  width: 960px;
+  width: 100%;
   height: 168px;
   background: white;
   border-radius: 5px;
@@ -145,6 +198,7 @@ export const ProdSecond = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin: 20px 0;
   h2 {
     margin: -5px 0 20px 0;  
   }
@@ -175,12 +229,10 @@ export const ModalContent = styled.div`
   justify-content: center;
   flex-direction: column;
   text-align: center;
-
   h3 {
     padding: 20px 0;
     font-size: 24px;
   }
-
   p {
     color: #4A4A4A;
     max-width: 420px;
@@ -198,9 +250,62 @@ export const SelectAdress = styled.div`
   background: #FAFAFA;
   border-radius: 5px;
   padding: 0 5px;
-
   small {
     color: #58A4B0;
     font-size: 14px;
   }
+`;
+
+export const ProdSecondComents = styled.div`
+  width: 100%;
+  height: 400px;
+  background: white;
+  border-radius: 5px;
+  padding: 0 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+  select {
+    width: 100%;
+    border: 0;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin: 5px 0;
+  }
+  textarea {
+    resize: none;
+    width: 100%;
+    height: 120px;
+    border: 0;
+    font-family: "Roboto";
+    margin: 5px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+  input[type=text], input[type=email] {
+    width: 100%;
+    border: 0;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid #ccc; 
+    margin: 5px 0;
+    padding: 10px;
+  }
+  input[type=submit] {
+    border-radius: 5px;
+    width: 100%;
+    border: 0;
+    background: black;
+    color: white;
+    height: 40px;
+  }
+  h2 {
+    margin: -5px 0 20px 0;  
+  }
+`;
+
+export const FormComents = styled.form`
 `;

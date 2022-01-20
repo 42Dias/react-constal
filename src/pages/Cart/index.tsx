@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   MdDelete,
   MdAddCircleOutline,
@@ -6,55 +6,140 @@ import {
 } from "react-icons/md";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import { api, ip, role } from "../../services/api";
 
 import { useCart } from "../../hooks/useCart";
 import { formatPrice } from "../../util/format";
 import { Container, ProductTable, Total, FooterContainer } from "./styles";
 import { Link } from "react-router-dom";
-
-interface Product {
-  id: number;
-  title: string;
-  price: number;
-  image: string;
-  amount: number;
-}
+// import { Product } from "../../types";
 
 const Cart = (): JSX.Element => {
   const { cart, removeProduct, updateProductAmount } = useCart();
+  const [products, setProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  const cartFormatted = cart.map((product) => ({
-    ...product,
-    priceFormatted: formatPrice(product.price),
-    subtotal: formatPrice(product.price * product.amount),
-  }));
+  interface Product {
+    id: string;
+    nome: string;
+    descricao: string;
+    preco: number;
+    publicUrl: string;
+    isOferta: number;
+    precoOferta: any;
+    produto: any;
+    quantidade: number;
+    subtotal: number;
+  }
+
+  interface Carrinho {
+    price: number | bigint;
+    id: string;
+    nome: string;
+    descricao: string;
+    preco: number;
+    publicUrl: string;
+    isOferta: number;
+    precoOferta: any;
+    quantidade: number;
+    subtotal: number;
+    priceFormatted: string;
+    produto: {
+      fotos: string;
+      id: string;
+      nome: string;
+      preco: number;
+      quantidade: number;
+    };
+  }
+
+  interface ProductFormatted extends Product {
+    priceFormatted: string;
+  }
+
   const total = formatPrice(
-    cartFormatted.reduce((sumTotal, product) => {
-      sumTotal += product.price * product.amount;
-
+    products.reduce((sumTotal, product) => {
+      sumTotal += product.produto.preco * product.quantidade;
       return sumTotal;
     }, 0)
   );
 
   function handleProductIncrement(product: Product) {
     const IncrementArguments = {
-      productId: product.id,
-      amount: product.amount + 1,
+      productId: product.produto.id,
+      quantidade: product.quantidade 
     };
     updateProductAmount(IncrementArguments);
   }
 
   function handleProductDecrement(product: Product) {
     const IncrementArguments = {
-      productId: product.id,
-      amount: product.amount - 1,
+      productId: product.produto.id,
+      quantidade: product.quantidade
     };
     updateProductAmount(IncrementArguments);
   }
 
-  function handleRemoveProduct(productId: number) {
+  function handleRemoveProduct(productId: string, index: number) {
+    console.log("nbjkvnbvfnklbnvkjbnckjvnbkjcvnbkncvjbnkcvnjv")
+    setLoading(true)
     removeProduct(productId);
+    
+    let newProd = [...products]
+    newProd.splice(index, 1)
+    setProducts(newProd)
+
+    console.log("newProd")
+    console.log(newProd)
+    
+    setLoading(false)
   }
+
+  useEffect(() => {
+    if (role != 'pessoa') {
+      // Simulate an HTTP redirect:
+      window.location.replace(`${ip}/#/erro`);
+    }
+    async function loadProducts() {
+      setLoading(true)
+      const response = await api.get('carrinho/')
+        .then(response => {
+          return response.data.rows;
+        })
+
+      console.log("cart");
+      console.log(response);
+
+      setProducts(response);
+      setLoading(false)
+    }
+
+    loadProducts();
+  }, []);
+
+  function updateIncrement(index: number) {
+
+    // atribuir o antigo array a uma variavel fazendo o destruct e atualizando ela
+    let updatedProduct = [...products]
+    updatedProduct[index].quantidade++
+    handleProductIncrement(updatedProduct[index])
+    setProducts(updatedProduct)
+
+  }
+
+  function updateDecrement(index: number) {
+    let updatedProduct = [...products]
+    updatedProduct[index].quantidade--
+    handleProductDecrement(updatedProduct[index])
+    setProducts(updatedProduct)
+
+  }
+  /*Possível useEfect para alterar os valores dos produtos?*/
+
+  //Está sendo alterado o useState mas não está sendo mostrado na
+
+  console.log("products.length")
+  console.log(products.length)
 
   return (
     <>
@@ -72,13 +157,14 @@ const Cart = (): JSX.Element => {
               </tr>
             </thead>
             <tbody>
-              {cartFormatted.map((product) => (
-                <tr data-testid="product" key={product.id}>
+              {products.map((product: any, index) => (
+                <tr data-testid="product" key={product.produto.id}
+                >
                   <td>
-                    <img src={product.image} alt={product.title} />
+                    <img src={product.imagemUrl} alt={product.produto.nome} />
                   </td>
                   <td>
-                    <strong>{product.title}</strong>
+                    <strong>{product.produto.nome}</strong>
                     <span>{product.priceFormatted}</span>
                   </td>
                   <td>
@@ -86,8 +172,10 @@ const Cart = (): JSX.Element => {
                       <button
                         type="button"
                         data-testid="decrement-product"
-                        disabled={product.amount <= 1}
-                        onClick={() => handleProductDecrement(product)}
+                        disabled={product.quantidade <= 1}
+                        onClick={() => {
+                          updateDecrement(index)
+                        }}
                       >
                         <MdRemoveCircleOutline size={20} />
                       </button>
@@ -95,28 +183,38 @@ const Cart = (): JSX.Element => {
                         type="text"
                         data-testid="product-amount"
                         readOnly
-                        value={product.amount}
+                        value={
+                          product.quantidade
+                          // howMuch[index]
+                        }
                       />
                       <button
                         type="button"
                         data-testid="increment-product"
-                        onClick={() => handleProductIncrement(product)}
+                        onClick={() => {
+                          updateIncrement(index)
+                        }}
                       >
                         <MdAddCircleOutline size={20} />
                       </button>
                     </div>
                   </td>
                   <td>
-                    <strong>{product.subtotal}</strong>
+                    <strong>
+                      {
+                        formatPrice(product.produto.preco * product.quantidade)
+                      }</strong>
                   </td>
                   <td>
+                  {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : 
                     <button
                       type="button"
                       data-testid="remove-product"
-                      onClick={() => handleRemoveProduct(product.id)}
+                      onClick={() => handleRemoveProduct(product.produto.id, index)}
                     >
-                      <MdDelete size={20} />
-                    </button>
+                      <MdDelete 
+                      size={20} />
+                    </button>}
                   </td>
                 </tr>
               ))}
@@ -124,8 +222,13 @@ const Cart = (): JSX.Element => {
           </ProductTable>
 
           <footer>
-            <Link to="/pagar">Finalizar pedido</Link>
-
+            {
+              products.length > 0 ? (
+                <Link to="/pagar">Finalizar pedido</Link>
+              ) : false
+            }
+            {console.log(products.length)}
+            {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
             <Total>
               <span>TOTAL</span>
               <strong>{total}</strong>

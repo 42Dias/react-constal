@@ -49,12 +49,19 @@ export const CardDatails = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 174px;
+    width: 120px;
     height: 41px;
     text-decoration: none;
     background: black;
     color: white;
     border-radius: 5px;
+  }
+
+  a:nth-child(2) {
+    background: white;
+    color: black;
+    border: 1px solid black;
+    margin: 0 20px;
   }
 `
 
@@ -62,36 +69,12 @@ export const CardDatailsContent = styled.div`
   background: white;
   width: 100%;
   height: 200px;
-  margin: 20px 0;
+  margin-top: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 12px;
   border-radius: 5px;
-  
-  a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 101px;
-    height: 41px;
-    text-decoration: none;
-    background: black;
-    color: white;
-    border-radius: 5px;
-  }
-
-  a:nth-child(1) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 101px;
-    height: 41px;
-    text-decoration: none;
-    background: transparent;
-    color: black;
-    border-radius: 5px;
-    border: 1px solid black;
   }
 
   .flex-btn {
@@ -113,15 +96,23 @@ export const ContentDetails = styled.div`
   }
 
   img {
-    padding: 0 40px;
+    width: 222px;
+    height: 140px;
+    border-radius: 10px 10px 0 0;
+    object-fit: contain;
   }
 
   p {
-    margin-left: 12px;
+    margin-left: 5px;
   }
   
   small {
     color: #757575;
     font-size: 16px;
   }
+
+`;
+
+export const BtnContent = styled.div`
+  display: flex;
 `;

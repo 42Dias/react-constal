@@ -1,14 +1,32 @@
 import Header from "../../../components/Header";
-import MenuAdm from "../../../components/MenuAdm";
 import item from "../../../assets/images/prodfav.png";
 import { Link } from "react-router-dom";
 import { CardDatails, CardDatailsContent, ContentDetails } from "./styles";
+import { Menu } from "../../../components/Menu";
+import { useEffect } from "react";
+import { ip, role, status } from "../../../services/api";
 
 export default function Historic() {
+
+  useEffect(
+    ()=>{
+      if(!role){
+        window.location.reload()
+      }
+      else{
+        if(role !== "admin" && role !== "empresa" || status === "pendente"){
+          // Simulate an HTTP redirect:
+          window.location.replace(`${ip}/#/erro`);
+        }
+      }
+  
+    }
+    ,[]
+  )
   return (
     <>
       <Header />
-      <MenuAdm />
+      <Menu />
       <div className="container">
         <CardDatails>
           <h2>Histórico</h2>

@@ -107,17 +107,33 @@ export const ContentDetails = styled.div`
   display: flex;
   align-items: center;
 
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   span {
     font-size: 18px;
     font-weight: bold;
   }
 
   img {
+    object-fit: cover; 
     padding: 0 40px;
+    border-radius: 5px;
+    width: 200px;
+    height: 120px;
+    @media (max-width: 768px) {
+      padding: 0 0;
+      width: 155px;
+    }
   }
 
   p {
     margin-left: 12px;
+    @media (max-width: 768px) {
+      margin-left: 0;
+    }
   }
   
   small {

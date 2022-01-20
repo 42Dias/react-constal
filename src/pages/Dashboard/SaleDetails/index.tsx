@@ -3,33 +3,98 @@ import { CardDatails, CardDatailsContent, ContentDetails } from "./styles";
 import Header from "../../../components/Header";
 import item from "../../../assets/images/prodfav.png";
 import { Link } from "react-router-dom";
-import MenuEmpresa from "../../../components/MenuEmpresa";
+import { Menu } from "../../../components/Menu";
+import { useEffect, useState } from "react";
+import { api, id, ip, role, status } from "../../../services/api";
+import { complement } from "polished";
+import { formatPrice } from "../../../util/format";
 
 export default function SaleDetails() {
+  const [response, setResponse]=useState<any[]>([]);
+
+  
+  
+
+  
+
+  const [total, setTotal]=useState('');
+
+
+  
+
+  function getHash() {
+      const hash = window.location.hash.replace(/#\/detalhes-da-venda\//g, '');    
+      // /#\/detalhes-da-venda\//
+      // const hash = window.location.hash.replace(/#\/produto\//g, '');    
+      return hash
+    }
+
+  useEffect(
+    () => {
+      if(!role){
+        window.location.reload()
+      }
+      else{
+        if(role !== "admin" && role !== "empresa" || status === "pendente"){
+          // Simulate an HTTP redirect:
+          window.location.replace(`${ip}/#/erro`);
+        }
+      }
+  
+      async function loadPedidoDetails() {
+        const pedidoId = getHash()
+        console.log("pedidoId")      
+        console.log(pedidoId)      
+
+        const data = {
+          userId: id
+        }
+
+
+        const response = await api.post(`findPedidoWithProductToEmpresa?filter%5BpedidoId%5D=${pedidoId}`, data)        
+        console.log(response.data)
+        setResponse(response.data)
+
+        /*
+        NECESSIDADE DE LINKAR O PRODUTO COM O PEDIDO
+        */
+
+      }
+
+      loadPedidoDetails()
+    }
+    ,[])
+
+
   return (
     <>
       <Header />
-      <MenuEmpresa />
+      <Menu />
       <div className="container">
-        <CardDatails>
           <h2>Detalhes da venda</h2>
-
+          {response.map(
+            (pedido) => (
+            <>
+            <CardDatails>
           <CardDatailsContent>
             <ContentDetails>
-              <img src={item} alt="" />
-              <span>Headset Preto</span>
+              {/* <img  src={pedido.imagemUrl} alt={pedido.nome} /> */}
+              <img  src={item} alt={pedido.nome} />
+              <span>{pedido.nome} </span> 
             </ContentDetails>
-            <p>R$ 999,99</p>
+            <p>{
+              formatPrice(pedido.preco)
+              }</p>
           </CardDatailsContent>
 
           <CardDatails>
             <CardDatailsContent>
               <ContentDetails>
                 <small>
-                  <b>Nome do cliente</b> <br />
-                  CPF: XXXX <br />
-                  Metodo de pagamento: XXXXXX <br />
-                  Parcelamento: XX
+                  <b>Nome do cliente: </b> {pedido.fullName} <br />
+                  CPF: {pedido.cpf} <br />
+                  {/* Metodo de pagamento: {formaPagamento} <br />
+                  Parcelamento: XX */}
                 </small>
               </ContentDetails>
             </CardDatailsContent>
@@ -38,9 +103,9 @@ export default function SaleDetails() {
               <ContentDetails>
                 <small>
                   <b>Entrega</b> <br />
-                  Endereço de destino: Rua, Número, Bairro, CEP <br />
-                  Complemento: XXXX <br />
-                  Cidade/Estado
+                  Endereço de destino: {pedido.logradouro} {pedido.numero}, {pedido.bairro}, {pedido.cep} <br />
+                  Complemento: {pedido.complemento} <br />
+                  {pedido.cidade}/{pedido.estado}
                 </small>
               </ContentDetails>
             </CardDatailsContent>
@@ -49,15 +114,18 @@ export default function SaleDetails() {
               <ContentDetails>
                 <small>
                   <b>Detalhes</b> <br />
-                  Data de solicitação da compra:  00/00/0000 <br />
-                  Produto R$ 00,00 <br />
-                  Envio R$ 00,00 <br />
-                  <b>Total: R$ 00,00</b>
+                  Data de solicitação da compra:  {pedido.dataPedido} <br />
+                  Produto {formatPrice(pedido.preco)} <br />
+                  Envio {pedido.valorFrete? formatPrice(pedido.valorFrete): 'grátis'} <br />
+                  <b>Total: {pedido.valorFrete? formatPrice(pedido.preco + pedido.valorFrete): formatPrice(pedido.preco)}</b>
                 </small>
               </ContentDetails>
             </CardDatailsContent>
           </CardDatails>
         </CardDatails>
+            </>  
+              )
+          )}
       </div>
     </>
   );
