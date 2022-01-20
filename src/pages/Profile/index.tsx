@@ -22,6 +22,7 @@ import { api, idPessoa, ip, role, token } from "../../services/api";
 import { Menu } from "../../components/Menu";
 import upload from "../../assets/images/upload.png";
 import axios from "axios";
+import { Field, Form, Formik } from "formik";
 
 export default function Profile() {
   const [showModal1, setShowModal1] = React.useState(false);
@@ -319,6 +320,30 @@ export default function Profile() {
       }
     }
   }
+  function onSubmitInput (values: any, actions: any) {
+    // console.log(data)
+    // Cadastro(data)
+    console.log('SUBMIT', values)
+  }
+
+  function onBlurCep (ev: any, setFieldValue: any) {
+    const { value } = ev.target
+
+    const cep = value?.replace(/[^0-9]/g, '')
+
+    if (cep?.length !== 8) {
+      return
+    }
+
+    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+      .then((res) => res.json())
+      .then((data) => {
+        setLogradouro(data.logradouro)
+        setBairro(data.bairro)
+        setCidade(data.localidade)
+        setEstado(data.uf)
+      })
+  }
 
   return (
     <>
@@ -412,28 +437,6 @@ export default function Profile() {
           <button onClick={() => setShowModalResetSenha(true)}>Alterar Senha</button>
         </CardDatailsContent>
 
-        {/*<CardDatails>
-          <h2>Cartões</h2>
-          <CardDatailsContent>
-            <ContentDetails>
-              <img src={mastercard} alt="" />
-              <p>
-                Final em XXXX <br /> Banco <br /> Vencimento{" "}
-              </p>
-            </ContentDetails>
-            <button>Excluir</button>
-          </CardDatailsContent>
-
-          <CardDatailsContent>
-            <ContentDetails>
-              <img src={visa} alt="" />
-              <p>
-                Final em XXXX <br /> Banco <br /> Vencimento{" "}
-              </p>
-            </ContentDetails>
-            <button>Excluir</button>
-          </CardDatailsContent>
-        </CardDatails>*/}
 
         <CardDatails>
           <h2>Endereço</h2>
@@ -525,83 +528,123 @@ export default function Profile() {
 
             <ModalContent>
               <h3>Alterar Endereço</h3>
-              <ContentFormNew>
-                <label htmlFor="">Bairro</label>
-                <input
-                  type="text"
-                  placeholder="bairro"
-                  value={bairro}
-                  onChange={(text) => setBairro(text.target.value)}
-                />
-              </ContentFormNew>
+              <Formik
+                onSubmit={onSubmitInput}
+                validateOnMount
+                initialValues={{
+                  cep: '',
+                  logradouro: '',
+                  numero: '',
+                  complemento: '',
+                  bairro: '',
+                  cidade: '',
+                  uf: '',
+                }}
+                render={({ isValid, setFieldValue }) => (
+                  <Form>
+                    
+                    <ContentFormNew className='form-control-group'>
+                      <label>Cep</label>
+                      <Field
+                      value={cep}
+                        name='cep' type='text'
+                        onBlur={(ev: any) => onBlurCep(ev, setFieldValue)}
+                        onChange={(text: any) => setCEP(text.target.value)}
+                        />
+                        
+                    </ContentFormNew>
 
-              <ContentFormNew>
-                <label htmlFor="">CEP</label>
-                <input
-                  type="cep"
-                  placeholder="CEP"
-                  value={cep}
-                  onChange={(text) => setCEP(text.target.value)}
-                />
-              </ContentFormNew>
+                    <ContentFormNew className='form-control-group'>
+                      <label>Logradouro</label>
+                      <Field 
+                      value={logradouro}
+                      name='logradouro'
+                      type='text'
+                      onChange={(text: any) => setLogradouro(text.target.value)} />
+                    </ContentFormNew>
 
-              <ContentFormNew>
-                <label htmlFor="">Rua</label>
-                <input
-                  type="text"
-                  placeholder="Rua"
-                  value={logradouro}
-                  onChange={(text) => setLogradouro(text.target.value)}
-                />
-              </ContentFormNew>
+                    <ContentFormNew className='form-control-group'>
+                      <label>Número</label>
+                      <Field 
+                      value={newNumero}
+                      name='numero' 
+                      type='text'
+                      onChange={(text: any) => setNewNumero(text.target.value)}
+                       />
+                    </ContentFormNew>
 
-              <ContentFormNew>
-                <label htmlFor="">Número</label>
-                <input
-                  type="number"
-                  placeholder="Número"
-                  value={newNumero}
-                  onChange={(text) => setNewNumero(text.target.value)}
-                />
-              </ContentFormNew>
+                    <ContentFormNew className='form-control-group'>
+                      <label>Complemento</label>
+                      <Field 
+                      value={newComplemento}
+                      name='complemento' 
+                      type='text'
+                      onChange={(text: any) => setNewComplemento(text.target.value)}
+                       />
+                    </ContentFormNew>
 
-              <ContentFormNew>
-                <label htmlFor="">Complemento</label>
-                <input
-                  type="text"
-                  placeholder="Complemento"
-                  onChange={(text) => setNewComplemento(text.target.value)}
-                />
-              </ContentFormNew>
+                    <ContentFormNew className='form-control-group'>
+                      <label>Bairro</label>
+                      <Field 
+                      value={bairro}
+                      name='bairro' 
+                      type='text'
+                      onChange={(text: any) => setBairro(text.target.value)}
+                       />
+                    </ContentFormNew>
 
-              <ContentFormNew>
-                <label htmlFor="">Referência</label>
-                <input
-                  type="text"
-                  placeholder="Referência"
-                  onChange={(text) => setNewPontoReferencia(text.target.value)}
-                />
-              </ContentFormNew>
+                    <ContentFormNew className='form-control-group'>
+                      <label>Cidade</label>
+                      <Field 
+                      value={cidade}
+                      name='cidade' 
+                      type='text'
+                      onChange={(text: any) => setCidade(text.target.value)}
+                       />
+                    </ContentFormNew>
 
-              <ContentFormNew>
-                <label htmlFor="">Estado</label>
-                <input
-                  type="text"
-                  placeholder="Estado"
-                  value={estado}
-                  onChange={(text) => setEstado(text.target.value)}
-                />
-              </ContentFormNew>
-
-              <ContentFormNew>
-                <label htmlFor="">Cidade</label>
-                <input
-                  type="text"
-                  placeholder="Cidade"
-                  value={cidade}
-                  onChange={(text) => setCidade(text.target.value)}
-                />
-              </ContentFormNew>
+                    <ContentFormNew className='form-control-group'>
+                      <label>Estado</label>
+                      <Field 
+                      value={estado}
+                      component='select' 
+                      name='uf'
+                      onChange={(text: any) => setEstado(text.target.value)}
+                      >
+                        <option value=''>Selecione o Estado</option>
+                        <option value='AC'>Acre</option>
+                        <option value='AL'>Alagoas</option>
+                        <option value='AP'>Amapá</option>
+                        <option value='AM'>Amazonas</option>
+                        <option value='BA'>Bahia</option>
+                        <option value='CE'>Ceará</option>
+                        <option value='DF'>Distrito Federal</option>
+                        <option value='ES'>Espírito Santo</option>
+                        <option value='GO'>Goiás</option>
+                        <option value='MA'>Maranhão</option>
+                        <option value='MT'>Mato Grosso</option>
+                        <option value='MS'>Mato Grosso do Sul</option>
+                        <option value='MG'>Minas Gerais</option>
+                        <option value='PA'>Pará</option>
+                        <option value='PB'>Paraíba</option>
+                        <option value='PR'>Paraná</option>
+                        <option value='PE'>Pernambuco</option>
+                        <option value='PI'>Piauí</option>
+                        <option value='RJ'>Rio de Janeiro</option>
+                        <option value='RN'>Rio Grande do Norte</option>
+                        <option value='RS'>Rio Grande do Sul</option>
+                        <option value='RO'>Rondônia</option>
+                        <option value='RR'>Roraima</option>
+                        <option value='SC'>Santa Catarina</option>
+                        <option value='SP'>São Paulo</option>
+                        <option value='SE'>Sergipe</option>
+                        <option value='TO'>Tocantins</option>
+                      </Field>
+                    </ContentFormNew>
+                  </Form>
+                )}
+              />
+             
               {loading ? <img width="40px" style={{ margin: 'auto' }} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
               <div className="buttonsNew">
                 <button type="button" onClick={messageCancel}>
