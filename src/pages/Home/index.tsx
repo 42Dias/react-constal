@@ -112,7 +112,7 @@ const Home = (): JSX.Element => {
       addProduct(id, 1);
     }
     else{
-      toast.error("Cadastre-se para habilitar o carrinho")
+      toast.error("Cadastre-se como cliente para habilitar o carrinho")
     }
   }
 
