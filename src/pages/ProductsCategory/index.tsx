@@ -3,22 +3,26 @@ import Footer from "../../components/Footer";
 
 import { Link } from "react-router-dom";
 import React, { useState ,useEffect, useRef, useCallback } from "react";
-import { api, ip } from "../../services/api";
+import { api, ip, role } from "../../services/api";
 import { formatPrice } from "../../util/format";
 
 import { useCart } from "../../hooks/useCart";
+
 
 import { AiOutlinePlus } from "react-icons/ai";
 import { Recommended, GridProdsFour, ProdContainerSingle } from "./styles";
 import useInfiniteScroll from '../../hooks/useInfiniteScroll'
 import { Menu } from "../../components/Menu";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 
 
 export default function ProductsCategory() {
-
+  
   const [products = [], setProducts] = useState<any[]>([]);
+  
+  const { addProduct, cart } = useCart();
 
   useEffect(
     ()=>{
@@ -38,8 +42,14 @@ export default function ProductsCategory() {
     },[]
   )
 
-  function handleAddProduct(id: number) {
-  // addProduct(id);
+  function handleAddProduct(id: string) {
+    if(role == 'pessoa'){
+      
+      addProduct(id, 1);
+    }
+    else{
+      toast.error("Cadastre-se como cliente para habilitar o carrinho")
+    }
   }
 
   return (
