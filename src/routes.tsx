@@ -1,6 +1,7 @@
 import { Switch, Route } from 'react-router-dom';
 
 import Home from './pages/Home';
+import Accounts from './pages/Accounts/Accounts'
 import Cart from './pages/Cart';
 import Profile from './pages/Profile';
 import Produto from './pages/Produto';
@@ -56,6 +57,7 @@ const Routes = (): JSX.Element => {
       <Route exact path="/historico" component={Historic} />
       <Route exact path="/pagamentos" component={Payments} />
       <Route exact path="/pagamentos-empresas" component={PaymentsCompanies} />
+      <Route exact path="/contas" component={Accounts} />
     </Switch>
   );
 };
