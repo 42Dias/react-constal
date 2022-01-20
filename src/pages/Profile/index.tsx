@@ -24,6 +24,10 @@ import upload from "../../assets/images/upload.png";
 import axios from "axios";
 import { Field, Form, Formik } from "formik";
 
+// @ts-ignore
+import InputMask from "react-input-mask";
+
+
 export default function Profile() {
   const [showModal1, setShowModal1] = React.useState(false);
   const [showModal2, setShowModal2] = React.useState(false);
@@ -35,6 +39,7 @@ export default function Profile() {
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [cpf, setCPF] = useState("");
+  const [maskedCPF, setMaskedCPF] = useState("");
   const [phone, setPhone] = useState("");
   const [logradouro, setLogradouro] = useState("");
   const [bairro, setBairro] = useState("");
@@ -106,6 +111,7 @@ export default function Profile() {
       setEmail(response.user.email);
       setFullName(response.nome);
       setCPF(response.cpf);
+      setMaskedCPF(formatarCpf(response.cpf));
       setPhone(response.telefone);
       setLogradouro(response.logradouro);
       setNewNumero(response.numero);
@@ -133,6 +139,7 @@ export default function Profile() {
       setEmail(response.email);
       setFullName(response.nome);
       setCPF(response.cpf);
+      setMaskedCPF(formatarCpf(response.cpf));
       setPhone(response.telefone);
       setLogradouro(response.logradouro);
       setNewNumero(response.numero)
@@ -162,6 +169,8 @@ export default function Profile() {
       setEmail(response.email);
       setFullName(response.fullName);
       setCPF(response.cpf);
+      setMaskedCPF(formatarCpf(response.cpf));
+
       setPhone(response.telefone);
       setLogradouro(response.logradouro + ", ");
       setNewNumero(response.numero)
@@ -345,6 +354,18 @@ export default function Profile() {
       })
   }
 
+  function formatarNumero(v: any){
+    v=v.replace(/\D/g,""); //Remove tudo o que não é dígito
+    v=v.replace(/^(\d{2})(\d)/g,"($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
+    v=v.replace(/(\d)(\d{4})$/,"$1-$2"); //Coloca hífen entre o quarto e o quinto dígitos
+    return v;
+  }
+  function formatarCpf(v: any){
+    return v.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")
+  }
+
+
+
   return (
     <>
       <Header />
@@ -357,7 +378,7 @@ export default function Profile() {
 
           <CardDatas>
             <h3>{fullName}</h3>
-            <span>{cpf}</span>
+            <span>{formatarCpf(cpf)}</span>
             <p>{phone}</p>
             <p>{email}</p>
           </CardDatas>
@@ -492,12 +513,29 @@ export default function Profile() {
 
               <ContentFormNew>
                 <label htmlFor="">CPF</label>
-                <input
+                {/* <input
                   type="text"
                   placeholder="CPF"
                   value={cpf}
                   onChange={(text) => setCPF(text.target.value)}
-                />
+                /> */}
+                 <InputMask mask="999.999.999-99" 
+                      value={maskedCPF} 
+
+                      // 01.161.734/0001-15
+                      onChange={
+                        (e: any) => {
+                          let cpf = e.target.value
+                          console.log(
+                            cpf.replace(/\D/g, '')
+                            )
+                          setCPF(
+                            cpf.replace(/\D/g, '')
+                          )
+                          setMaskedCPF(e.target.value)
+                          console.log(maskedCPF)
+                        }
+                      }/>
               </ContentFormNew>
 
 
