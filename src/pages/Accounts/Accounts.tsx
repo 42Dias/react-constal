@@ -1,5 +1,5 @@
 import Header from "../../components/Header"
-import MenuCliente from "../../components/MenuCliente"
+import { Menu } from "../../components/Menu"
 
 import * as S from './Accounts.styled'
 
@@ -7,7 +7,7 @@ export default function Accounts() {
   return (
     <>
      <Header />
-      <MenuCliente />
+     <Menu />
       <S.Container>
         <S.Content>
           <h1>Contas</h1>
