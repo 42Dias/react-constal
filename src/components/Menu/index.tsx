@@ -152,7 +152,7 @@ export function Menu() {
             Categorias fixas
             Categorias do cliente
             */}
-            <Link to="/produtos">Todos os produtos</Link>
+            {/* <Link to="/produtos">Todos os produtos</Link> */}
             {            
             categoriasFixed.map(
             (categoria, index) => (
