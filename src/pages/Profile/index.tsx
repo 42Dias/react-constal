@@ -435,7 +435,9 @@ export default function Profile() {
                 >
                   Cancelar
                 </button>
-                <button type="button" onClick={messageApprove}>
+                <button 
+                  type="button"
+                 onClick={messageApprove}>
                   Adicionar
                 </button>
               </div>
@@ -582,9 +584,10 @@ export default function Profile() {
                   <Form>
                     
                     <ContentFormNew className='form-control-group'>
-                      <label>Cep</label>
+                      <label>Cep*</label>
                       <Field
-                      value={cep}
+                        required
+                        value={cep}
                         name='cep' type='text'
                         onBlur={(ev: any) => onBlurCep(ev, setFieldValue)}
                         onChange={(text: any) => setCEP(text.target.value)}
@@ -593,8 +596,9 @@ export default function Profile() {
                     </ContentFormNew>
 
                     <ContentFormNew className='form-control-group'>
-                      <label>Logradouro</label>
+                      <label>Logradouro*</label>
                       <Field 
+                      required
                       value={logradouro}
                       name='logradouro'
                       type='text'
@@ -602,8 +606,9 @@ export default function Profile() {
                     </ContentFormNew>
 
                     <ContentFormNew className='form-control-group'>
-                      <label>Número</label>
+                      <label>Número*</label>
                       <Field 
+                      required
                       value={newNumero}
                       name='numero' 
                       type='text'
@@ -622,8 +627,9 @@ export default function Profile() {
                     </ContentFormNew>
 
                     <ContentFormNew className='form-control-group'>
-                      <label>Bairro</label>
+                      <label>Bairro*</label>
                       <Field 
+                      required
                       value={bairro}
                       name='bairro' 
                       type='text'
@@ -632,8 +638,9 @@ export default function Profile() {
                     </ContentFormNew>
 
                     <ContentFormNew className='form-control-group'>
-                      <label>Cidade</label>
+                      <label>Cidade*</label>
                       <Field 
+                      required
                       value={cidade}
                       name='cidade' 
                       type='text'
@@ -642,8 +649,9 @@ export default function Profile() {
                     </ContentFormNew>
 
                     <ContentFormNew className='form-control-group'>
-                      <label>Estado</label>
+                      <label>Estado*</label>
                       <Field 
+                      required
                       value={estado}
                       component='select' 
                       name='uf'
