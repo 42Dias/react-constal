@@ -1,4 +1,5 @@
 import Header from "../../components/Header"
+import { Menu } from "../../components/Menu";
 import { role, ip, status } from "../../services/api";
 import * as S from './Signature.styled'
 
@@ -10,6 +11,7 @@ export default function Signature() {
   return (
     <>
       <Header />
+      <Menu />
       <S.Container>
         <S.Title>Planos de cobrança da plataforma</S.Title>
         <S.Cards>
