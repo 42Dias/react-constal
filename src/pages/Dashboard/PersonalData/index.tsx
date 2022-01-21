@@ -660,7 +660,7 @@ switch (accountType) {
                     <ContentFormNew>
                     <label htmlFor="">Marca</label>
                     <input
-                    required type="text" placeholder="Marca"
+                    type="text" placeholder="Marca"
                     value={marca}
                     onChange={(text) => setMarca(text.target.value)}
                     />
@@ -679,7 +679,7 @@ switch (accountType) {
                     <ContentFormNew>
                     <label htmlFor="">Ramal</label>
                     <input
-                    required type="text" placeholder="Ramal"
+                    type="text" placeholder="Ramal"
                     value={ramal}
 
                     onChange={(text) => setRamal(text.target.value)}
@@ -713,6 +713,7 @@ switch (accountType) {
                     />
                     </ContentFormNew>
 
+                    {/*
                     <ContentFormNew>
                     <label htmlFor="">Celular</label>
                     <input
@@ -721,7 +722,8 @@ switch (accountType) {
 
                     onChange={(text) => setCelular(text.target.value)}
                     />
-                    </ContentFormNew>
+                    </ContentFormNew> 
+                    */}
                     <ContentFormNew>
                       <label htmlFor="">CNPJ</label>
                       <InputMask
@@ -749,7 +751,7 @@ switch (accountType) {
                     <ContentFormNew>
                     <label htmlFor="">Website</label>
                     <input
-                    required type="text" placeholder="Website"
+                    type="text" placeholder="Website"
                     value={website}
 
 
@@ -759,7 +761,9 @@ switch (accountType) {
 
                   <ContentFormNew>
                   <label htmlFor="">Seu Banco</label>
-                  <select onChange={(text) => {
+                  <select
+                    required
+                   onChange={(text) => {
                     setBanco(text.target.value); 
                     checkAccountType(text.target.value)
                                       }}>
@@ -773,7 +777,9 @@ switch (accountType) {
                 <ContentFormNew>
                   <label htmlFor="">Tipo De Conta</label>
                     
-                  <select onChange={(text) => {
+                  <select
+                  required
+                   onChange={(text) => {
                     setTipoDeConta(text.target.value);
                     console.log(text.target.value)
                     }}>
@@ -819,7 +825,6 @@ switch (accountType) {
                     maxLength={10} 
                      
                     value={cartaoAgencia}
-
                     onChange={(text) => setCartaoAgencia(text.target.value)}
                     />
 
@@ -844,7 +849,7 @@ switch (accountType) {
                     <ContentFormNew>
                     <label htmlFor="">Pix</label>
                     <input
-                    required type="text" placeholder="Pix"
+                    type="text" placeholder="Pix"
                     value={pix}
 
                     onChange={(text) => setPix(text.target.value)}
