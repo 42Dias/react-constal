@@ -148,14 +148,20 @@ export default function Questions() {
                         {comentario.comentario}
                       </small>
                     </ContentDetails>
-                    <Btn
-                      onClick={
-                        () => {
-                          setShowModal1(true)
-                          setComment(comentario)
-                        }
-                      } 
-                      >Responder</Btn>
+                    {
+                      role == 'empresa' ? (
+                        <Btn
+                        onClick={
+                          () => {
+                            setShowModal1(true)
+                            setComment(comentario)
+                          }
+                        } 
+                        >Responder</Btn>
+                      ):(
+                        false
+                      )
+                    }
                 </CardDatailsContent>
                 {
                   comentario.isRespondido? (
