@@ -1,4 +1,4 @@
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, HashRouter } from 'react-router-dom';
 
 import Home from './pages/Home';
 import Accounts from './pages/Accounts/Accounts'
@@ -30,35 +30,37 @@ import PaymentsCompanies from './pages/Dashboard/PaymentsCompanies';
 
 const Routes = (): JSX.Element => {
   return (
-    <Switch>
-      <Route path="/" exact component={Home} />
-      <Route path="/cart" component={Cart} />
-      <Route path="/meu-perfil" component={Profile} />
-      <Route path="/cadastrar" component={Register} />
-      <Route exact path="/produto/:id" component={Produto} />
-      <Route exact path="/finalizar" component={FinishBuy} />
-      <Route exact path="/pagar" component={PayCart} />
-      <Route exact path="/favoritos" component={Favorites} />
-      <Route exact path="/historico-de-pedidos" component={Histoty} />
-      <Route exact path="/produtos" component={Products} />
-      <Route exact path="/meus-produtos" component={NewProd} />
-      <Route exact path="/promocoes" component={Promotions} />
-      <Route exact path="/dados-pessoais" component={PersonalData} />
-      <Route exact path="/perguntas" component={Questions} />
-      <Route exact path="/detalhes-da-venda" component={SaleDetails} />
-      <Route exact path="/novo-plano" component={NewPlan} />
-      <Route exact path="/consultar-produtos" component={ProductQuery} />
-      <Route exact path="/vendas" component={Vendas} />
-      <Route exact path="/confirmadas" component={Confirmed} />
-      <Route exact path="/devolvidas" component={Returned} />
-      <Route exact path="/denunciadas" component={Denounced} />
-      <Route exact path="/aprovar-usuarios" component={ApproveUsers} />
-      <Route exact path="/empresas" component={Companies} />
-      <Route exact path="/historico" component={Historic} />
-      <Route exact path="/pagamentos" component={Payments} />
-      <Route exact path="/pagamentos-empresas" component={PaymentsCompanies} />
-      <Route exact path="/contas" component={Accounts} />
-    </Switch>
+    <HashRouter>
+     <HashRouter basename=''> 
+        <Route path="/" exact component={Home} />
+        <Route path="/cart" component={Cart} />
+        <Route path="/meu-perfil" component={Profile} />
+        <Route path="/cadastrar" component={Register} />
+        <Route exact path="/produto/:id" component={Produto} />
+        <Route exact path="/finalizar" component={FinishBuy} />
+        <Route exact path="/pagar" component={PayCart} />
+        <Route exact path="/favoritos" component={Favorites} />
+        <Route exact path="/historico-de-pedidos" component={Histoty} />
+        <Route exact path="/produtos" component={Products} />
+        <Route exact path="/meus-produtos" component={NewProd} />
+        <Route exact path="/promocoes" component={Promotions} />
+        <Route exact path="/dados-pessoais" component={PersonalData} />
+        <Route exact path="/perguntas" component={Questions} />
+        <Route exact path="/detalhes-da-venda" component={SaleDetails} />
+        <Route exact path="/novo-plano" component={NewPlan} />
+        <Route exact path="/consultar-produtos" component={ProductQuery} />
+        <Route exact path="/vendas" component={Vendas} />
+        <Route exact path="/confirmadas" component={Confirmed} />
+        <Route exact path="/devolvidas" component={Returned} />
+        <Route exact path="/denunciadas" component={Denounced} />
+        <Route exact path="/aprovar-usuarios" component={ApproveUsers} />
+        <Route exact path="/empresas" component={Companies} />
+        <Route exact path="/historico" component={Historic} />
+        <Route exact path="/pagamentos" component={Payments} />
+        <Route exact path="/pagamentos-empresas" component={PaymentsCompanies} />
+        <Route exact path="/contas" component={Accounts} />
+      </HashRouter>
+    </HashRouter>
   );
 };
 
