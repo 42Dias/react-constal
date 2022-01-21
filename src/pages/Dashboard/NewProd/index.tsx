@@ -306,9 +306,9 @@ export default function NewProd() {
       },
     };
     makeRequisitionToChange(data).then(
-      // () => {
-      //   window.location.hash = '#/promocoes'
-      // }
+      () => {
+        window.location.hash = '#/promocoes'
+      }
     );
   }
 
@@ -1106,7 +1106,10 @@ export default function NewProd() {
                 />
               ) : false}
               <div className="buttonsNew">
-                <button type="button" onClick={messageCancel}>
+                <button type="button" onClick={() => {
+                    messageCancel()
+                    closeModal()
+                  }}>
                   Cancelar
                 </button>
                 <button type="submit" onSubmit={addPromotion}>
@@ -1154,7 +1157,12 @@ export default function NewProd() {
                 />
               ) : false}
               <div className="buttonsNew">
-                <button type="button" onClick={messageCancel}>
+                <button type="button" onClick={
+                  () => {
+                    messageCancel()
+                    closeModal()
+                  }
+                  }>
                   Cancelar
                 </button>
                 <button type="submit" onSubmit={addCategoria}>
