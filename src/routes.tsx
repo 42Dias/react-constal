@@ -1,5 +1,6 @@
 import { Switch, Route, HashRouter } from "react-router-dom";
 
+import Accounts from './pages/Accounts/Accounts'
 import Home from "./pages/Home";
 import Cart from "./pages/Cart";
 import Profile from "./pages/Profile";
@@ -87,6 +88,7 @@ const Routes = (): JSX.Element => {
       <Route exact path="/checar-email/:id" component={CheckEmail} />
       <Route exact path="/enviar-banner" component={SendBanner} />
       <Route exact path="/categorias-fixar" component={categoryAdmin} />
+      <Route exact path="/contas" component={Accounts} />
       <Route
         exact
         path="/pagamentos-empresas"
