@@ -268,7 +268,11 @@ export default function SendBanner() {
           onSubmit={makeRequisition}
           >
             <h2>Faça upload</h2>
-
+            <h4
+                // style={{margin: 'auto'}}
+                >
+                  Imagem promocional deve estar em 1440 X 417 PX
+            </h4>
 
           <input type="file"
           name="image"

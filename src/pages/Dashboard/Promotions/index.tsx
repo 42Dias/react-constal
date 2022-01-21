@@ -217,6 +217,11 @@ export default function Promotions() {
 
               <ContentFormNew>
                 <label htmlFor="">Imagem Promocional</label>
+                <h4
+                style={{margin: 'auto'}}
+                >
+                  Imagem promocional deve estar em 1440 X 417 PX
+                </h4>
                 <input
                  required
                  type="url"
