@@ -253,7 +253,8 @@ export default function Profile() {
     return savedData;
   }
 
-  async function setNewData() {
+  async function setNewData(e: any) {
+    e.preventDefault()
     setLoading(true)
     const data = {
       data: {
@@ -566,7 +567,9 @@ export default function Profile() {
               <AiOutlineClose onClick={closeModal} />
             </ModalFlex>
 
-            <ModalContent>
+            <ModalContent
+            onSubmit={setNewData}
+            >
               <h3>Alterar Endereço</h3>
               <Formik
                 onSubmit={onSubmitInput}
@@ -696,7 +699,9 @@ export default function Profile() {
                 <button type="button" onClick={messageCancel}>
                   Cancelar
                 </button>
-                <button type="button" onClick={setNewData}>
+                <button 
+                 type="submit"
+                 onSubmit={setNewData}>
                   Adicionar
                 </button>
               </div>
