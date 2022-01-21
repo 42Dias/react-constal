@@ -5,7 +5,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import Header from "../../../components/Header";
 import { Menu } from "../../../components/Menu";
-import { api, Email, id, ip, role, status } from "../../../services/api";
+import { api, Email, id, ip, role, status, tenantId } from "../../../services/api";
 import { ModalContent } from "../../Produto/styles";
 import { ModalContainerVendedor } from "../../Profile/styles";
 import { ContentFormNew } from "../NewProd/styles";
@@ -108,6 +108,9 @@ export default function PersonalData() {
           if(role !== "admin" && role !== "empresa"){
             // Simulate an HTTP redirect:
             window.location.replace(`${ip}/#/erro`);
+          }
+          else if(!tenantId && role != undefined){
+            window.location.reload()
           }
         }
 
@@ -696,7 +699,7 @@ switch (accountType) {
                     onChange={(text) => setTelefone(text.target.value)}
                     /> */}
                     <InputMask
-                    mask="(99) 9999-99999"
+                    mask="(99) 9999-9999"
                     value={maskedTelefone} 
                     onChange={
                       (e: any) => {
@@ -718,13 +721,14 @@ switch (accountType) {
                     <ContentFormNew>
                       
                     <label htmlFor="">Celular</label>
-                    <input
+                    {/* <input
                     required type="text" placeholder="Celular"
                     value={celular}
 
                     onChange={(text) => setCelular(text.target.value)}
-                    />
+                    /> */}
                     <InputMask
+                    required
                     mask="(99) 9999-99999"
                     value={maskedCelular} 
                     onChange={
