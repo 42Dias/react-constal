@@ -33,8 +33,7 @@ import { useCart } from "../../hooks/useCart";
 import { toast } from "react-toastify";
 import { api, id, ip, role, token } from "../../services/api";
 import axios from "axios";
-import { margin } from "polished";
-import styled from "styled-components";
+
 
 
 const Header = (): JSX.Element => {
@@ -218,18 +217,16 @@ const Header = (): JSX.Element => {
 
   useEffect(() => {
     loadUser();
-    if (role == 'pessoa') {
-
-      }
       async function loadCart() {
         const allCart: any = await api.get(`carrinho/`)
         console.log("allCart")
         console.log(allCart.data.count)
         // return allCart.data.rows.lenght;
         setCartSize(allCart.data.count);
-
       }
-      loadCart()
+      if (role == 'pessoa') {
+        loadCart()
+        }
   }, [update]);
   
 
@@ -316,8 +313,8 @@ const Header = (): JSX.Element => {
                     </Cart>
                   </>
                 )}
-                <button className="loggout">
-                  <FiLogOut size={18} onClick={logof} />Sair
+                <button onClick={logof}  className="loggout">
+                  <FiLogOut size={18}/>Sair
                 </button>
               </IconsContainer>
 
