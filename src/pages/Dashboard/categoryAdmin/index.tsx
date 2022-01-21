@@ -34,7 +34,7 @@ export default function Sendcategoria() {
     const data = {
       data: {
         nome: name,
-        status: "ativo",
+        status: "aprovado",
       },
     };
 
