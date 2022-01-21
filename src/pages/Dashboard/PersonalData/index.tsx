@@ -531,7 +531,7 @@ switch (accountType) {
             {marca || razaoSocial || cnpj || telefone ? 'Alterar seus dados':'Adicionar seus dados'} 
           </Btn>
 
-{
+          {
             marca || razaoSocial || cnpj || telefone ? (
           <>
           <CardDatailsContent>
@@ -650,7 +650,7 @@ switch (accountType) {
                   {marca || razaoSocial || cnpj || telefone ? 'Alterar seus dados':'Cadastrar seus dados'} 
                     </h3>
                     <ContentFormNew>
-                    <label htmlFor="">Nome da Empresa</label>
+                    <label htmlFor="">Nome da Empresa*</label>
                     <input
                     required type="text" placeholder="Empresa"
                     value={nome}
@@ -666,7 +666,7 @@ switch (accountType) {
                     />
                     </ContentFormNew>
                     <ContentFormNew>
-                    <label htmlFor="">Razão Social</label>
+                    <label htmlFor="">Razão Social*</label>
                     <input
                     required type="text" placeholder="Razão Social"
                     value={razaoSocial}
@@ -687,7 +687,7 @@ switch (accountType) {
                     </ContentFormNew>
 
                     <ContentFormNew>
-                    <label htmlFor="">Telefone</label>
+                    <label htmlFor="">Telefone*</label>
                     {/* <input
                     required type="text" placeholder="Telefone"
                     value={telefone}
@@ -725,7 +725,7 @@ switch (accountType) {
                     </ContentFormNew> 
                     */}
                     <ContentFormNew>
-                      <label htmlFor="">CNPJ</label>
+                      <label htmlFor="">CNPJ*</label>
                       <InputMask
                       required mask="99.999.999/9999-99" 
                       value={maskedCNPJ} 
@@ -760,7 +760,7 @@ switch (accountType) {
                     </ContentFormNew>
 
                   <ContentFormNew>
-                  <label htmlFor="">Seu Banco</label>
+                  <label htmlFor="">Seu Banco*</label>
                   <select
                     required
                    onChange={(text) => {
@@ -775,7 +775,7 @@ switch (accountType) {
 
 
                 <ContentFormNew>
-                  <label htmlFor="">Tipo De Conta</label>
+                  <label htmlFor="">Tipo De Conta*</label>
                     
                   <select
                   required
@@ -792,7 +792,7 @@ switch (accountType) {
                 </ContentFormNew>
 
                 <ContentFormNew>
-                    <label htmlFor="">Numero do cartão</label>
+                    <label htmlFor="">Numero do cartão*</label>
                     <p>
                     Formato do Cartão <br />
                     {formatCartao}
@@ -814,7 +814,7 @@ switch (accountType) {
                 </ContentFormNew>
                 
                 <ContentFormNew>
-                  <label htmlFor="">Agência</label>
+                  <label htmlFor="">Agência*</label>
                   <p>
                     Formato da Agência <br />
                     {formatAgencia}
@@ -830,23 +830,7 @@ switch (accountType) {
 
                 </ContentFormNew>
 
-
-{/* 
-                    
-                    value={logradouro}
-                    value={numero}
-                    value={complemento}
-                    value={pontoReferencia}
-                    value={cidade}
-                    value={estado}
-                    value={bairro}
-
-
-
-*/}
-
-
-                    <ContentFormNew>
+                <ContentFormNew>
                     <label htmlFor="">Pix</label>
                     <input
                     type="text" placeholder="Pix"
@@ -855,7 +839,7 @@ switch (accountType) {
                     onChange={(text) => setPix(text.target.value)}
                     />
 
-                    <ContentFormNew>
+                <ContentFormNew>
 
                     <ContentFormNew>
                     <Formik
@@ -874,7 +858,7 @@ switch (accountType) {
                   <Form>
                     
                     <ContentFormNew className='form-control-group'>
-                      <label>Cep</label>
+                      <label>Cep*</label>
                       <Field
                       required
                       value={cep}
@@ -886,7 +870,7 @@ switch (accountType) {
                     </ContentFormNew>
 
                     <ContentFormNew className='form-control-group'>
-                      <label>Logradouro</label>
+                      <label>Logradouro*</label>
                       <Field 
                       required
                       value={logradouro}
@@ -896,7 +880,7 @@ switch (accountType) {
                     </ContentFormNew>
 
                     <ContentFormNew className='form-control-group'>
-                      <label>Número</label>
+                      <label>Número*</label>
                       <Field 
                       required
                       value={numero}
@@ -909,7 +893,6 @@ switch (accountType) {
                     <ContentFormNew className='form-control-group'>
                       <label>Complemento</label>
                       <Field 
-                      required
                       value={complemento}
                       name='complemento' 
                       type='text'
@@ -918,7 +901,7 @@ switch (accountType) {
                     </ContentFormNew>
 
                     <ContentFormNew className='form-control-group'>
-                      <label>Bairro</label>
+                      <label>Bairro**</label>
                       <Field 
                       required
                       value={bairro}
@@ -929,7 +912,7 @@ switch (accountType) {
                     </ContentFormNew>
 
                     <ContentFormNew className='form-control-group'>
-                      <label>Cidade</label>
+                      <label>Cidade*</label>
                       <Field 
                       required
                       value={cidade}
@@ -940,7 +923,7 @@ switch (accountType) {
                     </ContentFormNew>
 
                     <ContentFormNew className='form-control-group'>
-                      <label>Estado</label>
+                      <label>Estado*</label>
                       <Field 
                       required
                       value={estado}
