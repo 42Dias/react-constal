@@ -84,6 +84,7 @@ export default function PersonalData() {
   const [formatAgencia, setFormatAgencia] = useState("9999-D");
 
   const [maskedTelefone, setMaskedTelefone] = useState();
+  const [maskedCelular, setMaskedCelular] = useState();
   const [maskedCNPJ, setMaskedCNPJ] = useState();
 
   function formatarNumero(v: any){
@@ -695,7 +696,7 @@ switch (accountType) {
                     onChange={(text) => setTelefone(text.target.value)}
                     /> */}
                     <InputMask
-                    required mask="(99) 9999-99999"
+                    mask="(99) 9999-99999"
                     value={maskedTelefone} 
                     onChange={
                       (e: any) => {
@@ -713,8 +714,9 @@ switch (accountType) {
                     />
                     </ContentFormNew>
 
-                    {/*
+                    
                     <ContentFormNew>
+                      
                     <label htmlFor="">Celular</label>
                     <input
                     required type="text" placeholder="Celular"
@@ -722,8 +724,26 @@ switch (accountType) {
 
                     onChange={(text) => setCelular(text.target.value)}
                     />
+                    <InputMask
+                    mask="(99) 9999-99999"
+                    value={maskedCelular} 
+                    onChange={
+                      (e: any) => {
+                        let celular = e.target.value
+                        console.log(
+                          celular.replace(/\D/g, '')
+                          )
+                        setCelular(
+                          celular.replace(/[\(\)\.\s-]+/g,'')
+                          )
+                        setMaskedCelular(e.target.value)
+                      }
+                    }
+                    />
+
+                    
                     </ContentFormNew> 
-                    */}
+                   
                     <ContentFormNew>
                       <label htmlFor="">CNPJ*</label>
                       <InputMask
@@ -901,7 +921,7 @@ switch (accountType) {
                     </ContentFormNew>
 
                     <ContentFormNew className='form-control-group'>
-                      <label>Bairro**</label>
+                      <label>Bairro*</label>
                       <Field 
                       required
                       value={bairro}
