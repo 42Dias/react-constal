@@ -35,7 +35,7 @@ var uuid = require("uuid");
 export default function Promotions() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [imagemPromocional, setImagemPromocional] = useState<any>();
-  const [dataEncerramento, setDataEncerramento]   =  useState<any>();
+  // const [dataEncerramento, setDataEncerramento]   =  useState<any>();
   const [indexs, setIndexs]   =  useState<any>([]);
   
 
@@ -117,7 +117,7 @@ export default function Promotions() {
       data: {
         "imagemPromocional": imagemPromocional,
         "promocaoCriacao": new Date(),
-        "promocaoEncerramento": dataEncerramento,
+        // "promocaoEncerramento": dataEncerramento,
         "promocaoId": uuid.v4(),
         "empresaId": productCounter[0].empresaId
       }
@@ -225,7 +225,7 @@ export default function Promotions() {
                 />
               </ContentFormNew>
               
-              <ContentFormNew>
+              {/* <ContentFormNew>
                 <label htmlFor="">Data de encerramento</label>
                 <input 
                 required
@@ -233,7 +233,7 @@ export default function Promotions() {
                 placeholder="12/12/2022" 
                 onChange={event => setDataEncerramento(event.target.value)} 
                 />
-              </ContentFormNew>
+              </ContentFormNew> */}
 
               <div className="buttonsNew">
                 <button >Cancelar</button>
