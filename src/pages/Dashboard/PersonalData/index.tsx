@@ -68,10 +68,10 @@ export default function PersonalData() {
   const [pontoReferencia, setPontoReferencia] = useState('')
   const [cidade, setCidade] = useState('')
   const [estado, setEstado] = useState('')
-  const [banco, setBanco]=useState<any>();
-  const [tipoDeConta, setTipoDeConta]=useState<any>();
+  const [banco, setBanco]=useState<any>('Itaú');
+  const [tipoDeConta, setTipoDeConta]=useState<any>('Poupança');
   const [numeroCartao, setNumeroCartao]=useState<any>('');
-  const [cartaoAgencia, setCartaoAgencia] = useState<any>();
+  const [cartaoAgencia, setCartaoAgencia] = useState<any>('');
 
   const [bairro, setBairro] = useState('')
   const [pix, setPix] = useState('')
