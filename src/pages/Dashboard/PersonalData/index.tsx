@@ -792,9 +792,9 @@ switch (accountType) {
                 </ContentFormNew>
 
                 <ContentFormNew>
-                    <label htmlFor="">Numero do cartão*</label>
+                    <label htmlFor="">Numero do Conta*</label>
                     <p>
-                    Formato do Cartão <br />
+                    Formato do Conta <br />
                     {formatCartao}
                     </p>
                     <input
