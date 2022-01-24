@@ -449,12 +449,12 @@ export default function SendBanner() {
                   </a>
                 </small>
                 <p>
-                  <Link
+                  {/* <Link
                         // href={`/produtos-promocao/${promocao.promocaoId}`}
                         to={`/produtos-promocao/${imagem.promocaoId}`}>
-                          {/* /produtos-promocao/:imagemId */}
                           Ver Promoção
-                    </Link>
+                    </Link> */}
+                    {imagem.imagemPromocional}
                 </p>
 
                   {/* <p>
