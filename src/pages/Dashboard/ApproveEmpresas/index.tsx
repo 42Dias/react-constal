@@ -48,6 +48,7 @@ export default function ApproveEmpresas() {
     setIsOpen(false);
   }
   function aprovarEmpresa(empresa: Empresa) {
+    toast.info("Carregando...")
     empresa.status = "active";
     setLoading2(true)
     let response = api.put('empresaStatusUpdate/' + empresa.tId, {
@@ -83,6 +84,7 @@ export default function ApproveEmpresas() {
     })
   }
   function recusarEmpresa(empresa: Empresa) {
+    toast.info("Carregando...")
     empresa.status = "inative";
     setLoading(true)
     let response = api.put('empresaStatusUpdate/' + empresa.tId, {
