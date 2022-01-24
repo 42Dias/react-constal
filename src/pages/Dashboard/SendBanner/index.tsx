@@ -450,9 +450,10 @@ export default function SendBanner() {
               </ContentDetails>
             </CardDatailsContent>
             <div 
-            className="trash-btn"
+              className="trash-btn"
             >
               <button
+              className="reset"
               onClick={
                 () => {
                   deleteProduct(imagem.promocaoId)

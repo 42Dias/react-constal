@@ -151,6 +151,11 @@ export const CardDatailsContent = styled.div`
     color: white;
     border-radius: 5px;
   }
+
+  .reset{
+    background-color: transparent !important;
+    margin: 0 auto;
+  }
 `
 
 export const ContentDetails = styled.div`
