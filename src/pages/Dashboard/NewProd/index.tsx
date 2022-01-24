@@ -690,6 +690,11 @@ export default function NewProd() {
 
                 <ContentFormNew>
                   <label htmlFor="">URL da imagem</label>
+                  <p
+                      style={{margin: 'auto'}}
+                      >
+                        Imagem deve estar em 1440 X 417 PX
+                  </p>
                   <input
                     value={imagem}
                     required
@@ -902,6 +907,11 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">URL da imagem</label>
+                <p
+                      style={{margin: 'auto'}}
+                      >
+                        Imagem deve estar em 1440 X 417 PX
+                  </p>
                 <input
                   value={imagem}
                   required
