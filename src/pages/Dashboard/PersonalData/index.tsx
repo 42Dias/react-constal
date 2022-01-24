@@ -506,19 +506,7 @@ switch (accountType) {
     setFieldValue: any;
   }
 
-  console.log("token")
-  console.log(token)
-  console.log("tenantId")
-  console.log(tenantId)
-  console.log("role")
-  console.log(role)
-  console.log("id")
-  console.log(id)
-  console.log("idPessoa")
-  console.log(idPessoa)
-  console.log("Email")
-  console.log(Email)
-
+console.log("")
   return (
     <>
       <Header />
