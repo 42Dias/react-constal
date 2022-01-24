@@ -11296,13 +11296,18 @@ react-icons@*, react-icons@^4.2.0:
   resolved "https://registry.npmjs.org/react-icons/-/react-icons-4.2.0.tgz"
   integrity sha512-rmzEDFt+AVXRzD7zDE21gcxyBizD/3NqjbX6cmViAgdqfJ2UiLer8927/QhhrXQV7dEj/1EGuOTPp7JnLYVJKQ==
 
-react-input-mask@2.0.4:
+react-input-mask@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/react-input-mask/-/react-input-mask-2.0.4.tgz#9ade5cf8196f4a856dbf010820fe75a795f3eb14"
   integrity sha512-1hwzMr/aO9tXfiroiVCx5EtKohKwLk/NT8QlJXHQ4N+yJJFyUuMT+zfTpLBwX/lK3PkuMlievIffncpMZ3HGRQ==
   dependencies:
     invariant "^2.2.4"
     warning "^4.0.2"
+
+react-intl-currency-input@^0.2.6:
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/react-intl-currency-input/-/react-intl-currency-input-0.2.6.tgz#d71396a9db478fa5341ac562af2fd9c20afb7683"
+  integrity sha512-As8Kg3m9BKwD4liefx/gxG6Dge/8GjdZQBDVlwUUxrgtqWUkRNvRj9Iy4pNx4+o1xpXaEt+gfjtzO6r8uTNBlg==
 
 react-is@^16.13.1, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1:
   version "16.13.1"
