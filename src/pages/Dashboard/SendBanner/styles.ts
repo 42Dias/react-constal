@@ -139,6 +139,18 @@ export const CardDatailsContent = styled.div`
   .flex-btn a {
     margin: 0 20px;
   }
+
+  .trash-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 54px;
+    height: 41px;
+    text-decoration: none;
+    background: #EA1C24;
+    color: white;
+    border-radius: 5px;
+  }
 `
 
 export const ContentDetails = styled.div`
