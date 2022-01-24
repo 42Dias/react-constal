@@ -31,7 +31,7 @@ import React, { useEffect, useState } from "react";
 
 import { useCart } from "../../hooks/useCart";
 import { toast } from "react-toastify";
-import { api, id, ip, role, token } from "../../services/api";
+import { api, id, ip, role, tenantId, token } from "../../services/api";
 import axios from "axios";
 
 
@@ -228,6 +228,14 @@ const Header = (): JSX.Element => {
         loadCart()
         }
   }, [update]);
+
+
+  useEffect(() => {
+    if(email && !tenantId){
+      window.location.reload()
+    }
+  }, []);
+
   
 
   return (
