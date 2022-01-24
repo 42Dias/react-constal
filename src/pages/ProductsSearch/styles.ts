@@ -34,6 +34,8 @@ export const GridProdsFour = styled.div`
 
 export const ProdContainerSingle = styled.div`
   width: 222px;
+  display:flex;
+  flex-direction: column;
   height: 260px;
   background: white;
   margin: 20px auto;
@@ -68,6 +70,10 @@ export const ProdContainerSingle = styled.div`
     color: #CBCBCB;
     font-size: 12px;
     padding: 6px 7px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
     @media (max-width: 768px) {
       font-size: 14px;
     }
@@ -75,6 +81,8 @@ export const ProdContainerSingle = styled.div`
 
   .btn-group-add {
     padding: 0 7px;
+    margin-top: auto;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
