@@ -154,7 +154,7 @@ export const CardDatailsContent = styled.div`
 
   .reset{
     background-color: transparent !important;
-    margin: 0 auto;
+    margin: 0 auto !important;
   }
 `
 
