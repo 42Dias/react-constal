@@ -48,9 +48,13 @@ export default function ProductsPromotions() {
       <Header />
       <Menu />
       <div className="container">
-        <Recommended>
-          <h4>Recomendados</h4>
-        </Recommended>
+      {
+            role != 'admin' && role != 'empresa' ? (
+              <Recommended>
+              <h4>Recomendados</h4>
+              </Recommended>
+            ) : false
+          }
       <GridProdsFour>
     {products.map((product: any, index: number) => {
           return <ProdContainerSingle key={product.id}>
