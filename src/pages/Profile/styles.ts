@@ -202,7 +202,7 @@ export const ContentDetails = styled.div`
 `;
 
 
-export const ModalContainerVendedor = styled.div`
+export const ModalContainerVendedor = styled.form`
   display: flex;
 `;
 

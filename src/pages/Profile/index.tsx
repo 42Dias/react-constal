@@ -228,7 +228,7 @@ export default function Profile() {
   }
 
   useEffect(() => {
-    const hash = window.location.hash.replace('${ip}/#/errodias.com.br/Clientes/constal/#/', '');
+    const hash = window.location.hash.replace(`${ip}#/erro`, '');
     console.log(hash)
     if (hash) {
 
