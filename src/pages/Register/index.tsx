@@ -30,7 +30,6 @@ export default function Register() {
 
     localStorage.setItem("email", JSON.stringify(emailA));//saves client's data into localStorage:
     localStorage.setItem("password", JSON.stringify(passwordB));//saves client's data into localStorage:
-    console.log();
   }
   async function senEmail() {
     Axios.post(`${ip}:8157/api/cliente/${id}/${token}/verificarEmail`, {
@@ -73,7 +72,6 @@ export default function Register() {
   function handleLocalStorageToken(token: string[]) {
     const setLocalStorage = (data: string[]) => {
       localStorage.setItem("token", JSON.stringify(data)); //saves client's data into localStorage:
-      console.log("OK!!!");
     };
     setLocalStorage(token);
     loadUser(token)
@@ -115,7 +113,8 @@ export default function Register() {
   }
   let history = useHistory();
   function handleClickLogin() {
-    history.push("/");
+    // window.location.reload()
+    window.location.hash = '#/'
   }
 
   return (
