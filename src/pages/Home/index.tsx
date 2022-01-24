@@ -155,11 +155,13 @@ const Home = (): JSX.Element => {
             promocoes.map(
               (promocao, index) => (
                     <SwiperSlide key={index}>
-                      <a href={`${ip}:3000/constal#/produtos-promocao/${promocao.promocaoId}`}>
+                      <Link 
+                      // href={`/produtos-promocao/${promocao.promocaoId}`} 
+                      to={`/produtos-promocao/${promocao.promocaoId}`}>
                         {/* /produtos-promocao/:imagemId */}
                         <img src={promocao.imagemPromocional}
                         alt={promocao.precoOferta + " " + promocao.nome} />
-                    </a>
+                    </Link>
                     </SwiperSlide>
               )             
             )
