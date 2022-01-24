@@ -305,7 +305,9 @@ export default function SendBanner() {
                   Imagem deve estar em 1440 X 417 PX
             </h4>
 
-          <input type="file"
+          <input 
+          type="file"
+          required
           name="image"
           onChange={e => {
           console.log(e)
