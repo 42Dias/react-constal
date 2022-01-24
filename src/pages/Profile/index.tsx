@@ -18,7 +18,7 @@ import {
   ContentFormNew,
 } from "./styles";
 import { Link } from "react-router-dom";
-import { api, idPessoa, ip, role, token } from "../../services/api";
+import { api, Email, idPessoa, ip, role, tenantId, token } from "../../services/api";
 import { Menu } from "../../components/Menu";
 import upload from "../../assets/images/upload.png";
 import axios from "axios";
@@ -364,7 +364,18 @@ export default function Profile() {
   function formatarCpf(v: any){
     return v.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")
   }
-
+  console.log("token")
+  console.log(token)
+  console.log("tenantId")
+  console.log(tenantId)
+  console.log("role")
+  console.log(role)
+  console.log("id")
+  console.log(id)
+  console.log("idPessoa")
+  console.log(idPessoa)
+  console.log("Email")
+  console.log(Email)
 
 
   return (
@@ -421,7 +432,7 @@ export default function Profile() {
                     <label htmlFor="">Nome</label>
                     <input
                       type="text"
-                      placeholder="Seu novo nome"
+                      placeholder="Seu nome"
                       onChange={(text) => setNewNome(text.target.value)}
                     />
                   </ContentFormNew>
@@ -507,8 +518,8 @@ export default function Profile() {
               <ContentFormNew>
                 <label htmlFor="">Nome Completo</label>
                 <input
-                  type="nome"
-                  placeholder="Email"
+                  type="text"
+                  placeholder="Seu nome"
                   value={fullName}
                   onChange={(text) => setFullName(text.target.value)}
                 />

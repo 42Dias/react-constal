@@ -5,7 +5,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import Header from "../../../components/Header";
 import { Menu } from "../../../components/Menu";
-import { api, Email, id, ip, role, status, tenantId } from "../../../services/api";
+import { api, Email, id, idPessoa, ip, role, status, tenantId, token } from "../../../services/api";
 import { ModalContent } from "../../Produto/styles";
 import { ModalContainerVendedor } from "../../Profile/styles";
 import { ContentFormNew } from "../NewProd/styles";
@@ -504,6 +504,19 @@ switch (accountType) {
     ev: any;
     setFieldValue: any;
   }
+
+  console.log("token")
+  console.log(token)
+  console.log("tenantId")
+  console.log(tenantId)
+  console.log("role")
+  console.log(role)
+  console.log("id")
+  console.log(id)
+  console.log("idPessoa")
+  console.log(idPessoa)
+  console.log("Email")
+  console.log(Email)
 
   return (
     <>
