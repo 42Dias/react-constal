@@ -72,7 +72,7 @@ export default function Sendcategoria() {
           console.log("fixou!")
         }
         else{
-          toast.error("Não é possivel adicionar mais que 8 categorias fixas")
+          toast.error("Não é possivel adicionar mais que 7 categorias fixas")
           return
         }
       }
@@ -366,82 +366,6 @@ export default function Sendcategoria() {
           )
           
       }
-          {/* <CardDatailsContent>
-            <CardDatailsContent>
-              <ContentDetails>
-                <small>
-                  <a
-                    target="_blank"
-                    href="http://7dd208931cad.sn.mynetname.net:42080/constal/static/media/moveis.e2d4307e.png"
-                    rel="noreferrer"
-                  >
-                    Ver
-                  </a>
-                </small>
-              </ContentDetails>
-            </CardDatailsContent>
-            <div className="flex-btn">
-              <button>
-                <FiTrash />
-              </button>
-
-              <button>
-                <span>Deixar inativa</span>
-              </button>
-            </div>
-          </CardDatailsContent>
-
-          <CardDatailsContent>
-            <CardDatailsContent>
-              <ContentDetails>
-                <small>
-                  <a
-                    target="_blank"
-                    href="http://7dd208931cad.sn.mynetname.net:42080/constal/static/media/materiais.1b6d9340.png "
-                    rel="noreferrer"
-                  >
-                    Ver
-                  </a>
-                </small>
-              </ContentDetails>
-            </CardDatailsContent>
-            <div className="flex-btn">
-              <button>
-                <FiTrash />
-              </button>
-
-              
-              <button>
-                <span>Deixar inativa</span>
-              </button>
-            </div>
-          </CardDatailsContent>
-
-          <CardDatailsContent>
-            <CardDatailsContent>
-              <ContentDetails>
-                <small>
-                  <a
-                    target="_blank"
-                    href="http://7dd208931cad.sn.mynetname.net:42080/constal/static/media/modamasculina.76bf6829.png"
-                    rel="noreferrer"
-                  >
-                    Ver
-                  </a>
-                </small>
-              </ContentDetails>
-            </CardDatailsContent>
-            <div className="flex-btn">
-              <button>
-                <FiTrash />
-              </button>
-
-              
-              <button>
-                <span>Deixar inativa</span>
-              </button>
-            </div>
-          </CardDatailsContent> */}
         </CardDatails>
       </div>
     </>
