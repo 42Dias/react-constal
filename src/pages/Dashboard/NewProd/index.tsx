@@ -25,6 +25,12 @@ import axios from "axios";
 import { Empresa, Product } from "../../../types";
 import { api, id, ip, role, status } from "../../../services/api";
 import { Btn } from "./styles";
+
+//@ts-ignore
+import IntlCurrencyInput from "react-intl-currency-input"
+
+
+
 import Input from '../../../util/Input'
 
 // @ts-ignore
@@ -74,6 +80,9 @@ export default function NewProd() {
   const [categoriaId, setCategoriaId] = useState<any>();
   
   const [handleChangePrice, setHandleChangePrice] = useState<any>();
+
+  const [handleChangePriceOferta, setHandleChangePriceOferta] = useState<any>();
+
 
   const [compararProd, setCompararProd] = useState<any>();
   const [porcentagem, setPorcentagem] = useState<any>("");
@@ -481,6 +490,34 @@ export default function NewProd() {
   }
   //apenas fazer outra funçãozinha para setar o esse input com o valor quando for alterado!!!
 
+
+  const currencyConfig = {
+    locale: "pt-BR",
+    formats: {
+      number: {
+        BRL: {
+          style: "currency",
+          currency: "BRL",
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        },
+      },
+    },
+  };
+  
+    const handleChangea = (event: any, value: any, maskedValue: any) => {
+      event.preventDefault();
+  
+      setPreco(value); // value without mask (ex: 1234.56)
+      setHandleChangePrice(maskedValue); // masked value (ex: R$1234,56)
+    };
+
+    const handleChangeb = (event: any, value: any, maskedValue: any) => {
+      event.preventDefault();
+  
+      setPrecoOferta(value); // value without mask (ex: 1234.56)
+      setHandleChangePriceOferta(maskedValue); // masked value (ex: R$1234,56)
+    };
   return (
     <>
       <GlobalStyles />
@@ -675,7 +712,7 @@ export default function NewProd() {
 
                 <ContentFormNew>
                   <label htmlFor="">Preço</label>
-                  <input 
+                  {/* <input 
                   type="text"
                   placeholder="R$ 00,00"
                   value={handleChangePrice}
@@ -685,7 +722,13 @@ export default function NewProd() {
                     // ESTÁ MANDANDO COM ESPAÇO NO PRIMEIRO CARACTER
                     setHandleChangePrice(handlePriceOnMask(text.target.value))
                     setPreco(parseAFormatedNumber(handlePriceOnMask(text.target.value)))
-                  }} />
+                  }} /> */}
+                  <IntlCurrencyInput 
+                  currency="BRL" 
+                  config={currencyConfig}
+                  onChange={handleChangea} 
+                  value={handleChangePrice}
+                  />
                 </ContentFormNew>
 
                 <ContentFormNew>
@@ -892,7 +935,7 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Preço</label>
-                <input 
+                {/* <input 
                   type="text"
                   placeholder="R$ 00,00"
                   value={handleChangePrice}
@@ -902,7 +945,13 @@ export default function NewProd() {
                     // ESTÁ MANDANDO COM ESPAÇO NO PRIMEIRO CARACTER
                     setHandleChangePrice(handlePriceOnMask(text.target.value))
                     setPreco(parseAFormatedNumber(handlePriceOnMask(text.target.value)))
-                  }} />
+                  }} /> */}
+                  <IntlCurrencyInput 
+                  currency="BRL" 
+                  config={currencyConfig}
+                  onChange={handleChangea} 
+                  value={handleChangePrice}
+                  />
               </ContentFormNew>
 
               <ContentFormNew>
@@ -1035,7 +1084,7 @@ export default function NewProd() {
 
               <ContentFormNew>
                 <label htmlFor="">Novo preço</label>
-                <input 
+                {/* <input 
                   required
                   type="text"
                   placeholder="R$ 00,00"
@@ -1047,7 +1096,13 @@ export default function NewProd() {
                     setHandleChangePrice(handlePriceOnMask(text.target.value))
                     setPrecoOferta(parseAFormatedNumber(handlePriceOnMask(text.target.value)))
                     console.log(precoOferta)
-                  }} />
+                  }} /> */}
+                  <IntlCurrencyInput 
+                  currency="BRL" 
+                  config={currencyConfig}
+                  onChange={handleChangeb} 
+                  value={handleChangePriceOferta}
+                  />
               </ContentFormNew>
 
               <ContentFormNew>
@@ -1069,7 +1124,7 @@ export default function NewProd() {
                         var newPreco = preco - (event.target.value / 100) * preco
                         console.log(newPreco)
                         setPorcentagem(event.target.value)
-                        setHandleChangePrice(formatPrice(newPreco))
+                        setHandleChangePriceOferta(formatPrice(newPreco))
                         setPrecoOferta(newPreco)
                       }
                       else{
