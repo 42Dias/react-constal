@@ -29,7 +29,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { Field, Form, Formik } from "formik";
 import { format } from "path";
-import { createNoSubstitutionTemplateLiteral } from "typescript";
+
 
 export default function PersonalData() {
   const [showModal1, setShowModal1] = React.useState(false);
@@ -637,6 +637,7 @@ switch (accountType) {
           </CardDatailsContent>
         </CardDatails>
       </div>
+      
 
 
 
