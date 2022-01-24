@@ -693,7 +693,7 @@ export default function NewProd() {
                   <p
                       style={{margin: 'auto'}}
                       >
-                        Imagem deve estar em 1440 X 417 PX
+                        Imagem deve estar em 263 X 146 PX
                   </p>
                   <input
                     value={imagem}
@@ -910,7 +910,7 @@ export default function NewProd() {
                 <p
                       style={{margin: 'auto'}}
                       >
-                        Imagem deve estar em 1440 X 417 PX
+                        Imagem deve estar em 263 X 146 PX
                   </p>
                 <input
                   value={imagem}
