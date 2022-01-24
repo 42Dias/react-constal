@@ -7,6 +7,7 @@ import { api, ip, role, status, token } from "../../../services/api";
 import { Empresa } from "../../../types";
 import { toast } from "react-toastify";
 import React from "react";
+import axios from "axios";
 
 export default function ApproveEmpresas() {
   const [empresas = [], setEmpresas] = useState<any[]>([]);
@@ -58,7 +59,21 @@ export default function ApproveEmpresas() {
         toast.info('Empresa aprovado com sucesso! :)');
         //window.location.reload();
         setLoading2(false)
-        loadEmpresa();
+        console.log("empresa.email")
+        console.log(empresa.email)
+        axios.post(''+ip+':8157/api/cliente/enviarEmailEmpresaAprovada', {
+          email: empresa.email,
+        }).then((response) => {
+          if(response.status == 200){
+            console.log(response)
+            toast.info('Email enviado com sucesso! :)')
+            loadEmpresa();
+          }
+          else{
+            console.log(response)
+            toast.info('Email não foi enviado com sucesso! :(')
+          }
+        })
       }else{
         toast.error('Ops, não foi possivel aprovar a empresa! :(');
       }
