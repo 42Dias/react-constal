@@ -249,7 +249,7 @@ export const ModalFlex = styled.div`
   display: flex;
 `;
 
-export const ModalContent = styled.div`
+export const ModalContent = styled.form`
   display: flex;
   align-items: center;
   justify-content: center;
