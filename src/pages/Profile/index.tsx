@@ -364,19 +364,6 @@ export default function Profile() {
   function formatarCpf(v: any){
     return v.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")
   }
-  console.log("token")
-  console.log(token)
-  console.log("tenantId")
-  console.log(tenantId)
-  console.log("role")
-  console.log(role)
-  console.log("id")
-  console.log(id)
-  console.log("idPessoa")
-  console.log(idPessoa)
-  console.log("Email")
-  console.log(Email)
-
 
   return (
     <>
