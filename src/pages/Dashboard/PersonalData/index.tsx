@@ -644,7 +644,7 @@ switch (accountType) {
       {/* 
       ======================MODAIS======================
        */}
-      <ModalContainerVendedor>
+      <ModalContainerVendedor >
         {/* MODAL DE ALTERAR TUDO */}
           <Modal
             isOpen={showModal1}
@@ -656,7 +656,8 @@ switch (accountType) {
                   <AiOutlineClose onClick={
                     () => setShowModal1(false)} />
                 </ModalFlex>
-                <ModalContent>
+                <ModalContent
+                onSubmit={criarOuAtualizarEmpresa}>
                   <img  alt="" />
                   <h3>
                   {marca || razaoSocial || cnpj || telefone ? 'Alterar seus dados':'Cadastrar seus dados'} 
@@ -1011,7 +1012,7 @@ switch (accountType) {
                     </ContentFormNew>
                     <NewBtn>
                       <button type="button" onClick={() => setShowModal1(false)}>Cancelar</button>
-                      <button type="button" onClick={() => criarOuAtualizarEmpresa()}>Adicionar</button>
+                      <button type="submit" onSubmit={() => criarOuAtualizarEmpresa()}>Adicionar</button>
                     </NewBtn>
                 </ModalContent>
               </div>
