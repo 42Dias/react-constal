@@ -63,11 +63,14 @@ export default function ProductsPromotions() {
                       <span>
                         R$<b>{product.preco}</b>
                       </span>
-                      <div className="btn-more"
-                      onClick={() => handleAddProduct(product.id)}
-                      >
-                        <AiOutlinePlus />
-                      </div>
+                      {
+                        role == 'empresa' || role == 'admin' ? false : 
+                        <div className="btn-more"
+                          onClick={() => handleAddProduct(product.id)}
+                          >
+                          <AiOutlinePlus />
+                        </div>
+                      }
                     </div>
                 </ProdContainerSingle>}
       )}

@@ -3,7 +3,7 @@ import Footer from "../../components/Footer";
 
 import { Link } from "react-router-dom";
 import React, { useState ,useEffect, useRef, useCallback } from "react";
-import { api, semImagem } from "../../services/api";
+import { api, role, semImagem } from "../../services/api";
 import { formatPrice } from "../../util/format";
 
 import { useCart } from "../../hooks/useCart";
@@ -67,12 +67,16 @@ export default function Products() {
                       <span>
                         R$<b>{product.preco}</b>
                       </span>
-                      <div className="btn-more"
-                      onClick={() => handleAddProduct(product.id)}
-                      >
-                        <AiOutlinePlus />
+                      
+                        {
+                        role == 'empresa' || role == 'admin' ? false : 
+                        <div className="btn-more"
+                          onClick={() => handleAddProduct(product.id)}
+                          >
+                          <AiOutlinePlus />
+                        </div>
+                      }
                       </div>
-                    </div>
                 </ProdContainerSingle>
         }
         else{
@@ -86,11 +90,14 @@ export default function Products() {
                       <span>
                         R$<b>{product.preco}</b>
                       </span>
-                      <div className="btn-more"
-                      onClick={() => handleAddProduct(product.id)}
-                      >
-                        <AiOutlinePlus />
-                      </div>
+                      {
+                        role == 'empresa' || role == 'admin' ? false : 
+                        <div className="btn-more"
+                          onClick={() => handleAddProduct(product.id)}
+                          >
+                          <AiOutlinePlus />
+                        </div>
+                      }
                     </div>
                 </ProdContainerSingle>}
       })}
