@@ -26,6 +26,7 @@ export default function SendBanner() {
   const [imagensInativa = [], setImagensInativa] = useState<any[]>([]);
   const [imagensAtiva = [], setImagensAtiva] = useState<any[]>([]);
 
+  const [promocoes = [], setPromocoes] = useState<any[]>([]);
   
   const [displyedStatus = [], setDisplyedStatus] = useState<any[]>([]);
 
@@ -185,6 +186,32 @@ export default function SendBanner() {
       }
     )
   }
+  function loadPromocoes(){
+    axios.get(`${ip}:8157/api/produto-imagens-promocionais/`).then(
+      (response) => {
+        console.log(response.data)
+        setPromocoes(response.data)
+      }
+    )
+  }
+
+  function deleteProduct(promocaoId: any){
+
+    console.log(promocaoId)
+
+    api.delete(`delete-produto-imagens-promocionais/${promocaoId}`).then(
+      (response) => {
+        console.log(response)
+        if(response.status == 200){
+          toast.info("Produto removido com sucesso!")
+          loadPromocoes()
+        }
+        else{
+          toast.error("Erro ao remover o produto")
+        }
+      }
+    )
+  }
 
   async function loadImagens(){
     const imagensResponse = await api.get("banner")
@@ -203,9 +230,13 @@ export default function SendBanner() {
   useEffect(
     () => {
       setImagensInativa([])
-      
     }, []
   )
+  useEffect(
+    () => {
+      loadPromocoes()
+    }, [])
+
   function updateDisplayedStatus(text: any){
     if(text == 'inativo'){
       setImagensDisplayed(imagensInativa)
@@ -271,7 +302,7 @@ export default function SendBanner() {
             <h4
                 // style={{margin: 'auto'}}
                 >
-                  Imagem promocional deve estar em 1440 X 417 PX
+                  Imagem deve estar em 1440 X 417 PX
             </h4>
 
           <input type="file"
@@ -390,11 +421,51 @@ export default function SendBanner() {
               </button>
             </div>
           </CardDatailsContent>
-
             )
           )
-          
       }
+
+      <h2>Promoções</h2>
+      {
+        promocoes.length == 0 ? <h4>"Nenhuma Imagem Procional..." </h4>: false
+      }
+
+      { promocoes.map(
+            (imagem) => (
+            <CardDatailsContent>
+            <CardDatailsContent>
+              <ContentDetails>
+                <small>
+                  <a
+                    target="_blank"
+                    href={imagem.imagemPromocional}
+                    rel="noreferrer"
+                  >
+                    Ver
+                  </a>
+                </small>
+                  {/* <p>
+                    {imagem.nome}
+                  </p> */}
+              </ContentDetails>
+            </CardDatailsContent>
+            <div 
+            className="trash-btn"
+            >
+              <button
+              onClick={
+                () => {
+                  deleteProduct(imagem.promocaoId)
+                }
+              }
+              >
+                <FiTrash />
+              </button>
+            </div>
+          </CardDatailsContent>
+            )
+          ) }
+
           {/* <CardDatailsContent>
             <CardDatailsContent>
               <ContentDetails>
