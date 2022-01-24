@@ -154,7 +154,8 @@ export default function PersonalData() {
 
     
 
-  async function criarOuAtualizarEmpresa() {
+  async function criarOuAtualizarEmpresa(e: any) {
+    e.preventDefault()
     setLoading(true)
     const data = {
       data: {
@@ -1026,7 +1027,7 @@ switch (accountType) {
                     </ContentFormNew>
                     <NewBtn>
                       <button type="button" onClick={() => setShowModal1(false)}>Cancelar</button>
-                      <button type="submit" onSubmit={() => criarOuAtualizarEmpresa()}>Adicionar</button>
+                      <button type="submit" onSubmit={criarOuAtualizarEmpresa}>Adicionar</button>
                     </NewBtn>
                 </ModalContent>
               </div>
