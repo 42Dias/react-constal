@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { AiOutlineConsoleSql } from "react-icons/ai";
 import { toast } from "react-toastify";
 import Header from "../../components/Header"
 import { Menu } from "../../components/Menu"
@@ -131,6 +132,7 @@ export default function Accounts() {
     /*
     Problemas no set
     */
+   
     faturas.map(
       (fatura:any) => {
         let createdAtFormatado = fatura.createdAt.substr(0,10)
@@ -186,9 +188,6 @@ export default function Accounts() {
   }
 
 
-    
-
-  
   return (
     <>
      <Header />
@@ -196,6 +195,7 @@ export default function Accounts() {
       <S.Container>
         <S.Content>
           <h1>Contas</h1>
+
           <fieldset>
           <label htmlFor="start">Inicío</label>
           <input 
@@ -239,6 +239,10 @@ export default function Accounts() {
             }
             />
           </fieldset>
+          <h3>
+          {displayedFaturas.length == 0  ? (<h3>Você não tem nenhum valor a receber :(</h3>): false }
+          </h3>
+
           {
           displayedFaturas.map(
             (fatura: any) => (
