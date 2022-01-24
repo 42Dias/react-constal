@@ -196,6 +196,8 @@ export default function SendBanner() {
   }
 
   function deleteProduct(promocaoId: any){
+    toast.info("Carregando...")
+
 
     console.log(promocaoId)
 
