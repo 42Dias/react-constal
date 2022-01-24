@@ -9,7 +9,7 @@ import SwiperCore, {
 import "swiper/swiper.scss";
 
 import { SwiperStyles, BarHome, FlexBar, BannerHomeImage } from "./styles";
-import { api, ip, role, semImagem } from "../../services/api";
+import { api, Email, id, idPessoa, ip, role, semImagem, tenantId, token } from "../../services/api";
 import { formatPrice } from "../../util/format";
 import { useCart } from "../../hooks/useCart";
 import Header from "../../components/Header";
@@ -62,11 +62,6 @@ const Home = (): JSX.Element => {
 
   async function loadBanners(){
     const bannerResponse = await axios.get(""+ip+":8157/api/banner");
-
-    console.log("bannerResponse.data.rows")
-
-    console.log(bannerResponse.data.record)
-
     setBanners(bannerResponse.data.record)
   }
 
@@ -98,7 +93,6 @@ const Home = (): JSX.Element => {
     () => {
       axios.get(`${ip}:8157/api/produto-imagens-promocionais/`).then(
         (response) => {
-          console.log(response.data)
           setPromocoes(response.data)
         }
       )
@@ -116,7 +110,18 @@ const Home = (): JSX.Element => {
     }
   }
 
+console.log("")
 
+  useEffect(
+    () => {
+      let email = localStorage.getItem("email")?.replace(/"/g, "");
+      if(email && !role){
+              // @ts-ignore
+              document.location.reload(true);
+      }
+    }, []
+  )
+  
   return (
     <>
       <Header />
@@ -135,9 +140,6 @@ const Home = (): JSX.Element => {
           loop={true}
           navigation={true}
         >
-          {
-          console.log(banners)
-          }
           {
 
             banners.map(
@@ -227,8 +229,6 @@ const Home = (): JSX.Element => {
             <Swiper
               spaceBetween={50}
               slidesPerView={3}
-              onSlideChange={() => console.log("slide change")}
-              onSwiper={(swiper) => console.log(swiper)}
             >
               {products2.map((product) => (
                 <SwiperSlide>
@@ -273,8 +273,6 @@ const Home = (): JSX.Element => {
           <Swiper
             spaceBetween={50}
             slidesPerView={3}
-            onSlideChange={() => console.log("slide change")}
-            onSwiper={(swiper) => console.log(swiper)}
           >
             {products.map((product) => (
               <SwiperSlide>
