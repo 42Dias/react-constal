@@ -29,6 +29,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { Field, Form, Formik } from "formik";
 import { format } from "path";
+import { createNoSubstitutionTemplateLiteral } from "typescript";
 
 export default function PersonalData() {
   const [showModal1, setShowModal1] = React.useState(false);
@@ -187,7 +188,7 @@ export default function PersonalData() {
     const response = await api.post('empresa-perfil', data).then(
       (response) => {
         console.log(response)
-        if(response.status == 200){
+        if(response.status == 200 && !response.data.errors){
           toast.info('Empresa Criada com sucessso! :)')
           closeModal()
           setLoading(false)
@@ -195,7 +196,14 @@ export default function PersonalData() {
 
         else{
           toast.error('Algo deu errado :(')
-          console.log(response) 
+          console.log(response.data.errors)
+
+          Object.keys(response.data.errors).map(function(key, index) {
+            // console.log("response.data.errors[key]");
+            // console.log(key)
+            console.log(...response.data.errors[key][0]);
+            toast.error(`${key} ${response.data.errors[key][0]}`)
+          });
           setLoading(false)
         }
         
@@ -266,7 +274,7 @@ export default function PersonalData() {
     .then(
       (response) => {
         console.log(response)
-        if(response.status == 200){
+        if(!response.data.errors){
           toast.info('Empresa Criada com sucessso! :)')
           closeModal()
           setLoading(false)
@@ -274,7 +282,7 @@ export default function PersonalData() {
         }
         else{
           toast.info('Algo deu errado :(')
-          console.log(response) 
+          console.log(response.data.errors) 
           setLoading(false)
 
         }
