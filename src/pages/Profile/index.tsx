@@ -355,7 +355,7 @@ export default function Profile() {
       })
   }
 
-  function formatarNumero(v: any){
+  function formatarNumero(v: any){ //formatar cep
     v=v.replace(/\D/g,""); //Remove tudo o que não é dígito
     v=v.replace(/^(\d{2})(\d)/g,"($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
     v=v.replace(/(\d)(\d{4})$/,"$1-$2"); //Coloca hífen entre o quarto e o quinto dígitos
@@ -364,6 +364,16 @@ export default function Profile() {
   function formatarCpf(v: any){
     return v.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")
   }
+
+  useEffect(
+    () => {
+      let email = localStorage.getItem("email")?.replace(/"/g, "");
+      if(email && !role){
+              // @ts-ignore
+              document.location.reload(true);
+      }
+    }, []
+  )
 
   return (
     <>

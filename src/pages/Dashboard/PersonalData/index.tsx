@@ -506,7 +506,16 @@ switch (accountType) {
     setFieldValue: any;
   }
 
-console.log("")
+  useEffect(
+    () => {
+      let email = localStorage.getItem("email")?.replace(/"/g, "");
+      if(email && !role){
+              // @ts-ignore
+              document.location.reload(true);
+      }
+    }, []
+  )
+
   return (
     <>
       <Header />
