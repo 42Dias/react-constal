@@ -112,15 +112,12 @@ const Home = (): JSX.Element => {
 
 console.log("")
 
-  useEffect(
-    () => {
-      let email = localStorage.getItem("email")?.replace(/"/g, "");
-      if(email && !role){
-              // @ts-ignore
-              document.location.reload(true);
-      }
-    }, []
-  )
+  // useEffect(() => {
+  //   let newRole = localStorage.getItem("role")?.replace(/"/g, "");
+  //   if(Email && !tenantId && !role ){
+  //     window.location.reload()
+  //   }
+  // }, []);
   
   return (
     <>
