@@ -114,7 +114,18 @@ export default function Register() {
   let history = useHistory();
   function handleClickLogin() {
     // window.location.reload()
-    window.location.hash = '#/'
+    let localRole = localStorage.getItem('role')
+    console.log(localStorage.getItem('token'))
+    if(category == '1'){
+      window.location.hash = `#/meu-perfil/${localStorage.getItem('token')?.replace(/"/g, "")}`
+    }
+    else if(category == '2'|| category == '3'){
+      window.location.hash = `#/dados-pessoais`
+    }
+    else{
+      toast.error("NÃO PEGOU A ROLE")
+      console.log(localRole)
+    }
   }
 
   return (
