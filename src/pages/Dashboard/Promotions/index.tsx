@@ -59,6 +59,7 @@ export default function Promotions() {
   const [ids = [], setIds] = useState<any[]>([]);
 
   function addNewId(newId: string, index: number){
+    toast.info("produto adicionado a lista!")
     console.log(newId)
     setIds((prevValues: any[]) => {
       return [...new Set([...prevValues, newId])]	
