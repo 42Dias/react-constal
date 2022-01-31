@@ -20,14 +20,26 @@ import { toast } from "react-toastify";
 
 export default function ProductsCategory() {
   
+  let url = window.location.hash
   const [products = [], setProducts] = useState<any[]>([]);
+  const [newurl = [], setNewUrl] = useState<any>('');
   
   const { addProduct, cart } = useCart();
 
+  
+  console.log(url)
+  
   useEffect(
     ()=>{
-      async function loadProdutosPesquisados(){
-        const pesquisa = window.location.hash.replace(/#\/produto-categoria\//g, '');
+      setNewUrl(window.location.hash)
+      console.log("mudou url!")
+    },[url != newurl]
+    )
+    
+    useEffect(
+      ()=>{
+        async function loadProdutosPesquisados(){
+          const pesquisa = window.location.hash.replace(/#\/produto-categoria\//g, '');
         console.log(pesquisa)
         const resultadoDaPesquisa2 = await api.get(`produto?filter%5Bcategoria%5D=${pesquisa}`)
         const resultadoDaPesquisa = await axios.get(`${ip}:8157/api/produtos-list?filter%5Bcategoria%5D=${pesquisa}`)
@@ -39,7 +51,7 @@ export default function ProductsCategory() {
         setProducts(resultadoDaPesquisa.data.record)
       }
       loadProdutosPesquisados()
-    },[]
+    },[url != newurl]
   )
 
   function handleAddProduct(id: string) {
