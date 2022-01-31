@@ -38,6 +38,10 @@ export const BoxProd = styled.div`
   span {
     color: rgba(16, 16, 16, 0.69);
     font-size: 13px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 15;
+    -webkit-box-orient: vertical;
   }
 
   strong {
@@ -195,6 +199,10 @@ export const ProdCaracteristicas = styled.div`
   }
 
   span {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 15;
+    -webkit-box-orient: vertical;
     margin: 5px;
     b {
       font-weight: 500;
