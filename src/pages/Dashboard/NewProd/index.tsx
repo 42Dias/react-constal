@@ -292,6 +292,12 @@ export default function NewProd() {
   }
   async function addPromotion(e: any) {
     e.preventDefault()
+    let now = new Date
+    let dataPassed = new Date(dataEncerramento)
+    if(dataPassed < now){
+      toast.error("Data inválida :(")
+      return
+    }
     setLoading(true)
     const data = {
       data: {
@@ -1147,16 +1153,15 @@ export default function NewProd() {
                   onChange={event => {
                     console.log(event.target.value)
                     let now = new Date
-                    console.log(now)
                     let dataPassed = new Date(event.target.value)
                     console.log(dataPassed)
                     if(dataPassed > now){
-                      setDataEncerramento(event.target.value)
                       toast.info("Data válida :)")
                     }
                     else{
                       toast.error("Data inválida :(")
                     }
+                  setDataEncerramento(event.target.value)
                   }}
                 />
               </ContentFormNew> 
