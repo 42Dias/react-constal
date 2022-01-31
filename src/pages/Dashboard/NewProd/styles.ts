@@ -77,6 +77,10 @@ export const ProdContainerSingle = styled.div`
     overflow-wrap: anywhere;
     font-size: 12px;
     padding: 6px 7px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
     @media (max-width: 768px) {
       font-size: 14px;
     }
