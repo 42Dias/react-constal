@@ -29,16 +29,17 @@ export default function SendBanner() {
   const [promocoes = [], setPromocoes] = useState<any[]>([]);
   
   const [displyedStatus = [], setDisplyedStatus] = useState<any[]>([]);
-
-
+  
   const [imagemNova, setImagemNova] = useState<any>();
   const [name, setName] = useState<any>("");
   const [image, setImage] = useState('');
-
+  
   const [status, setStatus] = useState({
     type: '',
     mensagem: ''
   });
+  
+  const [emailContent, setEmailContent] = useState('');
 
   async function makeRequisition(e: any){
     e.preventDefault()
@@ -195,23 +196,45 @@ export default function SendBanner() {
     )
   }
 
-  function deleteProduct(promocaoId: any){
+  function deleteProduct(produto: any, emailContent: any){
     toast.info("Carregando...")
+    
 
+      //// req.product.createdById, req.body.product, req.body.emailContent
 
-    console.log(promocaoId)
+    console.log("produto.promocaoId")
+    console.log(produto.promocaoId)
+    console.log("emailContent")
+    console.log(emailContent)
 
-    api.delete(`delete-produto-imagens-promocionais/${promocaoId}`).then(
+    const data = {
+      empresaId : produto.empresaId,
+      product : produto,
+      emailContent : emailContent
+    }
+    console.log(data)
+
+    api.post(`/produto/enviarEmailRecusadoImagemProduto`, data).then(
       (response) => {
-        console.log(response)
         if(response.status == 200){
-          toast.info("Produto removido com sucesso!")
-          loadPromocoes()
+          toast.info("Enviado o email com sucesso!")
+          api.delete(`delete-produto-imagens-promocionais/${produto.promocaoId}`).then(
+            (response) => {
+              if(response.status == 200){
+                toast.info("Produto removido com sucesso!")
+                loadPromocoes()
+              }
+              else{
+                toast.error("Erro ao remover o produto")
+              }
+            }
+          )
         }
+
         else{
-          toast.error("Erro ao remover o produto")
+          toast.error("Erro ao mandar o email")
         }
-      }
+      } 
     )
   }
 
@@ -436,6 +459,7 @@ export default function SendBanner() {
 
       { promocoes.map(
             (imagem) => (
+              <>
             <CardDatailsContent>
             <CardDatailsContent>
               <ContentDetails>
@@ -469,7 +493,7 @@ export default function SendBanner() {
               className="reset"
               onClick={
                 () => {
-                  deleteProduct(imagem.promocaoId)
+                  deleteProduct(imagem, emailContent)
                 }
               }
               >
@@ -477,6 +501,13 @@ export default function SendBanner() {
               </button>
             </div>
           </CardDatailsContent>
+            <textarea
+            className="emailSender"
+            required
+            placeholder="Digite a mensagem caso reprovar"
+            onChange={(e) => setEmailContent(e.target.value)}
+            />
+          </>
             )
           ) }
 
