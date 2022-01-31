@@ -22,15 +22,30 @@ export default function Products() {
 
   const [products = [], setProducts] = useState<any[]>([]);
 
+  let url = window.location.hash
+  const [newurl = [], setNewUrl] = useState<any>('');
+
+  
+  console.log(url)
+  
   useEffect(
     ()=>{
-      async function loadProdutosPesquisados(){
-        const pesquisa = window.location.hash.replace(/#\/produtos\//g, '');
-        const resultadoDaPesquisa = await api.get(`produto?filter%5Bnome%5D=${pesquisa}`)
-        setProducts(resultadoDaPesquisa.data.rows)
-      }
-      loadProdutosPesquisados()
-    },[]
+      setNewUrl(window.location.hash)
+      console.log("mudou url!")
+    },[url != newurl]
+    )
+    
+
+    
+    useEffect(
+      ()=>{
+        async function loadProdutosPesquisados(){
+          const pesquisa = window.location.hash.replace(/#\/produtos\//g, '');
+          const resultadoDaPesquisa = await api.get(`produto?filter%5Bnome%5D=${pesquisa}`)
+          setProducts(resultadoDaPesquisa.data.rows)
+        }
+        loadProdutosPesquisados()
+      },[url != newurl]
   )
 
   function handleAddProduct(id: string) {
