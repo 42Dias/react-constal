@@ -3,7 +3,7 @@ import Footer from "../../components/Footer";
 
 import { Link } from "react-router-dom";
 import React, { useState ,useEffect, useRef, useCallback } from "react";
-import { api, role, semImagem } from "../../services/api";
+import { api, ip, role, semImagem } from "../../services/api";
 import { formatPrice } from "../../util/format";
 
 import { useCart } from "../../hooks/useCart";
@@ -13,6 +13,7 @@ import { Recommended, GridProdsFour, ProdContainerSingle } from "./styles";
 import useInfiniteScroll from '../../hooks/useInfiniteScroll'
 import { Menu } from "../../components/Menu";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 
 
@@ -41,8 +42,8 @@ export default function Products() {
       ()=>{
         async function loadProdutosPesquisados(){
           const pesquisa = window.location.hash.replace(/#\/produtos\//g, '');
-          const resultadoDaPesquisa = await api.get(`produto?filter%5Bnome%5D=${pesquisa}`)
-          setProducts(resultadoDaPesquisa.data.rows)
+          const resultadoDaPesquisa = await axios.get(`${ip}:8157/api/produtos-list?filter%5Bnome%5D=${pesquisa}`)
+          setProducts(resultadoDaPesquisa.data.record)
         }
         loadProdutosPesquisados()
       },[url != newurl]
