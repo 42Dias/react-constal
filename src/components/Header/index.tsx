@@ -113,7 +113,7 @@ const Header = (): JSX.Element => {
       console.log("OK!!!");
     };
     setLocalStorage(token);
-    loadUser();
+    loadUser(token);
   }
 
   let history = useHistory();
@@ -124,7 +124,7 @@ const Header = (): JSX.Element => {
       history.push("/dados-pessoais");
     }
   }
-  async function loadUser() {
+  async function loadUser(token: any) {
     const response = await axios({
       method: "get",
       url: `${ip}:8157/api/auth/me`,
@@ -169,7 +169,8 @@ const Header = (): JSX.Element => {
         handleLocalStorageToken(response.data);
         closeModal();
         // @ts-ignore
-        document.location.reload(true);
+        // document.location.reload();
+        loadUser(response.data)
       } else if (response.statusText == "Forbidden") {
         setLoading(false);
         toast.error("Ops, Não tem permisão!");
@@ -216,7 +217,7 @@ const Header = (): JSX.Element => {
   }
 
   useEffect(() => {
-    loadUser();
+    loadUser(token);
       async function loadCart() {
         const allCart: any = await api.get(`carrinho/`)
         console.log("allCart")
@@ -230,11 +231,11 @@ const Header = (): JSX.Element => {
   }, [update]);
 
 
-  useEffect(() => {
-    if(email && !tenantId){
-      window.location.reload()
-    }
-  }, []);
+  // useEffect(() => {
+  //   if(email && !tenantId){
+  //     window.location.reload()
+  //   }
+  // }, []);
 
   
 
