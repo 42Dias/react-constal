@@ -376,8 +376,10 @@ export default function NewProd() {
       setPrazo(products[index].prazo);
       setQuantidade(products[index].quantidadeNoEstoque);
       setFrete(products[index].frete);
-      setCategoria(products[index].categoria);
-      console.log(products[index].categoria)
+      setCategoria(products[index].categoria.id);
+      console.log("ESSA É A CATEGORIA AHAHAHAHAHAHHAHAHAHAHAAHAHAHAH")
+      console.log(products[index].categoria.id)
+      console.log(products[index].categoria.nome)
       setCategoriaId(products[index].categoriaId)
       setEmpresaId(products[index].empresaId);
       setStatusProd(products[index].status);
@@ -791,6 +793,7 @@ export default function NewProd() {
                 <ContentFormNew>
                   <label htmlFor="">Tipo de categoria</label>
                   <select
+                  value={categoria}
                   required 
                   onChange={(text) => {
                     setCategoria(text.target.value);
@@ -932,7 +935,7 @@ export default function NewProd() {
                 <label htmlFor="">Características técnicas</label>
                 <textarea
                   required
-                  placeholder="Especificações Aaaaa"
+                  placeholder="Especificações"
                   onChange={(text) =>
                     setCaracteristicasTecnicas(text.target.value)
                   }
