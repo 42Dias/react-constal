@@ -1123,7 +1123,13 @@ export default function NewProd() {
                 min="1" max="100" step="0.1"
                 // type="range" id="points" name="points" min="0" max="100"
                 placeholder="10%" 
-                onChange={event => {
+                onChange={(event: any) => {
+                  console.log("event.target.value")
+                  console.log(event.target.value)
+                  if(event.target.value == ''){
+                    event.target.value = 0
+                  }
+
                     if(event.target.value){
                       // @ts-ignore
                       let porcentagem:any  = parseInt(event.target.value)
