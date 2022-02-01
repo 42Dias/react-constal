@@ -399,8 +399,8 @@ export default function NewProd() {
     }
     async function loadCategorias() {
       setLoading(false)
-      const categoriasResponse = await axios.get(''+ip+':8157/api/categoria-aprovados');
-      const categoriasDoBack = categoriasResponse.data;
+      const categoriasResponse = await api.get('categoria?filter%5Bstatus%5D=aprovado');
+      const categoriasDoBack = categoriasResponse.data.rows;
       console.log(categoriasDoBack);
       setCategorias(categoriasDoBack);
       setLoading(false)
