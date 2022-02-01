@@ -459,7 +459,11 @@ export default function SendBanner() {
 
       { promocoes.map(
             (imagem) => (
-              <>
+              <form
+              onSubmit={(e) => {
+                console.log(e.preventDefault())
+                deleteProduct(imagem, emailContent)
+              }}>
             <CardDatailsContent>
             <CardDatailsContent>
               <ContentDetails>
@@ -491,11 +495,12 @@ export default function SendBanner() {
             >
               <button
               className="reset"
-              onClick={
-                () => {
-                  deleteProduct(imagem, emailContent)
-                }
-              }
+              type="submit"
+              // onClick={
+              //   () => {
+              //     deleteProduct(imagem, emailContent)
+              //   }
+              // }
               >
                 <FiTrash />
               </button>
@@ -507,7 +512,7 @@ export default function SendBanner() {
             placeholder="Digite a mensagem caso reprovar"
             onChange={(e) => setEmailContent(e.target.value)}
             />
-          </>
+          </form>
             )
           ) }
 
