@@ -267,6 +267,7 @@ export const ContentFormNew = styled.div`
     width: 466px;
     border-radius: 4px;
     border: 0;
+    font: 14px 'Poppins',sans-serif;
     background: #F2F2F2 !important;
     padding: 0 5px;
     margin: 10px 0;
