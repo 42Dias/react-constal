@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useEffect } from "react";
 import Header from "../../components/Header";
 import { useHistory } from "react-router-dom";
 import { BoxRegister, GridRegister, LinkContent, Terms } from "./styles";
@@ -21,8 +21,23 @@ export default function Register() {
   const [senha, setSenha] = useState('');
   const [category, setCategory] = useState('1');
   const [loading, setLoading] = useState(false);
+  const [termo, setTermo] = useState<any>('false');
+
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
+
+  async function loadTermos(){
+    let termoResponse: any = await  Axios.get(`${ip}:8157/api/termoTrue`)
+    let termosFormated = termoResponse.data.record[0]
+
+    setTermo(termosFormated)
+
+
+    console.log("termo")
+    console.log(termo)
+    console.log("termosFormated")
+    console.log(termosFormated)
+  }
 
 
   function handleCreateUser(event: FormEvent) {
@@ -138,7 +153,6 @@ export default function Register() {
   }
 
 
-
   function openModal() {
     setIsOpen(true);
   }
@@ -154,6 +168,12 @@ export default function Register() {
   function closeModal() {
     setIsOpen(false);
   }
+
+  useEffect(
+    () => {
+      loadTermos()
+    }, []
+  )
 
   return (
     <>
@@ -242,6 +262,8 @@ export default function Register() {
                 .</b>
             </span>
           </Terms>
+
+          <a href={termo.url}>TERMOS NOVO HAHAHAHAHAH</a>
           <LinkContent>
             {loading ? <img width="40px" style={{ margin: 'auto' }} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> :
               <button type="submit">Cadastrar</button>}
@@ -382,7 +404,7 @@ export default function Register() {
 <p>Você reconhece que é de titularidade exclusiva da Constal a propriedade intelectual empregada na plataforma e em qualquer material criado ou disponibilizado em sua Conta Digital, inclusive direito autorais e patrimoniais. E, ainda, que a marca, nome empresarial, domínio, logos, insígnias, layout, código-fonte, trade dress, funcionalidades tecnológicas, modelo de negócio, banco de dados, estrutura de rede e sistemas, estão protegidos pelas Leis e tratados internacionais e que são pertencentes a Constal. </p>
 <p>Ressaltamos que o uso indevido, irregular, ilícito e a reprodução total ou parcial dos referidos conteúdos são proibidos irrevogavelmente.</p>
 <h4>DO SUPORTE TÉCNICO</h4>
-<p>A Constal disponibiliza estrutura de atendimento, acerca da funcionalidade da plataforma, 24 horas por dia, sete dias por semana, com ferramentas de contato e equipe especializada de suporte para o tratamento de qualquer dúvida, reclamação, sugestão ou comentário que Você possua com relação a este termo de uso, para isso poderá nos ligar (xx) ____- ___ e/ou enviar e-mail para contato@constal.com.br. </p>
+<p>A Constal disponibiliza estrutura de atendimento, acerca da funcionalidade da plataforma, 24 horas por dia, sete dias por semana, com ferramentas de contato e equipe especializada de suporte para o tratamento de qualquer dúvida, reclamação, sugestão ou comentário que Você possua com relação a este termo de uso, para isso poderá nos ligar (15)2107-7389 e/ou enviar e-mail para contato@constal.com.br. </p>
 <p>Informamos que a resposta à sua demanda acontecerá dentro de até 5 (cinco) dias úteis e no horário comercial das 9h às 17h de segunda à sexta-feira e nos finais de semana exceto domingo e feriado das 9h às 12h, e em conformidade com a possibilidade técnica, salvo quando isso decorrer de funções de terceiros, tais como concessionária de energia elétrica, provedores de serviços de internet e outros.</p>
 <h4>DOS SOLUÇÕES DE CONTROVÉRSIAS.</h4>
 <p>Com o intuito de resolver consensualmente todo e qualquer conflito ou controvérsia de interpretação e violação das obrigações e direitos, decorrente deste termo, a Constal e o Usuário asseguram que buscarão solucionar com boa-fé e transparência, respeitada a lealdade e finalidade específica do presente instrumento, preferencialmente de forma amigável pelos meios alternativos de solução de conflito: autocomposição e conciliação. </p>
