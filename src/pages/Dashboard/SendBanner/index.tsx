@@ -401,7 +401,7 @@ export default function SendBanner() {
           imagensDisplayed.map(
             (imagem) => (
             <CardDatailsContent>
-            <CardDatailsContent>
+            <div>
               <ContentDetails>
                 <small>
                   <a
@@ -416,7 +416,7 @@ export default function SendBanner() {
                     {imagem.nome}
                   </p>
               </ContentDetails>
-            </CardDatailsContent>
+            </div>
             <div className="flex-btn">
               <button
               onClick={
@@ -465,7 +465,7 @@ export default function SendBanner() {
                 deleteProduct(imagem, emailContent)
               }}>
             <CardDatailsContent>
-            <CardDatailsContent>
+            <div>
               <ContentDetails>
                 <small>
                   <a
@@ -489,7 +489,7 @@ export default function SendBanner() {
                     {imagem.nome}
                   </p> */}
               </ContentDetails>
-            </CardDatailsContent>
+            </div>
             <div 
               className="trash-btn"
             >
