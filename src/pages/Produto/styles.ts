@@ -28,7 +28,9 @@ export const BoxProd = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 10px 20px;
+  height: auto;
+  min-height: 230px;
 
   .descprod {
     display: flex;
@@ -38,10 +40,6 @@ export const BoxProd = styled.div`
   span {
     color: rgba(16, 16, 16, 0.69);
     font-size: 13px;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 15;
-    -webkit-box-orient: vertical;
   }
 
   strong {
@@ -184,14 +182,15 @@ export const IconPlusMinus = styled.button`
 
 export const ProdCaracteristicas = styled.div`
   width: 100%;
-  height: 400px;
   background: white;
   border-radius: 5px;
-  padding: 0 30px;
+  padding: 30px 30px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 40px;
+  min-height: 400px;
+  height: auto;
 
   div {
     display: flex;
@@ -199,16 +198,19 @@ export const ProdCaracteristicas = styled.div`
   }
 
   span {
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 15;
-    -webkit-box-orient: vertical;
     margin: 5px;
     b {
       font-weight: 500;
     }
   }
 `;
+/*
+  overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 15;
+    -webkit-box-orient: vertical;
+
+*/
 
 export const ProdSecond = styled.div`
   width: 100%;
