@@ -94,7 +94,7 @@ export default function SendTermo() {
       }
     }
 
-    await axios.post(`${ip}:3028/upload-image`, formData, headers)
+    await axios.post(`${ip}:3000/upload-image`, formData, headers)
     .then((response) => {
       console.log(response)
       if(response.status == 200){
