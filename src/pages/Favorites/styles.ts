@@ -68,6 +68,26 @@ export const CardDatailsContent = styled.div`
   justify-content: space-between;
   padding: 0 12px;
   border-radius: 5px;
+
+  .flex-btn{
+    display: flex;
+    margin-left:  30px;
+    margin-right: 30px;
+  }
+
+  .trash-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    width: 54px;
+    height: 41px;
+    margin-left: 20px;
+    text-decoration: none;
+    background: #EA1C24;
+    color: white;
+    border-radius: 5px;
+  }
   
   a {
     display: flex;
