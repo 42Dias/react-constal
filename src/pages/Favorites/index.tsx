@@ -16,6 +16,7 @@ import { formatPrice } from "../../util/format";
 import { Menu } from "../../components/Menu";
 import { Btn } from "../Dashboard/PersonalData/styles";
 import { useCart } from "../../hooks/useCart";
+import { FiTrash } from 'react-icons/fi';
 
 export default function Favorites() {
 
@@ -76,6 +77,36 @@ function handleAddProduct(id: string) {
     console.log(favorito)
 
 
+  function setFavoritosInLocal(favoritos: string[]){    
+    console.log("favoritos in local set's")
+    console.log(favoritos)
+    localStorage.setItem("favorito", JSON.stringify(favoritos))
+    // toast.info("Adicionado aos favoritos!")
+}
+
+  function handleDeleteFavorites(id: any){
+    console.log(id)
+    let localStorageFavoritos = localStorage.getItem('favorito')
+    console.log(localStorageFavoritos)
+    let parsedFavoritos = JSON.parse(localStorageFavoritos!)
+
+    parsedFavoritos!.map(
+      (el: any, index: number) => {
+        if(el == id){
+          parsedFavoritos.splice(index, 1)
+          let newProd = [...favorito]
+          newProd.splice(index, 1)
+          setFavoritos(newProd)
+        }
+      }
+    )
+  console.log("parsedFavoritos after")
+  console.log(parsedFavoritos)
+  setFavoritosInLocal(parsedFavoritos)
+
+  // localStorage.setItem('favorito', JSON.parse(parsedFavoritos))
+  }
+
 
   return (
     <>
@@ -90,17 +121,34 @@ function handleAddProduct(id: string) {
               <ContentDetails>
                 <img src={product.imagemUrl} alt="" />
                 <span>{product.nome}</span>
-                <p>{formatPrice(product.preco)}</p>
+                <p>{
+                product.isOferta == true ? formatPrice(product.precoOferta) : formatPrice(product.preco)
+                }</p>
               </ContentDetails>
-              <Btn
-              onClick={
-                () => {
-                  handleAddProduct(product.id)
+              <div
+              className="flex-btn"
+              >
+                <Btn
+                onClick={
+                  () => {
+                    handleAddProduct(product.id)
+                    handleDeleteFavorites(product.id)
+                  }
                 }
-              }
-              >Comprar</Btn>
-            </CardDatailsContent>  
-            )
+                >Comprar</Btn>
+                <Btn
+                className='trash-btn'
+                  onClick={
+                    () => {
+                      handleDeleteFavorites(product.id)
+                    }
+                  }
+                  >
+                    <FiTrash />
+                  </Btn>
+              </div>
+              </CardDatailsContent>  
+              )
             )
           } 
 
