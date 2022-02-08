@@ -343,7 +343,14 @@ export default function Produto() {
                 <button
                   className="fav"
                   type="button"
-                  onClick={() => setFavoritos(favoritos, productId)}
+                  onClick={() => {
+                    if(role == 'pessoa'){
+                      setFavoritos(favoritos, productId)
+                    }
+                    else{
+                      toast.error("Cadastre-se como cliente para habilitar os favoritos!")
+                    }
+                  }}
                 >
                   Favoritar <FiHeart />
                 </button>
