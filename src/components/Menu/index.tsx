@@ -109,6 +109,8 @@ export function Menu() {
                 <Link to="/perguntas">Perguntas</Link>
                 <Link to="/contas">Contas a Receber</Link>
                 <Link to="/produtos">Produtos</Link>
+                <Link to="/enviar-termos">Termos</Link>
+                <Link to="/enviar-dados">Dados</Link>
               </div>
             </div>
           </div>
