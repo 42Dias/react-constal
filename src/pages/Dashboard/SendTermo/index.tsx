@@ -19,12 +19,12 @@ import { toast } from "react-toastify";
 
 export default function SendTermo() {
 
-  const [imagens = [], setImagens] = useState<any[]>([]);
+  const [termo = [], setTermo] = useState<any[]>([]);
 
-  const [imagensDisplayed = [], setImagensDisplayed] = useState<any[]>([]);
+  const [termoDisplayed = [], setTermoDisplayed] = useState<any[]>([]);
 
-  const [imagensInativa = [], setImagensInativa] = useState<any[]>([]);
-  const [imagensAtiva = [], setImagensAtiva] = useState<any[]>([]);
+  const [termoInativa = [], setTermoInativa] = useState<any[]>([]);
+  const [termoAtiva = [], setTermoAtiva] = useState<any[]>([]);
 
   const [promocoes = [], setPromocoes] = useState<any[]>([]);
   
@@ -49,22 +49,22 @@ export default function SendTermo() {
     let body = {
       data: {
         url: termoNova,
-        // status: 'ativo',
+        ativo: 'inativo',
         nome: name
       }
     }
       
-    await api.post("banner", body).then(
+    await api.post("termo", body).then(
     (response) => {
       console.log(response)
       if(response.status == 200){
-        toast.info("Novo banner adicionado com sucesso!")
+        toast.info("Novo termo adicionado com sucesso!")
 
-        setImagens((prevValues: any[]) => {
+        setTermo((prevValues: any[]) => {
           //console.log(prevValues)
           return [...new Set([...prevValues, response.data])]
         })
-        loadImagens()
+        loadTermo()
 
       }
       else if(response.status == 500){
@@ -127,7 +127,13 @@ export default function SendTermo() {
     toast.info("Carregando...")
     console.log(termoStatus)
     console.log(termo)
+    console.log(termoAtiva.length)
+
     if(termoStatus == 'inativo'){
+      if(termoStatus == 'inativo' && termoAtiva.length >= 1){
+        toast.error("Apenas pode ser 1 ativa")
+        throw 'Apenas pode ser 1 ativa'
+      }
       termoStatus = 'ativo'
     }
     else if(termoStatus == 'ativo'){
@@ -141,16 +147,16 @@ export default function SendTermo() {
       data: {
         termoUrl: termo.termoUrl,
         nome: termo.nome, 
-        status: termoStatus,
+        ativo: termoStatus,
       }
     }
 
-    api.put(`banner/${termo.id}`, body).then(
+    api.put(`termo/${termo.id}`, body).then(
       (response) => {
         console.log(response)
         if(response.status == 200){
           toast.info("Atualização do banner feita com sucesso!")
-          loadImagens()
+          loadTermo()
 
   
         }
@@ -168,13 +174,13 @@ export default function SendTermo() {
 
   function deleteBanner(id: string){
     toast.info("Carregando...")
-    api.delete(`bannerDeleteOne/${id}`)
+    api.delete(`termoDeleteOne/${id}`)
     .then(
       (response) => {
         console.log(response)
         if(response.status == 200){
           toast.info("Banner apagado com sucesso!")
-          loadImagens()
+          loadTermo()
           
         }
         else if(response.status == 500){
@@ -190,65 +196,65 @@ export default function SendTermo() {
   
 
 
-  async function loadImagens(){
-    const imagensResponse = await api.get("termo")
-    console.log(imagensResponse.data.rows)
-    setImagens(imagensResponse.data.rows)
-    setImagensDisplayed(imagensResponse.data.rows)
-    filterImagens(imagensResponse.data.rows)
+  async function loadTermo(){
+    const termoResponse = await api.get("termo")
+    console.log(termoResponse.data.rows)
+    setTermo(termoResponse.data.rows)
+    setTermoDisplayed(termoResponse.data.rows)
+    filterTermo(termoResponse.data.rows)
   }
 
   useEffect(
     () => {
-      loadImagens()
+      loadTermo()
     }, []
   )
 
   useEffect(
     () => {
-      setImagensInativa([])
+      setTermoInativa([])
     }, []
   )
   function updateDisplayedStatus(text: any){
     if(text == 'inativo'){
-      setImagensDisplayed(imagensInativa)
+      setTermoDisplayed(termoInativa)
     }
     else if(text == 'ativo'){
-      setImagensDisplayed(imagensAtiva) 
+      setTermoDisplayed(termoAtiva) 
     }
     else{
-      setImagensDisplayed(imagens) 
+      setTermoDisplayed(termo) 
     }
   }
 
-  console.log(imagensAtiva)
-  console.log(imagensInativa)
+  console.log(termoAtiva)
+  console.log(termoInativa)
 
-  function filterImagens(imagens: any){
-    imagens.filter(
+  function filterTermo(termo: any){
+    termo.filter(
       (termo: any)  => {
         
         console.log("termo")
         console.log(termo)
 
-        if (termo.status == "inativo") {
-          setImagensInativa((prevValues: any[]) => {
+        if (termo.ativo == "inativo") {
+          setTermoInativa((prevValues: any[]) => {
             //console.log(prevValues)
             return [...new Set([...prevValues, termo])]
           })
         }
       }
     )
-    setImagensAtiva([])
-    imagens.filter(
+    setTermoAtiva([])
+    termo.filter(
       (termo:any)  => {
         
         console.log("termo")
         console.log(termo)
 
-        if (termo.status == "ativo") {
+        if (termo.ativo == "ativo") {
 
-          setImagensAtiva((prevValues: any[]) => {
+          setTermoAtiva((prevValues: any[]) => {
             //console.log(prevValues)
             return [...new Set([...prevValues, termo])]
           })
@@ -317,7 +323,7 @@ export default function SendTermo() {
 
           <h2>termo</h2>
 
-          {/* <SelectInput>
+          <SelectInput>
             <select
             onChange={
               (text) => {
@@ -344,13 +350,13 @@ export default function SendTermo() {
                </option>
 
             </select>
-          </SelectInput> */}
+          </SelectInput>
 
           {
-          imagensDisplayed.map(
+          termoDisplayed.map(
             (termo) => (
             <CardDatailsContent>
-            <CardDatailsContent>
+            <div>
               <ContentDetails>
                 <small>
                   <a
@@ -365,7 +371,7 @@ export default function SendTermo() {
                     {termo.nome}
                   </p>
               </ContentDetails>
-            </CardDatailsContent>
+            </div>
             <div className="flex-btn">
               <button
               onClick={
@@ -381,17 +387,17 @@ export default function SendTermo() {
               <button
               onClick={
                 () => {
-                  updatetermoStatus(termo.status, termo)
+                  updatetermoStatus(termo.ativo, termo)
                 }
               }
               > 
               {
-                console.log(termo.status)
+                console.log(termo.ativo)
               }
                 <span>
                   Deixar
                   {
-                    termo.status == 'ativo' ? ' inativa': ' ativa'
+                    termo.ativo == 'ativo' ? ' inativa': ' ativa'
                   }
                   </span>
               </button>
