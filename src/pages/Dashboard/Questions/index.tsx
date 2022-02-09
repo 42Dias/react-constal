@@ -56,6 +56,48 @@ export default function Questions() {
     }
   }
 
+
+  async function denunciarComentario(comment: any){
+    toast.info("Carregando...")
+
+    console.log(comment)
+
+    comment.isDenunciado = 1
+    const response = await api.put(`comentario/${comment.id}`, comment)
+
+    if (response.status == 200){
+      toast.info("Ação realizada com sucesso!")
+      loadComentarios()
+      closeModal()
+    }
+    else{
+      toast.error("Algo deu errado :(")
+      console.log(response.status)
+    }
+
+  }
+
+
+  async function undenunciarComentario(comment: any){
+    toast.info("Carregando...")
+
+    console.log(comment)
+
+    comment.isDenunciado = 0
+    const response = await api.put(`comentario/${comment.id}`, comment)
+
+    if (response.status == 200){
+      toast.info("Ação realizada com sucesso!")
+      loadComentarios()
+      closeModal()
+    }
+    else{
+      toast.error("Algo deu errado :(")
+      console.log(response.status)
+    }
+
+  }
+
   useEffect(
     () => {
       if(!role){
@@ -89,6 +131,7 @@ export default function Questions() {
   }
 
   async function addResposta() {
+    toast.info("Carregando...")
     
     comment.resposta = resposta
     comment.isRespondido = 1
@@ -158,6 +201,41 @@ export default function Questions() {
                           }
                         } 
                         >Responder</Btn>
+                      ):(
+                        false
+                      )
+                    }
+                    {
+                      role == 'admin' && comentario.isDenunciado == '0' ? (
+                        <Btn
+                        onClick={
+                          () => {
+                            denunciarComentario(comentario)
+                          }
+                        } 
+                        >
+                          Denunciar
+                        </Btn>
+                      ):(
+                        false
+                      )
+                    }
+                    {
+                      role == 'admin' && comentario.isDenunciado == '1' ? (
+                        <Btn
+                        style={
+                          {
+                            width: '150px'
+                          }
+                        } 
+                        onClick={
+                          () => {
+                            undenunciarComentario(comentario)
+                          }
+                        }
+                        >
+                          Reverter denuncia
+                        </Btn>
                       ):(
                         false
                       )
