@@ -19,3 +19,11 @@ export const api = axios.create({
   headers: {'Authorization': 'Bearer '+ token}
 });
 
+
+export const apiWithoutToken = axios.create({
+  baseURL: ip+':8157/api/tenant/'+tenantId +"/",
+  // baseURL: ''+ip+':8157/api/tenant/'+tenantId || "fa22705e-cf27-41d0-bebf-9a6ab52948c4" +"/",
+  timeout: 50000,
+  // headers: {'Authorization': 'Bearer '+ token}
+});
+
