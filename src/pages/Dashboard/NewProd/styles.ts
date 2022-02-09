@@ -309,3 +309,14 @@ export const Btn = styled.button`
     text-decoration: underline;
   }
 `;
+
+export const ModalContainerText = styled.div`
+  padding-left: 25%;
+  padding-right: 25%;
+
+  padding-top: 2.5%;
+  padding-bottom: 2.5%;
+  
+
+  text-align: justify;
+  `
