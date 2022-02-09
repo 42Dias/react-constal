@@ -77,23 +77,41 @@ export default function Footer() {
             </div>
 
             <div>
-              <h4>Ajuda</h4>
-              <p style={{ cursor: "pointer" }} onClick={openModal}>
-                Segurança e Privacidade
+              {
+              seguranca?(
+              <>
+                <h4>Ajuda</h4>
+                <p style={{ cursor: "pointer" }} onClick={openModal}>
+                  Segurança e Privacidade
+                </p>
+              </>
+              ):false
+              }
+              <p>
+                {
+                telefone?(`Contato: ${telefone}`): false
+                }
               </p>
-              <p>Contato: {telefone}</p>
             </div>
             <div>
-              <h4>Endereço</h4>
-              <p>{logradouro}, nº {numero} - {complemento}, {bairro}. {cidade}/{estado}</p>
+                {logradouro && numero ? (
+                  <>
+                    <h4>Endereço</h4>
+                    <p>
+                        {logradouro}, nº {numero} - {complemento}, {bairro}. {cidade}/{estado}
+                    </p>
+                  </>
+                  ):false
+                  }
               <p>
-                CNPJ: {CNPJ} <br />
-                CEP: {CEP}
+                {CNPJ?(`CNPJ: ${CNPJ}`):false} <br />
+                { CEP?(`CEP: ${CEP}`  ):false} <br />
               </p>
             </div>
           </GridFooter>
-
-          <h5>Todos os direitos reservados a {direitos}</h5>
+          {direitos?(
+            <h5>Todos os direitos reservados a {direitos}</h5>
+          ):false}
         </div>
       </FooterContent>
 
@@ -105,7 +123,7 @@ export default function Footer() {
           </ModalEnter>
 
           <p>
-            {seguranca}
+            {`${seguranca}`}
           </p>
         {/* </ModalContainer> */}
       </Modal>
