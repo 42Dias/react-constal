@@ -79,8 +79,6 @@ export default function SendData() {
     toast.info("Carregando")
     api.post('informacoes-create-or-update', data).then(
       (res: any) => {
-        console.log(res)
-        console.log(res)
         if(res.status == 200){
           toast.info('Ação feita com sucessso! :)')
           closeModal()
@@ -117,7 +115,6 @@ export default function SendData() {
     api.get('informacoes').then(
       (res) => {
         let data = res.data.record[0]
-        console.log(data)
         setTelefone(data.telefone)
         setSeguranca(data.seguranca)
         setLogradouro(data.logradouro)
@@ -408,7 +405,7 @@ export default function SendData() {
 
               <h3>Sobre</h3>
               <ContentFormNew>
-                    <label htmlFor="">Sobre a constal</label>
+                    <label htmlFor="">Quem somos</label>
                     <textarea
                         required
                         value={sobre}
