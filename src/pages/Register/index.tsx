@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import Header from "../../components/Header";
 import { useHistory } from "react-router-dom";
 import { BoxRegister, GridRegister, LinkContent, Terms } from "./styles";
@@ -21,6 +21,8 @@ export default function Register() {
   const [senha, setSenha] = useState('');
   const [category, setCategory] = useState('1');
   const [loading, setLoading] = useState(false);
+
+  const [linkTo, setLinkTo] = useState('');
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
@@ -155,6 +157,20 @@ export default function Register() {
     setIsOpen(false);
   }
 
+  async function loadTermos(){
+    await axios.get(`${ip}:8157/api/termoTrue`).then(
+      (res) => {
+        setLinkTo(res.data.record[0].url)
+      }
+    )
+  }
+
+  useEffect(
+    () => {
+      loadTermos()
+    },[]
+  )
+
   return (
     <>
       <Header />
@@ -228,7 +244,10 @@ export default function Register() {
             type="checkbox" />
             <span>
               Aceito os <b 
-              onClick={openModal}
+              onClick={
+                // @ts-ignore
+                () => linkTo ?  window.open(`${linkTo}`) : openModal()
+              }
 
               style={
                 {
