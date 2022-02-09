@@ -156,7 +156,7 @@ export default function SendTermo() {
       (response) => {
         console.log(response)
         if(response.status == 200){
-          toast.info("Atualização do banner feita com sucesso!")
+          toast.info("Atualização do termo feita com sucesso!")
           loadTermo()
 
   
@@ -310,7 +310,7 @@ export default function SendTermo() {
             uploadImage(e.target.files[0])
           }
           else{
-            toast.error("Arquivo não suportado")
+            toast.error("Só é aceito arquivos em formato pdf")
           }
           
             
