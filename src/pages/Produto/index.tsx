@@ -83,8 +83,6 @@ export default function Produto() {
 
 
   function increment() {
-    console.log("counter dentro")
-    console.log(counter)
     if(counter < estoque){
       setCounter(counter + 1)
     }
@@ -92,11 +90,7 @@ export default function Produto() {
       toast.error("Quantidade solicitada fora do estoque")
     }
   }
-  console.log("counter fora")
-  console.log(counter)
   function withdraw() {
-    console.log("counter dentro")
-    console.log(counter)
     if (counter < 2 || counter == 0) {
       setCounter(1);
       error();
@@ -135,7 +129,6 @@ export default function Produto() {
   
   
   const selectedProduct = buildUrl()
-  console.log(selectedProduct);
   
   const [prodId, setProdId]=useState('');
   const [nome, setNome]=useState('');
@@ -159,7 +152,10 @@ export default function Produto() {
   3 counter = quantidade do produto no carrinho
   */
 
+  const [userEmpresaId, setUserEmpresaId]=useState('');
+
   const [logradouro, setLogradouro]=useState('');
+  const [produtoEmpresaId, setProdutoEmpresaId]=useState('');
   const [bairro, setBairro]=useState('');
   const [cep, setCEP]=useState('');
   const [cidade, setCidade]=useState('');
@@ -185,7 +181,6 @@ export default function Produto() {
       const response = await axios.get(`${ip}:8157/api/produtos-list?filter%5Bid%5D=${productId}`)
       // const response = await api.get(selectedProduct)
       .then((response) => {
-        console.log(response.data.record[0]);
         return response.data.record[0];
       });
 
@@ -211,12 +206,14 @@ export default function Produto() {
       if(response.categoria){
         setCategoria(response.categoria.nome);
       }
+      setProdutoEmpresaId(response.empresaId)
+      console.log("response.empresaId")
+      console.log(response.empresaId)
 
 
     }
     async function loadUser() {
       const user = await api.get("pessoa-fisica-perfil").then((user) => {
-        console.log(user.data);
         setUser(user.data)
         return user.data;
       });
@@ -240,7 +237,6 @@ export default function Produto() {
             "userId": id,
           }
         }
-        console.log(data)
 
         const response = await api.post('comentario', data)
 
@@ -267,7 +263,6 @@ export default function Produto() {
         comment.isRespondido = 1
 
         const response = await api.put(`comentario/${comment.id}`, comment)
-        console.log(response)
       }
 
     function handleAddProduct(id: string) {
@@ -279,18 +274,50 @@ export default function Produto() {
       }
     }
 
+    async function loadComments() {
+      if(prodId){
+        const response = await api.get(`findByProduto/${prodId}`);
+        setComentarios( response.data)
+      }
+    }
+
+    async function loadEmpresaIdUser(id: any){
+      api.get(`empresa?filter%5Buser%5D=${id}`).then(
+        (res) => {
+
+          console.log("--------------------------------")
+          console.log("res.data")
+          console.log(res.data.rows[0].id)
+          setUserEmpresaId(res.data.rows[0].id)
+        }
+      )
+    }
+
+
   useEffect(
     () => {
-      async function loadComments() {
-        if(prodId){
-          const response = await api.get(`findByProduto/${prodId}`);
-          console.log(response)
-          setComentarios( response.data)
-        }
-      }
       loadComments()
     }, [prodId]
   )
+
+  useEffect(
+    () => {
+      if(role == 'empresa'){
+
+        let userId = localStorage.getItem('id')?.replace(/"/g, "");
+        console.log(userId)
+
+        loadEmpresaIdUser(userId)
+      }
+    }, []
+    )
+
+
+  console.log("userEmpresaId ==  empresaId")
+  console.log(userEmpresaId)
+  console.log(empresaId)
+  console.log(userEmpresaId ==  produtoEmpresaId)
+    
   return (
     <>
       <Header />
@@ -402,8 +429,7 @@ export default function Produto() {
           {/* 
           pegar o id do comentátio
           */}
-          {
-            role != 'pessoa'? ( 
+          {role == 'empresa' && userEmpresaId ==  produtoEmpresaId ? ( 
               <Btn
               onClick={
                 () => {
