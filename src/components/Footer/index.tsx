@@ -10,10 +10,13 @@ import Modal from "react-modal";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { FiX } from "react-icons/fi";
-import { api } from "../../services/api";
+import { api, apiWithoutToken } from "../../services/api";
+import { ModalContainerText, ModalContainerVendedor, ModalFlex } from "../../pages/Dashboard/NewProd/styles";
+import { AiOutlineClose } from "react-icons/ai";
 
 export default function Footer() {
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalIsOpen1, setIsOpen1] = useState(false);
 
   function openModal() {
     setIsOpen(true);
@@ -21,6 +24,7 @@ export default function Footer() {
 
   function closeModal() {
     setIsOpen(false);
+    setIsOpen1(false);
   }
 
   const [telefone, setTelefone] = useState<any>("");
@@ -37,7 +41,7 @@ export default function Footer() {
   const [complemento, setComplemento] = useState<any>('')
 
   function loadInformations(){
-    api.get('informacoes').then(
+    apiWithoutToken.get('informacoes').then(
       (res) => {
         let data = res.data.record[0]
         console.log(data)
@@ -63,6 +67,9 @@ export default function Footer() {
     }, []
   )
 
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+  }
 
   return (
     <>
@@ -71,9 +78,19 @@ export default function Footer() {
           <GridFooter>
             <div>
               <img src={logo} alt="Constal" />
-              <p>
+              <br />
+
+              {/* <p>
                 {sobre}
-              </p>
+              </p> */}
+              {sobre?(
+                <h4
+                style={{ cursor: "pointer", margin: '0 auto' }} onClick={() => setIsOpen1(true)}
+                >
+                  <br />
+                  Sobre a Constal
+                </h4>
+              ):false}
             </div>
 
             <div>
@@ -81,16 +98,19 @@ export default function Footer() {
               seguranca?(
               <>
                 <h4>Ajuda</h4>
-                <p style={{ cursor: "pointer" }} onClick={openModal}>
+                <p style={{ cursor: "pointer" }} onClick={() => setIsOpen(true)}>
+                <br />
                   Segurança e Privacidade
                 </p>
               </>
               ):false
               }
               <p>
+                <br />
                 {
                 telefone?(`Contato: ${telefone}`): false
                 }
+                <br />
               </p>
             </div>
             <div>
@@ -98,6 +118,7 @@ export default function Footer() {
                   <>
                     <h4>Endereço</h4>
                     <p>
+                    <br />
                         {logradouro}, nº {numero} - {complemento}, {bairro}. {cidade}/{estado}
                     </p>
                   </>
@@ -110,23 +131,67 @@ export default function Footer() {
             </div>
           </GridFooter>
           {direitos?(
-            <h5>Todos os direitos reservados a {direitos}</h5>
+            <h5>
+                <br />              
+                <br />
+              Todos os direitos reservados a {direitos}</h5>
           ):false}
         </div>
       </FooterContent>
 
-      <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
-        {/* <ModalContainer> */}
-          <ModalEnter>
-            <h2>Segurança e Privacidade</h2>
-            <FiX size={20} onClick={closeModal} />
-          </ModalEnter>
+      <ModalContainerVendedor>
+          <Modal
+            isOpen={modalIsOpen}
+            onAfterOpen={afterOpenModal}
+            onRequestClose={() => {
+              setIsOpen(false)
+            }}
+          >
+            <div>
+              <ModalFlex>
+                <AiOutlineClose onClick={() => closeModal()} />
+              </ModalFlex>
 
-          <p>
-            {`${seguranca}`}
-          </p>
-        {/* </ModalContainer> */}
+            {/* <ModalContainer> */}
+              <ModalContainerText>
+                
+                <h2>Segurança e Privacidade</h2>
+                <br />
+                <p>
+                  {`${seguranca}`}
+                </p>
+                            {/* </ModalContainer> */}
+              </ModalContainerText>
+      </div>
       </Modal>
+      </ModalContainerVendedor>
+
+      <ModalContainerVendedor>
+          <Modal
+            isOpen={modalIsOpen1}
+            onAfterOpen={afterOpenModal}
+            onRequestClose={() => {
+              setIsOpen1(false)
+            }}
+          >
+            <div>
+              <ModalFlex>
+                <AiOutlineClose onClick={() => closeModal()} />
+              </ModalFlex>
+
+            {/* <ModalContainer> */}
+              <ModalContainerText>
+              <h2>Sobre a Constal</h2>
+              <br />
+              <p>
+                {`${sobre}`}
+              </p>
+                            {/* </ModalContainer> */}
+              </ModalContainerText>
+      </div>
+      </Modal>
+      </ModalContainerVendedor>
+      
     </>
   );
 }
