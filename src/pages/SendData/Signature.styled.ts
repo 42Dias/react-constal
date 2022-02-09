@@ -71,3 +71,28 @@ export const Card = styled.div`
     }
   }
 `
+
+export const BtnNew = styled.button
+`
+  margin: 0 auto !important;
+  width: 182px;
+  height: 33px;
+  background: #58A4B0;
+  background-color: rgb(88, 164, 176);
+  background-image: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+`
