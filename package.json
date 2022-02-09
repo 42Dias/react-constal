@@ -1,6 +1,7 @@
 {
   "name": "constal-front",
   "version": "0.1.0",
+  "homepage": "http://constalshop.com.br/",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
