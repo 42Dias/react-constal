@@ -6,7 +6,7 @@ import * as S from './Signature.styled'
 
 import { role, ip, status, api } from "../../services/api";
 import { useEffect, useState } from "react";
-import { ContentFormNew, ContentNew, ModalContainerVendedor, ModalContent, ModalFlex } from "../Dashboard/NewProd/styles";
+import { ContentFormNew, ContentNew, ModalContainerText, ModalContainerVendedor, ModalContent, ModalFlex } from "../Dashboard/NewProd/styles";
 
 // @ts-ignore
 import InputMask from "react-input-mask";
@@ -36,6 +36,11 @@ export default function SendData() {
   const [cidade, setCidade] = useState<any>('')
   const [estado, setEstado] = useState<any>('')
   const [complemento, setComplemento] = useState<any>('')
+
+
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalIsOpen1, setIsOpen1] = useState(false);
+
 
 
 
@@ -160,20 +165,29 @@ export default function SendData() {
 
       <div className="container">
       <ContentNew>
-      <div className="container">
-          <GridFooter>
+        <GridFooter>
             <div>
-              <img
-               src={logo} alt="Constal"
-               style={
-                 {
-                  width: '250px'
-                 }
-               }
-               />
-              <p>
+              <img src={logo} alt="Constal"
+              style={
+                {
+                 width: '250px'
+                }
+              }
+              />
+              <br />
+
+              {/* <p>
                 {sobre}
-              </p>
+              </p> */}
+              {
+              sobre?(
+                <h4
+                style={{ cursor: "pointer", margin: '0 auto' }} onClick={() => setIsOpen1(true)}
+                >
+                  <br />
+                  Sobre a Constal
+                </h4>
+              ):false}
             </div>
 
             <div>
@@ -181,16 +195,19 @@ export default function SendData() {
               seguranca?(
               <>
                 <h4>Ajuda</h4>
-                <p style={{ cursor: "pointer" }} onClick={() => setShowModal2(true)}>
+                <p style={{ cursor: "pointer" }} onClick={() => setIsOpen(true)}>
+                <br />
                   Segurança e Privacidade
                 </p>
               </>
               ):false
               }
               <p>
+                <br />
                 {
                 telefone?(`Contato: ${telefone}`): false
                 }
+                <br />
               </p>
             </div>
             <div>
@@ -198,6 +215,7 @@ export default function SendData() {
                   <>
                     <h4>Endereço</h4>
                     <p>
+                    <br />
                         {logradouro}, nº {numero} - {complemento}, {bairro}. {cidade}/{estado}
                     </p>
                   </>
@@ -210,12 +228,11 @@ export default function SendData() {
             </div>
           </GridFooter>
           {direitos?(
-            <>
-            <br />
-            <h5>Todos os direitos reservados a {direitos}</h5>
-            </>
+            <h5>
+                <br />              
+                <br />
+              Todos os direitos reservados a {direitos}</h5>
           ):false}
-        </div>
         
         <BtnNewTest
         onClick={
@@ -230,18 +247,58 @@ export default function SendData() {
       </ContentNew>
       </div>  
 
-      <Modal isOpen={showModal2} onRequestClose={closeModal}>
-        {/* <ModalContainer> */}
-          <ModalEnter>
-            <h2>Segurança e Privacidade</h2>
-            <FiX size={20} onClick={closeModal} />
-          </ModalEnter>
+      <ModalContainerVendedor>
+          <Modal
+            isOpen={modalIsOpen}
+            onAfterOpen={afterOpenModal}
+            onRequestClose={() => {
+              setIsOpen(false)
+            }}
+          >
+            <div>
+              <ModalFlex>
+                <AiOutlineClose onClick={() => closeModal()} />
+              </ModalFlex>
 
-          <p>
-            {`${seguranca}`}
-          </p>
-        {/* </ModalContainer> */}
+            {/* <ModalContainer> */}
+              <ModalContainerText>
+                
+                <h2>Segurança e Privacidade</h2>
+                <br />
+                <p>
+                  {`${seguranca}`}
+                </p>
+                            {/* </ModalContainer> */}
+              </ModalContainerText>
+      </div>
       </Modal>
+      </ModalContainerVendedor>
+
+      <ModalContainerVendedor>
+          <Modal
+            isOpen={modalIsOpen1}
+            onAfterOpen={afterOpenModal}
+            onRequestClose={() => {
+              setIsOpen1(false)
+            }}
+          >
+            <div>
+              <ModalFlex>
+                <AiOutlineClose onClick={() => closeModal()} />
+              </ModalFlex>
+
+            {/* <ModalContainer> */}
+              <ModalContainerText>
+              <h2>Sobre a Constal</h2>
+              <br />
+              <p>
+                {`${sobre}`}
+              </p>
+                            {/* </ModalContainer> */}
+              </ModalContainerText>
+      </div>
+      </Modal>
+      </ModalContainerVendedor>
 
 
 
