@@ -305,7 +305,7 @@ export default function SendData() {
           </button> */}
 
           <NewBtn>
-                <button type="button" onClick={() => console.log("aaaa")}>Cancelar</button>
+                <button type="button" onClick={() => window.location.hash= '#/'}>Cancelar</button>
                 <button type="button" onClick={makeRequisition}>Adicionar</button>
           </NewBtn>
       </ModalContent>
