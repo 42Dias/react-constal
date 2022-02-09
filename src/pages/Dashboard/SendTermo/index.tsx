@@ -94,6 +94,7 @@ export default function SendTermo() {
       }
     }
 
+    // await axios.post(`${ip}:3028/upload-image`, formData, headers)
     await axios.post(`${ip}:3000/upload-image`, formData, headers)
     .then((response) => {
       console.log(response)
@@ -101,10 +102,10 @@ export default function SendTermo() {
         const pathHelper = response.data.mensagem
         console.log(ip+pathHelper)
         settermoNova(ip+pathHelper)
-        toast.info("termo Válida!")
+        toast.info("Termo Válido!")
       }
       else{
-        toast.info("termo inválida, ou problemas com o servidor :(")
+        toast.info("Termo inválido, ou problemas com o servidor :(")
       }
 
     }).catch((err) => {
@@ -280,7 +281,8 @@ export default function SendTermo() {
             <h4
                 // style={{margin: 'auto'}}
                 >
-                  {/* O arquivo deve estar no formato _____ */}
+                  Todos os arquivos devem estar em formato PDF
+            <br />
             </h4>
 
           <input 
@@ -289,17 +291,20 @@ export default function SendTermo() {
           name="image"
           onChange={e => {
           console.log(e)
-
+          
+          
           //@ts-ignore
           console.log(e.target.files[0].name)
+          
           //@ts-ignore
           setName(e.target.files[0].name)
+          
           //@ts-ignore
           setImage(e.target.files[0])
-
+          
           //@ts-ignore
-          // if(e.target.files[0].type.includes('image')){
-          if(true){
+          if(e.target.files[0].type.includes('pdf')){
+            // if(true){
 
             //@ts-ignore
             uploadImage(e.target.files[0])
