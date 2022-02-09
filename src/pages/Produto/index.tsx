@@ -35,6 +35,7 @@ import { Btn } from "../Dashboard/PersonalData/styles";
 import { ContentFormNew, ModalContent } from "../Dashboard/NewProd/styles";
 import { useCart } from "../../hooks/useCart";
 import axios from "axios";
+import { totalmem } from "os";
 
 interface RepositoryItemProps {
   repository: {
@@ -228,6 +229,7 @@ export default function Produto() {
   }, []);
 
      async function makeCommentary() {
+       toast.info("Carregando...")
        setLoading(true)
         let data = {
           data: {
@@ -252,17 +254,34 @@ export default function Produto() {
           return [...new Set([...prevProducts,  response.data])]	
         })
         
-        window.location.reload()
-        
-        setLoading(false)
+       if(response.status == 200){
+          toast.info("Comentario adicionado com sucesso!")
+          setLoading(false)
+          loadComments()
+       }
+       else{
+          toast.error("Algo deu errado :(")
+       }
       }
     
       async function addResposta() {
+        setLoading(true)
+        toast.info("Carregando...")
         
         comment.resposta = resposta
         comment.isRespondido = 1
 
         const response = await api.put(`comentario/${comment.id}`, comment)
+        if(response.status == 200){
+          toast.info("Resposta adicionada com sucesso!")
+          closeModal()
+          loadComments()
+          setLoading(false)
+        }
+        else{
+
+          toast.error("Algo deu errado :(")
+        }
       }
 
     function handleAddProduct(id: string) {
@@ -284,10 +303,6 @@ export default function Produto() {
     async function loadEmpresaIdUser(id: any){
       api.get(`empresa?filter%5Buser%5D=${id}`).then(
         (res) => {
-
-          console.log("--------------------------------")
-          console.log("res.data")
-          console.log(res.data.rows[0].id)
           setUserEmpresaId(res.data.rows[0].id)
         }
       )
@@ -530,13 +545,10 @@ export default function Produto() {
                 src={"https://contribua.org/mb-static/images/loading.gif"}
                 alt="Loading"
               />
-            ) : false}
-              </ContentFormNew>
-
-
+            ) : <>
               <div className="buttonsNew">
                 <button type="button" onClick={
-                  () => console.log('ok')
+                  () => closeModal()
                 }>
                   Cancelar
                 </button>
@@ -544,6 +556,8 @@ export default function Produto() {
                   Adicionar
                 </button>
               </div>
+            </>}
+              </ContentFormNew>
             </ModalContent>
           </div>
         </Modal>
