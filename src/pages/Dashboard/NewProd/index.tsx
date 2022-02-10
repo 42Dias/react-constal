@@ -287,8 +287,8 @@ export default function NewProd() {
     updatedProducts[index].quantidadeNoEstoque = prod.quantidadeNoEstoque
     updatedProducts[index].imagemUrl = prod.imagemUrl
     updatedProducts[index].status = prod.status
-
-    setProducts(updatedProducts)
+    updatedProducts[index].caracteristicasTecnicas = prod.caracteristicasTecnicas
+    setProducts(updatedProducts) 
   }
   async function addPromotion(e: any) {
     e.preventDefault()
@@ -391,7 +391,7 @@ export default function NewProd() {
 
   useEffect(() => {
     if (!role) {
-      window.location.reload()
+      // window.location.reload()
     }
     else {
       if (role !== "admin" && role !== "empresa" || status === "pendente") {
@@ -419,17 +419,19 @@ export default function NewProd() {
     console.log("Empresas");
     console.log(response.rows);
   }
+
+
   useEffect(() => {
     setLoading(true)
     loadEmpresa();
-    async function loadProducts() {
-      const response = await api.get("produto");
-      setProducts(response.data.rows);
-      setLoading(false)
-    }
     loadProducts();
   }, []);
 
+  async function loadProducts() {
+        const response = await api.get("produto");
+        setProducts(response.data.rows);
+        setLoading(false)
+      }
 
   const [usuario, setUsuario] = useState<any>({} as any);
 
