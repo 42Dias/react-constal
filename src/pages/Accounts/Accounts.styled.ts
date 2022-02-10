@@ -73,3 +73,34 @@ export const Content = styled.div`
   }
 
 `
+
+
+export const FlexBtnsProd = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 20px 0;
+  justify-content: center;
+
+  h3 {
+    padding: 0 10px;
+  }
+
+  .btnReset {
+    margin-left: 20px;
+    background-color: rgb(183, 17, 23);
+  }
+`;
+
+
+export const Btn = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 41px;
+  text-decoration: none;
+  background: black;
+  color: white;
+  border-radius: 5px;
+  border:0;
+`
