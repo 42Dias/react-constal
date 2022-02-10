@@ -224,8 +224,7 @@ console.log("")
             <p>Nenhum produto em promoção</p>
           ) : (
             <Swiper
-              spaceBetween={50}
-              slidesPerView={3}
+            spaceBetween={30} centeredSlides={true} autoplay={{ delay: 4000, disableOnInteraction: false, }} pagination={{ clickable: true, }} 
             >
               {products2.map((product) => (
                 <SwiperSlide>
