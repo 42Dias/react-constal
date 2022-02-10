@@ -217,7 +217,12 @@ function ProductQuery() {
               <>
               <S.CardDatailsContent>
                 <S.ContentDetails>
-                  <img src={produto.imagemUrl} alt="" />
+                  <Link
+                    className="fixImage"
+                   to={`/produto/${produto.id}`}
+                  >
+                    <img src={produto.imagemUrl} alt="" />
+                  </Link>
                   <span className="prodNome" >{produto.nome}</span>
                   <p>{produto.quantidade}</p>
                   <p>R$ {produto.preco}</p>
