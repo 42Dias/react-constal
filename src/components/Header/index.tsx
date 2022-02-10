@@ -144,11 +144,11 @@ const Header = (): JSX.Element => {
     console.log(response);
     console.log(response.tenants[0].roles[0]);
 
-    // let setRole = response.tenants[0].roles
-    // const roleHelper = JSON.parse(setRole)
-    // console.log(roleHelper[0])
-    // localStorage.setItem("roles", JSON.stringify(roleHelper[0])); //saves client's data into localStorage:
-    localStorage.setItem("roles", JSON.stringify(response.tenants[0].roles[0])); //saves client's data into localStorage:
+    let setRole = response.tenants[0].roles
+    const roleHelper = JSON.parse(setRole)
+    console.log(roleHelper[0])
+    localStorage.setItem("roles", JSON.stringify(roleHelper[0])); //saves client's data into localStorage:
+    // localStorage.setItem("roles", JSON.stringify(response.tenants[0].roles[0])); //saves client's data into localStorage:
 
     console.log(response.tenants[0].tenant.id);
     localStorage.setItem(
