@@ -31,10 +31,11 @@ export const BoxProd = styled.div`
   padding: 10px 20px;
   height: auto;
   min-height: 230px;
-
+  
   .descprod {
     display: flex;
     flex-direction: column;
+    max-width: 100%;
   }
 
   span {
