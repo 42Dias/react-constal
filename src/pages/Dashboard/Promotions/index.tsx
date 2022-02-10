@@ -79,11 +79,14 @@ export default function Promotions() {
           (response) => {
             setLoading(false)
             if(  response.status == 200){
-              toast.info('Eba, recebemos o sua promoção. Ela será revisada e logo estará na plataforma :)')
+              toast.info('Eba, recebemos o sua promoção. :)')
               closeModal()
             }
             else if(  response.status != 200){
               toast.error('Algo deu errado, tente mais tarde :(')
+            }
+            else{
+              toast.error('Algo deu errado com o servidor... tente mais tarde :(')
             }
             console.log(response)
           }
