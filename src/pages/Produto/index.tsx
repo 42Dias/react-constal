@@ -179,10 +179,11 @@ export default function Produto() {
 
   useEffect(() => {
     async function loadProduct() {
-      const response = await axios.get(`${ip}:8157/api/produtos-list?filter%5Bid%5D=${productId}`)
+      const response = await axios.get(`${ip}:8157/api/find-produto-by-id/${productId}`)
       // const response = await api.get(selectedProduct)
       .then((response) => {
-        return response.data.record[0];
+        console.log(response.data)
+        return response.data;
       });
 
       setProdId(response.id)
