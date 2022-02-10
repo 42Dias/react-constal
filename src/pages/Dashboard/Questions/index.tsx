@@ -1,4 +1,4 @@
-import { CardDatails, CardDatailsContent, ContentDetails } from "./styles";
+import { CardDatails, CardDatailsContent, ContentDetails, TextAreaFormated } from "./styles";
 
 import Header from "../../../components/Header";
 import { Link } from "react-router-dom";
@@ -25,6 +25,8 @@ export default function Questions() {
   const [empresaId,  setEmpresaId] = useState<any>()
   const [comentarios = [] , setComentarios]=useState<any[]>([]);
 
+  const [emailContent, setEmailContent] = useState('');
+
 
   async function loadComentarios(){
     if (role == 'empresa'){
@@ -37,7 +39,6 @@ export default function Questions() {
               // const response  = api.get(`findByEmpresa/3b386e29-c490-4231-b3f6-bb9b407fc8e9`).then(
               (response) => {
                 setComentarios(response.data)
-                console.log(response)
               }
             )
           }
@@ -58,6 +59,10 @@ export default function Questions() {
 
 
   async function denunciarComentario(comment: any){
+    if(!emailContent){
+      toast.error("Adicione o email!")
+      return
+    }
     toast.info("Carregando...")
 
     console.log(comment)
@@ -65,10 +70,21 @@ export default function Questions() {
     comment.isDenunciado = 1
     const response = await api.put(`comentario/${comment.id}`, comment)
 
+  
+    
+    const email = await api.post('cliente/comentario-denuncia', {
+      id: comment.fornecedorEmpresaId,
+      emailContent: emailContent
+    }).then(
+      (res) => console.log(res) 
+    )
+
     if (response.status == 200){
       toast.info("Ação realizada com sucesso!")
       loadComentarios()
       closeModal()
+      setEmailContent('')
+
     }
     else{
       toast.error("Algo deu errado :(")
@@ -250,7 +266,17 @@ export default function Questions() {
                     <div></div>
                   )
                 }
-                  </>
+                {
+                  comentario.isDenunciado == '0' && role == 'admin' ? (
+                  <TextAreaFormated
+                  className="emailSender"
+                  required
+                  placeholder="Digite uma mensagem para a denuncia"
+                  onChange={(e) => setEmailContent(e.target.value)}
+                  />
+                  ): false
+                }
+                </>
                   
                 )
               )
@@ -281,6 +307,7 @@ export default function Questions() {
                       }}
                     />
                   </ContentFormNew>
+                  
 
                   <div className="buttonsNew">
                     <button type="button" onClick={
@@ -294,6 +321,7 @@ export default function Questions() {
                   </div>
                 </ModalContent>
               </div>
+
             </Modal>
           </ModalContainerVendedor>
       </div>
