@@ -373,7 +373,7 @@ export default function SendTermo() {
                   </a>
                 </small>
                   <p>
-                    {termo.nome}
+                    {termo.url}
                   </p>
               </ContentDetails>
             </div>
