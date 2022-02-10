@@ -251,8 +251,12 @@ export default function Produto() {
         // console.log("nwe")
         // console.log(nwe)
         
+        loadComments()
+        setComentario('')
+
         setComentarios(prevProducts => {
-          return [...new Set([...prevProducts,  response.data])]	
+          return [...new Set([...prevProducts,  response.data])]
+
         })
         
        if(response.status == 200){
@@ -495,6 +499,7 @@ export default function Produto() {
                 <option value="">Denuncia</option>
               </select>
               <textarea name="" id=""
+              value={comentario}
               onChange={(text) => {
                 setComentario(text.target.value)
               }}
