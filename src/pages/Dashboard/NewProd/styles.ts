@@ -34,7 +34,7 @@ export const GridProdsFour = styled.div`
 
 export const ProdContainerSingle = styled.div`
   width: 222px;
-  height: 300px;
+  height: 315px;
   background: white;
   margin: 20px auto;
   border-radius: 10px;
