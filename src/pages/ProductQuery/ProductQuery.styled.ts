@@ -102,6 +102,15 @@ export const ContentDetails = styled.div`
     object-fit: contain;
   }
 
+  a{
+    width: 222px;
+    height: 140px;
+    border-radius: 10px 10px 0 0;
+  }
+  .fixImage {
+    background-color: transparent;
+  }
+
   p {
     margin-left: 5px;
   }
