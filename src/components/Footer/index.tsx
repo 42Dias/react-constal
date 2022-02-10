@@ -83,7 +83,7 @@ export default function Footer() {
               {/* <p>
                 {sobre}
               </p> */}
-              {sobre?(
+              {sobre.trim() != '' ?(
                 <h4
                 style={{ cursor: "pointer", margin: '0 auto' }} onClick={() => setIsOpen1(true)}
                 >
