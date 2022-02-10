@@ -34,6 +34,7 @@ var uuid = require("uuid");
 
 export default function Promotions() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [loading, setLoading] = useState(false);
   const [imagemPromocional, setImagemPromocional] = useState<any>();
   // const [dataEncerramento, setDataEncerramento]   =  useState<any>();
   const [indexs, setIndexs]   =  useState<any>([]);
@@ -75,6 +76,7 @@ export default function Promotions() {
         const response: any = api.put(`produto/${id}`, data)
         .then(
           (response) => {
+            setLoading(false)
             if(  response.status == 200){
               toast.info('Eba, recebemos o sua promoção. Ela será revisada e logo estará na plataforma :)')
               closeModal()
@@ -111,7 +113,8 @@ export default function Promotions() {
     loadProducts();
   }, []);
 
-  function addNewPromotion(e: any) {
+  async function addNewPromotion(e: any) {
+    setLoading(true)
     e.preventDefault()
     console.log(productCounter[0].empresaId)
     const data = {
@@ -124,7 +127,8 @@ export default function Promotions() {
       }
     }
     console.log(data)
-    makeRequisitionToChange(data)
+    await makeRequisitionToChange(data)
+
   }
 
   console.log(uuid.v4())
@@ -240,14 +244,23 @@ export default function Promotions() {
                 onChange={event => setDataEncerramento(event.target.value)} 
                 />
               </ContentFormNew> */}
-
-              <div className="buttonsNew">
-                <button >Cancelar</button>
-                <button
-                type="submit" 
-                onSubmit={addNewPromotion}
-                >Adicionar</button>
-              </div>
+                {loading ? (
+                  <img
+                    width="40px"
+                    style={{ margin: "auto" }}
+                    height=""
+                    src={"https://contribua.org/mb-static/images/loading.gif"}
+                    alt="Loading"
+                  />
+                ) : (
+                <div className="buttonsNew">
+                  <button >Cancelar</button>
+                  <button
+                  type="submit" 
+                  onSubmit={addNewPromotion}
+                  >Adicionar</button>
+                </div>
+                )}
             </ModalContent>
           </div>
         </Modal>
