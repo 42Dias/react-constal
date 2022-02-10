@@ -65,12 +65,15 @@ export function Menu() {
                 <Link to="/aprovar-categorias">Aprovar Categorias</Link>
                 <Link to="/consultar-produtos">Aprovar Produtos</Link>
                 <Link to="/empresas">Empresas</Link>
-                <Link to="/assinaturas">Pagamentos</Link>
+                {/* <Link to="/assinaturas">Pagamentos</Link> */}
                 <Link to="/vendas">Vendas por Empresa</Link>
                 <Link to="/enviar-banner">Banners</Link>
                 <Link to="categorias-fixar" >Fixar categorias</Link>
                 <Link to="/perguntas">Perguntas</Link>
+                <Link to="/contas">Contas a Receber</Link>
                 <Link to="/produtos">Produtos</Link>
+                <Link to="/enviar-termos">Termos</Link>
+                <Link to="/enviar-dados">Dados do rodapé</Link>
               </div>
             </div>
           </div>
