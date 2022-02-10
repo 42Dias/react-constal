@@ -36,6 +36,8 @@ export default function SendData() {
   const [cidade, setCidade] = useState<any>('')
   const [estado, setEstado] = useState<any>('')
   const [complemento, setComplemento] = useState<any>('')
+  const [loading, setLoading] = useState(false);
+
 
 
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -84,6 +86,7 @@ export default function SendData() {
     toast.info("Carregando")
     api.post('informacoes-create-or-update', data).then(
       (res: any) => {
+        setLoading(false)
         if(res.status == 200){
           toast.info('Ação feita com sucessso! :)')
           closeModal()
@@ -97,6 +100,7 @@ export default function SendData() {
   }
   
   function makeRequisition(){
+    setLoading(true)
     const data = {
       data: {
         telefone: telefone,
@@ -119,6 +123,7 @@ export default function SendData() {
   function loadInformations(){
     api.get('informacoes').then(
       (res) => {
+        setLoading(false)
         let data = res.data.record[0]
         setTelefone(data.telefone)
         setSeguranca(data.seguranca)
@@ -142,10 +147,7 @@ export default function SendData() {
   
   useEffect(
     () => {
-      /*
-      função de load
-       -- função de set
-      */
+     setLoading(true)
      loadInformations()
     }, []
   )
@@ -234,13 +236,23 @@ export default function SendData() {
               Todos os direitos reservados a {direitos}</h5>
           ):false}
         
-        <BtnNewTest
-        onClick={
-          () => setShowModal1(true)
-        }
-        >
-          Alterar dados  
-        </BtnNewTest>
+        {loading ? (
+            <img
+              width="40px"
+              style={{ margin: "auto", display: "flex" }}
+              height=""
+              src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
+              alt="Loading"
+            />
+          ) : (
+            <BtnNewTest
+            onClick={
+              () => setShowModal1(true)
+            }
+            >
+              Alterar dados  
+            </BtnNewTest>
+          )}
 
 
 
@@ -480,10 +492,20 @@ export default function SendData() {
                             setDireitos(text)
                           }} />
               </ContentFormNew>
+              {loading ? (
+            <img
+              width="40px"
+              style={{ margin: "auto", display: "flex" }}
+              height=""
+              src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
+              alt="Loading"
+            />
+          ) : (
               <NewBtn>
-                    <button type="button" onClick={() => window.location.hash= '#/'}>Cancelar</button>
+                    <button type="button" onClick={() => closeModal()}>Cancelar</button>
                     <button type="button" onClick={makeRequisition}>Adicionar</button>
               </NewBtn>
+          )}
           </ModalContent>
       </div>
       </Modal>
