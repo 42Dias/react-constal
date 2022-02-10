@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { AiOutlineConsoleSql } from "react-icons/ai";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Header from "../../components/Header"
 import { Menu } from "../../components/Menu"
@@ -240,7 +241,26 @@ export default function Accounts() {
             />
           </fieldset>
           <h3>
-          {displayedFaturas.length == 0  ? (<h3>Você não tem nenhum valor a receber :(</h3>): false }
+          {displayedFaturas.length == 0  ? (<h3>Você não tem nenhum valor a receber :(</h3>): (
+            <S.FlexBtnsProd
+            style={{
+              margin: '0 auto'
+            }}
+            >
+              <S.Btn
+              onClick={() => setFilter()}
+              >
+                  Filtrar
+              </S.Btn>
+
+              <S.Btn
+              className="btnReset"
+              onClick={() => unsetFilter()}
+              >
+                  Desfiltrar
+              </S.Btn>
+            </S.FlexBtnsProd>
+          ) }
           </h3>
 
           {
