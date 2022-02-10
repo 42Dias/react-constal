@@ -197,7 +197,7 @@ export default function Vendas() {
               )
             )}
           </select>
-          {loading ? <img width="40px" height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
+          {loading ? <img width="40px" height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}
         </SelectInput>
           ) : (
             false
@@ -222,7 +222,7 @@ export default function Vendas() {
           }
           
         </MenuSell>
-        {loading2 ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
+        {loading2 ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}
         {
           pedidosPendentes.map(
             (pedidos) => (

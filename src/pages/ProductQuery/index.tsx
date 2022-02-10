@@ -177,7 +177,7 @@ function ProductQuery() {
       <Menu />
       <div className="container">
         <S.CardDatails>
-          <S.Title>Aprovar Produtos  {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}</S.Title>
+          <S.Title>Aprovar Produtos  {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}</S.Title>
          
           {
               role == 'admin' ? (
@@ -205,7 +205,7 @@ function ProductQuery() {
                   )
                 )}
               </select>
-              {loading ? <img width="40px" height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
+              {loading ? <img width="40px" height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}
             </SelectInput>
               ) : (
                 false
