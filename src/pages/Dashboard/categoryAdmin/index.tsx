@@ -28,6 +28,9 @@ export default function Sendcategoria() {
   const [categoriasAtiva = [], setcategoriasAtiva] = useState<any[]>([]);
   
   const [name, setName] = useState<any>("");
+
+  const [loading, setLoading] = useState(false);
+
   
 
   async function addCategoria() {
@@ -41,6 +44,7 @@ export default function Sendcategoria() {
     const response = await api.post("categoria", data).then(
       (response) => {
         console.log(response)
+        setLoading(false)
         response.status == 200 ? toast.info("Categoria adicionada ao sistema :)"): toast.error("Algo deu errado, tente mais tarde :(")
       }
     )
@@ -49,7 +53,7 @@ export default function Sendcategoria() {
 
 
   async function makeRequisition(e: any){
-
+    setLoading(true)
 
     e.preventDefault()
     e.target.reset();
@@ -244,8 +248,6 @@ export default function Sendcategoria() {
           
           >
             <h2>Criar Categoria</h2>
-
-
           <input 
           type="text"
           
@@ -265,9 +267,17 @@ export default function Sendcategoria() {
           /><br /><br />
 
             
-
-            <input type="submit" value="Enviar"
-             />
+        {loading ? (
+            <img
+              width="40px"
+              style={{ margin: "auto" }}
+              height=""
+              src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
+              alt="Loading"
+            />
+          ) : (
+            <input type="submit" value="Enviar"/>
+          )}
           </form>
 
 
