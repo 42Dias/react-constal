@@ -106,9 +106,17 @@ export default function Products() {
                 </ProdContainerSingle>}
       })}
         </GridProdsFour>
-      </div>
-      <div >
-        {loading && 'Loading...'}
+        {loading ? (
+            <img
+              width="40px"
+              style={{    
+                margin: '0 auto',
+                display: 'flex' }}
+              height=""
+              src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
+              alt="Loading"
+            />
+          ) : false}
       </div>
       <Footer />
     </>
