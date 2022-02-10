@@ -91,7 +91,7 @@ export default function Companies() {
       <Menu />
       <div className="container">
         <CardDatails>
-          <h2>Empresas {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}</h2>
+          <h2>Empresas {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}</h2>
 
           <SelectInput>
             <select

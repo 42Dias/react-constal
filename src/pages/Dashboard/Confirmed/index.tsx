@@ -186,7 +186,7 @@ export default function Confirmed() {
 //               )
 //             )}
 //           </select>
-//           {loading ? <img width="40px" height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
+//           {loading ? <img width="40px" height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}
 //         </SelectInput>
 //           ) : (
 //             false
@@ -211,7 +211,7 @@ export default function Confirmed() {
 //           }
           
 //         </MenuSell>
-//         {loading2 ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
+//         {loading2 ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}
 //         {
 //           pedidosConfirmados.map(
 //             (pedidos) => (
@@ -403,7 +403,7 @@ return (
           )
         )}
       </select>
-      {loading ? <img width="40px" height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
+      {loading ? <img width="40px" height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}
     </SelectInput>
       ) : (
         false
@@ -428,7 +428,7 @@ return (
           }
           
         </MenuSell>
-    {loading2 ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
+    {loading2 ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}
     {
       pedidosConfirmados.map(
         (pedidos) => (

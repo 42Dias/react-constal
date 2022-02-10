@@ -550,7 +550,7 @@ export default function Profile() {
               </ContentFormNew>
 
 
-              {loading ? <img width="40px" style={{ margin: 'auto' }} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
+              {loading ? <img width="40px" style={{ margin: 'auto' }} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}
               <div className="buttonsNew">
                 <button type="button" onClick={messageCancel}>
                   Cancelar
@@ -702,7 +702,7 @@ export default function Profile() {
                 )}
               />
              
-              {loading ? <img width="40px" style={{ margin: 'auto' }} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
+              {loading ? <img width="40px" style={{ margin: 'auto' }} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}
               <div className="buttonsNew">
                 <button type="button" onClick={messageCancel}>
                   Cancelar
@@ -742,7 +742,7 @@ export default function Profile() {
                   width="40px"
                   style={{ margin: "auto" }}
                   height=""
-                  src={"https://contribua.org/mb-static/images/loading.gif"}
+                  src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
                   alt="Loading"
                 />
               ) : false}

@@ -206,7 +206,7 @@ const Cart = (): JSX.Element => {
                       }</strong>
                   </td>
                   <td>
-                  {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : 
+                  {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : 
                     <button
                       type="button"
                       data-testid="remove-product"
@@ -228,7 +228,7 @@ const Cart = (): JSX.Element => {
               ) : false
             }
             {console.log(products.length)}
-            {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : false}
+            {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}
             <Total>
               <span>TOTAL</span>
               <strong>{total}</strong>

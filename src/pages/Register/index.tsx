@@ -262,7 +262,7 @@ export default function Register() {
             </span>
           </Terms>
           <LinkContent>
-            {loading ? <img width="40px" style={{ margin: 'auto' }} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> :
+            {loading ? <img width="40px" style={{ margin: 'auto' }} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> :
               <button type="submit">Cadastrar</button>}
           </LinkContent>
         </BoxRegister>

@@ -230,7 +230,7 @@ export default function PayCart() {
           <div className="container">
             <Titleh2>Formas de pagamentos</Titleh2>
             <CenterPay>
-              <div>Carregando formas de pagamentos...{loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : 
+              <div>Carregando formas de pagamentos...{loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : 
              false}</div>
               {/*<div className="input">
                 {/*<input type="checkbox" name="" id=""
@@ -282,7 +282,7 @@ export default function PayCart() {
               </div>*/}
             </CenterPay>
             <BtnFinish>
-            {/*loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://contribua.org/mb-static/images/loading.gif'} alt="Loading" /> : 
+            {/*loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : 
               /*<Btn
               onClick={
                 () => {
