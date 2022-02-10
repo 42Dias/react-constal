@@ -8,6 +8,8 @@ import SwiperCore, {
 } from 'swiper';
 import "swiper/swiper.scss";
 
+import Teste from './../../assets/images/bgHome.png';
+
 import { SwiperStyles, BarHome, FlexBar, BannerHomeImage } from "./styles";
 import { api, Email, id, idPessoa, ip, role, semImagem, tenantId, token } from "../../services/api";
 import { formatPrice } from "../../util/format";
@@ -143,39 +145,28 @@ console.log("")
               (banner, index ) => 
               (
                 <SwiperSlide key={index}>
-                        {/* /produtos-promocao/:imagemId */}
-                        <img src={banner.imagemUrl}
-                        alt={banner.nome} />
-                    </SwiperSlide>
+                  {/* /produtos-promocao/:imagemId */}
+                  <img src={banner.imagemUrl}
+                  alt={banner.nome} />
+                </SwiperSlide>
               ) 
             )
           }
           {
             promocoes.map(
               (promocao, index) => (
-                    <SwiperSlide key={index}>
-                      <Link 
-                      // href={`/produtos-promocao/${promocao.promocaoId}`} 
-                      to={`/produtos-promocao/${promocao.promocaoId}`}>
-                        {/* /produtos-promocao/:imagemId */}
-                        <img src={promocao.imagemPromocional}
-                        alt={promocao.precoOferta + " " + promocao.nome} />
-                    </Link>
-                    </SwiperSlide>
+                <SwiperSlide key={index}>
+                  <Link 
+                    // href={`/produtos-promocao/${promocao.promocaoId}`} 
+                    to={`/produtos-promocao/${promocao.promocaoId}`}>
+                      {/* /produtos-promocao/:imagemId */}
+                      <img src={promocao.imagemPromocional}
+                      alt={promocao.precoOferta + " " + promocao.nome} />
+                  </Link>
+                </SwiperSlide>
               )             
             )
           }
-          {/* COMENTADO POR OPÇÃO DO CLIENTE, SUBIR LIMPO PARA O SERVIDOR DELE */}
-          {/* <SwiperSlide><img src={moveis} alt="moveis" /></SwiperSlide>
-          <SwiperSlide><img src={moveis} alt="moveis" /></SwiperSlide>
-          <SwiperSlide><img src={materiais} alt="materiais" />
-          </SwiperSlide>
-          <SwiperSlide><img src={eletrodomesticos} alt="eletrodomesticos" /></SwiperSlide>
-          <SwiperSlide><img src={cama} alt="cama" /></SwiperSlide>
-          <SwiperSlide><img src={modainfantil} alt="moda infantil" /></SwiperSlide>
-          <SwiperSlide><img src={modafeminina} alt="moda feminina" /></SwiperSlide>
-          <SwiperSlide><img src={modamasculina} alt="moda masculina" /></SwiperSlide> 
-          */}
         </Swiper>
       </BannerHomeImage>
 
@@ -224,8 +215,15 @@ console.log("")
             <p>Nenhum produto em promoção</p>
           ) : (
             <Swiper
-              spaceBetween={50}
-              slidesPerView={3}
+              spaceBetween={30}
+              centeredSlides={true}
+              autoplay={{
+                delay: 4000,
+                disableOnInteraction: false,
+              }}
+              pagination={{
+                clickable: true,
+              }}
             >
               {products2.map((product) => (
                 <SwiperSlide>
@@ -268,8 +266,15 @@ console.log("")
         <div className="container">
           <h2>Produtos em destaque</h2>
           <Swiper
-            spaceBetween={50}
-            slidesPerView={3}
+            spaceBetween={30}
+            centeredSlides={true}
+            autoplay={{
+              delay: 4000,
+              disableOnInteraction: false,
+            }}
+            pagination={{
+              clickable: true,
+            }}
           >
             {products.map((product) => (
               <SwiperSlide>
