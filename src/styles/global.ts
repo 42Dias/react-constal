@@ -19,7 +19,7 @@ export default createGlobalStyle`
     background: #191920 url(${background}) no-repeat center top;
   }
 
-  body, input, button {
+  body, input, button, textarea {
     font: 14px 'Poppins', sans-serif;
   }
 

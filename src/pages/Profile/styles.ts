@@ -291,4 +291,10 @@ export const ContentFormNew = styled.div`
   label {
     margin: 5px 0;
   }
+
+  textarea {
+    resize: vertical;
+    padding: 7px;
+    border-radius: 10px;
+  }
 ` 
