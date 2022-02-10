@@ -47,6 +47,10 @@ export const ProdContainerSingle = styled.div`
     color: #CBCBCB;
     font-size: 12px;
     padding: 6px 7px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     @media (max-width: 768px) {
       font-size: 14px;
     }
