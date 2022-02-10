@@ -192,6 +192,7 @@ export const ProdCaracteristicas = styled.div`
   margin-bottom: 40px;
   min-height: 400px;
   height: auto;
+  overflow: hidden;
 
   div {
     display: flex;
