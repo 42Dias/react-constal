@@ -43,11 +43,28 @@ export const CardDatas = styled.div`
 `;
 
 export const CardDatails = styled.div`
+
   h2 {
     color: #000;
     font-size: 30px;
     padding: 40px 0 30px 0;
+    margin: 0 auto;
   }
+
+
+  input[type=text]  {
+    height: 48px;
+    width: 466px;
+    border-radius: 4px;
+    border: 0;
+    background: #F2F2F2 !important;
+    padding: 0 5px;
+    margin: 10px auto;
+    @media (max-width: 768px) {
+      width: 100%;
+    }
+  }
+  
 
   /* a {
     display: flex;
@@ -65,11 +82,10 @@ export const CardDatails = styled.div`
     background: white;
     width: 100%;
     height: 250px;
-    margin: 20px 0;
     display: flex;
     flex-direction: column;
     padding: 0 12px;
-    border-radius: 5px;
+    border-radius: 5px;;
 
     input[type=submit] {
       padding: 10px 10px;
@@ -78,7 +94,7 @@ export const CardDatails = styled.div`
       color: #FFF;
       text-align: center;
       display: block;
-      margin-top: 10px;
+      margin: 10px auto;
       cursor: pointer;
       border: 0;
       border-radius: 5px;
