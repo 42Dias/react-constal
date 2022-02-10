@@ -121,12 +121,10 @@ export default function ApproveEmpresas() {
               <CardDatailsContent>
                 <CardDatailsContent key={empresa.razaoSocial}>
                   <ContentDetails>
-                    <small>
-                      <b>{empresa.razaoSocial || empresa.fullName}</b><br />
-                      CNPJ: {empresa.cnpj} <br />
-                      Telefone: {empresa.telefone}<br />
-                      E-mail: {empresa.email}
-                    </small>
+                    <span>{empresa.razaoSocial || empresa.fullName}</span>
+                    <span>CNPJ: {empresa.cnpj}</span>
+                    <span>Telefone: {empresa.telefone}</span>
+                    <span>E-mail: {empresa.email}</span>
                   </ContentDetails>
                 </CardDatailsContent>
                 

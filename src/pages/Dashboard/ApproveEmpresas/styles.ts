@@ -69,7 +69,7 @@ export const CardDatails = styled.div`
 export const CardDatailsContent = styled.div`
   background: white;
   width: 100%;
-  height: 100px;
+  height: 100%;
   margin: 20px 0;
   display: flex;
   align-items: center;
@@ -129,19 +129,19 @@ export const CardDatailsContent = styled.div`
 
 export const ContentDetails = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  flex-direction: column;
 
   span {
-    font-size: 18px;
-    font-weight: bold;
+    margin-left: 12px;
+    max-width: 250px;   
+    &:first-child {
+      font-weight: bold;
+    }
   }
 
   img {
     padding: 0 40px;
-  }
-
-  p {
-    margin-left: 12px;
   }
   
   small {
