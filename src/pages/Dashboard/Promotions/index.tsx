@@ -71,6 +71,7 @@ export default function Promotions() {
 
   }
   async function makeRequisitionToChange(data: any){
+    toast.info("Carregando...")
     ids.map(
       async (id) => {        
         const response: any = api.put(`produto/${id}`, data)
