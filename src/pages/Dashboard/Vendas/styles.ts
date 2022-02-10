@@ -45,6 +45,7 @@ export const ContainerMenuSell = styled.div`
   height: 168px;
   background: white;
   margin: 15px 0 10px 0;
+  overflow: hidden;
 
   display: flex;
   align-items: center;

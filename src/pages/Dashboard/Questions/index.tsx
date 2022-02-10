@@ -1,4 +1,4 @@
-import { CardDatails, CardDatailsContent, ContentDetails, TextAreaFormated } from "./styles";
+import { CardDatails, CardDatailsContent, CardDatailsContentSecondary, ContentDetails, TextAreaFormated } from "./styles";
 
 import Header from "../../../components/Header";
 import { Link } from "react-router-dom";
@@ -259,9 +259,9 @@ export default function Questions() {
                 </CardDatailsContent>
                 {
                   comentario.isRespondido? (
-                    <CardDatailsContent>
+                    <CardDatailsContentSecondary>
                       {comentario.resposta}
-                    </CardDatailsContent>
+                    </CardDatailsContentSecondary>
                   ): (
                     <div></div>
                   )
