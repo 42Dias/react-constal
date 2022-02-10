@@ -26,7 +26,7 @@ export const CardDatailsContent = styled.div`
   background: white;
   width: 100%;
   height: 100px;
-  margin: 20px 0;
+  margin-top: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -89,3 +89,17 @@ export const ContentDetails = styled.div`
     font-size: 16px;
   }
 `;
+
+
+export const TextAreaFormated = styled.textarea`
+  width: 100%;
+  padding: 7px 10px;
+  font: 14px 'Poppins',sans-serif;
+  resize: none;
+  -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+`
