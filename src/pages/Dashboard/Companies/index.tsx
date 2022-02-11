@@ -28,7 +28,7 @@ export default function Companies() {
     loadEmpresa();
   }, []);
   async function loadEmpresa() {
-    console.log("entrou");
+    // console.log("entrou");
     setLoading(true)
     const response = await api
       .get("empresaStatus?filter%5Bstatus%5D=" + filtro)
@@ -37,8 +37,8 @@ export default function Companies() {
         return response.data;
       });
     setEmpresas(response.rows);
-    console.log("Empresas");
-    console.log(response.rows);
+    // console.log("Empresas");
+    // console.log(response.rows);
   }
   function message() {
     //toast.info('Ainda não implementado')
@@ -51,7 +51,7 @@ export default function Companies() {
       id: empresa.id,
       data: empresa,
     }).then((response) => {
-      console.log(response)
+      // console.log(response)
       if (response.statusText == "OK") {
         toast.info('Empresa aprovado com sucesso! :)');
         //window.location.reload();
@@ -62,7 +62,7 @@ export default function Companies() {
       }
     }).catch((error) => {
       toast.error('Ops, não foi possivel aprovar a empresa! :(');
-      console.log(error)
+      // console.log(error)
     })
   }
   function recusarEmpresa(empresa: Empresa) {
@@ -72,7 +72,7 @@ export default function Companies() {
       id: empresa.id,
       data: empresa,
     }).then((response) => {
-      console.log(response)
+      // console.log(response)
       if (response.statusText == "OK") {
         toast.info('Empresa recusado com sucesso! :)');
         //window.location.reload();
@@ -82,7 +82,7 @@ export default function Companies() {
       }
     }).catch((error) => {
       toast.error('Ops, não foi possivel recusado a empresa! :(');
-      console.log(error)
+      // console.log(error)
     })
   }
   return (
