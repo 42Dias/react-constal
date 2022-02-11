@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { api, id, ip, role, status } from "../../../services/api";
 import { complement } from "polished";
 import { formatPrice } from "../../../util/format";
+import moment from "moment";
 
 export default function SaleDetails() {
   const [response, setResponse]=useState<any[]>([]);
@@ -29,6 +30,27 @@ export default function SaleDetails() {
       return hash
     }
 
+  async function loadPedidoDetails() {
+    const pedidoId = getHash()
+    // console.log("pedidoId")      
+    // console.log(pedidoId)      
+
+    const data = {
+      userId: id
+    }
+
+
+    const response = await api.post(`findPedidoWithProductToEmpresa?filter%5BpedidoId%5D=${pedidoId}`, data)        
+    // console.log("response.data")
+    // console.log(response.data)
+    setResponse(response.data)
+
+    /*
+    NECESSIDADE DE LINKAR O PRODUTO COM O PEDIDO
+    */
+
+  }
+
   useEffect(
     () => {
       if(!role){
@@ -39,26 +61,6 @@ export default function SaleDetails() {
           // Simulate an HTTP redirect:
           window.location.replace(`${ip}/#/erro`);
         }
-      }
-  
-      async function loadPedidoDetails() {
-        const pedidoId = getHash()
-        console.log("pedidoId")      
-        console.log(pedidoId)      
-
-        const data = {
-          userId: id
-        }
-
-
-        const response = await api.post(`findPedidoWithProductToEmpresa?filter%5BpedidoId%5D=${pedidoId}`, data)        
-        console.log(response.data)
-        setResponse(response.data)
-
-        /*
-        NECESSIDADE DE LINKAR O PRODUTO COM O PEDIDO
-        */
-
       }
 
       loadPedidoDetails()
@@ -77,21 +79,27 @@ export default function SaleDetails() {
             <>
             <CardDatails>
           <CardDatailsContent>
-            <ContentDetails>
-              {/* <img  src={pedido.imagemUrl} alt={pedido.nome} /> */}
-              <img  src={item} alt={pedido.nome} />
-              <span>{pedido.nome} </span> 
+            <ContentDetails
+            style={{
+              width: '95%'
+            }}
+            >
+              <ContentDetails>
+                <img  src={pedido.imagemUrl} alt={pedido.nome} />
+                {/* <img  src={pedido.imagemUrl} alt={pedido.nome} /> */}
+                <span>{pedido.nome} </span>
+              </ContentDetails>
+              <p>{
+                formatPrice(pedido.preco)
+                }</p>
             </ContentDetails>
-            <p>{
-              formatPrice(pedido.preco)
-              }</p>
           </CardDatailsContent>
 
           <CardDatails>
             <CardDatailsContent>
               <ContentDetails>
                 <small>
-                  <b>Nome do cliente: </b> {pedido.fullName} <br />
+                  <b>Nome do cliente: </b> {pedido.nome} <br />
                   CPF: {pedido.cpf} <br />
                   {/* Metodo de pagamento: {formaPagamento} <br />
                   Parcelamento: XX */}
@@ -114,7 +122,9 @@ export default function SaleDetails() {
               <ContentDetails>
                 <small>
                   <b>Detalhes</b> <br />
-                  Data de solicitação da compra:  {pedido.dataPedido} <br />
+                  Data de solicitação da compra:  {
+                  moment(pedido.dataPedido).format('DD/MM/YYYY')
+                  } <br />
                   Produto {formatPrice(pedido.preco)} <br />
                   Envio {pedido.valorFrete? formatPrice(pedido.valorFrete): 'grátis'} <br />
                   <b>Total: {pedido.valorFrete? formatPrice(pedido.preco + pedido.valorFrete): formatPrice(pedido.preco)}</b>
