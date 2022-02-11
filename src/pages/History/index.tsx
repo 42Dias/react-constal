@@ -85,8 +85,10 @@ export default function Histoty() {
          <CardDatailsContent key={product.nome}>
               <ContentDetails>
                 <img src={product.imagemUrl} alt="" />
-                <span>{product.nome}</span>
-                <p>{formatPrice( product.precoTotal)}</p>
+                <div className="prodNome"><span>{product.nome}</span></div>
+                <div className="prodPreco">
+                  <p>{formatPrice( product.precoTotal)}</p>
+                </div>
               </ContentDetails>
               <strong onClick={openModal} >Ver detalhes</strong>
          </CardDatailsContent>
