@@ -110,7 +110,7 @@ const Home = (): JSX.Element => {
     }
   }
 
-console.log("")
+// console.log("")
 
   // useEffect(() => {
   //   let newRole = localStorage.getItem("role")?.replace(/"/g, "");
@@ -213,11 +213,11 @@ console.log("")
             if (p.isOferta === 1 && prodId != p.id) {
               productCounter.push(p);
               prodId = p.id;
-              console.log(p);
+              // console.log(p);
             }
 
-            //console.log(productCounter);
-            //console.log(products.length);
+            //// console.log(productCounter);
+            //// console.log(products.length);
           })*/}
 
           {products2.length === 0 ? (
