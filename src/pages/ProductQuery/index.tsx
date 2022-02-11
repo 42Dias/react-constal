@@ -11,6 +11,7 @@ import axios from "axios"
 import { toast } from "react-toastify"
 import { ContentFormNew } from "../Profile/styles"
 import { SelectInput } from "../Dashboard/Vendas/styles"
+import { formatPrice } from "../../util/format"
 /*
 
 
@@ -177,36 +178,37 @@ function ProductQuery() {
       <Menu />
       <div className="container">
         <S.CardDatails>
-          <S.Title>Aprovar Produtos  {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}</S.Title>
+          <S.Title>Aprovar Produtos</S.Title>
          
           {
               role == 'admin' ? (
-            <SelectInput>
-              <label htmlFor="">Selecionar Empresa: </label>
-              <select
-                onChange={(text) => {
-                  
-                  // console.log(text.target.value)
-                  if(!text){
+              loading ? <img width="40px" height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : (
+                <SelectInput>
+                <label htmlFor="">Selecionar Empresa: </label>
+                <select
+                  onChange={(text) => {
+                    
+                    // console.log(text.target.value)
+                    if(!text){
+                    }
+                    filterProductsBySelect(text.target.value)
                   }
-                  filterProductsBySelect(text.target.value)
-                }
-                  // setProdutos(text.target.value)
-                }
-              >
-                <option value={"selecione"} key={"Selecione"} >Selecione</option>
-                {produtosDosFornecedores.map(
-                  (empresa: any) => (
-                    <option 
-                    value={empresa.fornecedorId} 
-                    key={empresa.fornecedorId} >
-                        {empresa.fornecedorId || empresa.fornecedorId}
-                    </option>
-                  )
-                )}
-              </select>
-              {loading ? <img width="40px" height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}
-            </SelectInput>
+                    // setProdutos(text.target.value)
+                  }
+                >
+                  <option value={"selecione"} key={"Selecione"} >Selecione</option>
+                  {produtosDosFornecedores.map(
+                    (empresa: any) => (
+                      <option 
+                      value={empresa.fornecedorId} 
+                      key={empresa.fornecedorId} >
+                          {empresa.fornecedorId || empresa.fornecedorId}
+                      </option>
+                    )
+                  )}
+                </select>
+              </SelectInput>
+              )
               ) : (
                 false
               )
@@ -227,13 +229,15 @@ function ProductQuery() {
                   <S.ContentDetails>
                     <Link
                       className="fixImage"
-                     to={`/produto/${produto.id}`}
+                      to={`/produto/${produto.id}`}
                     >
-                      <img src={produto.imagemUrl} alt="" />
+                    <img src={produto.imagemUrl} alt="" />
                     </Link>
                     <span className="prodNome" >{produto.nome}</span>
-                    <p>{produto.quantidade}</p>
-                    <p>R$ {produto.preco}</p>
+                    {/* <p>{produto.quantidade}</p> */}
+                    <div className="prodPreco">
+                      <p>{formatPrice(produto.preco)}</p>
+                    </div>
                   </S.ContentDetails>
                   <S.BtnContent>
                     <button type="button" onClick={() => aprovarProd(produto)}>Aprovar</button>
