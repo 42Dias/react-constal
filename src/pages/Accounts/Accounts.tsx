@@ -59,6 +59,7 @@ export default function Accounts() {
     else if (role == 'empresa'){
       // toast.info("Você é empresa")
       const response = await api.get(`pedido-fatura?filter%5Bid%5D=${id}`)
+      console.log(response.data)
       setFaturas(response.data)
       setDisplayedFaturas(response.data)
       // response.data.map(
@@ -294,7 +295,7 @@ export default function Accounts() {
                 }
                 </strong>
               </p>
-              <a href="/">página da fatura</a>
+              <Link to={`/detalhes-da-venda/${fatura.pedidoId}`}>Ver detalhes</Link>
               </S.ContentListItem>
               )
             )
