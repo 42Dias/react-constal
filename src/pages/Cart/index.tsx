@@ -81,7 +81,7 @@ const Cart = (): JSX.Element => {
   }
 
   function handleRemoveProduct(productId: string, index: number) {
-    console.log("nbjkvnbvfnklbnvkjbnckjvnbkjcvnbkncvjbnkcvnjv")
+    // console.log("nbjkvnbvfnklbnvkjbnckjvnbkjcvnbkncvjbnkcvnjv")
     setLoading(true)
     removeProduct(productId);
     
@@ -89,8 +89,8 @@ const Cart = (): JSX.Element => {
     newProd.splice(index, 1)
     setProducts(newProd)
 
-    console.log("newProd")
-    console.log(newProd)
+    // console.log("newProd")
+    // console.log(newProd)
     
     setLoading(false)
   }
@@ -107,8 +107,8 @@ const Cart = (): JSX.Element => {
           return response.data.rows;
         })
 
-      console.log("cart");
-      console.log(response);
+      // console.log("cart");
+      // console.log(response);
 
       setProducts(response);
       setLoading(false)
@@ -138,8 +138,8 @@ const Cart = (): JSX.Element => {
 
   //Está sendo alterado o useState mas não está sendo mostrado na
 
-  console.log("products.length")
-  console.log(products.length)
+  // console.log("products.length")
+  // console.log(products.length)
 
   return (
     <>
@@ -227,7 +227,7 @@ const Cart = (): JSX.Element => {
                 <Link to="/pagar">Finalizar pedido</Link>
               ) : false
             }
-            {console.log(products.length)}
+            {/* {console.log(products.length)} */}
             {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}
             <Total>
               <span>TOTAL</span>
