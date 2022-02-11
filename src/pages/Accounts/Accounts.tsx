@@ -25,10 +25,12 @@ export default function Accounts() {
     setSoma(0) 
     faturas.map(
       (fatura: any) => {
+        // console.log(soma)
+        // console.log(faturas.length)
         let precoTotalFatura = parseFloat(fatura.precoTotal) 
-        console.log(
-          parseFloat(fatura.precoTotal)
-          )
+        // console.log(
+          // parseFloat(fatura.precoTotal)
+          // )
       setSoma(
         (prevValues) => prevValues +  precoTotalFatura
       )
@@ -43,7 +45,7 @@ export default function Accounts() {
       // response.data.map(
       //   (fatura: any) => {
       //     let precoTotalFatura = parseFloat(fatura.precoTotal) 
-      //     console.log(
+      //     // console.log(
       //       parseFloat(fatura.precoTotal)
       //       )
       //   setSoma(
@@ -54,14 +56,14 @@ export default function Accounts() {
       somaFaturas(response.data)
     }
     else if (role == 'empresa'){
-      toast.info("Você é empresa")
+      // toast.info("Você é empresa")
       const response = await api.get(`pedido-fatura?filter%5Bid%5D=${id}`)
       setFaturas(response.data)
       setDisplayedFaturas(response.data)
       // response.data.map(
       //   (fatura: any) => {
       //     let precoTotalFatura = parseFloat(fatura.precoTotal) 
-      //     console.log(
+      //     // console.log(
       //       parseFloat(fatura.precoTotal)
       //       )
       //   setSoma(
@@ -114,7 +116,7 @@ export default function Accounts() {
   Desconverter e passar dentro de um if só (a < data && a > data2)
   */
   async function unsetFilter() {
-    console.log("DESFILTRAR HA HA HA")
+    // console.log("DESFILTRAR HA HA HA")
     setDisplayedFaturas(faturas)
     somaFaturas(faturas)    
   }
@@ -133,50 +135,55 @@ export default function Accounts() {
     /*
     Problemas no set
     */
+   let faturaHelper: any = []
    
     faturas.map(
       (fatura:any) => {
+
         let createdAtFormatado = fatura.createdAt.substr(0,10)
-        console.log(createdAtFormatado)
+        // console.log(createdAtFormatado)
 
         let createdAtConvertido = new Date(createdAtFormatado)
-        console.log("createdAtConvertido")
-        console.log(createdAtConvertido)
+        // console.log("createdAtConvertido")
+        // console.log(createdAtConvertido)
 
         if(existeDataInicial && !existeDataFinal){
-          console.log("TEM SÓ A INICIAL")
-          console.log("createdAtConvertido é maior do que data inicial?")
-          console.log(dataInicial)
+          let faturasHelper = []
+          // console.log("TEM SÓ A INICIAL")
+          // console.log("createdAtConvertido é maior do que data inicial?")
+          // console.log(dataInicial)
 
           if(createdAtConvertido > dataInicial){
-          console.log("É SIM")
+          // console.log("É SIM")
+            
             setDisplayedFaturas((prevValues: any) => {
               return [...new Set([...prevValues, fatura])]	
                })
           }
           else{
-            console.log("É NÃO")
+            // console.log("É NÃO")
           }
         }
         if(!existeDataInicial && existeDataFinal){
-          console.log("TEM SÓ A FINAL")
+          // console.log("TEM SÓ A FINAL")
 
-          console.log("createdAtConvertido é menor do que data final?")
-          console.log(dataFinal)
+          // console.log("createdAtConvertido é menor do que data final?")
+          // console.log(dataFinal)
           if(createdAtConvertido < dataFinal){
-            console.log("É SIM")
+            // console.log("É SIM")
             setDisplayedFaturas((prevValues: any) => {
               return [...new Set([...prevValues, fatura])]	
                })
           }
           else{
-            console.log("É NÃO")
+            // console.log("É NÃO")
           }
         }
         else{
-          console.log("TEM OS DOIS KKKKKKKK")
+          // console.log("TEM OS DOIS KKKKKKKK")
           if(dataInicial <= createdAtConvertido && createdAtConvertido <= dataFinal){
-            console.log("É SIM")
+            // console.log("É SIM")
+            faturaHelper.push(fatura)
             setDisplayedFaturas((prevValues: any) => {
               return [...new Set([...prevValues, fatura])]	
                })
@@ -184,7 +191,7 @@ export default function Accounts() {
         }
       }
       )
-      somaFaturas(displayedFaturas)
+      somaFaturas(faturaHelper)
     return
   }
 
@@ -204,7 +211,7 @@ export default function Accounts() {
             id="meeting-time"
             onChange={
               (e) => {
-                console.log(e.target.value)
+                // console.log(e.target.value)
                 let novaData = new Date(e.target.value)
                 let dataNaoValida = isNaN(novaData.valueOf())
 
@@ -226,7 +233,7 @@ export default function Accounts() {
             id="meeting-time"
             onChange={
               (e) => {
-                console.log(e.target.value)
+                // console.log(e.target.value)
                 let novaData = new Date(e.target.value)
                 let dataNaoValida = isNaN(novaData.valueOf())
 
@@ -241,27 +248,27 @@ export default function Accounts() {
             />
           </fieldset>
           <h3>
-          {displayedFaturas.length == 0  ? (<h3>Você não tem nenhum valor a receber :(</h3>): (
-            <S.FlexBtnsProd
+          {displayedFaturas.length == 0  ? (<h3>Você não tem nenhum valor a receber :(</h3>): false }
+          </h3>
+
+          <S.FlexBtnsProd
             style={{
               margin: '0 auto'
             }}
             >
-              <S.Btn
-              onClick={() => setFilter()}
-              >
-                  Filtrar
-              </S.Btn>
-
               <S.Btn
               className="btnReset"
               onClick={() => unsetFilter()}
               >
                   Desfiltrar
               </S.Btn>
+              <S.Btn
+              onClick={() => setFilter()}
+              >
+                  Filtrar
+              </S.Btn>
+
             </S.FlexBtnsProd>
-          ) }
-          </h3>
 
           {
           displayedFaturas.map(
