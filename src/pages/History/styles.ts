@@ -107,6 +107,13 @@ align-items: center;
   align-items: flex-start;
 }
 
+.prodNome{
+  width: 60%
+}
+.prodPreco{
+  width: 25%
+}
+
 span {
   font-size: 18px;
   font-weight: bold;
@@ -120,7 +127,7 @@ img {
   object-fit: cover; 
   margin: 0 40px;
   border-radius: 5px;
-  width: 190px;
+  min-width: 190px;
   height: 170px;
   border-radius: 5px;
 
