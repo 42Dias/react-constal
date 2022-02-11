@@ -37,7 +37,7 @@ export const Content = styled.div`
     margin: 10px 0;
     padding: 0 7px;
     border: 0;
-    background: #fff;
+    background: #F2F2F2;
     color: #ccc;
 
     :focus {
@@ -103,4 +103,30 @@ export const Btn = styled.button`
   color: white;
   border-radius: 5px;
   border:0;
+`
+
+
+export const ContentInput = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 50px;
+  padding: 50px;
+  background-color: white;
+  border-radius: 5px;
+  margin-bottom: 50px;
+`
+
+
+export const ContentListItem = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 50px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 5px;
+  width: 100%;
 `
