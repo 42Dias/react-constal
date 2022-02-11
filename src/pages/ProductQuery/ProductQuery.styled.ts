@@ -45,7 +45,7 @@ export const CardDatails = styled.div`
     padding: 40px 0 30px 0;
   }
 
-  a {
+  button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -57,7 +57,7 @@ export const CardDatails = styled.div`
     border-radius: 5px;
   }
 
-  a:nth-child(2) {
+  button:nth-child(2) {
     background: white;
     color: black;
     border: 1px solid black;
@@ -102,7 +102,7 @@ export const ContentDetails = styled.div`
     object-fit: contain;
   }
 
-  a{
+  button{
     width: 222px;
     height: 140px;
     border-radius: 10px 10px 0 0;
