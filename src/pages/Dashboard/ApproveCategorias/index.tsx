@@ -22,8 +22,8 @@ export default function ApproveCategorias() {
         return response.data;
       })
       setCategoria(response.rows)
-    console.log("Categoria");
-    console.log(response.rows);
+    // console.log("Categoria");
+    // console.log(response.rows);
   }
 
   useEffect(() => {
@@ -45,14 +45,14 @@ export default function ApproveCategorias() {
     setIsOpen(false);
   }
   function aprovarCategoria(categoria: any) {
-    console.log(categoria)
+    // console.log(categoria)
     categoria.status = "aprovado";
     setLoading2(true)
     let response = api.put('categoria/' + categoria.id, {
       id: categoria.id,
       data: categoria,
     }).then((response) => {
-      console.log(response)
+      // console.log(response)
       if (response.statusText == "OK") {
         toast.info('Categoria aprovada com sucesso! :)');
         //window.location.reload();
@@ -63,18 +63,18 @@ export default function ApproveCategorias() {
       }
     }).catch((error)=>{
       toast.error('Ops, não foi possivel aprovar a categoria! :(');
-      console.log(error)
+      // console.log(error)
     })
   }
   function recusarCategoria(categoria: any) {
-    console.log(categoria)
+    // console.log(categoria)
     categoria.status = "inative";
     setLoading(true)
     let response = api.put('categoria/' + categoria.id, {
       id: categoria.id,
       data: categoria,
     }).then((response) => {
-      console.log(response)
+      // console.log(response)
       if (response.statusText == "OK") {
         toast.info('Categoria recusado com sucesso! :)');
         //window.location.reload();
@@ -85,7 +85,7 @@ export default function ApproveCategorias() {
       }
     }).catch((error)=>{
       toast.error('Ops, não foi possivel recusado a categoria! :(');
-      console.log(error)
+      // console.log(error)
     })
   }
   return (
