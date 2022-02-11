@@ -79,13 +79,13 @@ export default function Profile() {
       loadPerfil()
       return response.data;
     });
-    // console.log(response);
-    // console.log(response.tenants[0].roles[0]);
-    let setRole = response.tenants[0].roles
-    const roleHelper = JSON.parse(setRole)
-    // console.log(roleHelper[0])
-    // localStorage.setItem("roles", JSON.stringify(response.tenants[0].roles[0])); //saves client's data into localStorage:
-    localStorage.setItem("roles", JSON.stringify(roleHelper[0])); //saves client's data into localStorage:
+    // // console.log(response);
+    // // console.log(response.tenants[0].roles[0]);
+    // let setRole = response.tenants[0].roles
+    // const roleHelper = JSON.parse(setRole)
+    // // console.log(roleHelper[0])
+    localStorage.setItem("roles", JSON.stringify(response.tenants[0].roles[0])); //saves client's data into localStorage:
+    // localStorage.setItem("roles", JSON.stringify(roleHelper[0])); //saves client's data into localStorage:
 
     //response.tenants[0].tenant.id);
     localStorage.setItem(
@@ -103,11 +103,11 @@ export default function Profile() {
       const response = await api
         .get("pessoa-fisica-perfil")
         .then((response) => {
-          // console.log("response");
-          // console.log(response.data);
+          // // console.log("response");
+          // // console.log(response.data);
           return response.data;
         });
-      console.log(response);
+      // console.log(response);
       localStorage.setItem("idPessoa", JSON.stringify(response.id));
       setEmail(response.user.email);
       setFullName(response.nome);
@@ -127,9 +127,9 @@ export default function Profile() {
           "https://www.camaragibe.pe.gov.br/wp-content/uploads/2019/04/default-user-male.png"
         );
       }
-      //console.log("avatars");
-      //console.log(imagemUser);
-      //console.log(response);
+      //// console.log("avatars");
+      //// console.log(imagemUser);
+      //// console.log(response);
     }
     //Perfil empresa
     else if (role === "empresa") {
@@ -155,10 +155,10 @@ export default function Profile() {
           "https://www.camaragibe.pe.gov.br/wp-content/uploads/2019/04/default-user-male.png"
         );
       }
-      //console.log("avatars");
-      //console.log(imagemUser);
-      //console.log("response");
-      //console.log(response.rows);
+      //// console.log("avatars");
+      //// console.log(imagemUser);
+      //// console.log("response");
+      //// console.log(response.rows);
     }
     //Perfil Admin
     else {
@@ -179,8 +179,8 @@ export default function Profile() {
       setCEP(response.cep);
       setCidade(response.cidade);
       setEstado(response.estado);
-      //console.log("response.avatars[0]");
-      //console.log(response.avatars[0]);
+      //// console.log("response.avatars[0]");
+      //// console.log(response.avatars[0]);
       if (
         response.avatars !== undefined &&
         response.avatars[0] !== undefined
@@ -191,10 +191,10 @@ export default function Profile() {
           "https://www.camaragibe.pe.gov.br/wp-content/uploads/2019/04/default-user-male.png"
         );
       }
-      //console.log("avatars");
-      //console.log(imagemUser);
-      //console.log("response");
-      //console.log(response.rows);
+      //// console.log("avatars");
+      //// console.log(imagemUser);
+      //// console.log("response");
+      //// console.log(response.rows);
     }
   }
 
@@ -230,11 +230,11 @@ export default function Profile() {
 
   useEffect(() => {
     const hash = window.location.hash.replace(`${ip}#/erro`, '');
-    console.log(hash)
+    // console.log(hash)
     if (hash) {
 
       var token = hash.replace('#/meu-perfil/', '');
-      console.log(token)
+      // console.log(token)
       if (token) {
         localStorage.setItem("token", JSON.stringify(token));
         loadUser()
@@ -249,7 +249,7 @@ export default function Profile() {
     const savedData: string[] = JSON.parse(
       localStorage.getItem("clientDataFromLocalStorage") || "{}"
     );
-    //console.log(savedData);
+    //// console.log(savedData);
 
     return savedData;
   }
@@ -279,7 +279,7 @@ export default function Profile() {
     if (email) {
       const updatePersonalData = await api.put('pessoa-fisica/' + idPessoa, data).then(
         (data) => {
-          // console.log(data)
+          // // console.log(data)
           if(data.status == 200){
             toast.info("Dados Alterados com sucesso!")
           }
@@ -288,10 +288,10 @@ export default function Profile() {
           }
         }
       )
-      // console.log(updatePersonalData)
+      // // console.log(updatePersonalData)
     } else {
-      //console.log("hehe");
-      //console.log(data);
+      //// console.log("hehe");
+      //// console.log(data);
       data.data.email = localStorage.getItem("email") || "";
       data.data.password = localStorage.getItem("senha") || "";
 
@@ -303,7 +303,7 @@ export default function Profile() {
 
   const [savedData] = useState([]);
 
-  //console.log(savedData);
+  //// console.log(savedData);
 
   clientLocalStorage();
 
@@ -313,7 +313,7 @@ export default function Profile() {
       update(response.data)
       return response.data;
     });
-    // console.log(data)
+    // // console.log(data)
 
     async function update(data: any) {
       if (data) {
@@ -332,9 +332,9 @@ export default function Profile() {
     }
   }
   function onSubmitInput (values: any, actions: any) {
-    // console.log(data)
+    // // console.log(data)
     // Cadastro(data)
-    // console.log('SUBMIT', values)
+    // // console.log('SUBMIT', values)
   }
 
   function onBlurCep (ev: any, setFieldValue: any) {
@@ -475,12 +475,10 @@ export default function Profile() {
           <h2>Endereço</h2>
           <CardDatailsContent className="adress">
             <ContentDetails>
-              <small>
-                Endereço: {logradouro + ", " + newNumero} <br />
-                Bairro: {bairro} <br />
-                CEP: {cep} <br />
-                Cidade: {cidade + " - " + estado}
-              </small>
+                <small>Endereço: {logradouro + ", " + newNumero}</small>
+                <small>Bairro: {bairro} </small>
+                <small>CEP: {cep} </small>
+                <small>Cidade: {cidade + " - " + estado}</small>
             </ContentDetails>
 
             <button onClick={() => {
@@ -538,14 +536,14 @@ export default function Profile() {
                       onChange={
                         (e: any) => {
                           let cpf = e.target.value
-                          // console.log(
+                          // // console.log(
                           //   cpf.replace(/\D/g, '')
                           //   )
                           setCPF(
                             cpf.replace(/\D/g, '')
                           )
                           setMaskedCPF(e.target.value)
-                          // console.log(maskedCPF)
+                          // // console.log(maskedCPF)
                         }
                       }/>
               </ContentFormNew>
