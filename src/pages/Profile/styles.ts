@@ -81,7 +81,7 @@ export const CardDatails = styled.div`
     border: 0;
     width: 174px;
     height: 41px;
-    background: #101010;
+    background: black;
     border-radius: 5px;
     color: white;
   }
@@ -266,7 +266,7 @@ export const ModalContent = styled.form`
     width: 165px;
     height: 40px;
 
-    background: #101010;
+    background: black;
     border-radius: 5px;
     color: white;
     text-decoration: none;
@@ -313,3 +313,19 @@ export const ContentFormNew = styled.div`
     border-radius: 10px;
   }
 ` 
+export const LinkHolder = styled.div`
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+    width: 230px;
+    height: 41px;
+    text-decoration: none;
+    background: black;
+    color: white;
+    border-radius: 5px;
+    border: 0;
+  }
+
+`
