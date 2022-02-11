@@ -27,12 +27,12 @@ export default function ProductsCategory() {
   const { addProduct, cart } = useCart();
 
   
-  console.log(url)
+  // console.log(url)
   
   useEffect(
     ()=>{
       setNewUrl(window.location.hash)
-      console.log("mudou url!")
+      // console.log("mudou url!")
     },[url != newurl]
     )
     
@@ -40,13 +40,13 @@ export default function ProductsCategory() {
       ()=>{
         async function loadProdutosPesquisados(){
           const pesquisa = window.location.hash.replace(/#\/produto-categoria\//g, '');
-        console.log(pesquisa)
+        // console.log(pesquisa)
         // const resultadoDaPesquisa2 = await api.get(`produto?filter%5Bcategoria%5D=${pesquisa}`)
         const resultadoDaPesquisa = await axios.get(`${ip}:8157/api/produtos-list?filter%5Bcategoria%5D=${pesquisa}`)
 
         // console.log(resultadoDaPesquisa)
         // console.log(resultadoDaPesquisa2)
-        console.log(resultadoDaPesquisa)
+        // console.log(resultadoDaPesquisa)
 
         setProducts(resultadoDaPesquisa.data.record)
       }
@@ -86,7 +86,7 @@ export default function ProductsCategory() {
                     <p>{product.descricao}</p>
                     <div className="btn-group-add">
                       <span>
-                        R$<b>{product.preco}</b>
+                        <b>{formatPrice(product.preco)}</b>
                       </span>
                       {
                         role == 'empresa' || role == 'admin' ? false : 

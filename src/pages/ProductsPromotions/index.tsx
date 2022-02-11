@@ -29,10 +29,10 @@ export default function ProductsPromotions() {
         const pesquisa = window.location.hash.replace(/#\/produtos-promocao\//g, '');
         // const resultadoDaPesquisa = await api.get(`produto?filter%5BpromocaoId%5D=${pesquisa}`)
         
-        console.log(pesquisa)
+        // console.log(pesquisa)
         
         const resultadoDaPesquisa = await axios.get(`${ip}:8157/api/produtos-list?filter%5BpromocaoId%5D=${pesquisa}`)
-        console.log(resultadoDaPesquisa)
+        // console.log(resultadoDaPesquisa)
         setProducts(resultadoDaPesquisa.data.record)
       }
       loadProdutosPesquisados()
@@ -71,7 +71,7 @@ export default function ProductsPromotions() {
                     <p>{product.descricao}</p>
                     <div className="btn-group-add">
                       <span>
-                        R$<b>{product.preco}</b>
+                        <b>{formatPrice(product.preco)}</b>
                       </span>
                       {
                         role == 'empresa' || role == 'admin' ? false : 
