@@ -23,8 +23,8 @@ export default function ApproveUsers() {
         return response.data;
       })
     setEmpresas(response.rows)
-    console.log("Empresas");
-    console.log(response.rows);
+    // console.log("Empresas");
+    // console.log(response.rows);
   }
 
   useEffect(() => {
@@ -52,7 +52,7 @@ export default function ApproveUsers() {
       id: empresa.id,
       data: empresa,
     }).then((response) => {
-      console.log(response)
+      // console.log(response)
       if (response.statusText == "OK") {
         toast.info('Empresa aprovado com sucesso! :)');
         //window.location.reload();
@@ -63,7 +63,7 @@ export default function ApproveUsers() {
       }
     }).catch((error)=>{
       toast.error('Ops, não foi possivel aprovar a empresa! :(');
-      console.log(error)
+      // console.log(error)
     })
   }
   function recusarEmpresa(empresa: Empresa) {
@@ -73,7 +73,7 @@ export default function ApproveUsers() {
       id: empresa.id,
       data: empresa,
     }).then((response) => {
-      console.log(response)
+      // console.log(response)
       if (response.statusText == "OK") {
         toast.info('Empresa recusado com sucesso! :)');
         //window.location.reload();
@@ -83,7 +83,7 @@ export default function ApproveUsers() {
       }
     }).catch((error)=>{
       toast.error('Ops, não foi possivel recusado a empresa! :(');
-      console.log(error)
+      // console.log(error)
     })
   }
   return (
