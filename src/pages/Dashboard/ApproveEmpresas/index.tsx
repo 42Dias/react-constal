@@ -111,9 +111,8 @@ export default function ApproveEmpresas() {
       <Menu />
       <div className="container">
         <CardDatails>
-          <h2>Aprovar Empresas {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}</h2>
-          
-          {
+          <h2>Aprovar Empresas</h2>
+          {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : (
             empresas.length === 0 ? (
               <p>Todas os admin ja foram aprovadas</p>
             ) : (
@@ -135,7 +134,7 @@ export default function ApproveEmpresas() {
               </CardDatailsContent>
             ))
             )
-          }
+          )}
         </CardDatails>
       </div>
     </>
