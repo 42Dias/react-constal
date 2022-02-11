@@ -44,7 +44,6 @@ export default function Footer() {
     apiWithoutToken.get('informacoes').then(
       (res) => {
         let data = res.data.record[0]
-        console.log(data)
         setTelefone(data.telefone)
         setSeguranca(data.seguranca)
         setLogradouro(data.logradouro)
