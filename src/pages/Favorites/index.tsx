@@ -46,15 +46,15 @@ function handleAddProduct(id: string) {
       window.location.replace(`${ip}/#/erro`);
     }
     async function loadFavoritos(favoritos: string[]){
-      console.log("favoritos");
-      console.log(favoritos);
+      // // console.log("favoritos");
+      // // console.log(favoritos);
         favoritos.map(
             async favorito => {
-                console.log("favorito")
-                console.log(favorito)
+                // // console.log("favorito")
+                // // console.log(favorito)
                 const response = await api.get(`produto/${favorito}`);
-                console.log("response.data")
-                console.log(response.data)
+                // // console.log("response.data")
+                // // console.log(response.data)
                 // setProducts(response.data)
 
                 products.push(response.data)
@@ -68,26 +68,26 @@ function handleAddProduct(id: string) {
 
     async function loadProducts() {
       const favoritos: string[] = JSON.parse(localStorage.getItem("favorito") || '[]' );
-      console.log("favoritos")
-      console.log(favoritos)
+      // // console.log("favoritos")
+      // // console.log(favoritos)
       loadFavoritos(favoritos);
     }
     loadProducts();
   }, []);
-    console.log(favorito)
+    // console.log(favorito)
 
 
   function setFavoritosInLocal(favoritos: string[]){    
-    console.log("favoritos in local set's")
-    console.log(favoritos)
+    // // console.log("favoritos in local set's")
+    // // console.log(favoritos)
     localStorage.setItem("favorito", JSON.stringify(favoritos))
     // toast.info("Adicionado aos favoritos!")
 }
 
   function handleDeleteFavorites(id: any){
-    console.log(id)
     let localStorageFavoritos = localStorage.getItem('favorito')
-    console.log(localStorageFavoritos)
+    // // console.log(id)
+    // // console.log(localStorageFavoritos)
     let parsedFavoritos = JSON.parse(localStorageFavoritos!)
 
     parsedFavoritos!.map(
@@ -100,8 +100,8 @@ function handleAddProduct(id: string) {
         }
       }
     )
-  console.log("parsedFavoritos after")
-  console.log(parsedFavoritos)
+  // // console.log("parsedFavoritos after")
+  // // console.log(parsedFavoritos)
   setFavoritosInLocal(parsedFavoritos)
 
   // localStorage.setItem('favorito', JSON.parse(parsedFavoritos))
