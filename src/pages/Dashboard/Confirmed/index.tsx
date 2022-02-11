@@ -34,7 +34,7 @@ export default function Confirmed() {
 //         if (pedido.status == "pendente") {
 
 //           setPedidosPendentes((prevProducts: any[]) => {
-//             //console.log(prevProducts)
+//             //// console.log(prevProducts)
 //             return [...new Set([...prevProducts, pedido])]
 //           })
 
@@ -49,7 +49,7 @@ export default function Confirmed() {
 //       (pedido: any) => {
 //         if (pedido.status == "confirmado" || pedido.status == "entregue") {
 //           setPedidosConfirmados((prevProducts: any[]) => {
-//             //console.log(prevProducts)
+//             //// console.log(prevProducts)
 //             return [...new Set([...prevProducts, pedido])]
 //           })
 //         }
@@ -64,7 +64,7 @@ export default function Confirmed() {
 //       (pedido: any) => {
 //         if (pedido.status == "devolvido" || pedido.status == "cancelado") {
 //           setPedidosDevolvidos((prevProducts: any[]) => {
-//             //console.log(prevProducts)
+//             //// console.log(prevProducts)
 //             return [...new Set([...prevProducts, pedido])]
 //           })
 //         }
@@ -78,7 +78,7 @@ export default function Confirmed() {
 //       (pedido: any) => {
 //         if (pedido.status == "denunciado") {
 //           setPedidosDenunciador((prevProducts: any[]) => {
-//             //console.log(prevProducts)
+//             //// console.log(prevProducts)
 //             return [...new Set([...prevProducts, pedido])]
 //           })
 //         }
@@ -109,8 +109,8 @@ export default function Confirmed() {
 //             return response.data;
 //           })
 //         setEmpresas(response.rows)
-//         console.log("Empresas");
-//         console.log(response.rows);
+//         // console.log("Empresas");
+//         // console.log(response.rows);
 //       }
 
 //       if (role == "admin") {
@@ -120,9 +120,9 @@ export default function Confirmed() {
 
 //       else {
 //         async function loadPedidos() {
-//           console.log("requisição do pedido feita")
+//           // console.log("requisição do pedido feita")
 //           const res = await api.get('pedido')
-//           console.log(res.data)
+//           // console.log(res.data)
 //           setPedidos(res.data.rows)
 //         }
 //         loadPedidos()
@@ -138,33 +138,33 @@ export default function Confirmed() {
 //       loadPedidosConfirmados()
 //       loadPedidosDevolvidos()
 //       loadPedidosDenunciador()
-//       //console.log("EBA")
+//       //// console.log("EBA")
 //     }, [sinal]
 //   )
 
 //   async function empresaT(empresaId: string) {
 //     setSinal(0)
-//     console.log("Entrou empresaT");
-//     console.log(empresaId);
+//     // console.log("Entrou empresaT");
+//     // console.log(empresaId);
 //     setEmpresaIdParaRequisicao(empresaId)
 
 
 //     if (empresaId != "" && empresaId !== empresaIds) {
 //       setLoading2(true)
 //       setEmpresaId(empresaId)
-//       console.log("requisição do pedido feita")
+//       // console.log("requisição do pedido feita")
 //       const res = await api.get('pedido?filter%5BfornecedorEmpresa%5D=' + empresaId)
 //       // const res = await api.get('pedido')
-//       //console.log(res.data);
+//       //// console.log(res.data);
 //       setLoading2(false)
 //       setPedidos(res.data.rows);
 //       setSinal(1)
 //     }
 //   }
 
-//   //console.log(pedidosPendentes)
-//   //console.log(pedidosConfirmados)
-//   //console.log(pedidosDevolvidos)
+//   //// console.log(pedidosPendentes)
+//   //// console.log(pedidosConfirmados)
+//   //// console.log(pedidosDevolvidos)
 
 //   return (
 //     <>
@@ -246,7 +246,7 @@ pedidos.filter(
     if (pedido.status == "pendente") {
 
       setPedidosPendentes((prevProducts: any[]) => {
-        //console.log(prevProducts)
+        //// console.log(prevProducts)
         return [...new Set([...prevProducts, pedido])]
       })
 
@@ -261,7 +261,7 @@ pedidos.filter(
   (pedido: any) => {
     if (pedido.status == "confirmado" || pedido.status == "entregue") {
       setPedidosConfirmados((prevProducts: any[]) => {
-        //console.log(prevProducts)
+        //// console.log(prevProducts)
         return [...new Set([...prevProducts, pedido])]
       })
     }
@@ -276,7 +276,7 @@ pedidos.filter(
   (pedido: any) => {
     if (pedido.status == "devolvido" || pedido.status == "cancelado") {
       setPedidosDevolvidos((prevProducts: any[]) => {
-        //console.log(prevProducts)
+        //// console.log(prevProducts)
         return [...new Set([...prevProducts, pedido])]
       })
     }
@@ -290,7 +290,7 @@ pedidos.filter(
   (pedido: any) => {
     if (pedido.status == "denunciado") {
       setPedidosDenunciador((prevProducts: any[]) => {
-        //console.log(prevProducts)
+        //// console.log(prevProducts)
         return [...new Set([...prevProducts, pedido])]
       })
     }
@@ -321,8 +321,8 @@ useEffect(
         return response.data;
       })
     setEmpresas(response.rows)
-    console.log("Empresas");
-    console.log(response.rows);
+    // console.log("Empresas");
+    // console.log(response.rows);
   }
 
   if (role == "admin") {
@@ -332,12 +332,12 @@ useEffect(
 
   else {
     async function loadPedidos() {
-      console.log("requisição do pedido feita")
+      // console.log("requisição do pedido feita")
       const data = {
         userId: id
       }
       const res = await api.post(`findPedidoWithProductToEmpresa`, data)
-      console.log(res.data)
+      // console.log(res.data)
       setPedidos(res.data)
     }
     loadPedidos()
@@ -353,35 +353,35 @@ useEffect(
   loadPedidosConfirmados()
   loadPedidosDevolvidos()
   loadPedidosDenunciador()
-  //console.log("EBA")
+  //// console.log("EBA")
 }, [sinal]
 )
 
 async function empresaT(empresaId: string) {
 setSinal(0)
-console.log("Entrou empresaT");
-console.log(empresaId);
+// console.log("Entrou empresaT");
+// console.log(empresaId);
 setEmpresaIdParaRequisicao(empresaId)
 
 
 if (empresaId != "" && empresaId !== empresaIds) {
   setLoading2(true)
   setEmpresaId(empresaId)
-  console.log("requisição do pedido feita")
+  // console.log("requisição do pedido feita")
   const data = {
     userId: id
   }
   const res = await api.post(`findPedidoWithProductToEmpresa`, data)
-  console.log(res.data)
+  // console.log(res.data)
   setLoading2(false)
   setPedidos(res.data);
   setSinal(1)
 }
 }
 
-console.log(pedidosPendentes)
-//console.log(pedidosConfirmados)
-//console.log(pedidosDevolvidos)
+// console.log(pedidosPendentes)
+//// console.log(pedidosConfirmados)
+//// console.log(pedidosDevolvidos)
 
 return (
 <>

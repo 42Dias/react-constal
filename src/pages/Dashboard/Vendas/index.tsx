@@ -28,14 +28,25 @@ export default function Vendas() {
   const [loading, setLoading] = useState(false);
   const [loading2, setLoading2] = useState(false);
 
-  async function loadPedidosPendentes() {
+  async function loadPedidos() {
+    // // console.log("requisição do pedido feita")
+    const data = {
+      userId: id
+    }
+    const res = await api.post(`findPedidoWithProductToEmpresa`, data)
+    // // console.log(res.data)
+    setPedidos(res.data)
+  }
+
+  async function loadPedidosPendentes(pedidos: any) {
     setPedidosPendentes([])
     pedidos.filter(
-      pedido => {
+      (pedido: any) => {
+        // // console.log(pedido.status)
         if (pedido.status == "pendente") {
 
           setPedidosPendentes((prevProducts: any[]) => {
-            //console.log(prevProducts)
+            //// console.log(prevProducts)
             return [...new Set([...prevProducts, pedido])]
           })
 
@@ -44,13 +55,13 @@ export default function Vendas() {
     )
   }
 
-  async function loadPedidosConfirmados() {
+  async function loadPedidosConfirmados(pedidos: any) {
     setPedidosConfirmados([])
     pedidos.filter(
       (pedido: any) => {
         if (pedido.status == "confirmado" || pedido.status == "entregue") {
           setPedidosConfirmados((prevProducts: any[]) => {
-            //console.log(prevProducts)
+            //// console.log(prevProducts)
             return [...new Set([...prevProducts, pedido])]
           })
         }
@@ -58,14 +69,14 @@ export default function Vendas() {
     )
   }
 
-  async function loadPedidosDevolvidos() {
+  async function loadPedidosDevolvidos(pedidos: any) {
     setPedidosDevolvidos([])
 
     pedidos.filter(
       (pedido: any) => {
         if (pedido.status == "devolvido" || pedido.status == "cancelado") {
           setPedidosDevolvidos((prevProducts: any[]) => {
-            //console.log(prevProducts)
+            //// console.log(prevProducts)
             return [...new Set([...prevProducts, pedido])]
           })
         }
@@ -73,18 +84,26 @@ export default function Vendas() {
     )
   }
 
-  async function loadPedidosDenunciador() {
+  async function loadPedidosDenunciador(pedidos: any) {
     setPedidosDenunciador([])
     pedidos.filter(
       (pedido: any) => {
         if (pedido.status == "denunciado") {
           setPedidosDenunciador((prevProducts: any[]) => {
-            //console.log(prevProducts)
+            //// console.log(prevProducts)
             return [...new Set([...prevProducts, pedido])]
           })
         }
       }
     )
+  }
+
+  async function loadAll(pedido:any) {
+    loadPedidosConfirmados(pedido)
+    loadPedidosDenunciador(pedido)
+    loadPedidosDevolvidos(pedido)
+    loadPedidosPendentes(pedido)
+    
   }
 
 
@@ -110,8 +129,8 @@ export default function Vendas() {
             return response.data;
           })
         setEmpresas(response.rows)
-        console.log("Empresas");
-        console.log(response.rows);
+        // // console.log("Empresas");
+        // // console.log(response.rows);
       }
 
       if (role == "admin") {
@@ -120,52 +139,39 @@ export default function Vendas() {
       }
 
       else {
-        async function loadPedidos() {
-          console.log("requisição do pedido feita")
-          const data = {
-            userId: id
-          }
-          const res = await api.post(`findPedidoWithProductToEmpresa`, data)
-          console.log(res.data)
-          setPedidos(res.data)
-        }
         loadPedidos()
         setSinal(1)
-
         empresaT(id!)
 
       }
     }, []);
   useEffect(
     () => {
-      loadPedidosPendentes()
-      loadPedidosConfirmados()
-      loadPedidosDevolvidos()
-      loadPedidosDenunciador()
-      //console.log("EBA")
-    }, [sinal]
+      loadAll(pedidos)
+      //// console.log("EBA")
+    }, [pedidos]
   )
 
   async function empresaT(empresaId: string) {
     if(role == 'admin'){
       setSinal(0)
-      console.log("Entrou empresaT");
-      console.log(empresaId);
+      // // console.log("Entrou empresaT");
+      // // console.log(empresaId);
       setEmpresaIdParaRequisicao(empresaId)
   
   
       if (empresaId != "" && empresaId !== empresaIds) {
         setLoading2(true)
         setEmpresaId(empresaId)
-        console.log("requisição do pedido feita")
+        // // console.log("requisição do pedido feita")
         const data = {
           userId: id
         }
         // const res = await api.post(`findPedidoWithProductToEmpresa`, data)
         const res = await api.post(`findPedidoWithProductToEmpresa?filter%5Brole%5D=${empresaId}`, data)
         // PROBLEMA: ESSA FUNÇÃO ESTÁ SENDO CHAMADA MESMO CASO A ROLE NÃO SEJA ADMIN !!!!!!!!
-        console.log("res.data")
-        console.log(res.data)
+        // // console.log("res.data")
+        // // console.log(res.data)
         setLoading2(false)
         setPedidos(res.data);
         setSinal(1)
@@ -173,9 +179,9 @@ export default function Vendas() {
     }
   }
 
-  console.log(pedidosPendentes)
-  //console.log(pedidosConfirmados)
-  //console.log(pedidosDevolvidos)
+  // console.log(pedidosPendentes)
+  //// console.log(pedidosConfirmados)
+  //// console.log(pedidosDevolvidos)
 
   return (
     <>
