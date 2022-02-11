@@ -6,6 +6,7 @@ import Header from "../../components/Header"
 import { Menu } from "../../components/Menu"
 import { api, id, role } from "../../services/api";
 import { formatPrice } from "../../util/format";
+import { CardDatails } from "../Dashboard/categoryAdmin/styles";
 
 import * as S from './Accounts.styled'
 
@@ -203,81 +204,78 @@ export default function Accounts() {
       <S.Container>
         <S.Content>
           <h1>Contas</h1>
-          <fieldset>
-          <label htmlFor="start">Inicío</label>
-          <input 
-            type="date" 
-            id="meeting-time"
-            onChange={
-              (e) => {
-                // console.log(e.target.value)
-                let novaData = new Date(e.target.value)
-                let dataNaoValida = isNaN(novaData.valueOf())
-
-                if(dataNaoValida){
-                  toast.error("Data Inválida!")
-                }
-                else{
-                  setDataInicial(new Date(e.target.value))
-                }
-              }
-            }
-            />
-          </fieldset>
-
-          <fieldset>
-          <label htmlFor="end">Fim</label>
-          <input 
-            type="date" 
-            id="meeting-time"
-            onChange={
-              (e) => {
-                // console.log(e.target.value)
-                let novaData = new Date(e.target.value)
-                let dataNaoValida = isNaN(novaData.valueOf())
-
-                if(dataNaoValida){
-                  toast.error("Data Inválida!")
-                }
-                else{
-                  setDataFinal(new Date(e.target.value))
+          <S.ContentInput>
+            <fieldset>
+            <label htmlFor="start">Inicío</label>
+            <input
+              type="date"
+              id="meeting-time"
+              onChange={
+                (e) => {
+                  // console.log(e.target.value)
+                  let novaData = new Date(e.target.value)
+                  let dataNaoValida = isNaN(novaData.valueOf())
+                  if(dataNaoValida){
+                    toast.error("Data Inválida!")
+                  }
+                  else{
+                    setDataInicial(new Date(e.target.value))
+                  }
                 }
               }
+              />
+            </fieldset>
+            <fieldset>
+            <label htmlFor="end">Fim</label>
+            <input
+              type="date"
+              id="meeting-time"
+              onChange={
+                (e) => {
+                  // console.log(e.target.value)
+                  let novaData = new Date(e.target.value)
+                  let dataNaoValida = isNaN(novaData.valueOf())
+                  if(dataNaoValida){
+                    toast.error("Data Inválida!")
+                  }
+                  else{
+                    setDataFinal(new Date(e.target.value))
+                  }
+                }
+              }
+              />
+            </fieldset>
+            <h3>
+            {displayedFaturas.length == 0  ? (<h3>Você não tem nenhum valor a receber :(</h3>): false }
+            </h3>
+            {
+              faturas.length != 0? (
+                <S.FlexBtnsProd
+                  style={{
+                    margin: '0 auto'
+                  }}
+                  >
+                    <S.Btn
+                    className="btnReset"
+                    onClick={() => unsetFilter()}
+                    >
+                        Desfiltrar
+                    </S.Btn>
+                    <S.Btn
+                    onClick={() => setFilter()}
+                    >
+                        Filtrar
+                    </S.Btn>
+                  </S.FlexBtnsProd>
+              ):false
             }
-            />
-          </fieldset>
-          <h3>
-          {displayedFaturas.length == 0  ? (<h3>Você não tem nenhum valor a receber :(</h3>): false }
-          </h3>
-          {
-            faturas.length != 0? (
-              <S.FlexBtnsProd
-                style={{
-                  margin: '0 auto'
-                }}
-                >
-                  <S.Btn
-                  className="btnReset"
-                  onClick={() => unsetFilter()}
-                  >
-                      Desfiltrar
-                  </S.Btn>
-                  <S.Btn
-                  onClick={() => setFilter()}
-                  >
-                      Filtrar
-                  </S.Btn>
-
-                </S.FlexBtnsProd>
-
-            ):false
-          }
+          </S.ContentInput>
 
 
           {
           displayedFaturas.map(
             (fatura: any) => (
-              <>
+              <S.ContentListItem>
               <span>Nome do Cliente</span>
               <span>
                 Preço Unitário: {
@@ -297,12 +295,17 @@ export default function Accounts() {
                 </strong>
               </p>
               <a href="/">página da fatura</a>
-              </>
+              </S.ContentListItem>
               )
             )
             }
 
-          <h3>
+          <h3
+          style={{
+            marginTop: '50px',
+            textAlign: 'center'
+          }}
+          >
             Valor total: {
                     formatPrice(soma)
                     }
