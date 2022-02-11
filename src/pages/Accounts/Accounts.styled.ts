@@ -86,7 +86,7 @@ export const FlexBtnsProd = styled.div`
   }
 
   .btnReset {
-    margin-left: 20px;
+    margin-right: 20px;
     background-color: rgb(183, 17, 23);
   }
 `;
