@@ -16,6 +16,7 @@ import {
   ModalFlex,
   ModalContent,
   ContentFormNew,
+  LinkHolder,
 } from "./styles";
 import { Link } from "react-router-dom";
 import { api, Email, idPessoa, ip, role, tenantId, token } from "../../services/api";
@@ -395,10 +396,11 @@ export default function Profile() {
         </CardProfile>
 
 
-
-        <Link to={"/historico-de-pedidos"}>
-          Historico de compras
-        </Link>
+        <LinkHolder>
+          <Link to={"/historico-de-pedidos"}>
+            Historico de compras
+          </Link>
+        </LinkHolder>
 
         <CardDatails>
           <h2>Dados da conta</h2>
@@ -549,7 +551,8 @@ export default function Profile() {
               </ContentFormNew>
 
 
-              {loading ? <img width="40px" style={{ margin: 'auto' }} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}
+              {loading ? <img width="40px" style={{ margin: 'auto' }} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : (
+
               <div className="buttonsNew">
                 <button type="button" onClick={messageCancel}>
                   Cancelar
@@ -558,6 +561,7 @@ export default function Profile() {
                   Adicionar
                 </button>
               </div>
+              )}
             </ModalContent>
           </div>
         </Modal>
@@ -701,8 +705,8 @@ export default function Profile() {
                 )}
               />
              
-              {loading ? <img width="40px" style={{ margin: 'auto' }} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}
-              <div className="buttonsNew">
+              {loading ? <img width="40px" style={{ margin: 'auto' }} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : (
+                <div className="buttonsNew">
                 <button type="button" onClick={messageCancel}>
                   Cancelar
                 </button>
@@ -712,6 +716,7 @@ export default function Profile() {
                   Adicionar
                 </button>
               </div>
+              )}
             </ModalContent>
           </div>
         </Modal>
@@ -744,7 +749,7 @@ export default function Profile() {
                   src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
                   alt="Loading"
                 />
-              ) : false}
+              ) : (
               <div className="buttonsNew">
                 <button type="button" onClick={closeModalResetSenha}>
                   Cancelar
@@ -753,6 +758,7 @@ export default function Profile() {
                   Adicionar
                 </button>
               </div>
+              )}
             </ModalContent>
           </div>
         </Modal>
