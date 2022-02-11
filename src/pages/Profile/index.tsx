@@ -79,11 +79,11 @@ export default function Profile() {
       loadPerfil()
       return response.data;
     });
-    console.log(response);
-    console.log(response.tenants[0].roles[0]);
+    // console.log(response);
+    // console.log(response.tenants[0].roles[0]);
     let setRole = response.tenants[0].roles
     const roleHelper = JSON.parse(setRole)
-    console.log(roleHelper[0])
+    // console.log(roleHelper[0])
     // localStorage.setItem("roles", JSON.stringify(response.tenants[0].roles[0])); //saves client's data into localStorage:
     localStorage.setItem("roles", JSON.stringify(roleHelper[0])); //saves client's data into localStorage:
 
@@ -103,8 +103,8 @@ export default function Profile() {
       const response = await api
         .get("pessoa-fisica-perfil")
         .then((response) => {
-          console.log("response");
-          console.log(response.data);
+          // console.log("response");
+          // console.log(response.data);
           return response.data;
         });
       console.log(response);
@@ -279,7 +279,7 @@ export default function Profile() {
     if (email) {
       const updatePersonalData = await api.put('pessoa-fisica/' + idPessoa, data).then(
         (data) => {
-          console.log(data)
+          // console.log(data)
           if(data.status == 200){
             toast.info("Dados Alterados com sucesso!")
           }
@@ -313,7 +313,7 @@ export default function Profile() {
       update(response.data)
       return response.data;
     });
-    console.log(data)
+    // console.log(data)
 
     async function update(data: any) {
       if (data) {
@@ -334,7 +334,7 @@ export default function Profile() {
   function onSubmitInput (values: any, actions: any) {
     // console.log(data)
     // Cadastro(data)
-    console.log('SUBMIT', values)
+    // console.log('SUBMIT', values)
   }
 
   function onBlurCep (ev: any, setFieldValue: any) {
@@ -538,14 +538,14 @@ export default function Profile() {
                       onChange={
                         (e: any) => {
                           let cpf = e.target.value
-                          console.log(
-                            cpf.replace(/\D/g, '')
-                            )
+                          // console.log(
+                          //   cpf.replace(/\D/g, '')
+                          //   )
                           setCPF(
                             cpf.replace(/\D/g, '')
                           )
                           setMaskedCPF(e.target.value)
-                          console.log(maskedCPF)
+                          // console.log(maskedCPF)
                         }
                       }/>
               </ContentFormNew>
