@@ -43,7 +43,7 @@ export default function Sendcategoria() {
 
     const response = await api.post("categoria", data).then(
       (response) => {
-        console.log(response)
+        // console.log(response)
         setLoading(false)
         response.status == 200 ? toast.info("Categoria adicionada ao sistema :)"): toast.error("Algo deu errado, tente mais tarde :(")
       }
@@ -66,14 +66,14 @@ export default function Sendcategoria() {
   function updatecategoriaStatus(categoriaStatus: any, categoria: any){
     toast.info("Carregando...")
     
-    console.log(categoriasAtiva.length < 7 )
+    // console.log(categoriasAtiva.length < 7 )
     
-    console.log(categoria)
+    // console.log(categoria)
 
       if(categoria.isFixed == null){
         if(categoriasAtiva.length < 7 ){
           categoriaStatus = '1'
-          console.log("fixou!")
+          // console.log("fixou!")
         }
         else{
           toast.error("Não é possivel adicionar mais que 7 categorias fixas")
@@ -83,7 +83,7 @@ export default function Sendcategoria() {
       // else (categoriaStatus == '1')
       else{
         categoriaStatus = null
-        console.log("desfixou!")
+        // console.log("desfixou!")
       }
   
       const body ={
@@ -94,7 +94,7 @@ export default function Sendcategoria() {
   
       api.put(`categoria/${categoria.id}`, body).then(
         (response) => {
-          console.log(response)
+          // console.log(response)
           if(response.status == 200){
             toast.info("Atualização do categoria feita com sucesso!")
             loadcategorias()
@@ -119,7 +119,7 @@ export default function Sendcategoria() {
     api.delete(`categoriaDeleteOne/${id}`)
     .then(
       (response) => {
-        console.log(response)
+        // console.log(response)
         if(response.status == 200){
           toast.info("Categoria apagada com sucesso!")
           loadcategorias()
@@ -138,7 +138,7 @@ export default function Sendcategoria() {
 
   async function loadcategorias(){
     const categorias = await api.get("categoria?filter%5Bstatus%5D=aprovado")
-    console.log(categorias.data.rows)
+    // console.log(categorias.data.rows)
     setcategorias(categorias.data.rows)
     setcategoriasDisplayed(categorias.data.rows)
     filtercategorias(categorias.data.rows)
@@ -170,12 +170,12 @@ export default function Sendcategoria() {
     categorias.filter(
       (categoria: any)  => {
         
-        console.log("categoria")
-        console.log(categoria)
+        // console.log("categoria")
+        // console.log(categoria)
 
         if (categoria.isFixed == null) {
           setcategoriasInativa((prevValues: any[]) => {
-            //console.log(prevValues)
+            //// console.log(prevValues)
             return [...new Set([...prevValues, categoria])]
           })
         }
@@ -185,13 +185,13 @@ export default function Sendcategoria() {
     categorias.filter(
       (categoria:any)  => {
         
-        console.log("categoria")
-        console.log(categoria)
+        // console.log("categoria")
+        // console.log(categoria)
 
         if (categoria.isFixed != null) {
 
           setcategoriasAtiva((prevValues: any[]) => {
-            //console.log(prevValues)
+            //// console.log(prevValues)
             return [...new Set([...prevValues, categoria])]
           })
         }
@@ -254,10 +254,10 @@ export default function Sendcategoria() {
           required
 
           onChange={e => {
-          console.log(e)
+          // console.log(e)
 
           //@ts-ignore
-          console.log(e.target.value)
+          // console.log(e.target.value)
           //@ts-ignore
           setName(e.target.value)
           //@ts-ignore
@@ -288,7 +288,7 @@ export default function Sendcategoria() {
             onChange={
               (text) => {
                   
-              console.log(text.target.value)
+              // console.log(text.target.value)
               if(!text){
               }
               updateDisplayedStatus(text.target.value)
@@ -343,7 +343,7 @@ export default function Sendcategoria() {
               }
               > 
               {
-                console.log(categoria.status)
+                // console.log(categoria.status)
               }
                 <span>
                   {
@@ -360,7 +360,7 @@ export default function Sendcategoria() {
               }
               > 
               {
-                console.log(categoria.status)
+                // console.log(categoria.status)
               }
                 <span>
                   {
