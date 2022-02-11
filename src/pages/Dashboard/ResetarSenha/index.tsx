@@ -84,14 +84,14 @@ export default function ResetarSenha() {
   const [senha, setSenha] = useState("");
 
   useEffect(() => {
-    console.log(role + " " + status)
+    // console.log(role + " " + status)
 
     const hash = window.location.hash.replace('${ip}/#/errodias.com.br/Clientes/constal/#/', '');
-    console.log(hash)
+    // console.log(hash)
     if (hash) {
 
       var token = hash.replace('#/resetar-senha/', '');
-      console.log(token)
+      // console.log(token)
       if (token) {
         localStorage.setItem("token", JSON.stringify(token));
         loadUser()
@@ -117,11 +117,11 @@ export default function ResetarSenha() {
     }).then((response) => {
       return response.data;
     });
-    //console.log(response);
-    //console.log(response.tenants[0].roles[0]);
+    //// console.log(response);
+    //// console.log(response.tenants[0].roles[0]);
     let setRole = response.tenants[0].roles
     const roleHelper = JSON.parse(setRole)
-    console.log(roleHelper[0])
+    // console.log(roleHelper[0])
     localStorage.setItem("roles", JSON.stringify(roleHelper[0])); //saves client's data into localStorage:
 
     //response.tenants[0].tenant.id);
@@ -140,7 +140,7 @@ export default function ResetarSenha() {
       update(response.data)
       return response.data;
     });
-    console.log(data)
+    // console.log(data)
 
     async function update(data: any) {
       if (data) {
