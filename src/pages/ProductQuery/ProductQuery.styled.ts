@@ -89,6 +89,15 @@ export const CardDatailsContent = styled.div`
 export const ContentDetails = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  width: 65%;
+
+  .prodNome{
+    width: 60%
+  }
+  .prodPreco{
+    width: 25%
+  }
 
   span {
     font-size: 18px;
