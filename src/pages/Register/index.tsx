@@ -29,12 +29,12 @@ export default function Register() {
 
   function handleCreateUser(event: FormEvent) {
     event.preventDefault();
-    console.log({
-      nome,
-      email,
-      senha,
-      category
-    });
+    // // console.log({
+    //   nome,
+    //   email,
+    //   senha,
+    //   category
+    // });
     Cadastro();
   }
   function handleLocalStorage(emailA: string, passwordB: string) {
@@ -68,13 +68,13 @@ export default function Register() {
     }).then(response => {
       return response.data;
     })
-    console.log(response);
+    // console.log(response);
     let setRole = response.tenants[0].roles
     const roleHelper = JSON.parse(setRole)
-    console.log(roleHelper[0])
+    // console.log(roleHelper[0])
     localStorage.setItem("roles", JSON.stringify(roleHelper[0])); //saves client's data into localStorage:
 
-    console.log(response.tenants[0].tenant.id);
+    // console.log(response.tenants[0].tenant.id);
     localStorage.setItem("tenantId", JSON.stringify(response.tenants[0].tenant.id));//saves client's data into localStorage:
     localStorage.setItem("id", JSON.stringify(response.id));//saves client's data into localStorage:
     localStorage.setItem("status", JSON.stringify(response.tenants[0].status));//saves client's data into localStorage:
@@ -96,7 +96,7 @@ export default function Register() {
       role: parseInt(category),
       status: ''
     }).then((response) => {
-      console.log(response);
+      // console.log(response);
       if (response.statusText === "OK") {
         toast.info('Opa, recebemos o seu registro :)');
         if (category == '2') {
@@ -126,7 +126,7 @@ export default function Register() {
   function handleClickLogin() {
     // window.location.reload()
     let localRole = localStorage.getItem('role')
-    console.log(localStorage.getItem('token'))
+    // console.log(localStorage.getItem('token'))
     if(category == '1'){
       window.location.hash = `#/meu-perfil/${localStorage.getItem('token')?.replace(/"/g, "")}`
     }
@@ -135,7 +135,7 @@ export default function Register() {
     }
     else{
       toast.error("NÃO PEGOU A ROLE")
-      console.log(localRole)
+      // console.log(localRole)
     }
   }
 
