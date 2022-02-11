@@ -31,13 +31,13 @@ function ProductQuery() {
     const response = await api.get('produto?filter%5Bstatus%5D=pendente')
       .then(response => {
         setLoading(false)
-        console.log(response)
+        // console.log(response)
         return response.data.rows;
       })
     setProdutos(response)
     setProdutosHelp(response)
-    console.log("Produtos");
-    console.log(response);
+    // console.log("Produtos");
+    // console.log(response);
     const produtosNoCarrinho = response
       
     //adiciona os nomes dos fornecedores numa variavel
@@ -57,11 +57,11 @@ function ProductQuery() {
         }
       )
     
-      console.log("containerDeObjetos")
-      console.log(containerDeObjetos)
+      // console.log("containerDeObjetos")
+      // console.log(containerDeObjetos)
 
-      console.log(produtosNoCarrinho)
-      console.log(fornecedoresNoCarrinho)
+      // console.log(produtosNoCarrinho)
+      // console.log(fornecedoresNoCarrinho)
 
       //responsável por filtrar cada um em si
       containerDeObjetos.map( (fornecedor: any, index: number )=>{
@@ -77,15 +77,15 @@ function ProductQuery() {
             }
           }
           )
-          console.log(fornecedor, index)
+          // console.log(fornecedor, index)
         }
         )
         setProdutosDosFornecedores(containerDeObjetos)
 
     /*produtos.map((produto)=>(
-      console.log(produto)  
+      // console.log(produto)  
   ))*/
-  console.log(produtosDosFornecedores)
+  // console.log(produtosDosFornecedores)
   }
   useEffect(() => {
     if(role !== "admin" && role !== "empresa" || status === "pendente"){
@@ -102,7 +102,7 @@ function ProductQuery() {
       id: produto.id,
       data: produto,
     }).then((response) => {
-      console.log(response)
+      // console.log(response)
       if (response.statusText == "OK") {
         toast.info('Produto aprovado com sucesso! :)');
         //window.location.reload();
@@ -112,7 +112,7 @@ function ProductQuery() {
       }
     }).catch((error)=>{
       toast.error('Ops, não foi possivel aprovar o produto! :(');
-      console.log(error)
+      // console.log(error)
     })
   }
   function recusarProd(produto: Product) {
@@ -124,23 +124,23 @@ function ProductQuery() {
       data: produto,
     }).then((response) => {
       setLoading(false)
-      console.log(response)
+      // console.log(response)
       if (response.statusText == "OK") {
         toast.info('Produto recusado com sucesso! :)');
         loadUser()
-        console.log(response)
+        // console.log(response)
         axios.post(''+ip+':8157/api/produto/enviarEmailRecusado', {
           userId: produto.empresa.userId,
           product: produto, 
           emailContent: emailContent
         }).then((response) => {
           if(response.status == 200){
-            console.log(response)
+            // console.log(response)
             toast.info('Email enviado com sucesso! :)')
             setEmailContent('')
           }
           else{
-            console.log(response)
+            // console.log(response)
             toast.info('Email não foi enviado com sucesso! :(')
           }
         })
@@ -149,7 +149,7 @@ function ProductQuery() {
       }
     }).catch((error)=>{
       toast.error('Ops, não foi possivel recusado o produto! :(');
-      console.log(error)
+      // console.log(error)
     })
   }
 
@@ -159,18 +159,18 @@ function ProductQuery() {
         (produtoDoFornecedor: any) => {
           if(produtoDoFornecedor.fornecedorId == text){
             setProdutos(produtoDoFornecedor.produtos)
-            console.log(produtoDoFornecedor.produtos)
+            // console.log(produtoDoFornecedor.produtos)
           }
         }
       )
     }
     else{
       setProdutos([...produtosHelp])
-      console.log(produtosHelp)
+      // console.log(produtosHelp)
 
     }
   }
-  console.log(produtosHelp)
+  // console.log(produtosHelp)
   return (
     <>
       <Header />
@@ -186,7 +186,7 @@ function ProductQuery() {
               <select
                 onChange={(text) => {
                   
-                  console.log(text.target.value)
+                  // console.log(text.target.value)
                   if(!text){
                   }
                   filterProductsBySelect(text.target.value)
