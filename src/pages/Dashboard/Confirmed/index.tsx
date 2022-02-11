@@ -433,7 +433,7 @@ return (
           }
           
         </MenuSell>
-    {loading2 ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}
+    {loading2 ? <img width="40px" style={{margin: '50px auto', display: 'flex'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}
     {
       pedidosConfirmados.map(
         (pedidos) => (
