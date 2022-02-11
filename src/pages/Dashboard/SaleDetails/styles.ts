@@ -92,29 +92,48 @@ export const CardDatailsContent = styled.div`
 `;
 
 export const ContentDetails = styled.div`
-  display: flex;
-  align-items: center;
+display: flex;
+align-items: center;
+padding-right: 60px;
+justify-content: space-between;
 
-  span {
-    font-size: 18px;
-    font-weight: bold;
-  }
+@media (max-width: 768px) {
+  flex-direction: column;
+  align-items: flex-start;
+}
 
-  img {
-    padding: 0 40px;
+span {
+  font-size: 18px;
+  font-weight: bold;
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden
+}
 
-    @media (max-width: 768px) {
-      padding: 0 5px;
-      width: 120px;
-    }
-  }
+img {
+  object-fit: cover; 
+  margin: 0 40px;
+  border-radius: 5px;
+  width: 190px;
+  height: 170px;
+  border-radius: 5px;
 
-  p {
-    margin-left: 12px;
+  @media (max-width: 768px) {
+    padding: 0 0;
+    width: 155px;
   }
-  
-  small {
-    color: #757575;
-    font-size: 16px;
+}
+
+p {
+  margin-left: 20px;
+  @media (max-width: 768px) {
+    margin-left: 0;
   }
+}
+
+small {
+  color: #757575;
+  font-size: 16px;
+}
 `;
