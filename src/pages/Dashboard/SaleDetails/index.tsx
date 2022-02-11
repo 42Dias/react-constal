@@ -12,11 +12,7 @@ import moment from "moment";
 
 export default function SaleDetails() {
   const [response, setResponse]=useState<any[]>([]);
-
-  
-  
-
-  
+  const [loading, setLoading] = useState(false);
 
   const [total, setTotal]=useState('');
 
@@ -31,6 +27,8 @@ export default function SaleDetails() {
     }
 
   async function loadPedidoDetails() {
+    setLoading(true)
+
     const pedidoId = getHash()
     // console.log("pedidoId")      
     // console.log(pedidoId)      
@@ -40,10 +38,15 @@ export default function SaleDetails() {
     }
 
 
-    const response = await api.post(`findPedidoWithProductToEmpresa?filter%5BpedidoId%5D=${pedidoId}`, data)        
+    const response = await api.post(`findPedidoWithProductToEmpresa?filter%5BpedidoId%5D=${pedidoId}`, data).then(
+      (response) => {
+        setLoading(false)
+        return response.data
+      }
+    )        
     // console.log("response.data")
-    // console.log(response.data)
-    setResponse(response.data)
+    // console.log(response)
+    setResponse(response)
 
     /*
     NECESSIDADE DE LINKAR O PRODUTO COM O PEDIDO
@@ -74,6 +77,7 @@ export default function SaleDetails() {
       <Menu />
       <div className="container">
           <h2>Detalhes da venda</h2>
+          {loading ? <img width="40px" style={{margin: '50px auto', display: 'flex'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}
           {response.map(
             (pedido) => (
             <>
