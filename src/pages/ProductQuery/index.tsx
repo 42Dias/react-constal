@@ -215,34 +215,45 @@ function ProductQuery() {
           {
             produtos.map((produto) => (
               <>
-              <S.CardDatailsContent>
-                <S.ContentDetails>
-                  <Link
-                    className="fixImage"
-                   to={`/produto/${produto.id}`}
-                  >
-                    <img src={produto.imagemUrl} alt="" />
-                  </Link>
-                  <span className="prodNome" >{produto.nome}</span>
-                  <p>{produto.quantidade}</p>
-                  <p>R$ {produto.preco}</p>
-                </S.ContentDetails>
-                <S.BtnContent>
-                  <Link to="/consultar-produtos" onClick={() => aprovarProd(produto)}>Aprovar</Link>
-                  <Link to="/consultar-produtos" onClick={() => recusarProd(produto)}>Recusar</Link>
-                </S.BtnContent>
-              </S.CardDatailsContent>
-                <ContentFormNew 
-                style={{backgroundColor: 'white', padding: 15}}>
-                  {/* nome da empresa: {produto.empresa.nome} */}
-                  <label style={{color: 'black'}}  htmlFor="">Se recusar, envie um Email para empresa</label>
-                  <textarea
-                    required
-                    placeholder="Resposta"
-                    onChange={(text) => setEmailContent(text.target.value)}
-                  // value="5165161"
-                  />
-                </ContentFormNew>
+              <form 
+              onSubmit={(e: any) => {
+                e.preventDefault()
+                e.target.reset()
+                recusarProd(produto)
+
+              }}
+              >
+                <S.CardDatailsContent>
+                  <S.ContentDetails>
+                    <Link
+                      className="fixImage"
+                     to={`/produto/${produto.id}`}
+                    >
+                      <img src={produto.imagemUrl} alt="" />
+                    </Link>
+                    <span className="prodNome" >{produto.nome}</span>
+                    <p>{produto.quantidade}</p>
+                    <p>R$ {produto.preco}</p>
+                  </S.ContentDetails>
+                  <S.BtnContent>
+                    <button type="button" onClick={() => aprovarProd(produto)}>Aprovar</button>
+                    <button type="submit" 
+                    // onClick={() => recusarProd(produto)}
+                    >Recusar</button>
+                  </S.BtnContent>
+                </S.CardDatailsContent>
+                  <ContentFormNew
+                  style={{backgroundColor: 'white', padding: 15}}>
+                    {/* nome da empresa: {produto.empresa.nome} */}
+                    <label style={{color: 'black'}}  htmlFor="">Se recusar, envie um Email para empresa</label>
+                    <textarea
+                      required
+                      placeholder="Resposta"
+                      onChange={(text) => setEmailContent(text.target.value)}
+                    // value="5165161"
+                    />
+                  </ContentFormNew>
+              </form>
 
               </>
             ))
