@@ -94,9 +94,9 @@ export default function ApproveCategorias() {
       <Menu />
       <div className="container">
         <CardDatails>
-          <h2>Aprovar Categorias {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}</h2>
+          <h2>Aprovar Categorias</h2>
           
-          {
+          {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : (
             categoria.length === 0 ? (
               <p>Todas as categorias ja foram aprovadas</p>
             ) : (
@@ -117,7 +117,7 @@ export default function ApproveCategorias() {
               </CardDatailsContent>
             ))
             )
-          }
+          )}
         </CardDatails>
       </div>
     </>
