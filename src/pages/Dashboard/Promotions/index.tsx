@@ -61,7 +61,7 @@ export default function Promotions() {
 
   function addNewId(newId: string, index: number){
     toast.info("produto adicionado a lista!")
-    console.log(newId)
+    // console.log(newId)
     setIds((prevValues: any[]) => {
       return [...new Set([...prevValues, newId])]	
        })
@@ -88,10 +88,10 @@ export default function Promotions() {
             else{
               toast.error('Algo deu errado com o servidor... tente mais tarde :(')
             }
-            console.log(response)
+            // console.log(response)
           }
           )
-          console.log(await response)
+          // console.log(await response)
         }
         )
   }
@@ -111,7 +111,7 @@ export default function Promotions() {
 
     async function loadProducts() {
       const response = await api.get("produto");
-      console.log(response.data);
+      // console.log(response.data);
       setProducts(response.data.rows);
     }
     loadProducts();
@@ -120,7 +120,7 @@ export default function Promotions() {
   async function addNewPromotion(e: any) {
     setLoading(true)
     e.preventDefault()
-    console.log(productCounter[0].empresaId)
+    // console.log(productCounter[0].empresaId)
     const data = {
       data: {
         "imagemPromocional": imagemPromocional,
@@ -130,14 +130,14 @@ export default function Promotions() {
         "empresaId": productCounter[0].empresaId
       }
     }
-    console.log(data)
+    // console.log(data)
     await makeRequisitionToChange(data)
 
   }
 
-  console.log(uuid.v4())
+  // console.log(uuid.v4())
 
-  console.log(ids)
+  // console.log(ids)
 
   
   return (
