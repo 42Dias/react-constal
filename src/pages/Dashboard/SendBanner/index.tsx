@@ -56,12 +56,12 @@ export default function SendBanner() {
       
     await api.post("banner", body).then(
     (response) => {
-      console.log(response)
+      // console.log(response)
       if(response.status == 200){
         toast.info("Novo banner adicionado com sucesso!")
 
         setImagens((prevValues: any[]) => {
-          //console.log(prevValues)
+          //// console.log(prevValues)
           return [...new Set([...prevValues, response.data])]
         })
         loadImagens()
@@ -84,7 +84,7 @@ export default function SendBanner() {
 
     formData.append('image', imagemNova);
     
-    console.log(...formData)
+    // console.log(...formData)
 
     const headers = {
       'headers': {
@@ -94,12 +94,12 @@ export default function SendBanner() {
       }
     }
 
-    await axios.post(`${ip}:8080/upload-image`, formData, headers)
+    await axios.post(`${ip}:3000/upload-image`, formData, headers)
     .then((response) => {
-      console.log(response)
+      // console.log(response)
       if(response.status == 200){
         const pathHelper = response.data.mensagem
-        console.log(ip+pathHelper)
+        // console.log(ip+pathHelper)
         setImagemNova(ip+pathHelper)
         toast.info("Imagem Válida!")
       }
@@ -109,7 +109,7 @@ export default function SendBanner() {
 
     }).catch((err) => {
       if(err.response){
-        console.log(err)
+        // console.log(err)
         toast.error("Erro: Tente mais tarde :(")
 
       }
@@ -125,8 +125,8 @@ export default function SendBanner() {
 
   function updateImagemStatus(imagemStatus: any, imagem: any){
     toast.info("Carregando...")
-    console.log(imagemStatus)
-    console.log(imagem)
+    // console.log(imagemStatus)
+    // console.log(imagem)
     if(imagemStatus == 'inativo'){
       imagemStatus = 'ativo'
     }
@@ -147,7 +147,7 @@ export default function SendBanner() {
 
     api.put(`banner/${imagem.id}`, body).then(
       (response) => {
-        console.log(response)
+        // console.log(response)
         if(response.status == 200){
           toast.info("Atualização do banner feita com sucesso!")
           loadImagens()
@@ -171,7 +171,7 @@ export default function SendBanner() {
     api.delete(`bannerDeleteOne/${id}`)
     .then(
       (response) => {
-        console.log(response)
+        // console.log(response)
         if(response.status == 200){
           toast.info("Banner apagado com sucesso!")
           loadImagens()
@@ -190,7 +190,7 @@ export default function SendBanner() {
   function loadPromocoes(){
     axios.get(`${ip}:8157/api/produto-imagens-promocionais/`).then(
       (response) => {
-        console.log(response.data)
+        // console.log(response.data)
         setPromocoes(response.data)
       }
     )
@@ -202,17 +202,17 @@ export default function SendBanner() {
 
       //// req.product.createdById, req.body.product, req.body.emailContent
 
-    console.log("produto.promocaoId")
-    console.log(produto.promocaoId)
-    console.log("emailContent")
-    console.log(emailContent)
+    // console.log("produto.promocaoId")
+    // console.log(produto.promocaoId)
+    // console.log("emailContent")
+    // console.log(emailContent)
 
     const data = {
       empresaId : produto.empresaId,
       product : produto,
       emailContent : emailContent
     }
-    console.log(data)
+    // console.log(data)
 
     api.post(`/produto/enviarEmailRecusadoImagemProduto`, data).then(
       (response) => {
@@ -240,7 +240,7 @@ export default function SendBanner() {
 
   async function loadImagens(){
     const imagensResponse = await api.get("banner")
-    console.log(imagensResponse.data.rows)
+    // console.log(imagensResponse.data.rows)
     setImagens(imagensResponse.data.rows)
     setImagensDisplayed(imagensResponse.data.rows)
     filterImagens(imagensResponse.data.rows)
@@ -274,19 +274,19 @@ export default function SendBanner() {
     }
   }
 
-  console.log(imagensAtiva)
-  console.log(imagensInativa)
+  // console.log(imagensAtiva)
+  // console.log(imagensInativa)
 
   function filterImagens(imagens: any){
     imagens.filter(
       (imagem: any)  => {
         
-        console.log("imagem")
-        console.log(imagem)
+        // console.log("imagem")
+        // console.log(imagem)
 
         if (imagem.status == "inativo") {
           setImagensInativa((prevValues: any[]) => {
-            //console.log(prevValues)
+            //// console.log(prevValues)
             return [...new Set([...prevValues, imagem])]
           })
         }
@@ -296,13 +296,13 @@ export default function SendBanner() {
     imagens.filter(
       (imagem:any)  => {
         
-        console.log("imagem")
-        console.log(imagem)
+        // console.log("imagem")
+        // console.log(imagem)
 
         if (imagem.status == "ativo") {
 
           setImagensAtiva((prevValues: any[]) => {
-            //console.log(prevValues)
+            //// console.log(prevValues)
             return [...new Set([...prevValues, imagem])]
           })
         }
@@ -335,10 +335,10 @@ export default function SendBanner() {
           required
           name="image"
           onChange={e => {
-          console.log(e)
+          // console.log(e)
 
           //@ts-ignore
-          console.log(e.target.files[0].name)
+          // console.log(e.target.files[0].name)
           //@ts-ignore
           setName(e.target.files[0].name)
           //@ts-ignore
@@ -373,7 +373,7 @@ export default function SendBanner() {
             onChange={
               (text) => {
                   
-              console.log(text.target.value)
+              // console.log(text.target.value)
               if(!text){
               }
               updateDisplayedStatus(text.target.value)
@@ -437,7 +437,7 @@ export default function SendBanner() {
               }
               > 
               {
-                console.log(imagem.status)
+                // console.log(imagem.status)
               }
                 <span>
                   Deixar
@@ -461,7 +461,7 @@ export default function SendBanner() {
             (imagem) => (
               <form
               onSubmit={(e) => {
-                console.log(e.preventDefault())
+                // console.log(e.preventDefault())
                 deleteProduct(imagem, emailContent)
               }}>
             <CardDatailsContent>
