@@ -203,7 +203,6 @@ export default function Accounts() {
       <S.Container>
         <S.Content>
           <h1>Contas</h1>
-
           <fieldset>
           <label htmlFor="start">Inicío</label>
           <input 
@@ -250,25 +249,30 @@ export default function Accounts() {
           <h3>
           {displayedFaturas.length == 0  ? (<h3>Você não tem nenhum valor a receber :(</h3>): false }
           </h3>
+          {
+            faturas.length != 0? (
+              <S.FlexBtnsProd
+                style={{
+                  margin: '0 auto'
+                }}
+                >
+                  <S.Btn
+                  className="btnReset"
+                  onClick={() => unsetFilter()}
+                  >
+                      Desfiltrar
+                  </S.Btn>
+                  <S.Btn
+                  onClick={() => setFilter()}
+                  >
+                      Filtrar
+                  </S.Btn>
 
-          <S.FlexBtnsProd
-            style={{
-              margin: '0 auto'
-            }}
-            >
-              <S.Btn
-              className="btnReset"
-              onClick={() => unsetFilter()}
-              >
-                  Desfiltrar
-              </S.Btn>
-              <S.Btn
-              onClick={() => setFilter()}
-              >
-                  Filtrar
-              </S.Btn>
+                </S.FlexBtnsProd>
 
-            </S.FlexBtnsProd>
+            ):false
+          }
+
 
           {
           displayedFaturas.map(
