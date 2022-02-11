@@ -191,20 +191,25 @@ export default function Vendas() {
         <TitleVendas>Vendas</TitleVendas>
         {
           role == 'admin' ? (
-        <SelectInput>
-          <label htmlFor="">Selecionar Empresa: </label>
-          <select
-            onChange={(text) => setEmpresa(text.target.value)} onClick={() => empresaT(empresa)}
-          >
-            <option value={"Selecione"} key={"--Selecione--"} >Selecione</option>
-            {empresas.map(
-              (empresa) => (
-                <option value={empresa.empresaId} key={empresa.empresaId} >{empresa.razaoSocial || empresa.fullName}</option>
-              )
-            )}
-          </select>
-          {loading ? <img width="40px" height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}
-        </SelectInput>
+            
+        loading ? <img width="40px" height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : (
+
+        <div>
+          <SelectInput>
+            <label htmlFor="">Selecionar Empresa: </label>
+            <select
+              onChange={(text) => setEmpresa(text.target.value)} onClick={() => empresaT(empresa)}
+            >
+              <option value={"Selecione"} key={"--Selecione--"} >Selecione</option>
+              {empresas.map(
+                (empresa) => (
+                  <option value={empresa.empresaId} key={empresa.empresaId} >{empresa.razaoSocial || empresa.fullName}</option>
+                )
+              )}
+            </select>
+          </SelectInput>
+        </div>
+        )
           ) : (
             false
           )
