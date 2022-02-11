@@ -135,14 +135,20 @@ export const ContentDetails = styled.div`
   span {
     font-size: 18px;
     font-weight: bold;
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden
   }
 
   img {
     object-fit: cover; 
-    padding: 0 40px;
+    margin: 0 40px;
     border-radius: 5px;
-    width: 200px;
-    height: 120px;
+    width: 190px;
+    height: 170px;
+    border-radius: 5px;
+
     @media (max-width: 768px) {
       padding: 0 0;
       width: 155px;
