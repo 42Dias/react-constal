@@ -91,8 +91,8 @@ export default function Companies() {
       <Menu />
       <div className="container">
         <CardDatails>
-          <h2>Empresas {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}</h2>
-
+          <h2>Empresas</h2>
+          {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : (
           <SelectInput>
             <select
               value={filtro}
@@ -110,6 +110,7 @@ export default function Companies() {
               </option>
             </select>
           </SelectInput>
+          )}
           
           {empresas.map((empresa) => (
             <CardDatailsContent>
