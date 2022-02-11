@@ -65,9 +65,9 @@ export default function Histoty() {
       window.location.replace(`${ip}/#/erro`);
     }
     async function loadHistory() {
-      console.log("requisição do pedido feita")
+      // console.log("requisição do pedido feita")
       const res = await api.get('pedidoWithProduct')
-      console.log(res.data)
+      // console.log(res.data)
       setProducts(res.data) 
     }
     loadHistory()
