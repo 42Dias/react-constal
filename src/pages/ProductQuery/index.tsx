@@ -243,7 +243,13 @@ function ProductQuery() {
                   </S.BtnContent>
                 </S.CardDatailsContent>
                   <ContentFormNew
-                  style={{backgroundColor: 'white', padding: 15}}>
+                  style={{
+                   backgroundColor: 'white',
+                   padding: 15,
+                   transform: 'translateY(-5px)',
+                   borderBottomRightRadius: '5px',
+                   borderBottomLeftRadius:  '5px',
+                  }}>
                     {/* nome da empresa: {produto.empresa.nome} */}
                     <label style={{color: 'black'}}  htmlFor="">Se recusar, envie um Email para empresa</label>
                     <textarea
