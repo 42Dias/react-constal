@@ -26,6 +26,10 @@ export const CardDatas = styled.div`
   h3 { 
     font-size: 30px;
     padding: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden
   }
 
   span { 
@@ -39,6 +43,10 @@ export const CardDatas = styled.div`
     font-size: 22px;
     color: rgba(0, 0, 0, 0.65);
     padding: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden
   }
   
   margin-left: 20px;
@@ -172,7 +180,8 @@ export const CardDatailsContent = styled.div`
 
 export const ContentDetails = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  flex-direction: column;
 
   span {
     font-size: 18px;
@@ -182,6 +191,7 @@ export const ContentDetails = styled.div`
       font-size: 14px;
     }
   }
+
 
   img {
     padding: 0 40px;
@@ -198,6 +208,11 @@ export const ContentDetails = styled.div`
   small {
     color: #757575;
     font-size: 16px;
+    margin-left: 12px;
+    max-width: 250px;   
+    &:first-child {
+      font-weight: bold;
+    }
   }
 `;
 
