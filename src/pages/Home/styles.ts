@@ -168,6 +168,11 @@ export const SwiperStyles = styled.div`
   strong {
     font-size: 18px;
     padding: 15px 15px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 71px;
   }
 
   p { 
