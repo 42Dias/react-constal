@@ -27,12 +27,12 @@ export default function Products() {
   const [newurl = [], setNewUrl] = useState<any>('');
 
   
-  console.log(url)
+  // console.log(url)
   
   useEffect(
     ()=>{
       setNewUrl(window.location.hash)
-      console.log("mudou url!")
+      // console.log("mudou url!")
     },[url != newurl]
     )
     
@@ -81,7 +81,7 @@ export default function Products() {
                     <p>{product.descricao}</p>
                     <div className="btn-group-add">
                       <span>
-                        R$<b>{product.preco}</b>
+                        <b>{formatPrice(product.preco)}</b>
                       </span>
                       {
                         role == 'empresa' || role == 'admin' ? false : 
