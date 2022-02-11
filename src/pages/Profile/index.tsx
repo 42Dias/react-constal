@@ -82,11 +82,11 @@ export default function Profile() {
     });
     // console.log(response);
     // console.log(response.tenants[0].roles[0]);
-    let setRole = response.tenants[0].roles
-    const roleHelper = JSON.parse(setRole)
-    localStorage.setItem("roles", JSON.stringify(roleHelper[0])); //saves client's data into localStorage:
+    // let setRole = response.tenants[0].roles
+    // const roleHelper = JSON.parse(setRole)
+    // localStorage.setItem("roles", JSON.stringify(roleHelper[0])); //saves client's data into localStorage:
     // console.log(roleHelper[0])
-    // localStorage.setItem("roles", JSON.stringify(response.tenants[0].roles[0])); //saves client's data into localStorage:
+    localStorage.setItem("roles", JSON.stringify(response.tenants[0].roles[0])); //saves client's data into localStorage:
 
     //response.tenants[0].tenant.id);
     localStorage.setItem(
@@ -599,7 +599,8 @@ export default function Profile() {
                     
                     <ContentFormNew className='form-control-group'>
                       <label>Cep*</label>
-                      <Field
+                      <InputMask
+                        mask="99999-999" 
                         required
                         value={cep}
                         name='cep' type='text'
