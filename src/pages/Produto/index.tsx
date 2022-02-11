@@ -71,12 +71,12 @@ export default function Produto() {
 
 
   function setFavoritos(favoritos: string[], produtoId: string){    
-      console.log("favoritos")
-      console.log(favoritos)
-      console.log("produtoId")
-      console.log(produtoId)    
+      // // console.log("favoritos")
+      // // console.log(favoritos)
+      // // console.log("produtoId")
+      // // console.log(produtoId)    
+      // // console.log(favoritos)
       favoritos.push(produtoId)
-      console.log(favoritos)
       localStorage.setItem("favorito", JSON.stringify(favoritos))
       toast.info("Adicionado aos favoritos!")
   }
@@ -95,8 +95,8 @@ export default function Produto() {
     if (counter < 2 || counter == 0) {
       setCounter(1);
       error();
-      console.log("counter dentro que passou")
-      console.log(counter)
+      // // console.log("counter dentro que passou")
+      // // console.log(counter)
     } else {
       setCounter(counter - 1);
     }
@@ -182,7 +182,7 @@ export default function Produto() {
       const response = await axios.get(`${ip}:8157/api/find-produto-by-id/${productId}`)
       // const response = await api.get(selectedProduct)
       .then((response) => {
-        console.log(response.data)
+        // console.log(response.data)
         return response.data;
       });
 
@@ -209,8 +209,8 @@ export default function Produto() {
         setCategoria(response.categoria.nome);
       }
       setProdutoEmpresaId(response.empresaId)
-      console.log("response.empresaId")
-      console.log(response.empresaId)
+      // // console.log("response.empresaId")
+      // // console.log(response.empresaId)
 
 
     }
@@ -243,13 +243,13 @@ export default function Produto() {
 
         const response = await api.post('comentario', data)
 
-        // console.log(response.data)
+        // // console.log(response.data)
         
         // let nwe = response.data
 
-        // console.log("-------------------------------")
-        // console.log("nwe")
-        // console.log(nwe)
+        // // console.log("-------------------------------")
+        // // console.log("nwe")
+        // // console.log(nwe)
         
         loadComments()
         setComentario('')
@@ -325,18 +325,12 @@ export default function Produto() {
       if(role == 'empresa'){
 
         let userId = localStorage.getItem('id')?.replace(/"/g, "");
-        console.log(userId)
+        // // console.log(userId)
 
         loadEmpresaIdUser(userId)
       }
     }, []
     )
-
-
-  console.log("userEmpresaId ==  empresaId")
-  console.log(userEmpresaId)
-  console.log(empresaId)
-  console.log(userEmpresaId ==  produtoEmpresaId)
     
   return (
     <>
