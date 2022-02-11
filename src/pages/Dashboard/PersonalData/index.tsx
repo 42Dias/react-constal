@@ -101,7 +101,7 @@ export default function PersonalData() {
     useEffect(
       
       () => {
-        console.log(role +" "+ status)
+        // console.log(role +" "+ status)
         if(!role){
           //window.location.reload()
         }
@@ -118,7 +118,7 @@ export default function PersonalData() {
         async function loadData(){          
             const responseRes = await api.get('empresa-perfil')
             const response = responseRes.data
-            console.log(responseRes)
+            // console.log(responseRes)
 
             setNome(response.nome)
             setMarca(response.marca)
@@ -184,11 +184,11 @@ export default function PersonalData() {
         status : "pendente",
       }
     }
-    console.log(data)
+    // console.log(data)
 
     const response = await api.post('empresa-perfil', data).then(
       (response) => {
-        console.log(response)
+        // console.log(response)
         if(response.status == 200 && !response.data.errors){
           toast.info('Empresa Criada com sucessso! :)')
           closeModal()
@@ -197,12 +197,12 @@ export default function PersonalData() {
 
         else{
           toast.error('Algo deu errado :(')
-          console.log(response.data.errors)
+          // console.log(response.data.errors)
 
           Object.keys(response.data.errors).map(function(key, index) {
-            // console.log("response.data.errors[key]");
-            // console.log(key)
-            console.log(...response.data.errors[key][0]);
+            // // console.log("response.data.errors[key]");
+            // // console.log(key)
+            // console.log(...response.data.errors[key][0]);
             toast.error(`${key} ${response.data.errors[key][0]}`)
           });
           setLoading(false)
@@ -230,7 +230,7 @@ export default function PersonalData() {
       update(response.data)
       return response.data;
     });
-    console.log(data)
+    // console.log(data)
     
     async function update(data:any){
       if(data){
@@ -270,11 +270,11 @@ export default function PersonalData() {
         bairro : bairro,
       }
     }
-    console.log("heaha")
+    // console.log("heaha")
     const response = await api.post('empresa-perfil', data)
     .then(
       (response) => {
-        console.log(response)
+        // console.log(response)
         if(!response.data.errors){
           toast.info('Empresa Criada com sucessso! :)')
           closeModal()
@@ -283,7 +283,7 @@ export default function PersonalData() {
         }
         else{
           toast.info('Algo deu errado :(')
-          console.log(response.data.errors) 
+          // console.log(response.data.errors) 
           setLoading(false)
 
         }
@@ -291,7 +291,7 @@ export default function PersonalData() {
     )
     .catch(
       (response) => {
-        console.log(response)
+        // console.log(response)
         if(response.data){
           toast.info(response.data.status)
         }
@@ -466,9 +466,9 @@ switch (accountType) {
   }
   
   function onSubmitInput (values: any, actions: any) {
-    // console.log(data)
+    // // console.log(data)
     // Cadastro(data)
-    console.log('SUBMIT', values)
+    // console.log('SUBMIT', values)
   }
 
   function onBlurCep (ev: any, setFieldValue: any) {
@@ -725,14 +725,14 @@ switch (accountType) {
                     onChange={
                       (e: any) => {
                         let telefone = e.target.value
-                        console.log(
-                          telefone.replace(/\D/g, '')
-                          )
+                        // console.log(
+                          // telefone.replace(/\D/g, '')
+                          // )
                         setTelefone(
                           telefone.replace(/[\(\)\.\s-]+/g,'')
                           )
                           setMaskedTelefone(e.target.value)
-                          console.log(maskedTelefone)
+                          // console.log(maskedTelefone)
                       }
                     }
                     />
@@ -755,9 +755,9 @@ switch (accountType) {
                     onChange={
                       (e: any) => {
                         let celular = e.target.value
-                        console.log(
-                          celular.replace(/\D/g, '')
-                          )
+                        // console.log(
+                          // celular.replace(/\D/g, '')
+                          // )
                         setCelular(
                           celular.replace(/[\(\)\.\s-]+/g,'')
                           )
@@ -779,14 +779,14 @@ switch (accountType) {
                       onChange={
                         (e: any) => {
                           let cnpj = e.target.value
-                          console.log(
+                          /* console.log(
                             cnpj.replace(/\D/g, '')
-                            )
+                            )*/
                           setCnpj(
                             cnpj.replace(/\D/g, '')
                           )
                           setMaskedCNPJ(e.target.value)
-                          console.log(maskedCNPJ)
+                          // console.log(maskedCNPJ)
                         }
                       }
                       />
@@ -826,7 +826,7 @@ switch (accountType) {
                   required
                    onChange={(text) => {
                     setTipoDeConta(text.target.value);
-                    console.log(text.target.value)
+                    // console.log(text.target.value)
                     }}>
                   <option value='Poupança'>Conta Poupança</option>
                   <option value='Corrente'>Conta Corrente</option>
@@ -851,9 +851,9 @@ switch (accountType) {
 
                     onChange={(text) => {
                       setNumeroCartao(text.target.value)
-                      console.log("numero do cartão:")
-                      console.log(text.target.value)
-                      console.log(numeroCartao)
+                      // console.log("numero do cartão:")
+                      // console.log(text.target.value)
+                      // console.log(numeroCartao)
                     }}
                     />
                 </ContentFormNew>
