@@ -24,8 +24,8 @@ export default function ApproveEmpresas() {
         return response.data;
       })
     setEmpresas(response.rows)
-    console.log("Empresas");
-    console.log(response.rows);
+    // console.log("Empresas");
+    // console.log(response.rows);
   }
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export default function ApproveEmpresas() {
       id: empresa.id,
       data: empresa,
     }).then((response) => {
-      console.log(response)
+      // console.log(response)
       if (response.statusText == "OK") {
         toast.info('Empresa aprovado com sucesso! :)');
         //window.location.reload();
@@ -66,12 +66,12 @@ export default function ApproveEmpresas() {
           email: empresa.email,
         }).then((response) => {
           if(response.status == 200){
-            console.log(response)
+            // console.log(response)
             toast.info('Email enviado com sucesso! :)')
             loadEmpresa();
           }
           else{
-            console.log(response)
+            // console.log(response)
             toast.info('Email não foi enviado com sucesso! :(')
           }
         })
@@ -80,7 +80,7 @@ export default function ApproveEmpresas() {
       }
     }).catch((error)=>{
       toast.error('Ops, não foi possivel aprovar a empresa! :(');
-      console.log(error)
+      // console.log(error)
     })
   }
   function recusarEmpresa(empresa: Empresa) {
@@ -91,7 +91,7 @@ export default function ApproveEmpresas() {
       id: empresa.id,
       data: empresa,
     }).then((response) => {
-      console.log(response)
+      // console.log(response)
       if (response.statusText == "OK") {
         toast.info('Empresa recusado com sucesso! :)');
         loadEmpresa();
@@ -102,7 +102,7 @@ export default function ApproveEmpresas() {
       }
     }).catch((error)=>{
       toast.error('Ops, não foi possivel recusado a empresa! :(');
-      console.log(error)
+      // console.log(error)
     })
   }
   return (
