@@ -17,6 +17,10 @@ export const ProdContainerSingle = styled.div`
   background: white;
   margin: 20px auto;
   border-radius: 10px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-direction: column;
 
   @media (max-width: 768px) {
     width: 100%;
@@ -37,11 +41,22 @@ export const ProdContainerSingle = styled.div`
 
   h5 {
     font-size: 14px;
+    overflow-wrap: anywhere;
     padding: 3px 7px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
     @media (max-width: 768px) {
       font-size: 16px;
     }
   }
+  
+  .prodNome{
+    overflow-wrap: anywhere;
+  }
+
 
   p {
     color: #CBCBCB;
@@ -49,6 +64,7 @@ export const ProdContainerSingle = styled.div`
     padding: 6px 7px;
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    max-height: 42px;
     -webkit-box-orient: vertical;
     overflow: hidden;
     @media (max-width: 768px) {
@@ -61,6 +77,7 @@ export const ProdContainerSingle = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
     @media (max-width: 768px) {
       span {
         font-size: 16px;
