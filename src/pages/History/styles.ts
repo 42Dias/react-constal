@@ -76,6 +76,7 @@ export const CardDatailsContent = styled.div`
     background: black;
     color: white;
     border-radius: 5px;
+    cursor: pointer;
   }
   a:nth-child(1) {
     display: flex;
@@ -98,37 +99,48 @@ export const CardDatailsContent = styled.div`
 `;
 
 export const ContentDetails = styled.div`
-  display: flex;
-  align-items: center;
-  img{
-    width: 300px;
-  };
+display: flex;
+align-items: center;
+
+@media (max-width: 768px) {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+span {
+  font-size: 18px;
+  font-weight: bold;
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden
+}
+
+img {
+  object-fit: cover; 
+  margin: 0 40px;
+  border-radius: 5px;
+  width: 190px;
+  height: 170px;
+  border-radius: 5px;
+
   @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: flex-start;
+    padding: 0 0;
+    width: 155px;
   }
-  span {
-    font-size: 18px;
-    font-weight: bold;
+}
+
+p {
+  margin-left: 12px;
+  @media (max-width: 768px) {
+    margin-left: 0;
   }
-  img {
-    padding: 0 40px;
-    @media (max-width: 768px) {
-      padding: 0 0;
-      width: 155px;
-    }
-  }
-  p {
-    margin-left: 12px;
-    @media (max-width: 768px) {
-      margin-left: 0;
-    }
-  }
-  
-  small {
-    color: #757575;
-    font-size: 16px;
-  }
+}
+
+small {
+  color: #757575;
+  font-size: 16px;
+}
 `;
 
 export const ModalContainerVendedor = styled.div`
