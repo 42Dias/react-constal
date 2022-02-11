@@ -33,8 +33,8 @@ export default function Questions() {
       async function getEmpresaId() {
         const empresaIdResponse =  api.get(`empresaUser/${id}`).then(
           (empresaIdResponse) => {
-            console.log("empresaIdResponse")
-            console.log(empresaIdResponse.data)
+            // console.log("empresaIdResponse")
+            // console.log(empresaIdResponse.data)
             const response  = api.get(`findByEmpresa/${empresaIdResponse.data.id}`).then(
               // const response  = api.get(`findByEmpresa/3b386e29-c490-4231-b3f6-bb9b407fc8e9`).then(
               (response) => {
@@ -50,7 +50,7 @@ export default function Questions() {
     else{
       const response  = api.get(`comentario`).then(
         (response) => {
-          console.log(response)
+          // console.log(response)
           setComentarios(response.data.record)
         }
       )
@@ -65,7 +65,7 @@ export default function Questions() {
     }
     toast.info("Carregando...")
 
-    console.log(comment)
+    // console.log(comment)
 
     comment.isDenunciado = 1
     const response = await api.put(`comentario/${comment.id}`, comment)
@@ -76,7 +76,7 @@ export default function Questions() {
       id: comment.fornecedorEmpresaId,
       emailContent: emailContent
     }).then(
-      (res) => console.log(res) 
+      (res) => toast.info("Email enviado com sucesso!") 
     )
 
     if (response.status == 200){
@@ -88,7 +88,7 @@ export default function Questions() {
     }
     else{
       toast.error("Algo deu errado :(")
-      console.log(response.status)
+      // console.log(response.status)
     }
 
   }
@@ -97,7 +97,7 @@ export default function Questions() {
   async function undenunciarComentario(comment: any){
     toast.info("Carregando...")
 
-    console.log(comment)
+    // console.log(comment)
 
     comment.isDenunciado = 0
     const response = await api.put(`comentario/${comment.id}`, comment)
@@ -109,7 +109,7 @@ export default function Questions() {
     }
     else{
       toast.error("Algo deu errado :(")
-      console.log(response.status)
+      // console.log(response.status)
     }
 
   }
@@ -160,7 +160,7 @@ export default function Questions() {
     }
     else{
       toast.error("Algo deu errado :(")
-      console.log(response.status)
+      // console.log(response.status)
     }
   }
 
@@ -260,7 +260,7 @@ export default function Questions() {
                 {
                   comentario.isRespondido? (
                     <CardDatailsContentSecondary>
-                      {comentario.resposta}
+                      Resposta: {comentario.resposta}
                     </CardDatailsContentSecondary>
                   ): (
                     <div></div>
@@ -311,7 +311,7 @@ export default function Questions() {
 
                   <div className="buttonsNew">
                     <button type="button" onClick={
-                      () => console.log('ok')
+                      () => closeModal()
                     }>
                       Cancelar
                     </button>
