@@ -141,7 +141,7 @@ export default function NewProd() {
         status: "pendente",
       },
     };
-    console.log(data)
+    // console.log(data)
 
     return data;
   }
@@ -151,7 +151,7 @@ export default function NewProd() {
     setLoading(true)
     const data = setValues();
     const response: any = await api.post("produto", data).then((response) => {
-      console.log(response)
+      // console.log(response)
       if (response.status == 200) {
         messageApprove();
         toast.info(
@@ -161,20 +161,20 @@ export default function NewProd() {
         setProducts(prevProducts => {
           return [...new Set([...prevProducts, response.data])]
         })
-        console.log(response)
+        // console.log(response)
         //window.location.reload();
         setLoading(false)
       } else {
         toast.error('Algo deu errado, tente mais tarde :(');
-        console.log(response)
+        // console.log(response)
       }
     }).catch(error => {
       toast.error("Algo deu errado, tente mais tarde :(");
-      console.log(error)
+      // console.log(error)
       setLoading(false)
     });
 
-    console.log(response);
+    // console.log(response);
 
     /*if (response.status == 200) {
       messageApprove();
@@ -190,28 +190,28 @@ export default function NewProd() {
   }
 
   async function makeRequisitionToChange(data: any) {
-    console.log(categoria)
+    // console.log(categoria)
     setLoading(true)
 
     const response: any = api.put(`produto/${idProd}`, data)
     .then(
       async (response) => {
-    console.log(response);
+    // console.log(response);
     if ((response.status) == 200) {
       messageApprove();
       closeModal()
       return response.data
 
     } else if (response.status == 500) {
-      console.log(response)
+      // console.log(response)
       toast.error("Algo deu errado, tente mais tarde :(");
       setLoading(false)
     } else {
       toast.error("Algo deu errado, tente mais tarde :(");
-      console.log(response)
+      // console.log(response)
     }
     setLoading(false)
-    console.log(response)
+    // console.log(response)
 
     return response
       }
@@ -228,7 +228,7 @@ export default function NewProd() {
   async function changeProduct(e: any) {
     e.preventDefault()
     let data;
-    console.log(compararProd.nome != nome)
+    // console.log(compararProd.nome != nome)
     if(
       compararProd.nome != nome ||
       compararProd.descricao != descricao ||
@@ -275,11 +275,11 @@ export default function NewProd() {
       };
     }
 
-    console.log("data")
-    console.log(data);
+    // console.log("data")
+    // console.log(data);
     const prod = await makeRequisitionToChange(data);
     let updatedProducts = [...products]
-    console.log(prod)
+    // console.log(prod)
     updatedProducts[index].nome = prod.nome
     updatedProducts[index].codigo = prod.codigo
     updatedProducts[index].descricao = prod.descricao
@@ -338,14 +338,14 @@ export default function NewProd() {
     };
     const response = await api.post("categoria", data).then(
       (response) => {
-        console.log(response)
+        // console.log(response)
         response.status == 200 ? toast.info("A sua categoria será revisada e logo entrará no sistema :)"): toast.error("Algo deu errado, tente mais tarde :(")
         closeModal()
         setLoading(false)
       }
     )
-    console.log(response);
-    // console.log(newCategoria)
+    // console.log(response);
+    // // console.log(newCategoria)
   }
 
   async function deleteProduct(prodId: any, index: number) {
@@ -364,8 +364,8 @@ export default function NewProd() {
 
   function setProductOnClick(index: number ) {
     try {
-      console.log("products[index]")
-      console.log(products[index])
+      // console.log("products[index]")
+      // console.log(products[index])
       setId(products[index].id);
       setNome(products[index].nome);
       setCodigoDaEmpresa(products[index].codigo);
@@ -377,15 +377,15 @@ export default function NewProd() {
       setQuantidade(products[index].quantidadeNoEstoque);
       setFrete(products[index].frete);
       setCategoria(products[index].categoria.id);
-      console.log("ESSA É A CATEGORIA AHAHAHAHAHAHHAHAHAHAHAAHAHAHAH")
-      console.log(products[index].categoria.id)
-      console.log(products[index].categoria.nome)
+      // console.log("ESSA É A CATEGORIA AHAHAHAHAHAHHAHAHAHAHAAHAHAHAH")
+      // console.log(products[index].categoria.id)
+      // console.log(products[index].categoria.nome)
       setCategoriaId(products[index].categoriaId)
       setEmpresaId(products[index].empresaId);
       setStatusProd(products[index].status);
       setHandleChangePrice(formatPrice(products[index].preco))
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   }
 
@@ -403,7 +403,7 @@ export default function NewProd() {
       setLoading(false)
       const categoriasResponse = await api.get('categoria?filter%5Bstatus%5D=aprovado');
       const categoriasDoBack = categoriasResponse.data.rows;
-      console.log(categoriasDoBack);
+      // console.log(categoriasDoBack);
       setCategorias(categoriasDoBack);
       setLoading(false)
     }
@@ -416,8 +416,8 @@ export default function NewProd() {
         return response.data;
       });
     setEmpresas(response.rows);
-    console.log("Empresas");
-    console.log(response.rows);
+    // console.log("Empresas");
+    // console.log(response.rows);
   }
 
 
@@ -476,12 +476,12 @@ export default function NewProd() {
         .replace(/\*/g, ".")
         .replaceAll(" ", "")
 
-        console.log(parseFloat(newText))
+        // console.log(parseFloat(newText))
 
 
         //checa se a conversão é NaN, ocasionado quando se é passado um caracter que não seja numero
         if(Number.isNaN(parseFloat(newText))){
-          console.log(newText)
+          // console.log(newText)
           newText = 0.00 // transforma o numero para ser devolvido ao input
         }
 
@@ -606,7 +606,7 @@ export default function NewProd() {
                       className="btn-more"
                       onClick={() => {
                         setIndex(index);
-                        console.log(index);
+                        // console.log(index);
                         setCompararProd(products[index])
                         setProductToReq(product.id);
                         setShowModal1(true);
@@ -620,7 +620,7 @@ export default function NewProd() {
                       <img
                     onClick={() => {
                       setIndex(index);
-                      console.log(index);
+                      // console.log(index);
 
                       setProductToReq(product.id);
                       setShowModal3(true);
@@ -799,7 +799,7 @@ export default function NewProd() {
                   required 
                   onChange={(text) => {
                     setCategoria(text.target.value);
-                    console.log(text.target.value);
+                    // console.log(text.target.value);
                     setCategoriaId(text.target.value);
                     }
                     }>
@@ -809,7 +809,7 @@ export default function NewProd() {
                         //@ts-ignore
                         setCategoria(text.target.value);
                         //@ts-ignore
-                        console.log(text.target.value);
+                        // console.log(text.target.value);
                         //@ts-ignore
                         setCategoriaId(text.target.value);}
                       } 
@@ -905,7 +905,7 @@ export default function NewProd() {
                   required 
                   onChange={(text) => {
                     setCategoria(text.target.value);
-                    console.log(text.target.value);
+                    // console.log(text.target.value);
                     setCategoriaId(text.target.value);
                     }
                     }>
@@ -915,7 +915,7 @@ export default function NewProd() {
                         //@ts-ignore
                         setCategoria(text.target.value);
                         //@ts-ignore
-                        console.log(text.target.value);
+                        // console.log(text.target.value);
                         //@ts-ignore
                         setCategoriaId(text.target.value);}
                       } 
@@ -1106,7 +1106,7 @@ export default function NewProd() {
                     // ESTÁ MANDANDO COM ESPAÇO NO PRIMEIRO CARACTER
                     setHandleChangePrice(handlePriceOnMask(text.target.value))
                     setPrecoOferta(parseAFormatedNumber(handlePriceOnMask(text.target.value)))
-                    console.log(precoOferta)
+                    // console.log(precoOferta)
                   }} /> */}
                   <IntlCurrencyInput 
                   currency="BRL" 
@@ -1126,8 +1126,8 @@ export default function NewProd() {
                 // type="range" id="points" name="points" min="0" max="100"
                 placeholder="10%" 
                 onChange={(event: any) => {
-                  console.log("event.target.value")
-                  console.log(event.target.value)
+                  // console.log("event.target.value")
+                  // console.log(event.target.value)
                   if(event.target.value == ''){
                     event.target.value = 0
                   }
@@ -1139,7 +1139,7 @@ export default function NewProd() {
                       if(porcentagem < 100 && porcentagem >= 0 ){
                         // @ts-ignore
                         var newPreco = preco - (event.target.value / 100) * preco
-                        console.log(newPreco)
+                        // console.log(newPreco)
                         setPorcentagem(event.target.value)
                         setHandleChangePriceOferta(formatPrice(newPreco))
                         setPrecoOferta(newPreco)
@@ -1162,10 +1162,10 @@ export default function NewProd() {
                   type="date"
                   placeholder="01/03/2024"
                   onChange={event => {
-                    console.log(event.target.value)
+                    // console.log(event.target.value)
                     let now = new Date
                     let dataPassed = new Date(event.target.value)
-                    console.log(dataPassed)
+                    // console.log(dataPassed)
                     if(dataPassed > now){
                       toast.info("Data válida :)")
                     }
