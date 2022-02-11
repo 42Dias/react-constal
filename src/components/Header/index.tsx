@@ -80,7 +80,7 @@ const Header = (): JSX.Element => {
     Verificar se o token é valido, caso não descartar o token
 
     */
-    console.log("email e senha: " + email + " " + password);
+     // console.log("email e senha: " + email + " " + password);
 
     if (token) {
       handleClickLogin();
@@ -105,12 +105,12 @@ const Header = (): JSX.Element => {
   function handleLocalStorage(emailA: string, passwordB: string) {
     localStorage.setItem("email", JSON.stringify(emailA)); //saves client's data into localStorage:
     localStorage.setItem("password", JSON.stringify(passwordB)); //saves client's data into localStorage:
-    console.log();
+     // console.log();
   }
   function handleLocalStorageToken(token: string[]) {
     const setLocalStorage = (data: string[]) => {
       localStorage.setItem("token", JSON.stringify(data)); //saves client's data into localStorage:
-      console.log("OK!!!");
+       // console.log("OK!!!");
     };
     setLocalStorage(token);
     loadUser(token);
@@ -141,16 +141,16 @@ const Header = (): JSX.Element => {
       }
       return response.data;
     });
-    console.log(response);
-    console.log(response.tenants[0].roles[0]);
+    //  // console.log(response);
+    //  // console.log(response.tenants[0].roles[0]);
 
-    let setRole = response.tenants[0].roles
-    const roleHelper = JSON.parse(setRole)
-    console.log(roleHelper[0])
-    localStorage.setItem("roles", JSON.stringify(roleHelper[0])); //saves client's data into localStorage:
-    // localStorage.setItem("roles", JSON.stringify(response.tenants[0].roles[0])); //saves client's data into localStorage:
+    // let setRole = response.tenants[0].roles
+    // const roleHelper = JSON.parse(setRole)
+    //  // console.log(roleHelper[0])
+    // localStorage.setItem("roles", JSON.stringify(roleHelper[0])); //saves client's data into localStorage:
+    localStorage.setItem("roles", JSON.stringify(response.tenants[0].roles[0])); //saves client's data into localStorage:
 
-    console.log(response.tenants[0].tenant.id);
+     // console.log(response.tenants[0].tenant.id);
     localStorage.setItem(
       "tenantId",
       JSON.stringify(response.tenants[0].tenant.id)
@@ -222,8 +222,8 @@ const Header = (): JSX.Element => {
     loadUser(token);
       async function loadCart() {
         const allCart: any = await api.get(`carrinho/`)
-        console.log("allCart")
-        console.log(allCart.data.count)
+         // console.log("allCart")
+         // console.log(allCart.data.count)
         // return allCart.data.rows.lenght;
         setCartSize(allCart.data.count);
       }
@@ -284,7 +284,7 @@ const Header = (): JSX.Element => {
                     onClick={
                       () => {
                         window.location.hash = `#/produtos/${pesquisa}`
-                        console.log("click")
+                         // console.log("click")
                       }
                     }
                   >
