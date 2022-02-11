@@ -120,10 +120,12 @@ function handleAddProduct(id: string) {
               <CardDatailsContent>
               <ContentDetails>
                 <img src={product.imagemUrl} alt="" />
-                <span>{product.nome}</span>
-                <p>{
-                product.isOferta == true ? formatPrice(product.precoOferta) : formatPrice(product.preco)
-                }</p>
+                <div className="prodNome"><span>{product.nome}</span></div>
+                <div className="prodPreco">
+                  <p>{
+                  product.isOferta == true ? formatPrice(product.precoOferta) : formatPrice(product.preco)
+                  }</p>
+                </div>
               </ContentDetails>
               <div
               className="flex-btn"
