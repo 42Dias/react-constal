@@ -56,12 +56,12 @@ export default function SendTermo() {
       
     await api.post("termo", body).then(
     (response) => {
-      console.log(response)
+      // console.log(response)
       if(response.status == 200){
         toast.info("Novo termo adicionado com sucesso!")
 
         setTermo((prevValues: any[]) => {
-          //console.log(prevValues)
+          //// console.log(prevValues)
           return [...new Set([...prevValues, response.data])]
         })
         loadTermo()
@@ -84,7 +84,7 @@ export default function SendTermo() {
 
     formData.append('image', termoNova);
     
-    console.log(...formData)
+    // console.log(...formData)
 
     const headers = {
       'headers': {
@@ -97,10 +97,10 @@ export default function SendTermo() {
     // await axios.post(`${ip}:3028/upload-image`, formData, headers)
     await axios.post(`${ip}:3000/upload-image`, formData, headers)
     .then((response) => {
-      console.log(response)
+      // console.log(response)
       if(response.status == 200){
         const pathHelper = response.data.mensagem
-        console.log(ip+pathHelper)
+        // console.log(ip+pathHelper)
         settermoNova(ip+pathHelper)
         toast.info("Termo Válido!")
       }
@@ -110,7 +110,7 @@ export default function SendTermo() {
 
     }).catch((err) => {
       if(err.response){
-        console.log(err)
+        // console.log(err)
         toast.error("Erro: Tente mais tarde :(")
 
       }
@@ -126,9 +126,9 @@ export default function SendTermo() {
 
   function updatetermoStatus(termoStatus: any, termo: any){
     toast.info("Carregando...")
-    console.log(termoStatus)
-    console.log(termo)
-    console.log(termoAtiva.length)
+    // console.log(termoStatus)
+    // console.log(termo)
+    // console.log(termoAtiva.length)
 
     if(termoStatus == 'inativo'){
       if(termoStatus == 'inativo' && termoAtiva.length >= 1){
@@ -154,7 +154,7 @@ export default function SendTermo() {
 
     api.put(`termo/${termo.id}`, body).then(
       (response) => {
-        console.log(response)
+        // console.log(response)
         if(response.status == 200){
           toast.info("Atualização do termo feita com sucesso!")
           loadTermo()
@@ -178,7 +178,7 @@ export default function SendTermo() {
     api.delete(`termoDeleteOne/${id}`)
     .then(
       (response) => {
-        console.log(response)
+        // console.log(response)
         if(response.status == 200){
           toast.info("Banner apagado com sucesso!")
           loadTermo()
@@ -199,7 +199,7 @@ export default function SendTermo() {
 
   async function loadTermo(){
     const termoResponse = await api.get("termo")
-    console.log(termoResponse.data.rows)
+    // console.log(termoResponse.data.rows)
     setTermo(termoResponse.data.rows)
     setTermoDisplayed(termoResponse.data.rows)
     filterTermo(termoResponse.data.rows)
@@ -228,19 +228,19 @@ export default function SendTermo() {
     }
   }
 
-  console.log(termoAtiva)
-  console.log(termoInativa)
+  // console.log(termoAtiva)
+  // console.log(termoInativa)
 
   function filterTermo(termo: any){
     termo.filter(
       (termo: any)  => {
         
-        console.log("termo")
-        console.log(termo)
+        // console.log("termo")
+        // console.log(termo)
 
         if (termo.ativo == "inativo") {
           setTermoInativa((prevValues: any[]) => {
-            //console.log(prevValues)
+            //// console.log(prevValues)
             return [...new Set([...prevValues, termo])]
           })
         }
@@ -250,13 +250,13 @@ export default function SendTermo() {
     termo.filter(
       (termo:any)  => {
         
-        console.log("termo")
-        console.log(termo)
+        // console.log("termo")
+        // console.log(termo)
 
         if (termo.ativo == "ativo") {
 
           setTermoAtiva((prevValues: any[]) => {
-            //console.log(prevValues)
+            //// console.log(prevValues)
             return [...new Set([...prevValues, termo])]
           })
         }
@@ -290,11 +290,11 @@ export default function SendTermo() {
           required
           name="image"
           onChange={e => {
-          console.log(e)
+          // console.log(e)
           
           
           //@ts-ignore
-          console.log(e.target.files[0].name)
+          // console.log(e.target.files[0].name)
           
           //@ts-ignore
           setName(e.target.files[0].name)
@@ -333,7 +333,7 @@ export default function SendTermo() {
             onChange={
               (text) => {
                   
-              console.log(text.target.value)
+              // console.log(text.target.value)
               if(!text){
               }
               updateDisplayedStatus(text.target.value)
@@ -397,7 +397,7 @@ export default function SendTermo() {
               }
               > 
               {
-                console.log(termo.ativo)
+                // console.log(termo.ativo)
               }
                 <span>
                   Deixar
