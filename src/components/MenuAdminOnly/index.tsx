@@ -26,8 +26,8 @@ export function Menu() {
     const categoriasResponseFixed = await axios.get(''+ip+':8157/api/categoria-aprovados-is-fixed');
 
     const categoriasDoBack = categoriasResponseFixed.data
-      console.log("categoriasDoBack")
-      console.log(categoriasDoBack)
+      // console.log("categoriasDoBack")
+      // console.log(categoriasDoBack)
       setCategoriasFixed(categoriasDoBack)
     
   }
@@ -35,9 +35,9 @@ export function Menu() {
   async function loadCategorias() {
       const categoriasResponse = await axios.get(''+ip+':8157/api/categoria-aprovados');
       const categoriasDoBack = categoriasResponse.data
-      console.log("categoriasDoBack")
-      console.log("categoriasDoBack")
-      console.log(categoriasDoBack)
+      // console.log("categoriasDoBack")
+      // console.log("categoriasDoBack")
+      // console.log(categoriasDoBack)
       setCategorias(categoriasDoBack)
   }
 
