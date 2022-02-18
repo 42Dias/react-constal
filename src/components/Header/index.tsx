@@ -305,7 +305,8 @@ const Header = (): JSX.Element => {
                 </button>
 
                 {role != "pessoa" ? (
-                  <div />
+                  <>
+                  </>
                 ) : (
                   <>
                     <Link to="/favoritos">
@@ -322,6 +323,10 @@ const Header = (): JSX.Element => {
                       </div>
                       <FiShoppingBag size={18} />
                     </Cart>
+                    <div className="flex-item">
+                      <button onClick={logof}>Sair</button> 
+                      <FiLogOut />          
+                    </div>
                   </>
                 )}
                 <button onClick={logof}  className="loggout">
@@ -336,7 +341,10 @@ const Header = (): JSX.Element => {
                     <FiUser size={18} />
                   </div>
                   {role != "pessoa" ? (
-                    <div />
+                    <div className="flex-item">
+                      <button onClick={logof}>Sair</button> 
+                      <FiLogOut />          
+                    </div>
                   ) : (
                     <>
                       <div className="flex-item">
@@ -356,6 +364,10 @@ const Header = (): JSX.Element => {
                         </div>
                         <FiShoppingBag size={18} />
                       </Cart>
+                      <div className="flex-item">
+                        <button onClick={logof}>Sair</button> 
+                        <FiLogOut />          
+                      </div>
                     </>
                   )}
                 </div>
