@@ -323,15 +323,30 @@ const Header = (): JSX.Element => {
                       </div>
                       <FiShoppingBag size={18} />
                     </Cart>
-                    <div className="flex-item">
-                      <button onClick={logof}>Sair</button> 
-                      <FiLogOut />          
-                    </div>
+                    <div
+                    style={{
+                      background : 'transparent',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}
+                    >
+                        <button 
+                        style={{
+                          background : 'transparent',
+                          display: 'flex'
+                        }}
+                        onClick={logof}>
+                          Sairaaaa
+                          </button> 
+                        <FiLogOut
+                        style={{
+                          margin : '0',
+                        }}
+                        />          
+                      </div>
                   </>
                 )}
-                <button onClick={logof}  className="loggout">
-                  <FiLogOut size={18}/>Sair
-                </button>
               </IconsContainer>
 
               <IconsContainerMenu>
@@ -342,7 +357,11 @@ const Header = (): JSX.Element => {
                   </div>
                   {role != "pessoa" ? (
                     <div className="flex-item">
-                      <button onClick={logof}>Sair</button> 
+                      <button 
+                      style={{
+                        background : 'transparent'
+                      }}
+                      onClick={logof} className="mobile-dissapear">Sair</button> 
                       <FiLogOut />          
                     </div>
                   ) : (
@@ -365,7 +384,11 @@ const Header = (): JSX.Element => {
                         <FiShoppingBag size={18} />
                       </Cart>
                       <div className="flex-item">
-                        <button onClick={logof}>Sair</button> 
+                        <button 
+                        style={{
+                          background : 'transparent'
+                        }}
+                        onClick={logof}>Sair</button> 
                         <FiLogOut />          
                       </div>
                     </>

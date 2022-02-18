@@ -244,7 +244,14 @@ export const IconsContainerMenu = styled.div`
         display: flex;
         align-items: center;
         margin-top: 30px;
+
+
+        div.mobile-dissapear{
+          display: block
+        }
+
       }
+
 
       span {
         color: #0D0F21;
