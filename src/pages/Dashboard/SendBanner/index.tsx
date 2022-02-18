@@ -462,6 +462,7 @@ export default function SendBanner() {
               <form
               onSubmit={(e) => {
                 // console.log(e.preventDefault())
+                e.preventDefault()
                 deleteProduct(imagem, emailContent)
               }}>
             <CardDatailsContent>
