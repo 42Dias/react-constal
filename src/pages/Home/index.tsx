@@ -97,9 +97,6 @@ const Home = (): JSX.Element => {
         }
       )
     }, [])
-  function filterPromocoes(){
-
-  }
   function handleAddProduct(id: string) {
     if(role == 'pessoa'){
       
@@ -224,7 +221,9 @@ const Home = (): JSX.Element => {
             <p>Nenhum produto em promoção</p>
           ) : (
             <Swiper
-            spaceBetween={30} centeredSlides={true} autoplay={{ delay: 4000, disableOnInteraction: false, }} pagination={{ clickable: true, }} 
+            spaceBetween={30} centeredSlides={true}
+            //  autoplay={{ delay: 4000, disableOnInteraction: false, }}
+            pagination={{ clickable: true, }} 
             >
               {products2.map((product) => (
                 <SwiperSlide>
