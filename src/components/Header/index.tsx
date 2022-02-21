@@ -305,8 +305,28 @@ const Header = (): JSX.Element => {
                 </button>
 
                 {role != "pessoa" ? (
-                  <>
-                  </>
+                  <div
+                    style={{
+                      background : 'transparent',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}
+                    >
+                      <button 
+                        style={{
+                          background : 'transparent',
+                          display: 'flex'
+                        }}
+                        onClick={logof}>
+                          Sair
+                          </button> 
+                        <FiLogOut
+                        style={{
+                          margin : '0',
+                        }}
+                        />          
+                      </div> 
                 ) : (
                   <>
                     <Link to="/favoritos">
@@ -331,13 +351,13 @@ const Header = (): JSX.Element => {
                       justifyContent: 'center'
                     }}
                     >
-                        <button 
+                      <button 
                         style={{
                           background : 'transparent',
                           display: 'flex'
                         }}
                         onClick={logof}>
-                          Sairaaaa
+                          Sair
                           </button> 
                         <FiLogOut
                         style={{
