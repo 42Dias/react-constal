@@ -251,6 +251,10 @@ export default function NewProd() {
           categoriaId: categoriaId,
           imagemUrl: imagem,
           status: 'pendente',
+          // imagemPromocional, promocaoId 
+          isOferta: false,
+          imagemPromocional: null,
+          promocaoId: null
         },
       };
     }
@@ -278,8 +282,10 @@ export default function NewProd() {
     // console.log("data")
     // console.log(data);
     const prod = await makeRequisitionToChange(data);
-    let updatedProducts = [...products]
+    // console.log("prod")
     // console.log(prod)
+
+    let updatedProducts = [...products]
     updatedProducts[index].nome = prod.nome
     updatedProducts[index].codigo = prod.codigo
     updatedProducts[index].descricao = prod.descricao
@@ -1122,7 +1128,7 @@ export default function NewProd() {
                 required
                 type="number" 
                 value={porcentagem}
-                min="1" max="100" step="0.1"
+                min="0" max="100" step="0.1"
                 // type="range" id="points" name="points" min="0" max="100"
                 placeholder="10%" 
                 onChange={(event: any) => {
