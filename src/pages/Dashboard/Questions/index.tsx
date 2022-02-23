@@ -38,6 +38,7 @@ export default function Questions() {
             const response  = api.get(`findByEmpresa/${empresaIdResponse.data.id}`).then(
               // const response  = api.get(`findByEmpresa/3b386e29-c490-4231-b3f6-bb9b407fc8e9`).then(
               (response) => {
+                console.log(response.data)
                 setComentarios(response.data)
               }
             )
@@ -182,7 +183,11 @@ export default function Questions() {
                       <small>
                     <small>     
                       </small>
-                        <b>{comentario.firstName}</b>     {
+                        <br />
+                        <h3>{comentario.nomeDoProduto}</h3> 
+                        <br />
+                        <b>{comentario.firstName}</b> 
+                        {
                             comentario.isRespondido != 1? (
                               <span>
                                 x
