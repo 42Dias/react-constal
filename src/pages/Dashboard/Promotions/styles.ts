@@ -67,6 +67,7 @@ export const ProdContainerSingle = styled.div`
     max-height: 42px;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    max-width: 100%;
     @media (max-width: 768px) {
       font-size: 14px;
     }
