@@ -215,6 +215,13 @@ export default function Questions() {
                     {
                       role == 'empresa' ? (
                         <Btn
+                        style={
+                          {
+                            minWidth: '150px',
+                            marginTop: '25px' 
+                          }
+                        } 
+                        
                         onClick={
                           () => {
                             setShowModal1(true)
@@ -246,7 +253,8 @@ export default function Questions() {
                         <Btn
                         style={
                           {
-                            width: '150px'
+                            minWidth: '150px',
+                            marginTop: '50px' 
                           }
                         } 
                         onClick={

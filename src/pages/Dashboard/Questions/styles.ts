@@ -25,13 +25,18 @@ export const CardDatails = styled.div`
 export const CardDatailsContent = styled.div`
   background: white;
   width: 100%;
-  height: 100px;
+  min-height: 100px;
   margin-top: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 12px;
   border-radius: 5px;
+  overflow: hidden;
+
+  @media (max-width: 266px) {
+    flex-direction: column;
+  }
   
   a {
     display: flex;
@@ -43,6 +48,7 @@ export const CardDatailsContent = styled.div`
     background: black;
     color: white;
     border-radius: 5px;
+    margin-top: 20px;
   }
 
   a:nth-child(1) {
@@ -110,10 +116,12 @@ export const TextAreaFormated = styled.textarea`
 export const CardDatailsContentSecondary = styled.div`
   background: white;
   width: 100%;
-  height: 100px;
+  min-height: 100px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 12px;
   transform: translateY(-5px);
+  overflow: hidden;
+
 `
