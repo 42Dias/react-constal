@@ -78,50 +78,59 @@ export default function SendTermo() {
     )
    }
 
-   const uploadImage = async (termoNova: string | Blob) => {
-    
-    const formData = new FormData();
+   async function uploadImage(newImage: any, setImage: any) {
+    const formData = new FormData()
 
-    formData.append('image', termoNova);
-    
-    // console.log(...formData)
+    console.log(newImage)
 
-    const headers = {
-      'headers': {
-        // 'Content-Type': 'application/json'
-        'Content-Type': 'multipart/form-data'
-        
-      }
+    formData.append('file', newImage)
+
+    let imageName = newImage.name
+    console.log(imageName)
+
+    let credentials = await api.get(`file/credentials`, {
+        params: {
+            filename: imageName,
+            storageId: 'produtoImagem1',
+        },
+    })
+    if (credentials.status != 200) {
+        toast.info('Arquivo inválido, ou problemas com o servidor :(')
+        return
     }
 
-    // await axios.post(`${ip}:3028/upload-image`, formData, headers)
-    await axios.post(`${ip}:3000/upload-image`, formData, headers)
-    .then((response) => {
-      // console.log(response)
-      if(response.status == 200){
-        const pathHelper = response.data.mensagem
-        // console.log(ip+pathHelper)
-        settermoNova(ip+pathHelper)
-        toast.info("Termo Válido!")
-      }
-      else{
-        toast.info("Termo inválido, ou problemas com o servidor :(")
-      }
+    let credentialsData = credentials.data
 
-    }).catch((err) => {
-      if(err.response){
-        // console.log(err)
-        toast.error("Erro: Tente mais tarde :(")
+    let credencial = credentialsData.uploadCredentials.url
 
-      }
-      else{
-        setStatus({
-          type: 'error',
-          mensagem: "Erro: Tente mais tarde :("
-        });
-      }
-      toast.error("Erro: Tente mais tarde :(")
-    });
+    console.log(credentialsData)
+
+    let credentialCleaned = credencial.replace('"http://localhost:8157/api" ;localhost', '')
+    let downloadExtension = credentialsData.downloadUrl.replace('"http://localhost:8157/api" ;localhost', '')
+
+    console.log(credentialCleaned)
+    console.log(downloadExtension)
+
+    let ipLoad = `${ip}:8157/api${credentialCleaned}`
+
+    let upload = await axios.post(ipLoad, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    })
+    if (upload.status != 200) {
+        console.log(upload)
+        toast.info('Arquivo inválido')
+        return
+    }
+
+    console.log(credencial)
+    toast.success('Arquivo Válido!')
+
+    let pathToImage = `${ip}:8157/api${downloadExtension}`
+    console.log("pathToImage")
+    console.log(pathToImage)
+    setImage(pathToImage)
   }
 
   function updatetermoStatus(termoStatus: any, termo: any){
@@ -307,7 +316,7 @@ export default function SendTermo() {
             // if(true){
 
             //@ts-ignore
-            uploadImage(e.target.files[0])
+            uploadImage(e.target.files[0], settermoNova)
           }
           else{
             toast.error("Só é aceito arquivos em formato pdf")
