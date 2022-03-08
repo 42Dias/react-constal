@@ -31,6 +31,7 @@ export const BoxProd = styled.div`
   padding: 10px 20px;
   height: auto;
   min-height: 230px;
+  overflow: hidden;
   
   .descprod {
     display: flex;
