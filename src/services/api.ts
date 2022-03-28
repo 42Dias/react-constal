@@ -9,6 +9,7 @@ export let status = localStorage.getItem("status")?.replace(/"/g, "");
 export let Email = localStorage.getItem("email")?.replace(/"/g, "");
 export const semImagem = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Item_sem_imagem.png/1024px-Item_sem_imagem.png.png"
 export let ip = "http://localhost"; //teste local
+export let porta = "8157";
 //export let ip = "https://projetos.42dias.com.br";//servidor teste
 // export let ip = "http://constalshop.com.br";//servidor
 
