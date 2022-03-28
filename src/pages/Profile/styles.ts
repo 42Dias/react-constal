@@ -85,6 +85,35 @@ export const CardDatails = styled.div`
     border-radius: 5px;
     color: white;
   }
+  
+
+  a {
+    border: 0;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width: 101px;
+    height: 41px;
+    -webkit-text-decoration: none;
+    text-decoration: none;
+    background: black;
+    color: white;
+    border-radius: 5px;
+    border: 0;
+    background: black;
+    border-radius: 5px;
+    color: white;
+  }
+  
 
   span {
     display: flex;
@@ -146,6 +175,37 @@ export const CardDatailsContent = styled.div`
     border: 1px solid black;
     margin: 0 20px;
   }
+
+
+  
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 101px;
+    height: 41px;
+    text-decoration: none;
+    background: black;
+    color: white;
+    border-radius: 5px;
+    border: 0;
+  }
+
+  
+  a:nth-child(1) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 101px;
+    height: 41px;
+    text-decoration: none;
+    background: transparent;
+    color: black;
+    border-radius: 5px;
+    border: 1px solid black;
+    margin: 0 20px;
+  }
+  
 
   .flex-btn {
     display: flex;
