@@ -69,11 +69,7 @@ export default function PersonalData() {
   const [pontoReferencia, setPontoReferencia] = useState('')
   const [cidade, setCidade] = useState('')
   const [estado, setEstado] = useState('')
-  const [banco, setBanco]=useState<any>('Itaú');
-  const [tipoDeConta, setTipoDeConta]=useState<any>('Poupança');
-  const [numeroCartao, setNumeroCartao]=useState<any>('');
-  const [cartaoAgencia, setCartaoAgencia] = useState<any>('');
-
+  
   const [bairro, setBairro] = useState('')
   const [pix, setPix] = useState('')
   const [showModalResetSenha, setShowModalResetSenha] = React.useState(false);
@@ -87,6 +83,18 @@ export default function PersonalData() {
   const [maskedTelefone, setMaskedTelefone] = useState();
   const [maskedCelular, setMaskedCelular] = useState();
   const [maskedCNPJ, setMaskedCNPJ] = useState();
+  
+  const [banco, setBanco]=useState<any>('Itaú');
+  
+  const [tipoDeConta, setTipoDeConta]=useState<any>('Poupança');
+  const [numeroConta, setNumeroConta]=useState<any>('');
+  const [agencia, setAgencia] = useState<any>('');
+
+  const [codigoBanco, setCodigoBanco] = useState<any>('');
+
+  const [agenciaNumero, setAgenciaNumero] = useState<any>('');
+
+
 
   function formatarNumero(v: any){
     v=v.replace(/\D/g,""); //Remove tudo o que não é dígito
@@ -138,10 +146,6 @@ export default function PersonalData() {
             setEstado(response.estado)
             setBairro(response.bairro)
             setPix(response.pix)
-            setNumeroCartao(response.cartaoNumero)
-            setTipoDeConta(response.cartaoTipo)
-            setBanco(response.cartaoBanco)
-            setCartaoAgencia(response.cartaoAgencia)
             setMaskedTelefone(formatarNumero(response.telefone))
             setMaskedCNPJ(formatarCnpj(response.cnpj))
         }
@@ -176,10 +180,12 @@ export default function PersonalData() {
         cidade : cidade,
         estado : estado,
         bairro : bairro,
-        cartaoTipo: tipoDeConta,
-        cartaoNumero: numeroCartao,
-        cartaoBanco: banco,
-        cartaoAgencia: cartaoAgencia, 
+        tipoDeConta: tipoDeConta,
+        conta: numeroConta,
+        codigoBanco: codigoBanco,
+        agenciaDigito: agenciaNumero,
+        banco: banco,
+        agencia: agencia, 
         pix : pix,
         status : "pendente",
       }
@@ -306,163 +312,163 @@ export default function PersonalData() {
   function checkAccountType(accountType: any) {
 
 
-switch (accountType) {
-  /*
-  Banco	Agência	Conta
-  Banco do Brasil	9999-D	99999999-D
-  */
-  case 'Santander':
-  case 'Pagseguro':
-  case 'Safra':
-  case 'Banestes':
-  case 'Unicred':
-  case 'Gerencianet Pagamentos do Brasil':
-  case 'Mercantil do Brasil':
-  case 'Banco C6':
-  case 'Picpay':
-  case "Banco do Brasil":
-    setFormatAgencia('9999')
-    setFormatCartao('99999999-D')
-    break;
+// switch (accountType) {
+//   /*
+//   Banco	Agência	Conta
+//   Banco do Brasil	9999-D	99999999-D
+//   */
+//   case 'Santander':
+//   case 'Pagseguro':
+//   case 'Safra':
+//   case 'Banestes':
+//   case 'Unicred':
+//   case 'Gerencianet Pagamentos do Brasil':
+//   case 'Mercantil do Brasil':
+//   case 'Banco C6':
+//   case 'Picpay':
+//   case "Banco do Brasil":
+//     setFormatAgencia('9999')
+//     setFormatCartao('99999999-D')
+//     break;
 
-  case "Banco do Brasil":
-  case 'Sicoob'	:                          
-  case 'Itaú'	:                            
-  case 'Banpará'	:                          
-  case 'Inter'	:                            
-  case 'BRB'	:                              
-  case 'Neon/Votorantim' :
-  case 'Modal'	:         
-    setFormatAgencia('9999')
-    setFormatCartao('999999999-D')
-    break;
+//   case "Banco do Brasil":
+//   case 'Sicoob'	:                          
+//   case 'Itaú'	:                            
+//   case 'Banpará'	:                          
+//   case 'Inter'	:                            
+//   case 'BRB'	:                              
+//   case 'Neon/Votorantim' :
+//   case 'Modal'	:         
+//     setFormatAgencia('9999')
+//     setFormatCartao('999999999-D')
+//     break;
 
-  case 'Bradesco'	:                          
-  case 'Next'	:              
-    setFormatAgencia('9999-D')
-    setFormatCartao('9999999-D')
-    break;
+//   case 'Bradesco'	:                          
+//   case 'Next'	:              
+//     setFormatAgencia('9999-D')
+//     setFormatCartao('9999999-D')
+//     break;
 
 
-  case 'Nubank':                          
-  case 'PJBank':
-  case 'Mercado Pago':                          
-  case 'Juno':              	
-    setFormatAgencia('9999')
-    setFormatCartao('9999999999-D')
-    break;
+//   case 'Nubank':                          
+//   case 'PJBank':
+//   case 'Mercado Pago':                          
+//   case 'Juno':              	
+//     setFormatAgencia('9999')
+//     setFormatCartao('9999999999-D')
+//     break;
     
-  case 'Banco Original' :
-  case 'BS2' :
-  case 'Stone' :
-  case 'Cooperativa Central de Credito Noroeste Brasileiro' :
-  case 'Cora' :       
-    setFormatAgencia('9999')
-    setFormatCartao('9999999-D')
-    break;
+//   case 'Banco Original' :
+//   case 'BS2' :
+//   case 'Stone' :
+//   case 'Cooperativa Central de Credito Noroeste Brasileiro' :
+//   case 'Cora' :       
+//     setFormatAgencia('9999')
+//     setFormatCartao('9999999-D')
+//     break;
 
   
-  case 'Via Credi':
-  case 'JP Morgan':
-    setFormatAgencia('9999')
-    setFormatCartao('99999999999-D')
-    break;
+//   case 'Via Credi':
+//   case 'JP Morgan':
+//     setFormatAgencia('9999')
+//     setFormatCartao('99999999999-D')
+//     break;
 
-  case 'Uniprime':
-  case 'Banco Genial':
-    setFormatAgencia('9999')
-    setFormatCartao('9999-D')
-    break;
+//   case 'Uniprime':
+//   case 'Banco Genial':
+//     setFormatAgencia('9999')
+//     setFormatCartao('9999-D')
+//     break;
 
-  case 'Uniprime Norte do Paraná':
-  case 'Banco da Amazonia':
-  case 'Banco Daycoval':
-  case 'Banco Omni':
-  case 'Polocred':	
-    setFormatAgencia('9999')
-    setFormatCartao('999999-D')
-    break;
+//   case 'Uniprime Norte do Paraná':
+//   case 'Banco da Amazonia':
+//   case 'Banco Daycoval':
+//   case 'Banco Omni':
+//   case 'Polocred':	
+//     setFormatAgencia('9999')
+//     setFormatCartao('999999-D')
+//     break;
 
-  case 'Banco do Nordeste':	
-  case 'BRL Trust DTVM':	  
-    setFormatAgencia('999')
-    setFormatCartao('999999-D')
-    break;
+//   case 'Banco do Nordeste':	
+//   case 'BRL Trust DTVM':	  
+//     setFormatAgencia('999')
+//     setFormatCartao('999999-D')
+//     break;
   
-  case 'Caixa Econômica':	  
-      setFormatAgencia('9999')
-      setFormatCartao('XXXX999999999-D (X: Operação - Novo formato CP)')
-      break;
+//   case 'Caixa Econômica':	  
+//       setFormatAgencia('9999')
+//       setFormatCartao('XXXX999999999-D (X: Operação - Novo formato CP)')
+//       break;
 
-  case 'Agibank':	  
-      setFormatAgencia('9999')
-      setFormatCartao('9999999999')
-      break;
+//   case 'Agibank':	  
+//       setFormatAgencia('9999')
+//       setFormatCartao('9999999999')
+//       break;
 
-  case 'Agibank':	  
-      setFormatAgencia('9999')
-      setFormatCartao('999999D')
-      break;
+//   case 'Agibank':	  
+//       setFormatAgencia('9999')
+//       setFormatCartao('999999D')
+//       break;
 
-  case 'Money Plus':	  
-      setFormatAgencia('9')
-      setFormatCartao('99999999-D')
-      break;
+//   case 'Money Plus':	  
+//       setFormatAgencia('9')
+//       setFormatCartao('99999999-D')
+//       break;
 
-  case 'Rendimento':	  
-      setFormatAgencia('9999-D')
-      setFormatCartao('9999999999')
-      break;
+//   case 'Rendimento':	  
+//       setFormatAgencia('9999-D')
+//       setFormatCartao('9999999999')
+//       break;
 
-  case 'Citibank':	  
-      setFormatAgencia('9999')
-      setFormatCartao('99999999')
-      break;
+//   case 'Citibank':	  
+//       setFormatAgencia('9999')
+//       setFormatCartao('99999999')
+//       break;
 
-  case 'Citibank':	  
-      setFormatAgencia('9999')
-      setFormatCartao('99999999999')
-      break;
+//   case 'Citibank':	  
+//       setFormatAgencia('9999')
+//       setFormatCartao('99999999999')
+//       break;
 
-  case 'BNP Paribas Brasil':	  
-      setFormatAgencia('999')
-      setFormatCartao('999999-DDD')
-      break;
-
-
-  case 'Cresol':	  
-      setFormatAgencia('9999-D')
-      setFormatCartao('99999-D')
-      break;
+//   case 'BNP Paribas Brasil':	  
+//       setFormatAgencia('999')
+//       setFormatCartao('999999-DDD')
+//       break;
 
 
-  case 'Banco Banese':	  
-      setFormatAgencia('999')
-      setFormatCartao('99999999-D')
-      break;
+//   case 'Cresol':	  
+//       setFormatAgencia('9999-D')
+//       setFormatCartao('99999-D')
+//       break;
 
 
-  case 'Acesso Soluções de pagamento':	  
-      setFormatAgencia('9999')
-      setFormatCartao('99999999')
-      break;
+//   case 'Banco Banese':	  
+//       setFormatAgencia('999')
+//       setFormatCartao('99999999-D')
+//       break;
 
-  case 'CCR de São Miguel do Oeste':	  
-      setFormatAgencia('9999')
-      setFormatCartao('99999')
-      break;
 
-  case 'Banco Capital S.A':	  
-      setFormatAgencia('9999')
-      setFormatCartao('999999999')
-      break;
+//   case 'Acesso Soluções de pagamento':	  
+//       setFormatAgencia('9999')
+//       setFormatCartao('99999999')
+//       break;
 
-  case 'Caixa Econômica':	  
-      setFormatAgencia('9999')
-      setFormatCartao('XXX99999999-D (X: Operação)')
-      break;
+//   case 'CCR de São Miguel do Oeste':	  
+//       setFormatAgencia('9999')
+//       setFormatCartao('99999')
+//       break;
+
+//   case 'Banco Capital S.A':	  
+//       setFormatAgencia('9999')
+//       setFormatCartao('999999999')
+//       break;
+
+//   case 'Caixa Econômica':	  
+//       setFormatAgencia('9999')
+//       setFormatCartao('XXX99999999-D (X: Operação)')
+//       break;
   
-  } 
+//   } 
   }
   
   function onSubmitInput (values: any, actions: any) {
@@ -803,7 +809,7 @@ switch (accountType) {
                     onChange={(text) => setWebsite(text.target.value)}
                     />
                     </ContentFormNew>
-
+                  {/* 
                   <ContentFormNew>
                   <label htmlFor="">Seu Banco*</label>
                   <select
@@ -817,6 +823,7 @@ switch (accountType) {
                     ))}
                   </select>
                 </ContentFormNew>
+                */}
 
 
                 <ContentFormNew>
@@ -828,32 +835,75 @@ switch (accountType) {
                     setTipoDeConta(text.target.value);
                     // console.log(text.target.value)
                     }}>
-                  <option value='Poupança'>Conta Poupança</option>
-                  <option value='Corrente'>Conta Corrente</option>
-                  
+                
+                  <option value="conta_corrente">
+                    conta corrente
+                    </option>
+
+                  <option value="conta_poupanca">
+                    conta poupanca
+                    </option>
+
+                  <option value="conta_corrente_conjunta">
+                    conta corrente conjunta
+                    </option>
+
+                  <option value="conta_poupanca_conjunta">
+                    conta poupanca conjunta
+                  </option>
                   
                   </select>
 
+                </ContentFormNew>
+                {/*  
+                bank
+                  string
+
+                  Número da conta. Max: 13 caracteres numéricos
+                  account_check_digit
+                  string
+
+                  Digitos validadores da conta. Max 2 caracteres numéricos
+                  holder_type
+                  string
+
+                  Tipo do documento. "individual" ou "company"
+
+                */}
+
+                <ContentFormNew>
+                    <label htmlFor="">Código do banco*</label>
+                    <p>
+                    3 números
+                    </p>
+                    <input
+                    required type="text" placeholder={'999'}
+                    
+                    maxLength={10} 
+                     
+                    value={codigoBanco}
+
+                    onChange={(text) => {
+                      // setCodigoBanco
+                      setCodigoBanco(text.target.value)
+                    }}
+                    />
                 </ContentFormNew>
 
                 <ContentFormNew>
                     <label htmlFor="">Numero da Conta*</label>
                     <p>
-                    Formato da Conta <br />
-                    {formatCartao}
+                    Max. 2 caracteres numéricos
                     </p>
                     <input
-                    required type="text" placeholder={formatCartao}
+                    required type="text" placeholder={'999'}
                     
                     maxLength={10} 
                      
-                    value={numeroCartao}
+                    value={numeroConta}
 
                     onChange={(text) => {
-                      setNumeroCartao(text.target.value)
-                      // console.log("numero do cartão:")
-                      // console.log(text.target.value)
-                      // console.log(numeroCartao)
+                      setNumeroConta(text.target.value)
                     }}
                     />
                 </ContentFormNew>
@@ -861,16 +911,31 @@ switch (accountType) {
                 <ContentFormNew>
                   <label htmlFor="">Agência*</label>
                   <p>
-                    Formato da Agência <br />
-                    {formatAgencia}
+                  5 números
                   </p>
                   <input
                   required type="text" 
-                    placeholder={formatAgencia}
+                    placeholder={''}
                     maxLength={10} 
                      
-                    value={cartaoAgencia}
-                    onChange={(text) => setCartaoAgencia(text.target.value)}
+                    value={agencia}
+                    onChange={(text) => setAgencia(text.target.value)}
+                    />
+
+                </ContentFormNew>
+
+                <ContentFormNew>
+                  <label htmlFor="">Numero da Agência*</label>
+                  <p>
+                  5 números
+                  </p>
+                  <input
+                  required type="text" 
+                    placeholder={''}
+                    maxLength={10} 
+                     
+                    value={agenciaNumero}
+                    onChange={(text) => setAgenciaNumero(text.target.value)}
                     />
 
                 </ContentFormNew>
