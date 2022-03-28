@@ -1,0 +1,55 @@
+.credit-cards-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  padding-left: 24px;
+}
+
+.card-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 20px;
+  margin-top: 20px;
+  /* padding-left: 24px; */
+  /* gap: 24px; */
+}
+
+.btn-del {
+  margin: 8px;
+  background-color: #fff;
+  width: 64px;
+  color: #000;
+  border: none;
+  font-size: 16px;
+  transition: 0.2s;
+  
+}
+
+.btn-del:hover {
+  background-color: rgb(165, 45, 57) !important;
+  color: #fff !important;
+  border-radius: 4px;
+}
+
+#btn-add {
+  background-color: #14b8a6;
+  border: none;
+  box-shadow: px 3px 14px -8px rgba(98, 63, 101, 0.53);
+  color: white;
+  font-size: 12px;
+  margin: 0px;
+}
+
+.container-item {
+  /* padding: 0px; */
+}
+
+#cartoes-cadastrados {
+  display: flex;
+  flex-direction: row;
+}
