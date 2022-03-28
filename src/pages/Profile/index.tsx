@@ -29,6 +29,7 @@ import { Field, Form, Formik } from "formik";
 import InputMask from "react-input-mask";
 
 
+
 export default function Profile() {
   const [showModal1, setShowModal1] = React.useState(false);
   const [showModal2, setShowModal2] = React.useState(false);
@@ -63,6 +64,7 @@ export default function Profile() {
   const [newEstado, setNewEstado] = useState("");
   const [newBairro, setNewBairro] = useState("");
 
+  
   async function loadUser() {
     if (!token) {
       //window.location.reload()
@@ -474,6 +476,16 @@ export default function Profile() {
 
 
         <CardDatails>
+          <h2>Cartões da conta</h2>
+          <Link
+            to="/cartoes"
+          >
+            Ver Cartões
+          </Link>
+        </CardDatails>
+
+
+        <CardDatails>
           <h2>Endereço</h2>
           <CardDatailsContent className="adress">
             <ContentDetails>
@@ -497,7 +509,11 @@ export default function Profile() {
             Novo endereço
           </button>*/}
         </CardDatails>
+
+
       </div>
+
+
       <Footer />
 
       <ModalContainerVendedor>
