@@ -42,6 +42,9 @@ import SendBanner from "./pages/Dashboard/SendBanner";
 import categoryAdmin from "./pages/Dashboard/categoryAdmin";
 import SendTermo from "./pages/Dashboard/SendTermo";
 import SendData from "./pages/SendData";
+import Test from "./pages/Test";
+import GetCode from "./pages/GetCode";
+import MyPaymentInfo from "./pages/MyPaymentInfo/MyPaymentInfo";
 
 
 const Routes = (): JSX.Element => {
@@ -93,6 +96,10 @@ const Routes = (): JSX.Element => {
       <Route exact path="/enviar-dados" component={SendData} />
       <Route exact path="/categorias-fixar" component={categoryAdmin} />
       <Route exact path="/contas" component={Accounts} />
+      <Route exact path="/teste" component={Test} />
+      <Route exact path="/teste01/:id" component={GetCode} />
+      <Route exact path="/cartoes" component={MyPaymentInfo} />
+
       <Route
         exact
         path="/pagamentos-empresas"
