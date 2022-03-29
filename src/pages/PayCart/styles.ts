@@ -9,7 +9,7 @@ export const FooterContainer = styled.div`
 
 export const CenterPay = styled.div`
   width: 100%;
-  height: 331px;
+  min-height: 331px;
   margin: 0 auto;
   background: #FFFFFF;
   border-radius: 5px;
