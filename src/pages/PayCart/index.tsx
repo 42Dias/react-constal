@@ -17,8 +17,24 @@ export default function PayCart() {
   const [produtosDosFornecedores, setProdutosDosFornecedores] = useState([]);
   const [ids = [], setIds] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const [formaDePagamento, setFormaDePagamento] = useState("");
   // const [produtosNoCarrinho, setProdutosNoCarrinho] = useState([]);
   var produtosNoCarinho: any;
+
+  async function gerarFornecedores(){
+    setLoading(true)
+    const fornecedoresNoCarrinho: string[] = []
+    const produtosNoCarrinhoResponse: any = await api.get('/carrinho/').then((response)=>{
+      // console.log("response.data.rows")
+      // console.log(response.data.rows)
+
+      produtosNoCarinho = response.data.rows
+    
+      makeMagic()
+      
+    }
+   
+    )} 
 
 
   useEffect(() => {
@@ -26,21 +42,6 @@ export default function PayCart() {
       window.location.replace(`${ip}/constal#/erro`);
     }
     
-    async function gerarFornecedores(){
-      setLoading(true)
-      const fornecedoresNoCarrinho: string[] = []
-      const produtosNoCarrinhoResponse: any = await api.get('/carrinho/').then((response)=>{
-        // console.log("response.data.rows")
-        // console.log(response.data.rows)
-
-        produtosNoCarinho = response.data.rows
-      
-        makeMagic()
-        
-      }
-     
-      )} 
-       gerarFornecedores() 
     }, []
     )
     
@@ -107,18 +108,85 @@ export default function PayCart() {
       
     }
 
-    let formaDePagamento: string;
     
     return (
       <>
         <Header />
         <Menu />
-          <div className="container">
+        <div className="container">
             <Titleh2>Formas de pagamentos</Titleh2>
             <CenterPay>
-              <div>Carregando formas de pagamentos...{loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : 
+              <div>{
+              loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : 
              false}</div>
+              <div className="input">
+                <input type="radio" name="forma-pag" id="pix"
+                 onClick={
+                    () => {
+                      setFormaDePagamento('pix')
+                    console.log(formaDePagamento)
+                    }
+                  }
+                />
+                <div>
+                  <h2>Pix</h2>
+                  <p>Aprovação imediata</p>
+                </div>
+              </div> 
+              <div className="input">
+                <input type="radio" name="forma-pag" id="boleto"
+                  onClick={
+                    () => {
+                    // formaDePagamento = 'boleto'
+                    setFormaDePagamento('boleto')
+                    console.log(formaDePagamento)
+                    console.log(produtosDosFornecedores)
+                    console.log(ids)
+                    }
+                  }
+                
+                />
+                <div>
+                  <h2>Boleto</h2>
+                  <p>Aprovado em 1 ou 2 dias úteis após pagamento</p>
+                </div>
+              </div>
+
+              <div className="input">
+                <input type="radio" name="forma-pag" id="cartao" 
+                onClick={
+                  () => {
+                    setFormaDePagamento('cartao')
+                    // formaDePagamento = 'cartao'
+                    console.log(formaDePagamento)
+                  }
+                }
+              />
+                <div>
+                  <h2>Cartão de crédito</h2>
+                  <p>Aprovação imediata</p>
+                </div>
+              </div>
+              
             </CenterPay>
+            <BtnFinish>
+            {loading ?
+            (
+              <img
+                width="40px"
+                style={{margin: 'auto'}}
+                height=""
+                src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'}
+                alt="Loading" /> 
+              ) : (
+              <Btn
+              onClick={
+                () => {
+                  makeMagic()
+                }
+              }
+            >Finalizar</Btn>) }
+            </BtnFinish>
           </div>
         <FooterContainer>
           <Footer />
