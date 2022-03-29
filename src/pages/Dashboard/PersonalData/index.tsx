@@ -93,6 +93,9 @@ export default function PersonalData() {
   const [codigoBanco, setCodigoBanco] = useState<any>('');
 
   const [agenciaNumero, setAgenciaNumero] = useState<any>('');
+  const [contaDigito, setContaDigito] = useState<any>('');
+
+
 
 
 
@@ -148,6 +151,12 @@ export default function PersonalData() {
             setPix(response.pix)
             setMaskedTelefone(formatarNumero(response.telefone))
             setMaskedCNPJ(formatarCnpj(response.cnpj))
+
+            setCodigoBanco(response.codigoBanco)
+            setNumeroConta(response.conta)
+            setAgencia(response.agencia)
+            setAgenciaNumero(response.agenciaDigito)
+            setContaDigito(response.contaDigito)
         }
         loadData()
         setBancos(['Itaú', 'Bradesco', 'Caixa Econômica', 'Banco do Brasil', 'Santander', 'Banrisul', 'Sicredi', 'Sicoob', 'Inter', 'BRB', 'Via Credi', 'Neon', 'Votorantim', 'Nubank', 'Pagseguro', 'Banco Original', 'Safra', 'Modal', 'Banestes','Unicred','Money Plus','Mercantil do Brasil','JP Morgan','Gerencianet Pagamentos do Brasil', 'Banco C6', 'BS2', 'Banco Topazio', 'Uniprime', 'Stone', 'Banco Daycoval', 'Rendimento', 'Banco do Nordeste', 'Citibank', 'PJBank', 'Cooperativa Central de Credito Noroeste Brasileiro', 'Uniprime Norte do Paraná', 'Global SCM', 'Next', 'Cora', 'Mercado Pago', 'Banco da Amazonia', 'BNP Paribas Brasil', 'Juno','Cresol','BRL Trust DTVM','Banco Banese','Banco BTG Pactual','Banco Omni','Acesso Soluções de Pagamento','CCR de São Miguel do Oeste','Polocred','Ótimo']
@@ -161,6 +170,7 @@ export default function PersonalData() {
   async function criarOuAtualizarEmpresa(e: any) {
     e.preventDefault()
     setLoading(true)
+    
     const data = {
       data: {
         nome : nome, 
@@ -183,52 +193,48 @@ export default function PersonalData() {
         tipoDeConta: tipoDeConta,
         conta: numeroConta,
         codigoBanco: codigoBanco,
+        contaDigito: contaDigito,
         agenciaDigito: agenciaNumero,
         banco: banco,
         agencia: agencia, 
         pix : pix,
+        user : id,
         status : "pendente",
       }
     }
-    // console.log(data)
 
-    const response = await api.post('empresa-perfil', data).then(
-      (response) => {
-        // console.log(response)
-        if(response.status == 200 && !response.data.errors){
-          toast.info('Empresa Criada com sucessso! :)')
-          closeModal()
-          setLoading(false)
-        }
+    console.log("data")
+    console.log(data)
 
-        else{
-          toast.error('Algo deu errado :(')
-          // console.log(response.data.errors)
+    const isThereEmpresa = await api.get(`empresaUser/${id}`)
+    .then(r => r.data)
 
-          Object.keys(response.data.errors).map(function(key, index) {
-            // // console.log("response.data.errors[key]");
-            // // console.log(key)
-            // console.log(...response.data.errors[key][0]);
-            toast.error(`${key} ${response.data.errors[key][0]}`)
-          });
-          setLoading(false)
-        }
-        
-      }
-    )
+
+    console.log(isThereEmpresa)
+
+
+    if(isThereEmpresa) return updateEmpresa(isThereEmpresa.id, data)
+
+    const generatedApiData = await api.post('empresa-perfil', data)
+    .then(r => r.data)
+    .catch(e => toast.error("Erro ao criar seus dados no gateway de pagamento, revise-os!"))
+
+    if(!generatedApiData) return toast.error("Erro ao criar seus dados no gateway de pagamento, revise-os!")
+
+    const generatedEmpresa = await api.post('empresa', { data: { ...generatedApiData } })
+    .then(r => r.data)
     .catch(
       (response) => {
-        if(response.data){
-          toast.info(response.data.status)
-        }
-        else{
-          toast.error("Algo deu errado, verifique seus dados ou tente mais tarde")
-        }
-        setLoading(false)
+        response.data ? toast.info(response.data.status) : toast.error("Algo deu errado, verifique seus dados ou tente mais tarde")
+    })
 
-      }
-    )
-  
+    if(generatedEmpresa){
+      toast.info('Empresa Criada com sucessso! :)')
+      closeModal()
+    }
+    
+    setLoading(false)
+
   }
   async function resetSenha(){
     setLoading(true)
@@ -309,6 +315,21 @@ export default function PersonalData() {
       }
     )
   }
+
+
+  async function updateEmpresa(id: string, data: any,){
+    let res = await api.put(`empresa/${id}`, data)
+
+    if (res.status != 200) return toast.error("Algo deu errado!")
+    
+    toast.success("Dados alterados com sucesso")
+    closeModal()
+    setLoading(false)
+
+  }
+
+
+
   function checkAccountType(accountType: any) {
 
 
@@ -826,35 +847,7 @@ export default function PersonalData() {
                 */}
 
 
-                <ContentFormNew>
-                  <label htmlFor="">Tipo De Conta*</label>
-                    
-                  <select
-                  required
-                   onChange={(text) => {
-                    setTipoDeConta(text.target.value);
-                    // console.log(text.target.value)
-                    }}>
-                
-                  <option value="conta_corrente">
-                    conta corrente
-                    </option>
 
-                  <option value="conta_poupanca">
-                    conta poupanca
-                    </option>
-
-                  <option value="conta_corrente_conjunta">
-                    conta corrente conjunta
-                    </option>
-
-                  <option value="conta_poupanca_conjunta">
-                    conta poupanca conjunta
-                  </option>
-                  
-                  </select>
-
-                </ContentFormNew>
                 {/*  
                 bank
                   string
@@ -873,69 +866,108 @@ export default function PersonalData() {
 
                 <ContentFormNew>
                     <label htmlFor="">Código do banco*</label>
-                    <p>
-                    3 números
-                    </p>
-                    <input
-                    required type="text" placeholder={'999'}
-                    
-                    maxLength={10} 
-                     
-                    value={codigoBanco}
+                    <label>
+                      3 números
+                    </label>
 
-                    onChange={(text) => {
-                      // setCodigoBanco
-                      setCodigoBanco(text.target.value)
-                    }}
-                    />
+                    <InputMask
+                      required
+                      mask="999" 
+                      defaultValue={codigoBanco} 
+                      placeholder={'999'}
+                      // 01.161.734/0001-15
+                      onChange={
+                        (e: any) => {
+                          let value = e.target.value
+                          let formatedValue = value.replace(/\D/g, '')
+                          setCodigoBanco(formatedValue)
+                        }
+                      }
+                      />
+
                 </ContentFormNew>
 
                 <ContentFormNew>
                     <label htmlFor="">Numero da Conta*</label>
-                    <p>
-                    Max. 2 caracteres numéricos
-                    </p>
-                    <input
-                    required type="text" placeholder={'999'}
-                    
-                    maxLength={10} 
-                     
-                    value={numeroConta}
+                    <label>
+                      Max. 2 caracteres numéricos
+                    </label>
 
-                    onChange={(text) => {
-                      setNumeroConta(text.target.value)
-                    }}
-                    />
+                    <InputMask
+                      required
+                      mask="99" 
+                      defaultValue={numeroConta} 
+                      placeholder={'99'}
+                      onChange={
+                        (e: any) => {
+                          let value = e.target.value
+                          let formatedValue = value.replace(/\D/g, '')
+                          setNumeroConta(formatedValue)
+                        }
+                      }
+                      />
                 </ContentFormNew>
                 
                 <ContentFormNew>
                   <label htmlFor="">Agência*</label>
-                  <p>
-                  5 números
-                  </p>
-                  <input
-                  required type="text" 
-                    placeholder={''}
-                    maxLength={10} 
-                     
-                    value={agencia}
-                    onChange={(text) => setAgencia(text.target.value)}
-                    />
+                  <label>
+                  Max. 4 números
+                  </label>
+
+                  <InputMask
+                      required
+                      mask="9999" 
+                      defaultValue={agencia} 
+                      placeholder={'9999'}
+                      onChange={
+                        (e: any) => {
+                          let value = e.target.value
+                          let formatedValue = value.replace(/\D/g, '')
+                          setAgencia(formatedValue)
+                        }
+                      }
+                      />
 
                 </ContentFormNew>
 
                 <ContentFormNew>
                   <label htmlFor="">Numero da Agência*</label>
                   <p>
-                  5 números
+                  Max. 1 caracter numérico
                   </p>
-                  <input
-                  required type="text" 
-                    placeholder={''}
-                    maxLength={10} 
-                     
-                    value={agenciaNumero}
-                    onChange={(text) => setAgenciaNumero(text.target.value)}
+                  <InputMask
+                    required
+                    mask="9" 
+                    defaultValue={agenciaNumero} 
+                    placeholder={'9'}
+                    onChange={
+                      (e: any) => {
+                        let value = e.target.value
+                        let formatedValue = value.replace(/\D/g, '')
+                        setAgenciaNumero(formatedValue)
+                      }
+                    }
+                    />
+
+                </ContentFormNew>
+
+                <ContentFormNew>
+                  <label htmlFor="">Dígito da Conta*</label>
+                  <label>
+                  Max. 2 caracteres numéricos
+                  </label>
+                  <InputMask
+                    required
+                    mask="99" 
+                    defaultValue={contaDigito} 
+                    placeholder={'99'}
+                    onChange={
+                      (e: any) => {
+                        let value = e.target.value
+                        let formatedValue = value.replace(/\D/g, '')
+                        setContaDigito(formatedValue)
+                      }
+                    }
                     />
 
                 </ContentFormNew>
