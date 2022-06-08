@@ -9,24 +9,35 @@ import { useEffect, useState } from "react";
 import { Btn } from "../Dashboard/PersonalData/styles";
 import { toast } from "react-toastify";
 
-let token = localStorage.getItem("token")?.replace(/"/g, "");
-const tenantId = "fa22705e-cf27-41d0-bebf-9a6ab52948c4";
-const containerDeObjetos: any = []
+import { useCreditCard } from "../../contexts/CreditCardContext";
+import Form from "react-bootstrap/Form";
+import { convertToObject } from "typescript";
+
+
+import QRCode from "react-qr-code";
+
+import handleCovertDate from "../../utils/handleCovertDate"
+import { setTimeout } from "timers";
 
 export default function PayCart() {
+  const { getCreditCards, creditCardList, } = useCreditCard();
+
+
   const [produtosDosFornecedores, setProdutosDosFornecedores] = useState([]);
-  const [ids = [], setIds] = useState<any[]>([]);
+  const [formaDePagamento       , setFormaDePagamento       ] = useState(0);
+  const [returnedApiData        , setReturnedApiData        ] = useState<any>({});
+  const [ids    , setIds    ] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
-  const [formaDePagamento, setFormaDePagamento] = useState("");
-  // const [produtosNoCarrinho, setProdutosNoCarrinho] = useState([]);
+
+  const [card  ,  setCard   ] = useState({});
+
   var produtosNoCarinho: any;
 
   async function gerarFornecedores(){
     setLoading(true)
     const fornecedoresNoCarrinho: string[] = []
     const produtosNoCarrinhoResponse: any = await api.get('/carrinho/').then((response)=>{
-      // console.log("response.data.rows")
-      // console.log(response.data.rows)
+
 
       produtosNoCarinho = response.data.rows
     
@@ -52,50 +63,52 @@ export default function PayCart() {
     // deletarCarrinho()
 
   async function gerarPedido() {
+    toast.info("Gerando fatura...")
+
 
     produtosNoCarinho.compradorUserId = id
-
-    
-    // console.log("Começou")
-    // console.log(produtosNoCarinho)
-    axios({
-      method: 'post',
-      url: `${ip}:8157/api/tenant/${tenantId}/pedido-newfatura`,
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer '+ token
-      },
-      data: {
+    await api.post('pedido-newfatura', {
+      
         data:{
           fornecedores: {
             produtosNoCarinho
-          }
+          },
+          formaPagamento: formaDePagamento,
+          cartao: card,
         }
-      }              
-    }).then(
+    })
+    .then(
       (response) => {
-        let url = response.data.urlFaturaIugu
-        // console.log('url') 
-        // console.log(url)
+
+        console.log(response)
         
-        if(url === undefined){
+        let id = response.data.id
+        
+        if(id === undefined){
           toast.error("Não foi possivel gerar a fatura, confira os seu dados pessoais!")
-        }else{
-          window.open(url, '_blank')?.focus();
-          window.location.replace(`https://projetos.42dias.com.br/constal/#/finalizar`)
+          return setLoading(false)
         }
+
+        const dataFromApi = response.data.apiResponse
+
+        setReturnedApiData(dataFromApi)
+
+        toast.info("Fatura paga com sucesso!")
+
+        if( dataFromApi && formaDePagamento == 3){
+          setTimeout(() => {
+            window.location.hash = '#/finalizar'
+          }, 1000);
+        }
+
         setLoading(false)
       }
-    ).catch((error)=>{
+    )
+    .catch((error)=>{
       toast.error(error)
       setLoading(false)
     })
 
-      
-        toast.info("Gerando fatura...")
-        
-        
       } 
       
       
@@ -108,26 +121,60 @@ export default function PayCart() {
       
     }
 
+    useEffect(
+      () => {
+
+
+      }, []
+    )
+
+    console.log(returnedApiData)
+
     
     return (
       <>
         <Header />
         <Menu />
-        <div className="container">
+
+          <div>
+          {
+          formaDePagamento != 3 && returnedApiData.success ? (
+            <div className="container">
+            <h2> Para pagar:</h2>
+            {
+            (formaDePagamento == 5 && returnedApiData.pedido.qrCodePix)&& (
+              <CenterPay>
+              <h3>Você escolheu PIX</h3>
+              <QRCode level="L" value={returnedApiData.pedido.qrCodePix}/>
+              {/* <p>QR Code do PIX:  <br/> {returnedApiData.pedido.qrCodePix}</p> */}
+              <p>Validade: {returnedApiData.pedido.validadePix}</p>
+              </CenterPay>
+            )
+            }
+
+            {
+            (formaDePagamento == 1  && returnedApiData.pedido.boleto) && (
+              <CenterPay>
+                <h3>Você escolheu Boleto</h3>
+                <p>Código de Barras: {returnedApiData.pedido.boleto.codigo_barras}</p>
+                <p>Data de Vencimento: { handleCovertDate(returnedApiData.pedido.boleto.data_vencimento)}</p>
+                <p>Veja o boleto: <a href={returnedApiData.pedido.boleto.url} target="_blank">Ver</a></p>
+              </CenterPay>
+            )
+            }
+            </div>
+          ) : (
+          <div className="container">
             <Titleh2>Formas de pagamentos</Titleh2>
             <CenterPay>
-              <div>{
-              loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : 
-             false}</div>
+
               <div className="input">
                 <input type="radio" name="forma-pag" id="pix"
-                 onClick={
-                    () => {
-                      setFormaDePagamento('pix')
-                    console.log(formaDePagamento)
-                    }
+                onClick={
+                    () => setFormaDePagamento(5)
                   }
                 />
+                
                 <div>
                   <h2>Pix</h2>
                   <p>Aprovação imediata</p>
@@ -136,13 +183,7 @@ export default function PayCart() {
               <div className="input">
                 <input type="radio" name="forma-pag" id="boleto"
                   onClick={
-                    () => {
-                    // formaDePagamento = 'boleto'
-                    setFormaDePagamento('boleto')
-                    console.log(formaDePagamento)
-                    console.log(produtosDosFornecedores)
-                    console.log(ids)
-                    }
+                    () => setFormaDePagamento(1)
                   }
                 
                 />
@@ -155,11 +196,7 @@ export default function PayCart() {
               <div className="input">
                 <input type="radio" name="forma-pag" id="cartao" 
                 onClick={
-                  () => {
-                    setFormaDePagamento('cartao')
-                    // formaDePagamento = 'cartao'
-                    console.log(formaDePagamento)
-                  }
+                  () => setFormaDePagamento(3)
                 }
               />
                 <div>
@@ -167,8 +204,43 @@ export default function PayCart() {
                   <p>Aprovação imediata</p>
                 </div>
               </div>
+
+              {
+              formaDePagamento == 3 && (
+                <>
+                <h5>Selecione um Cartão</h5>
+                  {
+                  creditCardList.map(
+                  (card: any, index: number) => (
+                  <div
+                  key={index}
+                  onClick={(_) => {
+                    setCard(card)
+                  }}
+                  >    
+                    <Form.Check
+                      type="radio"
+                      label={card.apelido}
+                      name="formHorizontalRadios"
+                      id={card.id}
+                    />
+                  </div>
+                    )
+                  )
+                  }
+                <Link
+                  to="/cartoes"
+                >
+                  Criar Cartões
+                </Link>
+                </>
+              )
+              }
               
             </CenterPay>
+
+
+            
             <BtnFinish>
             {loading ?
             (
@@ -182,11 +254,13 @@ export default function PayCart() {
               <Btn
               onClick={
                 () => {
-                  makeMagic()
+                  gerarFornecedores()
                 }
               }
             >Finalizar</Btn>) }
             </BtnFinish>
+        </div>)
+        }
           </div>
         <FooterContainer>
           <Footer />
