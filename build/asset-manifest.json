@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.js": "/static/js/main.fb7cc648.chunk.js",
+    "main.js.map": "/static/js/main.fb7cc648.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.3490dca3.js",
+    "runtime-main.js.map": "/static/js/runtime-main.3490dca3.js.map",
+    "static/css/2.ecb1ee1e.chunk.css": "/static/css/2.ecb1ee1e.chunk.css",
+    "static/js/2.3149fd69.chunk.js": "/static/js/2.3149fd69.chunk.js",
+    "static/js/2.3149fd69.chunk.js.map": "/static/js/2.3149fd69.chunk.js.map",
+    "static/js/3.338b840a.chunk.js": "/static/js/3.338b840a.chunk.js",
+    "static/js/3.338b840a.chunk.js.map": "/static/js/3.338b840a.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.ecb1ee1e.chunk.css.map": "/static/css/2.ecb1ee1e.chunk.css.map",
+    "static/js/2.3149fd69.chunk.js.LICENSE.txt": "/static/js/2.3149fd69.chunk.js.LICENSE.txt",
+    "static/media/bgHome.ac4d492f.png": "/static/media/bgHome.ac4d492f.png",
+    "static/media/error.33bcb8c0.png": "/static/media/error.33bcb8c0.png",
+    "static/media/logo.dbfcbed5.png": "/static/media/logo.dbfcbed5.png",
+    "static/media/prodfav.02029747.png": "/static/media/prodfav.02029747.png",
+    "static/media/upload.a97ff9a3.png": "/static/media/upload.a97ff9a3.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.3490dca3.js",
+    "static/css/2.ecb1ee1e.chunk.css",
+    "static/js/2.3149fd69.chunk.js",
+    "static/js/main.fb7cc648.chunk.js"
+  ]
+}

@@ -11,7 +11,9 @@ export const semImagem = "https://upload.wikimedia.org/wikipedia/commons/thumb/e
 export let ip = "http://localhost"; //teste local
 export let porta = "8157";
 //export let ip = "https://projetos.42dias.com.br";//servidor teste
-// export let ip = "http://constalshop.com.br";//servidor
+ export let ip = "https://constalshop.com.br";//servidor
+
+//export let ip =  "https://162.240.22.199"	
 
 export const api = axios.create({
   baseURL: ip+':8157/api/tenant/'+tenantId +"/",
