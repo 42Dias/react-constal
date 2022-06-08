@@ -12,6 +12,9 @@ import { ContentFormNew } from "../NewProd/styles";
 import { ModalFlex } from "../Promotions/styles";
 import Modal from "react-modal";
 
+import { serialize } from 'object-to-formdata';
+
+
 // @ts-ignore
 import InputMask from 'react-input-mask';
 
@@ -29,6 +32,8 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { Field, Form, Formik } from "formik";
 import { format } from "path";
+import { type } from "os";
+import integration from "../../../services/integration/integration";
 
 
 export default function PersonalData() {
@@ -54,21 +59,25 @@ export default function PersonalData() {
   const [bancos, setBancos]=useState<any>([]);  
 
   const [nome, setNome]=useState('');  
-  const [marca, setMarca] = useState('')
-  const [razaoSocial, setRazaoSocial] = useState('')
   const [cnpj, setCnpj] = useState('')
+  const [email, setEmail] = useState('')
   const [telefone, setTelefone] = useState('')
   const [celular, setCelular] = useState('')
-  const [ramal, setRamal] = useState('')
-  const [email, setEmail] = useState('')
-  const [website, setWebsite] = useState('')
+  
+  const [cidade, setCidade] = useState('')
+  const [estado, setEstado] = useState('')
   const [cep, setCep] = useState('')
   const [logradouro, setLogradouro] = useState('')
   const [numero, setNumero] = useState('')
+  
+  
+  const [marca, setMarca] = useState('')
+  const [razaoSocial, setRazaoSocial] = useState('')
+  const [ramal, setRamal] = useState('')
+  const [website, setWebsite] = useState('')
+  
   const [complemento, setComplemento] = useState('')
   const [pontoReferencia, setPontoReferencia] = useState('')
-  const [cidade, setCidade] = useState('')
-  const [estado, setEstado] = useState('')
   
   const [bairro, setBairro] = useState('')
   const [pix, setPix] = useState('')
@@ -89,15 +98,36 @@ export default function PersonalData() {
   const [tipoDeConta, setTipoDeConta]=useState<any>('Poupança');
   const [numeroConta, setNumeroConta]=useState<any>('');
   const [agencia, setAgencia] = useState<any>('');
-
   const [codigoBanco, setCodigoBanco] = useState<any>('');
+  const [nomeTitular, setNomeTitular] = useState<any>('');
+
+
+
+  const [faturamentoEstimado, setFaturamentoEstimado] = useState<any>('');
 
   const [agenciaNumero, setAgenciaNumero] = useState<any>('');
-  const [contaDigito, setContaDigito] = useState<any>('');
+  const [bancoDigito  , setBancoDigito  ] = useState<any>('');
+
+
+  const [nomeProprietario,       setNomeProprietario      ] = useState('');  
+  const [sobrenomeProprietario,  setSobreomeProprietario  ] = useState('');  
+  const [cpfProprietario,        setCpfProprietario       ] = useState('')
+  const [emailProprietario,      setEmailProprietario     ] = useState('')
+  const [telefoneProprietario,   setTelefoneProprietario  ] = useState('')
+  const [celularProprietario,    setCelularProprietario   ] = useState('')
+  
+  const [cidadeProprietario,     setCidadeProprietario    ] = useState('')
+  const [dataNascProprietario,   setDataNascProprietario  ] = useState('')
+  const [estadoProprietario,     setEstadoProprietario    ] = useState('')
+  const [cepProprietario,        setCepProprietario       ] = useState('')
+  const [bairroProprietario,     setBairroProprietario    ] = useState('')
+  const [logradouroProprietario, setLogradouroProprietario] = useState('')
+  const [numeroProprietario,     setNumeroProprietario    ] = useState('')
 
 
 
-
+  
+  
 
   function formatarNumero(v: any){
     v=v.replace(/\D/g,""); //Remove tudo o que não é dígito
@@ -156,7 +186,7 @@ export default function PersonalData() {
             setNumeroConta(response.conta)
             setAgencia(response.agencia)
             setAgenciaNumero(response.agenciaDigito)
-            setContaDigito(response.contaDigito)
+            setBancoDigito(response.contaDigito)
         }
         loadData()
         setBancos(['Itaú', 'Bradesco', 'Caixa Econômica', 'Banco do Brasil', 'Santander', 'Banrisul', 'Sicredi', 'Sicoob', 'Inter', 'BRB', 'Via Credi', 'Neon', 'Votorantim', 'Nubank', 'Pagseguro', 'Banco Original', 'Safra', 'Modal', 'Banestes','Unicred','Money Plus','Mercantil do Brasil','JP Morgan','Gerencianet Pagamentos do Brasil', 'Banco C6', 'BS2', 'Banco Topazio', 'Uniprime', 'Stone', 'Banco Daycoval', 'Rendimento', 'Banco do Nordeste', 'Citibank', 'PJBank', 'Cooperativa Central de Credito Noroeste Brasileiro', 'Uniprime Norte do Paraná', 'Global SCM', 'Next', 'Cora', 'Mercado Pago', 'Banco da Amazonia', 'BNP Paribas Brasil', 'Juno','Cresol','BRL Trust DTVM','Banco Banese','Banco BTG Pactual','Banco Omni','Acesso Soluções de Pagamento','CCR de São Miguel do Oeste','Polocred','Ótimo']
@@ -170,7 +200,167 @@ export default function PersonalData() {
   async function criarOuAtualizarEmpresa(e: any) {
     e.preventDefault()
     setLoading(true)
-    
+
+    const zspayData =  {
+      tipoEstabelecimentoId: 2,
+       categoria : 71, 
+       nome : nome, 
+       nomeComprovante: nome,
+       marca : marca,
+       email: email,
+       razaoSocial : razaoSocial,
+       cnpj : cnpj,
+       telefone : telefone,
+       celular : celular,
+       faturamento_estimado: faturamentoEstimado,
+
+       desativarVendas: 0,
+       nomeFantasia: nome,
+
+       dataNascimento: '',
+       dataNascimento2: '',
+       taxpayer_id: 0,
+
+
+       endereco: {
+         logradouro: logradouro,
+         numero: numero,
+         cidade: cidade,
+         estado: estado,
+         cep: cep,
+         bairro: bairro,
+         complemento: complemento,
+       },
+
+       proprietario: {
+         nome: nomeProprietario,
+         sobrenome: sobrenomeProprietario,
+         email: emailProprietario,
+         celular:  celularProprietario,
+         dataNascimento: dataNascProprietario,
+         cpf: cpfProprietario,
+     
+         endereco: {
+           logradouro: logradouroProprietario,
+           numero: numeroProprietario,
+           cidade: cidadeProprietario,
+           estado: estadoProprietario,
+           cep: cepProprietario,
+           bairro: bairroProprietario
+         }
+       },
+
+       contaBancaria: {
+         tipoContaBancaria: "1",
+         nomeTitular: nomeTitular,
+         agencia: agencia,
+         conta: numeroConta,
+         bancoId: bancoDigito,
+       },
+
+
+       logo:                   null,
+       documentos:             null,
+       documentosProprietario: null,
+       documentosAtividade:    null,
+       documentosResidencia:   null,
+       outrosDocumentos:       null,
+
+
+       enderecoPOS: {
+        logradouro: "",
+        numero: "",
+        cidade: "",
+        estado: "",
+        cep: "",
+        bairro: "",
+        complemento: "",
+      },
+
+   }
+   
+   const zspayData2 = getFormData(zspayData)
+
+    const data: any = {
+      data: {
+        tipoEstabelecimentoId: 2,
+        nome : nome, 
+        nomeComprovante: nome,
+        marca : marca,
+        email: email,
+        razaoSocial : razaoSocial,
+        cnpj : cnpj,
+        telefone : telefone,
+        celular : celular,
+        faturamento_estimado: faturamentoEstimado,
+
+        desativarVendas: "0",
+        nomeFantasia: nome,
+
+
+
+        endereco: {
+          logradouro: logradouro,
+          numero: numero,
+          cidade: cidade,
+          estado: estado,
+          cep: cep,
+          bairro: bairro,
+          complemento: complemento,
+        },
+
+        proprietario: {
+          nome: nomeProprietario,
+          sobrenome: sobrenomeProprietario,
+          email: emailProprietario,
+          celular:  celularProprietario,
+          dataNascimento: dataNascProprietario,
+          cpf: cpfProprietario,
+      
+          endereco: {
+            logradouro: logradouroProprietario,
+            numero: numeroProprietario,
+            cidade: cidadeProprietario,
+            estado: estadoProprietario,
+            cep: cepProprietario,
+            bairro: bairroProprietario
+          }
+        },
+
+        contaBancaria: {
+          tipoContaBancaria: "1",
+          nomeTitular: nomeTitular,
+          agencia: agencia,
+          conta: numeroConta,
+          bancoId: bancoDigito,
+        },
+
+        ramal : ramal,
+        website : website,
+        cep : cep,
+        logradouro : logradouro,
+        numero : numero,
+        complemento : complemento,
+        pontoReferencia : pontoReferencia,
+        cidade : cidade,
+        estado : estado,
+        bairro : bairro,
+        tipoDeConta: tipoDeConta,
+        conta: numeroConta,
+        codigoBanco: codigoBanco,
+        contaDigito: bancoDigito,
+        agenciaDigito: agenciaNumero,
+        banco: banco,
+        agencia: agencia, 
+        pix : pix,
+        user : id,
+        status : "pendente",
+      }
+    }
+
+
+    /*
+
     const data = {
       data: {
         nome : nome, 
@@ -200,31 +390,41 @@ export default function PersonalData() {
         pix : pix,
         user : id,
         status : "pendente",
-      }
-    }
 
-    console.log("data")
-    console.log(data)
+        api: {
+          
+        }
+
+
+    }
+        */
 
     const isThereEmpresa = await api.get(`empresaUser/${id}`)
     .then(r => r.data)
 
 
-    console.log(isThereEmpresa)
+    if(isThereEmpresa) {
+      setLoading(false)
+      return updateEmpresa(isThereEmpresa.id, data)
+    }
 
+    const generatedApiData = await integration.create(zspayData2)
 
-    if(isThereEmpresa) return updateEmpresa(isThereEmpresa.id, data)
+    console.log("generatedApiData")
+    console.log(generatedApiData)
 
-    const generatedApiData = await api.post('empresa-perfil', data)
-    .then(r => r.data)
-    .catch(e => toast.error("Erro ao criar seus dados no gateway de pagamento, revise-os!"))
+    if(!generatedApiData) {
+      setLoading(false)
+      return toast.error("Erro ao criar seus dados no gateway de pagamento, revise-os!")
+  }
 
-    if(!generatedApiData) return toast.error("Erro ao criar seus dados no gateway de pagamento, revise-os!")
+    data.data.user_token = generatedApiData.estabelecimento.id
 
-    const generatedEmpresa = await api.post('empresa', { data: { ...generatedApiData } })
+    const generatedEmpresa = await api.post('empresa',  data )
     .then(r => r.data)
     .catch(
       (response) => {
+        setLoading(false)
         response.data ? toast.info(response.data.status) : toast.error("Algo deu errado, verifique seus dados ou tente mais tarde")
     })
 
@@ -329,169 +529,6 @@ export default function PersonalData() {
   }
 
 
-
-  function checkAccountType(accountType: any) {
-
-
-// switch (accountType) {
-//   /*
-//   Banco	Agência	Conta
-//   Banco do Brasil	9999-D	99999999-D
-//   */
-//   case 'Santander':
-//   case 'Pagseguro':
-//   case 'Safra':
-//   case 'Banestes':
-//   case 'Unicred':
-//   case 'Gerencianet Pagamentos do Brasil':
-//   case 'Mercantil do Brasil':
-//   case 'Banco C6':
-//   case 'Picpay':
-//   case "Banco do Brasil":
-//     setFormatAgencia('9999')
-//     setFormatCartao('99999999-D')
-//     break;
-
-//   case "Banco do Brasil":
-//   case 'Sicoob'	:                          
-//   case 'Itaú'	:                            
-//   case 'Banpará'	:                          
-//   case 'Inter'	:                            
-//   case 'BRB'	:                              
-//   case 'Neon/Votorantim' :
-//   case 'Modal'	:         
-//     setFormatAgencia('9999')
-//     setFormatCartao('999999999-D')
-//     break;
-
-//   case 'Bradesco'	:                          
-//   case 'Next'	:              
-//     setFormatAgencia('9999-D')
-//     setFormatCartao('9999999-D')
-//     break;
-
-
-//   case 'Nubank':                          
-//   case 'PJBank':
-//   case 'Mercado Pago':                          
-//   case 'Juno':              	
-//     setFormatAgencia('9999')
-//     setFormatCartao('9999999999-D')
-//     break;
-    
-//   case 'Banco Original' :
-//   case 'BS2' :
-//   case 'Stone' :
-//   case 'Cooperativa Central de Credito Noroeste Brasileiro' :
-//   case 'Cora' :       
-//     setFormatAgencia('9999')
-//     setFormatCartao('9999999-D')
-//     break;
-
-  
-//   case 'Via Credi':
-//   case 'JP Morgan':
-//     setFormatAgencia('9999')
-//     setFormatCartao('99999999999-D')
-//     break;
-
-//   case 'Uniprime':
-//   case 'Banco Genial':
-//     setFormatAgencia('9999')
-//     setFormatCartao('9999-D')
-//     break;
-
-//   case 'Uniprime Norte do Paraná':
-//   case 'Banco da Amazonia':
-//   case 'Banco Daycoval':
-//   case 'Banco Omni':
-//   case 'Polocred':	
-//     setFormatAgencia('9999')
-//     setFormatCartao('999999-D')
-//     break;
-
-//   case 'Banco do Nordeste':	
-//   case 'BRL Trust DTVM':	  
-//     setFormatAgencia('999')
-//     setFormatCartao('999999-D')
-//     break;
-  
-//   case 'Caixa Econômica':	  
-//       setFormatAgencia('9999')
-//       setFormatCartao('XXXX999999999-D (X: Operação - Novo formato CP)')
-//       break;
-
-//   case 'Agibank':	  
-//       setFormatAgencia('9999')
-//       setFormatCartao('9999999999')
-//       break;
-
-//   case 'Agibank':	  
-//       setFormatAgencia('9999')
-//       setFormatCartao('999999D')
-//       break;
-
-//   case 'Money Plus':	  
-//       setFormatAgencia('9')
-//       setFormatCartao('99999999-D')
-//       break;
-
-//   case 'Rendimento':	  
-//       setFormatAgencia('9999-D')
-//       setFormatCartao('9999999999')
-//       break;
-
-//   case 'Citibank':	  
-//       setFormatAgencia('9999')
-//       setFormatCartao('99999999')
-//       break;
-
-//   case 'Citibank':	  
-//       setFormatAgencia('9999')
-//       setFormatCartao('99999999999')
-//       break;
-
-//   case 'BNP Paribas Brasil':	  
-//       setFormatAgencia('999')
-//       setFormatCartao('999999-DDD')
-//       break;
-
-
-//   case 'Cresol':	  
-//       setFormatAgencia('9999-D')
-//       setFormatCartao('99999-D')
-//       break;
-
-
-//   case 'Banco Banese':	  
-//       setFormatAgencia('999')
-//       setFormatCartao('99999999-D')
-//       break;
-
-
-//   case 'Acesso Soluções de pagamento':	  
-//       setFormatAgencia('9999')
-//       setFormatCartao('99999999')
-//       break;
-
-//   case 'CCR de São Miguel do Oeste':	  
-//       setFormatAgencia('9999')
-//       setFormatCartao('99999')
-//       break;
-
-//   case 'Banco Capital S.A':	  
-//       setFormatAgencia('9999')
-//       setFormatCartao('999999999')
-//       break;
-
-//   case 'Caixa Econômica':	  
-//       setFormatAgencia('9999')
-//       setFormatCartao('XXX99999999-D (X: Operação)')
-//       break;
-  
-//   } 
-  }
-  
   function onSubmitInput (values: any, actions: any) {
     // // console.log(data)
     // Cadastro(data)
@@ -516,22 +553,12 @@ export default function PersonalData() {
         setEstado(data.uf)
       })
   }
-  type FormData = {
-    cnpj: string;
-    razaoSocial: string;
-    nomeFantasia: string;
-    cep: string;
-    uf: string;
-    cidade: string;
-    bairro: string;
-    logradouro: string;
-    numero: string;
-    complemento: string;
-    values: string;
-    actions: string;
-    ev: any;
-    setFieldValue: any;
-  }
+
+
+   /*transforms a object into formData*/
+   function getFormData(object: any) {
+   return serialize(object)
+}
 
   useEffect(
     () => {
@@ -659,10 +686,10 @@ export default function PersonalData() {
           <CardDatailsContent className="adress">
             <ContentDetails>
               <small>
-                <h3>Logradouro: <span>{logradouro}</span></h3>  
+                <h3>Logradouro: <span>{logradouro}     </span></h3>  
                 <h3>Referência: <span>{pontoReferencia}</span></h3> 
-                <h3>CEP: <span>{cep}</span></h3>
-                <h3>Cidade: <span>{cidade}</span></h3> 
+                <h3>CEP:        <span>{cep}            </span></h3>
+                <h3>Cidade:     <span>{cidade}         </span></h3> 
               </small>
             </ContentDetails>
               <Btn //estava como link
@@ -740,26 +767,18 @@ export default function PersonalData() {
 
                     <ContentFormNew>
                     <label htmlFor="">Telefone*</label>
-                    {/* <input
-                    required type="text" placeholder="Telefone"
-                    value={telefone}
-
-                    onChange={(text) => setTelefone(text.target.value)}
-                    /> */}
+                   
                     <InputMask
                     mask="(99) 9999-9999"
                     value={maskedTelefone} 
                     onChange={
                       (e: any) => {
                         let telefone = e.target.value
-                        // console.log(
-                          // telefone.replace(/\D/g, '')
-                          // )
+
                         setTelefone(
                           telefone.replace(/[\(\)\.\s-]+/g,'')
                           )
                           setMaskedTelefone(e.target.value)
-                          // console.log(maskedTelefone)
                       }
                     }
                     />
@@ -769,12 +788,7 @@ export default function PersonalData() {
                     <ContentFormNew>
                       
                     <label htmlFor="">Celular</label>
-                    {/* <input
-                    required type="text" placeholder="Celular"
-                    value={celular}
 
-                    onChange={(text) => setCelular(text.target.value)}
-                    /> */}
                     <InputMask
                     required
                     mask="(99) 9999-99999"
@@ -782,9 +796,6 @@ export default function PersonalData() {
                     onChange={
                       (e: any) => {
                         let celular = e.target.value
-                        // console.log(
-                          // celular.replace(/\D/g, '')
-                          // )
                         setCelular(
                           celular.replace(/[\(\)\.\s-]+/g,'')
                           )
@@ -806,14 +817,10 @@ export default function PersonalData() {
                       onChange={
                         (e: any) => {
                           let cnpj = e.target.value
-                          /* console.log(
-                            cnpj.replace(/\D/g, '')
-                            )*/
                           setCnpj(
                             cnpj.replace(/\D/g, '')
                           )
                           setMaskedCNPJ(e.target.value)
-                          // console.log(maskedCNPJ)
                         }
                       }
                       />
@@ -830,74 +837,32 @@ export default function PersonalData() {
                     onChange={(text) => setWebsite(text.target.value)}
                     />
                     </ContentFormNew>
-                  {/* 
+
                   <ContentFormNew>
-                  <label htmlFor="">Seu Banco*</label>
+                  <label htmlFor="">Tipo de Conta*</label>
+
                   <select
-                    required
-                   onChange={(text) => {
-                    setBanco(text.target.value); 
-                    checkAccountType(text.target.value)
-                                      }}>
-                    {bancos.map((banco: any) => (
-                      <option value={banco}>{banco}</option>
-                    ))}
+                    onChange={
+                      (e: any) => setTipoDeConta(e.target.value) }
+                    >
+                      <option value="1">Conta Corrente</option>
+                      <option value="2">Conta Poupança</option>
+
+
                   </select>
-                </ContentFormNew>
-                */}
 
+              </ContentFormNew>
 
-
-                {/*  
-                bank
-                  string
-
-                  Número da conta. Max: 13 caracteres numéricos
-                  account_check_digit
-                  string
-
-                  Digitos validadores da conta. Max 2 caracteres numéricos
-                  holder_type
-                  string
-
-                  Tipo do documento. "individual" ou "company"
-
-                */}
 
                 <ContentFormNew>
-                    <label htmlFor="">Código do banco*</label>
-                    <label>
-                      3 números
-                    </label>
+                    <label htmlFor="">Conta*</label>
 
                     <InputMask
                       required
-                      mask="999" 
-                      defaultValue={codigoBanco} 
-                      placeholder={'999'}
+
+                      mask="999999-9"
+                      placeholder={'012855-3'}
                       // 01.161.734/0001-15
-                      onChange={
-                        (e: any) => {
-                          let value = e.target.value
-                          let formatedValue = value.replace(/\D/g, '')
-                          setCodigoBanco(formatedValue)
-                        }
-                      }
-                      />
-
-                </ContentFormNew>
-
-                <ContentFormNew>
-                    <label htmlFor="">Numero da Conta*</label>
-                    <label>
-                      Max. 2 caracteres numéricos
-                    </label>
-
-                    <InputMask
-                      required
-                      mask="99" 
-                      defaultValue={numeroConta} 
-                      placeholder={'99'}
                       onChange={
                         (e: any) => {
                           let value = e.target.value
@@ -906,19 +871,17 @@ export default function PersonalData() {
                         }
                       }
                       />
+
                 </ContentFormNew>
-                
+
                 <ContentFormNew>
                   <label htmlFor="">Agência*</label>
-                  <label>
-                  Max. 4 números
-                  </label>
 
                   <InputMask
                       required
-                      mask="9999" 
+                      mask="9999"
+                      placeholder={'0590'}
                       defaultValue={agencia} 
-                      placeholder={'9999'}
                       onChange={
                         (e: any) => {
                           let value = e.target.value
@@ -931,44 +894,44 @@ export default function PersonalData() {
                 </ContentFormNew>
 
                 <ContentFormNew>
-                  <label htmlFor="">Numero da Agência*</label>
-                  <p>
-                  Max. 1 caracter numérico
-                  </p>
+                  <label htmlFor="">Dígito do banco*</label>
+
                   <InputMask
-                    required
-                    mask="9" 
-                    defaultValue={agenciaNumero} 
-                    placeholder={'9'}
-                    onChange={
-                      (e: any) => {
-                        let value = e.target.value
-                        let formatedValue = value.replace(/\D/g, '')
-                        setAgenciaNumero(formatedValue)
+                      required
+                      mask="9999"
+                      placeholder={'0590'}
+                      defaultValue={bancoDigito} 
+                      onChange={
+                        (e: any) => {
+                          let value = e.target.value
+                          let formatedValue = value.replace(/\D/g, '')
+                          setBancoDigito(formatedValue)
+                        }
                       }
-                    }
+                      />
+
+                </ContentFormNew>
+
+
+                <ContentFormNew>
+                    <label htmlFor="">Nome do titular</label>
+                    <input
+                    type="text" placeholder="Nome do titular"
+                    value={nomeTitular}
+
+                    onChange={(text) => setNomeTitular(text.target.value)}
                     />
 
                 </ContentFormNew>
 
                 <ContentFormNew>
-                  <label htmlFor="">Dígito da Conta*</label>
-                  <label>
-                  Max. 2 caracteres numéricos
-                  </label>
-                  <InputMask
-                    required
-                    mask="99" 
-                    defaultValue={contaDigito} 
-                    placeholder={'99'}
-                    onChange={
-                      (e: any) => {
-                        let value = e.target.value
-                        let formatedValue = value.replace(/\D/g, '')
-                        setContaDigito(formatedValue)
-                      }
-                    }
-                    />
+                    <label htmlFor="">Faturamento estimado da empresa</label>
+                    <input
+                    type="text" placeholder="Faturamento"
+                    value={faturamentoEstimado}
+
+                    onChange={(text) => setFaturamentoEstimado(text.target.value)}
+                  />
 
                 </ContentFormNew>
 
@@ -1103,6 +1066,181 @@ export default function PersonalData() {
                         <option value='TO'>Tocantins</option>
                       </Field>
                     </ContentFormNew>
+                    
+
+
+                    <ContentFormNew className='form-control-group'>
+                      <label>Nome do proprietário*</label>
+                      <Field 
+                      required
+                      value={nomeProprietario}
+                      name='cidade' 
+                      type='text'
+                      onChange={(text: any) => setNomeProprietario(text.target.value)}
+                       />
+                    </ContentFormNew>
+
+
+                    <ContentFormNew className='form-control-group'>
+                      <label>Sobrenome do proprietário*</label>
+                      <Field 
+                      required
+                      value={sobrenomeProprietario}
+                      name='cidade' 
+                      type='text'
+                      onChange={(text: any) => setSobreomeProprietario(text.target.value)}
+                       />
+                    </ContentFormNew>
+
+                    <ContentFormNew className='form-control-group'>
+                      <label>Email do proprietário*</label>
+                      <Field 
+                      required
+                      value={emailProprietario}
+                      name='cidade' 
+                      type='text'
+                      onChange={(text: any) => setEmailProprietario(text.target.value)}
+                       />
+                    </ContentFormNew>
+
+                    <ContentFormNew className='form-control-group'>
+                      <label>Celular do proprietário*</label>
+                      <Field 
+                      required
+                      value={celularProprietario}
+                      name='cidade' 
+                      type='text'
+                      onChange={(text: any) => setCelularProprietario(text.target.value)}
+                       />
+                    </ContentFormNew>
+
+
+
+                    <ContentFormNew className='form-control-group'>
+                      <label>Data de nascimento do proprietário*</label>
+                      <Field 
+                      required
+                      value={dataNascProprietario}
+                      name='cidade' 
+                      type='text'
+                      onChange={(text: any) => setDataNascProprietario(text.target.value)}
+                       />
+                    </ContentFormNew>
+
+
+                    
+
+
+                    <ContentFormNew className='form-control-group'>
+                      <label>CPF do proprietário*</label>
+                      <Field 
+                      required
+                      value={cpfProprietario}
+                      name='cidade' 
+                      type='text'
+                      onChange={(text: any) => setCpfProprietario(text.target.value)}
+                       />
+                    </ContentFormNew>
+
+
+
+
+                    <ContentFormNew className='form-control-group'>
+                      <label>Logradouro do proprietário*</label>
+                      <Field 
+                      required
+                      value={logradouroProprietario}
+                      name='cidade' 
+                      type='text'
+                      onChange={(text: any) => setLogradouroProprietario(text.target.value)}
+                       />
+                    </ContentFormNew>
+
+
+                    <ContentFormNew className='form-control-group'>
+                      <label>Número do proprietário*</label>
+                      <Field 
+                      required
+                      value={numeroProprietario}
+                      name='cidade' 
+                      type='text'
+                      onChange={(text: any) => setNumeroProprietario(text.target.value)}
+                       />
+                    </ContentFormNew>
+                    <ContentFormNew className='form-control-group'>
+                      <label>Cidade do proprietário*</label>
+                      <Field 
+                      required
+                      value={cidadeProprietario}
+                      name='cidade' 
+                      type='text'
+                      onChange={(text: any) => setCidadeProprietario(text.target.value)}
+                       />
+                    </ContentFormNew>
+
+                    <ContentFormNew className='form-control-group'>
+                      <label>Estado do proprietário*</label>
+                      <Field 
+                        required
+                        value={estadoProprietario}
+                        component='select' 
+                        name='uf'
+                        onChange={(text: any) => setEstadoProprietario(text.target.value)}
+                        >
+                          <option value=''  hidden >Selecione o Estado</option>
+                          <option value='AC'>Acre</option>
+                          <option value='AL'>Alagoas</option>
+                          <option value='AP'>Amapá</option>
+                          <option value='AM'>Amazonas</option>
+                          <option value='BA'>Bahia</option>
+                          <option value='CE'>Ceará</option>
+                          <option value='DF'>Distrito Federal</option>
+                          <option value='ES'>Espírito Santo</option>
+                          <option value='GO'>Goiás</option>
+                          <option value='MA'>Maranhão</option>
+                          <option value='MT'>Mato Grosso</option>
+                          <option value='MS'>Mato Grosso do Sul</option>
+                          <option value='MG'>Minas Gerais</option>
+                          <option value='PA'>Pará</option>
+                          <option value='PB'>Paraíba</option>
+                          <option value='PR'>Paraná</option>
+                          <option value='PE'>Pernambuco</option>
+                          <option value='PI'>Piauí</option>
+                          <option value='RJ'>Rio de Janeiro</option>
+                          <option value='RN'>Rio Grande do Norte</option>
+                          <option value='RS'>Rio Grande do Sul</option>
+                          <option value='RO'>Rondônia</option>
+                          <option value='RR'>Roraima</option>
+                          <option value='SC'>Santa Catarina</option>
+                          <option value='SP'>São Paulo</option>
+                          <option value='SE'>Sergipe</option>
+                          <option value='TO'>Tocantins</option>
+                        </Field>
+                    </ContentFormNew>
+
+                    <ContentFormNew className='form-control-group'>
+                      <label>CEP do proprietário*</label>
+                      <Field 
+                      required
+                      value={cepProprietario}
+                      name='cidade' 
+                      type='text'
+                      onChange={(text: any) => setCepProprietario(text.target.value)}
+                       />
+                    </ContentFormNew>
+
+                    <ContentFormNew className='form-control-group'>
+                      <label>Bairro do proprietário*</label>
+                      <Field 
+                      required
+                      value={bairroProprietario}
+                      name='cidade' 
+                      type='text'
+                      onChange={(text: any) => setBairroProprietario(text.target.value)}
+                       />
+                    </ContentFormNew>
+
+
                   </Form>
                 )}
               />
