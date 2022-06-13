@@ -432,7 +432,6 @@ const Header = (): JSX.Element => {
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
-        className="modal"
       >
         <ModalContainer>
           <ModalEnter>
@@ -506,7 +505,6 @@ const Header = (): JSX.Element => {
         isOpen={modalIsOpen2}
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal2}
-        className="modal"
       >
         <ModalContainer>
           <ModalEnter>
