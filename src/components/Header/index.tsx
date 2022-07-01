@@ -11,8 +11,8 @@ import {
 } from "react-icons/fi";
 import Axios from "axios";
 import logo from "../../assets/images/logo.png";
-import { FiLogOut } from "react-icons/fi";
 import loading from "../../assets/images/loading.gif";
+import { FiLogOut } from "react-icons/fi";
 
 
 import {
@@ -194,9 +194,6 @@ const Header = (): JSX.Element => {
   }
 
 
-  function handleClickMain() {
-    history.push("/");
-  }
   function logof() {
     localStorage.clear();
     toast.info("Saiu!")
@@ -466,7 +463,7 @@ const Header = (): JSX.Element => {
                 width="40px"
                 style={{ margin: "auto" }}
                 height=""
-                src={"https://contribua.org/mb-static/images/loading.gif"}
+                src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
                 alt="Loading"
               />
             ) : (
@@ -521,7 +518,7 @@ const Header = (): JSX.Element => {
                 width="40px"
                 style={{ margin: "0 auto" }}
                 height=""
-                src={"https://contribua.org/mb-static/images/loading.gif"}
+                src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
                 alt="Loading"
               />
             ) :
