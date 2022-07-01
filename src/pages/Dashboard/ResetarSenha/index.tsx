@@ -215,15 +215,17 @@ export default function ResetarSenha() {
                   src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
                   alt="Loading"
                 />
-              ) : false}
-              <div className="buttonsNew">
-                <button type="button" onClick={closeModalResetSenha}>
-                  Cancelar
-                </button>
-                <button type="button" onClick={resetSenha}>
-                  Adicionar
-                </button>
-              </div>
+              ) : (
+                <div className="buttonsNew">
+                  <button type="button" onClick={closeModalResetSenha}>
+                    Cancelar
+                  </button>
+                  <button type="button" onClick={resetSenha}>
+                    Adicionar
+                  </button>
+                </div>
+              )
+              }
             </ModalContent>
           </div>
         </Modal>
