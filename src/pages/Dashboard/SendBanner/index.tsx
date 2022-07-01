@@ -16,6 +16,7 @@ import axios from "axios";
 import React from "react";
 
 import { toast } from "react-toastify";
+import { MdFileUpload } from "react-icons/md";
 
 export default function SendBanner() {
 
@@ -332,52 +333,83 @@ export default function SendBanner() {
       <Menu />
       <div className="container">
         <CardDatails>
-          
+
           <form className="file"
-          encType='multipart/form-data'
+            encType='multipart/form-data'
 
-          onSubmit={makeRequisition}
+            onSubmit={makeRequisition}
           >
-            <h2>Faça upload</h2>
-            <h4
-                // style={{margin: 'auto'}}
-                >
-                  Imagem deve estar em 1440 X 417 PX
-            </h4>
 
-          <input 
-          type="file"
-          required
-          name="image"
-          onChange={e => {
-          // console.log(e)
 
-          //@ts-ignore
-          // console.log(e.target.files[0].name)
-          //@ts-ignore
-          setName(e.target.files[0].name)
-          //@ts-ignore
-          setImage(e.target.files[0])
 
-          //@ts-ignore
-          if(e.target.files[0].type.includes('image')){
-            //@ts-ignore
-            uploadImage(e.target.files[0], setImagemNova)
-          }
-          else{
-            toast.error("Arquivo não suportado")
-          }
-          
-            
+            <h2>
+              Crie um novo Banner
+            </h2>
 
-        }
-        } 
-          /><br /><br />
 
-            
+            <div className="flex-container">
+              <label
+                htmlFor="upload-xls"
+                className="btn-info"
+              >
+                Selecione uma imagem
+                <MdFileUpload />
+              </label>
+              <input
+                type="file"
+                id="upload-xls"
+                required
+                className="upload-input"
+                name="image"
+                onChange={e => {
+                  //@ts-ignore
+                  setName(e?.target?.files[0].name)
+                  //@ts-ignore
+                  setImage(e?.target?.files[0])
+                  //@ts-ignore
+                  if (e?.target?.files[0].type.includes('image')) {
+                    //@ts-ignore
+                    uploadImage(e?.target?.files[0], setImagemNova)
+                  }
+                  else {
+                    toast.error("Arquivo não suportado")
+                  }
+                }
+                }
+              />
+            </div>
+
+            <p
+            className="specifications"
+            >
+              Imagem deve estar em 1440 X 417 PX
+            </p>
+
+            <br /><br />
+
+
 
             <input type="submit" value="Enviar"
-             />
+            />
+
+
+            {/* <div className="flex-container">
+              <label
+                htmlFor="upload-xls"
+                className="btn-info"
+              >
+                Arquivo Excel
+                <MdFileUpload/>
+              </label>
+
+              <input
+                className="upload-xls"
+                type="file"
+                id="upload-xls"
+                name="upload-xls"
+                accept=".xls,.xlsx,.ods,.csv"
+              />
+            </div> */}
           </form>
 
 
@@ -427,7 +459,7 @@ export default function SendBanner() {
                     Ver
                   </a>
                 </small>
-                  <p>
+                  <p className="reset-btn">
                     {imagem.nome}
                   </p>
               </ContentDetails>
