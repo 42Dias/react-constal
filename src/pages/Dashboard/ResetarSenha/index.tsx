@@ -27,81 +27,35 @@ import axios from "axios";
 export default function ResetarSenha() {
   const [showModal1, setShowModal1] = React.useState(false);
   const [showModal2, setShowModal2] = React.useState(false);
+  const [email              , setEmail              ] = useState('')
+  const [userId             , setuserId             ] = useState('')
+  const [senha              , setSenha              ] = useState("");
+  const [showModalResetSenha, setShowModalResetSenha] = useState(false);
+  const [loading            , setLoading            ] = useState(false);
 
   function afterOpenModal() {
     // references are now sync'd and can be accessed.
   }
-  function closeModal() {
-    setShowModal1(false);
-    setShowModal2(false);
-  }
-  function messageCancel() {
-    toast.error('Ah, que pena. o seu produto não foi cadastrado na plataforma. Revise algumas informações :(')
-    //setIsOpen(false);
-  }
 
-  function messageApprove() {
-    toast.info('Eba, recebemos o seu pedido. Ele será revisado e logo estará na plataforma :)')
-    //setIsOpen(false);
-  }
-
-  const [nome, setNome] = useState('');
-  const [marca, setMarca] = useState('')
-  const [razaoSocial, setRazaoSocial] = useState('')
-  const [cnpj, setCnpj] = useState('')
-  const [telefone, setTelefone] = useState('')
-  const [ramal, setRamal] = useState('')
-  const [email, setEmail] = useState('')
-  const [website, setWebsite] = useState('')
-  const [cep, setCep] = useState('')
-  const [logradouro, setLogradouro] = useState('')
-  const [numero, setNumero] = useState('')
-  const [complemento, setComplemento] = useState('')
-  const [pontoReferencia, setPontoReferencia] = useState('')
-  const [cidade, setCidade] = useState('')
-  const [estado, setEstado] = useState('')
-  const [bairro, setBairro] = useState('')
-  const [pix, setPix] = useState('')
-  const [showModalResetSenha, setShowModalResetSenha] = React.useState(false);
-  const [newNome, setNewNome] = useState('');
-  const [newMarca, setNewMarca] = useState('')
-  const [newRazaoSocial, setNewRazaoSocial] = useState('')
-  const [newCnpj, setNewCnpj] = useState('')
-  const [newTelefone, setNewTelefone] = useState('')
-  const [newRamal, setNewRamal] = useState('')
-  const [newEmail, setNewEmail] = useState('')
-  const [newWebsite, setNewWebsite] = useState('')
-  const [newCep, setNewCep] = useState('')
-  const [newLogradouro, setNewLogradouro] = useState('')
-  const [newNumero, setNewNumero] = useState('')
-  const [newComplemento, setNewComplemento] = useState('')
-  const [newPontoReferencia, setNewPontoReferencia] = useState('')
-  const [newCidade, setNewCidade] = useState('')
-  const [newEstado, setNewEstado] = useState('')
-  const [newBairro, setNewBairro] = useState('')
-  const [newPix, setNewPix] = useState('')
-  const [loading, setLoading] = useState(false);
-  const [senha, setSenha] = useState("");
 
   useEffect(() => {
-    // console.log(role + " " + status)
 
-    const hash = window.location.hash.replace('${ip}/#/errodias.com.br/Clientes/constal/#/', '');
-    // console.log(hash)
+    console.log("window.location.hash")
+    console.log(window.location.hash)
+
+    const hash = window.location.hash.replace(`#/resetar-senha/`, ``);
+
     if (hash) {
+      
+      localStorage.setItem("token", JSON.stringify(hash));
+      loadUser(hash)
 
-      var token = hash.replace('#/resetar-senha/', '');
-      // console.log(token)
-      if (token) {
-        localStorage.setItem("token", JSON.stringify(token));
-        loadUser()
-      }
     }
   }
 
     , []
   )
-  async function loadUser() {
+  async function loadUser(token: string) {
     if (!token) {
       //window.location.reload()
     }
@@ -114,7 +68,8 @@ export default function ResetarSenha() {
         Authorization: "Bearer " + token,
       },
       timeout: 50000,
-    }).then((response) => {
+    })
+    .then((response) => {
       return response.data;
     });
     //// console.log(response);
@@ -132,11 +87,14 @@ export default function ResetarSenha() {
     localStorage.setItem("id", JSON.stringify(response.id)); //saves client's data into localStorage:
     localStorage.setItem("status", JSON.stringify(response.tenants[0].status)); //saves client's data into localStorage:
     localStorage.setItem("email", JSON.stringify(response.email));
+
+    setuserId(response.id)
   }
 
   async function resetSenha() {
     setLoading(true)
-    const data = await api.get("user/" + id).then((response) => {
+  
+    await api.get("user/" + id).then((response) => {
       update(response.data)
       return response.data;
     });
@@ -145,13 +103,18 @@ export default function ResetarSenha() {
     async function update(data: any) {
       if (data) {
         data.password = senha
-        const response = await axios.put(`${ip}:8157/api/auth/password-reset/`, {
-          token: id,
+        
+        await axios.put(`${ip}:8157/api/auth/password-reset/`, {
+          token: userId,
           password: senha
-        }).then((response) => {
+        })
+        .then((response) => {
           setLoading(false)
+          toast.info("Senha Alterada com sucesso!")
+          closeModalResetSenha()
           return response.data;
-        }).catch(error => {
+        })
+        .catch(error => {
           toast.error("Link de redefinição de senha inválido ou expirado")
           setLoading(false)
         })
