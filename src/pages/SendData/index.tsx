@@ -177,10 +177,6 @@ export default function SendData() {
               }
               />
               <br />
-
-              {/* <p>
-                {sobre}
-              </p> */}
               {
               sobre?(
                 <h4
@@ -299,14 +295,12 @@ export default function SendData() {
                 <AiOutlineClose onClick={() => closeModal()} />
               </ModalFlex>
 
-            {/* <ModalContainer> */}
               <ModalContainerText>
               <h2>Sobre a Constal</h2>
               <br />
               <p>
                 {`${sobre}`}
               </p>
-                            {/* </ModalContainer> */}
               </ModalContainerText>
       </div>
       </Modal>
@@ -341,7 +335,7 @@ export default function SendData() {
                         }} />
                       <label htmlFor="">Contato</label>
                       <InputMask
-                          mask=" (99) 9 99999-9999"
+                          mask=" (99) 9999-9999"
                           value={telefone}
                           onChange={
                             (e: any) => {
