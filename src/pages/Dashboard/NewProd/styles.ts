@@ -1,3 +1,4 @@
+import { Container } from './../../NewPlan/NewPlan.styled';
 import styled from "styled-components";
 
 export const DetailsProdFirts = styled.div`
@@ -259,7 +260,7 @@ export const ContentFormNew = styled.div`
     width: 466px;
     border-radius: 4px;
     border: 0;
-    background: #F2F2F2 !important;
+    background: #F2F2F2 ;
     padding: 0 5px;
     margin: 10px 0;
     @media (max-width: 768px) {
@@ -326,3 +327,71 @@ export const ModalContainerText = styled.div`
 
   text-align: justify;
   `
+
+export const FileContainer = styled.div`
+  background: white;
+  width: 100%;
+  
+  min-height: 250px;
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  /*
+  padding: 5%;
+  */
+  border-radius: 5px;
+
+
+  .btn-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 210px;
+    height: 41px;
+    text-decoration: none;
+    background: black;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: .5rem;
+    width: 100%;
+  } 
+  
+  .container-file{
+    display: flex;
+    width: 466px;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  input[type=submit] {
+    padding: 10px 10px;
+    width: 120px;
+    background-color: black;
+    color: #FFF;
+    text-align: center;
+    display: block;
+    /*
+    margin-top: 10px;
+    */
+    cursor: pointer;
+    border: 0;
+    border-radius: 5px;
+  } 
+
+  input[type=file]{
+
+    background: transparent;
+  }
+  input[type=file]::-webkit-file-upload-button {
+    visibility: hidden;
+    display: none;
+
+  }
+
+  input[type=file]::file-selector-button {
+    display: none;
+  }
+
+`
