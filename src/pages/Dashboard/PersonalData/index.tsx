@@ -199,7 +199,12 @@ export default function PersonalData() {
 
   async function criarOuAtualizarEmpresa(e: any) {
     e.preventDefault()
+
+    if(loading) return;
+    
     setLoading(true)
+    try {
+
 
     const zspayData =  {
       tipoEstabelecimentoId: 2,
@@ -401,6 +406,7 @@ export default function PersonalData() {
 
     const isThereEmpresa = await api.get(`empresaUser/${id}`)
     .then(r => r.data)
+    .catch(() => setLoading(false) )
 
 
     if(isThereEmpresa) {
@@ -432,16 +438,24 @@ export default function PersonalData() {
       toast.info('Empresa Criada com sucessso! :)')
       closeModal()
     }
+    closeModal()
+    setLoading(false)
+  }
+  catch(e){
+    // toast.error(String(e)) 
+    toast.error("Erro ao enviar os dados!")
     
     setLoading(false)
-
+  }
   }
   async function resetSenha(){
     setLoading(true)
-    const data = await api.get("user/" + id).then((response) => {
+    const data = await api.get("user/" + id)
+    .then((response) => {
       update(response.data)
       return response.data;
-    });
+    })
+    .catch(() => setLoading(false) )
     // console.log(data)
     
     async function update(data:any){
@@ -451,8 +465,8 @@ export default function PersonalData() {
         token: id,
         password: senha
       }).then((response) => {
-        setLoading(false)
         closeModal()
+        setLoading(false)
         toast.info("Ação realizada com sucesso")
         return response.data;
       }).catch(error =>{
@@ -468,8 +482,9 @@ export default function PersonalData() {
 
   async function changePlace(){
 
-    setLoading(true)
+    if(loading) return;
 
+    setLoading(true)
     const data = {
       data: {
         cep : cep,
@@ -582,103 +597,103 @@ export default function PersonalData() {
           <CardDatailsContent>
             <ContentDetails>
               <h3>Login: <span>{email || Email}</span></h3>
-              
+
             </ContentDetails>
           </CardDatailsContent>
 
           <CardDatailsContent>
-            <ContentDetails> 
+            <ContentDetails>
               <h3>Senha: <span>******</span></h3>
-              
+
             </ContentDetails>
-            <Btn style={ {width: "115px"}  }
-             onClick={() => setShowModalResetSenha(true)}
+            <Btn style={{ width: "115px" }}
+              onClick={() => setShowModalResetSenha(true)}
             >Alterar senha</Btn>
           </CardDatailsContent>
         </CardDatails>
         <CardDatails>
-        
 
-          
+
+
           <h2>{nome}</h2>
-        <Btn style={ {width: "170px"}  }
-          onClick={
-          () => {setShowModal1(true)}
-          }>
-            {marca || razaoSocial || cnpj || telefone ? 'Alterar seus dados':'Adicionar seus dados'} 
+          <Btn style={{ width: "170px" }}
+            onClick={
+              () => { setShowModal1(true) }
+            }>
+            {marca || razaoSocial || cnpj || telefone ? 'Alterar seus dados' : 'Adicionar seus dados'}
           </Btn>
 
           {
             marca || razaoSocial || cnpj || telefone ? (
-          <>
-          <CardDatailsContent>
-            <ContentDetails>
-              <h3>Marca: <span>{marca}</span></h3>
-            </ContentDetails>
-          </CardDatailsContent>
+              <>
+                <CardDatailsContent>
+                  <ContentDetails>
+                    <h3>Marca: <span>{marca}</span></h3>
+                  </ContentDetails>
+                </CardDatailsContent>
 
-          <CardDatailsContent>
-            <ContentDetails>
-              <h3>Ramal: <span>{ramal}</span></h3>
-            </ContentDetails>
-          </CardDatailsContent>
+                <CardDatailsContent>
+                  <ContentDetails>
+                    <h3>Ramal: <span>{ramal}</span></h3>
+                  </ContentDetails>
+                </CardDatailsContent>
 
-          <CardDatailsContent>
-            <ContentDetails>
-              <h3>Razão Social: <span>{razaoSocial}</span></h3>
-            </ContentDetails>
-          </CardDatailsContent>
+                <CardDatailsContent>
+                  <ContentDetails>
+                    <h3>Razão Social: <span>{razaoSocial}</span></h3>
+                  </ContentDetails>
+                </CardDatailsContent>
 
-          <CardDatailsContent>
-            <ContentDetails>
-              <h3>CNPJ: <span> {
-                maskedCNPJ
-                } </span></h3>
-            </ContentDetails>
-          </CardDatailsContent>
+                <CardDatailsContent>
+                  <ContentDetails>
+                    <h3>CNPJ: <span> {
+                      maskedCNPJ
+                    } </span></h3>
+                  </ContentDetails>
+                </CardDatailsContent>
 
-          <CardDatailsContent>
-            <ContentDetails>
-              <h3>Telefone: <span> {
-              maskedTelefone
-              }</span></h3>
-            </ContentDetails>
-          </CardDatailsContent>
+                <CardDatailsContent>
+                  <ContentDetails>
+                    <h3>Telefone: <span> {
+                      maskedTelefone
+                    }</span></h3>
+                  </ContentDetails>
+                </CardDatailsContent>
 
-          <CardDatailsContent>
-            <ContentDetails>
-              <h3>Celular: <span> {celular? formatarNumero(celular): false}</span></h3>
-            </ContentDetails>
-          </CardDatailsContent>
+                <CardDatailsContent>
+                  <ContentDetails>
+                    <h3>Celular: <span> {celular ? formatarNumero(celular) : false}</span></h3>
+                  </ContentDetails>
+                </CardDatailsContent>
 
-          <CardDatailsContent>
-            <ContentDetails>
-              <h3>Website: 
-              <span>  
-              <a
-              style={
-                {
-                  backgroundColor: 'transparent',
-                  color: 'rgba(0, 0, 0, 0.65)',
-                  display: 'inline',
-                  fontWeight: 'lighter',
-                }
-              }
-              href={website} 
-              target="_blank">
-                  {website}
-              </a> 
-                 </span>
-              </h3>
-            </ContentDetails>
-          </CardDatailsContent>
-          </>    
-            ):
-            (
-            false
+                <CardDatailsContent>
+                  <ContentDetails>
+                    <h3>Website:
+                      <span>
+                        <a
+                          style={
+                            {
+                              backgroundColor: 'transparent',
+                              color: 'rgba(0, 0, 0, 0.65)',
+                              display: 'inline',
+                              fontWeight: 'lighter',
+                            }
+                          }
+                          href={website}
+                          target="_blank">
+                          {website}
+                        </a>
+                      </span>
+                    </h3>
+                  </ContentDetails>
+                </CardDatailsContent>
+              </>
+            ) :
+              (
+                false
               )
           }
-          
+
         </CardDatails>
 
         <CardDatails>
@@ -686,23 +701,23 @@ export default function PersonalData() {
           <CardDatailsContent className="adress">
             <ContentDetails>
               <small>
-                <h3>Logradouro: <span>{logradouro}     </span></h3>  
-                <h3>Referência: <span>{pontoReferencia}</span></h3> 
+                <h3>Logradouro: <span>{logradouro}     </span></h3>
+                <h3>Referência: <span>{pontoReferencia}</span></h3>
                 <h3>CEP:        <span>{cep}            </span></h3>
-                <h3>Cidade:     <span>{cidade}         </span></h3> 
+                <h3>Cidade:     <span>{cidade}         </span></h3>
               </small>
             </ContentDetails>
-              <Btn //estava como link
+            <Btn //estava como link
               onClick={
                 () => setShowModal2(true)}
-              >
-                {logradouro ? 'Alterar':'Adicionar'} 
-                </Btn>
+            >
+              {logradouro ? 'Alterar' : 'Adicionar'}
+            </Btn>
 
           </CardDatailsContent>
         </CardDatails>
       </div>
-      
+
 
 
 
@@ -712,482 +727,672 @@ export default function PersonalData() {
        */}
       <ModalContainerVendedor >
         {/* MODAL DE ALTERAR TUDO */}
-          <Modal
-            isOpen={showModal1}
-            onAfterOpen={afterOpenModal}
-            onRequestClose={() => setShowModal1(false)}
-            >
-              <div>
-                <ModalFlex>
-                  <AiOutlineClose onClick={
-                    () => setShowModal1(false)} />
-                </ModalFlex>
-                <ModalContent
-                onSubmit={criarOuAtualizarEmpresa}>
-                  <img  alt="" />
-                  <h3>
-                  {marca || razaoSocial || cnpj || telefone ? 'Alterar seus dados':'Cadastrar seus dados'} 
-                    </h3>
-                    <ContentFormNew>
-                    <label htmlFor="">Nome da Empresa*</label>
-                    <input
-                    required type="text" placeholder="Empresa"
-                    value={nome}
-                    onChange={(text) => setNome(text.target.value)}
-                    />
-                    </ContentFormNew>
-                    <ContentFormNew>
-                    <label htmlFor="">Marca</label>
-                    <input
-                    type="text" placeholder="Marca"
-                    value={marca}
-                    onChange={(text) => setMarca(text.target.value)}
-                    />
-                    </ContentFormNew>
-                    <ContentFormNew>
-                    <label htmlFor="">Razão Social*</label>
-                    <input
-                    required type="text" placeholder="Razão Social"
-                    value={razaoSocial}
+        <Modal
+          isOpen={showModal1}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={() => setShowModal1(false)}
+        >
+          <div>
+            <ModalFlex>
+              <AiOutlineClose onClick={
+                () => setShowModal1(false)} />
+            </ModalFlex>
+            <ModalContent
+              onSubmit={criarOuAtualizarEmpresa}>
+              <img alt="" />
+              <h3>
+                {marca || razaoSocial || cnpj || telefone ? 'Alterar seus dados' : 'Cadastrar seus dados'}
+              </h3>
+              <ContentFormNew>
+                <label htmlFor="">Nome da Empresa*</label>
+                <input
+                  required type="text" placeholder="Empresa"
+                  value={nome}
+                  onChange={(text) => setNome(text.target.value)}
+                />
+              </ContentFormNew>
+              <ContentFormNew>
+                <label htmlFor="">Marca</label>
+                <input
+                  type="text" placeholder="Marca"
+                  value={marca}
+                  onChange={(text) => setMarca(text.target.value)}
+                />
+              </ContentFormNew>
+              <ContentFormNew>
+                <label htmlFor="">Razão Social*</label>
+                <input
+                  required type="text" placeholder="Razão Social"
+                  value={razaoSocial}
 
-                    onChange={(text) => setRazaoSocial(text.target.value)}
-                    />
-                    </ContentFormNew>
+                  onChange={(text) => setRazaoSocial(text.target.value)}
+                />
+              </ContentFormNew>
 
 
-                    <ContentFormNew>
-                    <label htmlFor="">Ramal</label>
-                    <input
-                    type="text" placeholder="Ramal"
-                    value={ramal}
+              <ContentFormNew>
+                <label htmlFor="">Ramal</label>
+                <input
+                  type="text" placeholder="Ramal"
+                  value={ramal}
 
-                    onChange={(text) => setRamal(text.target.value)}
-                    />
-                    </ContentFormNew>
+                  onChange={(text) => setRamal(text.target.value)}
+                />
+              </ContentFormNew>
 
-                    <ContentFormNew>
-                    <label htmlFor="">Telefone*</label>
-                   
-                    <InputMask
-                    mask="(99) 9999-9999"
-                    value={maskedTelefone} 
-                    onChange={
-                      (e: any) => {
-                        let telefone = e.target.value
+              <ContentFormNew>
+                <label htmlFor="">Telefone*</label>
 
-                        setTelefone(
-                          telefone.replace(/[\(\)\.\s-]+/g,'')
-                          )
-                          setMaskedTelefone(e.target.value)
-                      }
+                <InputMask
+                  mask="(99) 9999-9999"
+                  value={maskedTelefone}
+                  onChange={
+                    (e: any) => {
+                      let telefone = e.target.value
+
+                      setTelefone(
+                        telefone.replace(/[\(\)\.\s-]+/g, '')
+                      )
+                      setMaskedTelefone(e.target.value)
                     }
-                    />
-                    </ContentFormNew>
+                  }
+                />
+              </ContentFormNew>
 
-                    
-                    <ContentFormNew>
-                      
-                    <label htmlFor="">Celular</label>
 
-                    <InputMask
-                    required
-                    mask="(99) 9999-99999"
-                    value={maskedCelular} 
-                    onChange={
-                      (e: any) => {
-                        let celular = e.target.value
-                        setCelular(
-                          celular.replace(/[\(\)\.\s-]+/g,'')
-                          )
-                        setMaskedCelular(e.target.value)
-                      }
+              <ContentFormNew>
+
+                <label htmlFor="">Celular</label>
+
+                <InputMask
+                  required
+                  mask="(99) 9999-99999"
+                  value={maskedCelular}
+                  onChange={
+                    (e: any) => {
+                      let celular = e.target.value
+                      setCelular(
+                        celular.replace(/[\(\)\.\s-]+/g, '')
+                      )
+                      setMaskedCelular(e.target.value)
                     }
-                    />
-
-                    
-                    </ContentFormNew> 
-                   
-                    <ContentFormNew>
-                      <label htmlFor="">CNPJ*</label>
-                      <InputMask
-                      required mask="99.999.999/9999-99" 
-                      value={maskedCNPJ} 
-
-                      // 01.161.734/0001-15
-                      onChange={
-                        (e: any) => {
-                          let cnpj = e.target.value
-                          setCnpj(
-                            cnpj.replace(/\D/g, '')
-                          )
-                          setMaskedCNPJ(e.target.value)
-                        }
-                      }
-                      />
-                    </ContentFormNew>
+                  }
+                />
 
 
-                    <ContentFormNew>
-                    <label htmlFor="">Website</label>
-                    <input
-                    type="text" placeholder="Website"
-                    value={website}
+              </ContentFormNew>
+
+              <ContentFormNew>
+                <label htmlFor="">CNPJ*</label>
+                <InputMask
+                  required mask="99.999.999/9999-99"
+                  value={maskedCNPJ}
+
+                  // 01.161.734/0001-15
+                  onChange={
+                    (e: any) => {
+                      let cnpj = e.target.value
+                      setCnpj(
+                        cnpj.replace(/\D/g, '')
+                      )
+                      setMaskedCNPJ(e.target.value)
+                    }
+                  }
+                />
+              </ContentFormNew>
 
 
-                    onChange={(text) => setWebsite(text.target.value)}
-                    />
-                    </ContentFormNew>
-
-                  <ContentFormNew>
-                  <label htmlFor="">Tipo de Conta*</label>
-
-                  <select
-                    onChange={
-                      (e: any) => setTipoDeConta(e.target.value) }
-                    >
-                      <option value="1">Conta Corrente</option>
-                      <option value="2">Conta Poupança</option>
+              <ContentFormNew>
+                <label htmlFor="">Website</label>
+                <input
+                  type="text" placeholder="Website"
+                  value={website}
 
 
-                  </select>
+                  onChange={(text) => setWebsite(text.target.value)}
+                />
+              </ContentFormNew>
+
+              <ContentFormNew>
+                <label htmlFor="">Tipo de Conta*</label>
+
+                <select
+                  onChange={
+                    (e: any) => setTipoDeConta(e.target.value)}
+                >
+                  <option value="1">Conta Corrente</option>
+                  <option value="2">Conta Poupança</option>
+
+
+                </select>
 
               </ContentFormNew>
 
 
+              <ContentFormNew>
+                <label htmlFor="">Conta*</label>
+
+                <InputMask
+                  required
+
+                  mask="999999-9"
+                  placeholder={'012855-3'}
+                  // 01.161.734/0001-15
+                  onChange={
+                    (e: any) => {
+                      let value = e.target.value
+                      let formatedValue = value.replace(/\D/g, '')
+                      setNumeroConta(formatedValue)
+                    }
+                  }
+                />
+
+              </ContentFormNew>
+
+              <ContentFormNew>
+                <label htmlFor="">Agência*</label>
+
+                <InputMask
+                  required
+                  mask="9999"
+                  placeholder={'0590'}
+                  defaultValue={agencia}
+                  onChange={
+                    (e: any) => {
+                      let value = e.target.value
+                      let formatedValue = value.replace(/\D/g, '')
+                      setAgencia(formatedValue)
+                    }
+                  }
+                />
+
+              </ContentFormNew>
+
+              <ContentFormNew>
+                <label htmlFor="">Dígito do banco*</label>
+
+                <InputMask
+                  required
+                  mask="9999"
+                  placeholder={'0590'}
+                  defaultValue={bancoDigito}
+                  onChange={
+                    (e: any) => {
+                      let value = e.target.value
+                      let formatedValue = value.replace(/\D/g, '')
+                      setBancoDigito(formatedValue)
+                    }
+                  }
+                />
+
+              </ContentFormNew>
+
+
+              <ContentFormNew>
+                <label htmlFor="">Nome do titular</label>
+                <input
+                  type="text" placeholder="Nome do titular"
+                  value={nomeTitular}
+
+                  onChange={(text) => setNomeTitular(text.target.value)}
+                />
+
+              </ContentFormNew>
+
+              <ContentFormNew>
+                <label htmlFor="">Faturamento estimado da empresa</label>
+                <input
+                  type="text" placeholder="Faturamento"
+                  value={faturamentoEstimado}
+
+                  onChange={(text) => setFaturamentoEstimado(text.target.value)}
+                />
+
+              </ContentFormNew>
+
+              <ContentFormNew>
+                <label htmlFor="">Pix</label>
+                <input
+                  type="text" placeholder="Pix"
+                  value={pix}
+
+                  onChange={(text) => setPix(text.target.value)}
+                />
+
                 <ContentFormNew>
-                    <label htmlFor="">Conta*</label>
 
-                    <InputMask
-                      required
-
-                      mask="999999-9"
-                      placeholder={'012855-3'}
-                      // 01.161.734/0001-15
-                      onChange={
-                        (e: any) => {
-                          let value = e.target.value
-                          let formatedValue = value.replace(/\D/g, '')
-                          setNumeroConta(formatedValue)
-                        }
-                      }
-                      />
-
-                </ContentFormNew>
-
-                <ContentFormNew>
-                  <label htmlFor="">Agência*</label>
-
-                  <InputMask
-                      required
-                      mask="9999"
-                      placeholder={'0590'}
-                      defaultValue={agencia} 
-                      onChange={
-                        (e: any) => {
-                          let value = e.target.value
-                          let formatedValue = value.replace(/\D/g, '')
-                          setAgencia(formatedValue)
-                        }
-                      }
-                      />
-
-                </ContentFormNew>
-
-                <ContentFormNew>
-                  <label htmlFor="">Dígito do banco*</label>
-
-                  <InputMask
-                      required
-                      mask="9999"
-                      placeholder={'0590'}
-                      defaultValue={bancoDigito} 
-                      onChange={
-                        (e: any) => {
-                          let value = e.target.value
-                          let formatedValue = value.replace(/\D/g, '')
-                          setBancoDigito(formatedValue)
-                        }
-                      }
-                      />
-
-                </ContentFormNew>
-
-
-                <ContentFormNew>
-                    <label htmlFor="">Nome do titular</label>
-                    <input
-                    type="text" placeholder="Nome do titular"
-                    value={nomeTitular}
-
-                    onChange={(text) => setNomeTitular(text.target.value)}
-                    />
-
-                </ContentFormNew>
-
-                <ContentFormNew>
-                    <label htmlFor="">Faturamento estimado da empresa</label>
-                    <input
-                    type="text" placeholder="Faturamento"
-                    value={faturamentoEstimado}
-
-                    onChange={(text) => setFaturamentoEstimado(text.target.value)}
-                  />
-
-                </ContentFormNew>
-
-                <ContentFormNew>
-                    <label htmlFor="">Pix</label>
-                    <input
-                    type="text" placeholder="Pix"
-                    value={pix}
-
-                    onChange={(text) => setPix(text.target.value)}
-                    />
-
-                <ContentFormNew>
-
-                    <ContentFormNew>
+                  <ContentFormNew>
                     <Formik
-                onSubmit={onSubmitInput}
-                validateOnMount
-                initialValues={{
-                  cep: '',
-                  logradouro: '',
-                  numero: '',
-                  complemento: '',
-                  bairro: '',
-                  cidade: '',
-                  uf: '',
-                }}
-                render={({ isValid, setFieldValue }) => (
-                  <Form>
-                    
-                    <ContentFormNew className='form-control-group'>
-                      <label>Cep*</label>
-                      <Field
-                      required
-                      value={cep}
-                        name='cep' type='text'
-                        onBlur={(ev: any) => onBlurCep(ev, setFieldValue)}
-                        onChange={(text: any) => setCep(text.target.value)}
+                      onSubmit={onSubmitInput}
+                      validateOnMount
+                      initialValues={{
+                        cep: '',
+                        logradouro: '',
+                        numero: '',
+                        complemento: '',
+                        bairro: '',
+                        cidade: '',
+                        uf: '',
+                      }}
+                      render={({ isValid, setFieldValue }) => (
+                        <Form>
+
+                          <ContentFormNew className='form-control-group'>
+                            <label>Cep*</label>
+                            <Field
+                              required
+                              value={cep}
+                              name='cep' type='text'
+                              onBlur={(ev: any) => onBlurCep(ev, setFieldValue)}
+                              onChange={(text: any) => setCep(text.target.value)}
+                            />
+
+                          </ContentFormNew>
+
+                          <ContentFormNew className='form-control-group'>
+                            <label>Logradouro*</label>
+                            <Field
+                              required
+                              value={logradouro}
+                              name='logradouro'
+                              type='text'
+                              onChange={(text: any) => setLogradouro(text.target.value)} />
+                          </ContentFormNew>
+
+                          <ContentFormNew className='form-control-group'>
+                            <label>Número*</label>
+                            <Field
+                              required
+                              value={numero}
+                              name='numero'
+                              type='text'
+                              onChange={(text: any) => setNumero(text.target.value)}
+                            />
+                          </ContentFormNew>
+
+                          <ContentFormNew className='form-control-group'>
+                            <label>Complemento</label>
+                            <Field
+                              value={complemento}
+                              name='complemento'
+                              type='text'
+                              onChange={(text: any) => setComplemento(text.target.value)}
+                            />
+                          </ContentFormNew>
+
+                          <ContentFormNew className='form-control-group'>
+                            <label>Bairro*</label>
+                            <Field
+                              required
+                              value={bairro}
+                              name='bairro'
+                              type='text'
+                              onChange={(text: any) => setBairro(text.target.value)}
+                            />
+                          </ContentFormNew>
+
+                          <ContentFormNew className='form-control-group'>
+                            <label>Cidade*</label>
+                            <Field
+                              required
+                              value={cidade}
+                              name='cidade'
+                              type='text'
+                              onChange={(text: any) => setCidade(text.target.value)}
+                            />
+                          </ContentFormNew>
+
+                          <ContentFormNew className='form-control-group'>
+                            <label>Estado*</label>
+                            <Field
+                              required
+                              value={estado}
+                              component='select'
+                              name='uf'
+                              onChange={(text: any) => setEstado(text.target.value)}
+                            >
+                              <option value=''>Selecione o Estado</option>
+                              <option value='AC'>Acre</option>
+                              <option value='AL'>Alagoas</option>
+                              <option value='AP'>Amapá</option>
+                              <option value='AM'>Amazonas</option>
+                              <option value='BA'>Bahia</option>
+                              <option value='CE'>Ceará</option>
+                              <option value='DF'>Distrito Federal</option>
+                              <option value='ES'>Espírito Santo</option>
+                              <option value='GO'>Goiás</option>
+                              <option value='MA'>Maranhão</option>
+                              <option value='MT'>Mato Grosso</option>
+                              <option value='MS'>Mato Grosso do Sul</option>
+                              <option value='MG'>Minas Gerais</option>
+                              <option value='PA'>Pará</option>
+                              <option value='PB'>Paraíba</option>
+                              <option value='PR'>Paraná</option>
+                              <option value='PE'>Pernambuco</option>
+                              <option value='PI'>Piauí</option>
+                              <option value='RJ'>Rio de Janeiro</option>
+                              <option value='RN'>Rio Grande do Norte</option>
+                              <option value='RS'>Rio Grande do Sul</option>
+                              <option value='RO'>Rondônia</option>
+                              <option value='RR'>Roraima</option>
+                              <option value='SC'>Santa Catarina</option>
+                              <option value='SP'>São Paulo</option>
+                              <option value='SE'>Sergipe</option>
+                              <option value='TO'>Tocantins</option>
+                            </Field>
+                          </ContentFormNew>
+
+                        {/* NOT SO NECESSARY AT ALL  */}
+                        {/* 
+                          <ContentFormNew className='form-control-group'>
+                            <label>Nome do proprietário*</label>
+                            <Field
+                              required
+                              value={nomeProprietario}
+                              name='cidade'
+                              type='text'
+                              onChange={(text: any) => setNomeProprietario(text.target.value)}
+                            />
+                          </ContentFormNew>
+
+
+                          <ContentFormNew className='form-control-group'>
+                            <label>Sobrenome do proprietário*</label>
+                            <Field
+                              required
+                              value={sobrenomeProprietario}
+                              name='cidade'
+                              type='text'
+                              onChange={(text: any) => setSobreomeProprietario(text.target.value)}
+                            />
+                          </ContentFormNew>
+
+                          <ContentFormNew className='form-control-group'>
+                            <label>Email do proprietário*</label>
+                            <Field
+                              required
+                              value={emailProprietario}
+                              name='cidade'
+                              type='text'
+                              onChange={(text: any) => setEmailProprietario(text.target.value)}
+                            />
+                          </ContentFormNew>
+
+                          <ContentFormNew className='form-control-group'>
+                            <label>Celular do proprietário*</label>
+                            <Field
+                              required
+                              value={celularProprietario}
+                              name='cidade'
+                              type='text'
+                              onChange={(text: any) => setCelularProprietario(text.target.value)}
+                            />
+                          </ContentFormNew>
+
+
+
+                          <ContentFormNew className='form-control-group'>
+                            <label>Data de nascimento do proprietário*</label>
+                            <Field
+                              required
+                              value={dataNascProprietario}
+                              name='cidade'
+                              type='text'
+                              onChange={(text: any) => setDataNascProprietario(text.target.value)}
+                            />
+                          </ContentFormNew>
+
+
+
+
+
+                          <ContentFormNew className='form-control-group'>
+                            <label>CPF do proprietário*</label>
+                            <Field
+                              required
+                              value={cpfProprietario}
+                              name='cidade'
+                              type='text'
+                              onChange={(text: any) => setCpfProprietario(text.target.value)}
+                            />
+                          </ContentFormNew>
+
+
+
+
+                          <ContentFormNew className='form-control-group'>
+                            <label>Logradouro do proprietário*</label>
+                            <Field
+                              required
+                              value={logradouroProprietario}
+                              name='cidade'
+                              type='text'
+                              onChange={(text: any) => setLogradouroProprietario(text.target.value)}
+                            />
+                          </ContentFormNew>
+
+
+                          <ContentFormNew className='form-control-group'>
+                            <label>Número do proprietário*</label>
+                            <Field
+                              required
+                              value={numeroProprietario}
+                              name='cidade'
+                              type='text'
+                              onChange={(text: any) => setNumeroProprietario(text.target.value)}
+                            />
+                          </ContentFormNew>
+                          <ContentFormNew className='form-control-group'>
+                            <label>Cidade do proprietário*</label>
+                            <Field
+                              required
+                              value={cidadeProprietario}
+                              name='cidade'
+                              type='text'
+                              onChange={(text: any) => setCidadeProprietario(text.target.value)}
+                            />
+                          </ContentFormNew>
+
+                          <ContentFormNew className='form-control-group'>
+                            <label>Estado do proprietário*</label>
+                            <Field
+                              required
+                              value={estadoProprietario}
+                              component='select'
+                              name='uf'
+                              onChange={(text: any) => setEstadoProprietario(text.target.value)}
+                            >
+                              <option value='' hidden >Selecione o Estado</option>
+                              <option value='AC'>Acre</option>
+                              <option value='AL'>Alagoas</option>
+                              <option value='AP'>Amapá</option>
+                              <option value='AM'>Amazonas</option>
+                              <option value='BA'>Bahia</option>
+                              <option value='CE'>Ceará</option>
+                              <option value='DF'>Distrito Federal</option>
+                              <option value='ES'>Espírito Santo</option>
+                              <option value='GO'>Goiás</option>
+                              <option value='MA'>Maranhão</option>
+                              <option value='MT'>Mato Grosso</option>
+                              <option value='MS'>Mato Grosso do Sul</option>
+                              <option value='MG'>Minas Gerais</option>
+                              <option value='PA'>Pará</option>
+                              <option value='PB'>Paraíba</option>
+                              <option value='PR'>Paraná</option>
+                              <option value='PE'>Pernambuco</option>
+                              <option value='PI'>Piauí</option>
+                              <option value='RJ'>Rio de Janeiro</option>
+                              <option value='RN'>Rio Grande do Norte</option>
+                              <option value='RS'>Rio Grande do Sul</option>
+                              <option value='RO'>Rondônia</option>
+                              <option value='RR'>Roraima</option>
+                              <option value='SC'>Santa Catarina</option>
+                              <option value='SP'>São Paulo</option>
+                              <option value='SE'>Sergipe</option>
+                              <option value='TO'>Tocantins</option>
+                            </Field>
+                          </ContentFormNew>
+
+                          <ContentFormNew className='form-control-group'>
+                            <label>CEP do proprietário*</label>
+                            <Field
+                              required
+                              value={cepProprietario}
+                              name='cidade'
+                              type='text'
+                              onChange={(text: any) => setCepProprietario(text.target.value)}
+                            />
+                          </ContentFormNew>
+
+                          <ContentFormNew className='form-control-group'>
+                            <label>Bairro do proprietário*</label>
+                            <Field
+                              required
+                              value={bairroProprietario}
+                              name='cidade'
+                              type='text'
+                              onChange={(text: any) => setBairroProprietario(text.target.value)}
+                            />
+                          </ContentFormNew>
+                          */}
+
+
+                        </Form>
+                      )}
+                    />
+                  </ContentFormNew>
+                  {loading ? (
+                    <img
+                      width="40px"
+                      style={{ margin: "auto" }}
+                      height=""
+                      src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
+                      alt="Loading"
+                    />
+                  ) : (
+                    <NewBtn>
+                      <button type="button" onClick={() => setShowModal1(false)}>Cancelar</button>
+                      <button type="submit" onSubmit={criarOuAtualizarEmpresa}>Adicionar</button>
+                    </NewBtn>
+                  )}
+                </ContentFormNew>
+
+              </ContentFormNew>
+
+            </ModalContent>
+          </div>
+        </Modal>
+      </ModalContainerVendedor>
+
+      <ModalContainerVendedor>
+        <Modal
+          isOpen={showModal2}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+        >
+          <div>
+            <ModalFlex>
+              <AiOutlineClose onClick={closeModal} />
+            </ModalFlex>
+
+            <ModalContent>
+              <h3>
+                {logradouro ? 'Alterar ' : 'Adicionar '}
+                endereço</h3>
+
+
+              <ContentFormNew>
+                <Formik
+                  onSubmit={onSubmitInput}
+                  validateOnMount
+                  initialValues={{
+                    cep: '',
+                    logradouro: '',
+                    numero: '',
+                    complemento: '',
+                    bairro: '',
+                    cidade: '',
+                    uf: '',
+                  }}
+                  render={({ isValid, setFieldValue }) => (
+                    <Form>
+
+                      <ContentFormNew className='form-control-group'>
+                        <label>Cep</label>
+                        <Field
+                          required
+                          value={cep}
+                          name='cep' type='text'
+                          onBlur={(ev: any) => onBlurCep(ev, setFieldValue)}
+                          onChange={(text: any) => setCep(text.target.value)}
                         />
-                        
-                    </ContentFormNew>
 
-                    <ContentFormNew className='form-control-group'>
-                      <label>Logradouro*</label>
-                      <Field 
-                      required
-                      value={logradouro}
-                      name='logradouro'
-                      type='text'
-                      onChange={(text: any) => setLogradouro(text.target.value)} />
-                    </ContentFormNew>
+                      </ContentFormNew>
 
-                    <ContentFormNew className='form-control-group'>
-                      <label>Número*</label>
-                      <Field 
-                      required
-                      value={numero}
-                      name='numero' 
-                      type='text'
-                      onChange={(text: any) => setNumero(text.target.value)}
-                       />
-                    </ContentFormNew>
+                      <ContentFormNew className='form-control-group'>
+                        <label>Logradouro</label>
+                        <Field
+                          required
+                          value={logradouro}
+                          name='logradouro'
+                          type='text'
+                          onChange={(text: any) => setLogradouro(text.target.value)} />
+                      </ContentFormNew>
 
-                    <ContentFormNew className='form-control-group'>
-                      <label>Complemento</label>
-                      <Field 
-                      value={complemento}
-                      name='complemento' 
-                      type='text'
-                      onChange={(text: any) => setComplemento(text.target.value)}
-                       />
-                    </ContentFormNew>
+                      <ContentFormNew className='form-control-group'>
+                        <label>Número</label>
+                        <Field
+                          required
+                          value={numero}
+                          name='numero'
+                          type='text'
+                          onChange={(text: any) => setNumero(text.target.value)}
+                        />
+                      </ContentFormNew>
 
-                    <ContentFormNew className='form-control-group'>
-                      <label>Bairro*</label>
-                      <Field 
-                      required
-                      value={bairro}
-                      name='bairro' 
-                      type='text'
-                      onChange={(text: any) => setBairro(text.target.value)}
-                       />
-                    </ContentFormNew>
+                      <ContentFormNew className='form-control-group'>
+                        <label>Complemento</label>
+                        <Field
+                          required
+                          value={complemento}
+                          name='complemento'
+                          type='text'
+                          onChange={(text: any) => setComplemento(text.target.value)}
+                        />
+                      </ContentFormNew>
 
-                    <ContentFormNew className='form-control-group'>
-                      <label>Cidade*</label>
-                      <Field 
-                      required
-                      value={cidade}
-                      name='cidade' 
-                      type='text'
-                      onChange={(text: any) => setCidade(text.target.value)}
-                       />
-                    </ContentFormNew>
+                      <ContentFormNew className='form-control-group'>
+                        <label>Bairro</label>
+                        <Field
+                          required
+                          value={bairro}
+                          name='bairro'
+                          type='text'
+                          onChange={(text: any) => setBairro(text.target.value)}
+                        />
+                      </ContentFormNew>
 
-                    <ContentFormNew className='form-control-group'>
-                      <label>Estado*</label>
-                      <Field 
-                      required
-                      value={estado}
-                      component='select' 
-                      name='uf'
-                      onChange={(text: any) => setEstado(text.target.value)}
-                      >
-                        <option value=''>Selecione o Estado</option>
-                        <option value='AC'>Acre</option>
-                        <option value='AL'>Alagoas</option>
-                        <option value='AP'>Amapá</option>
-                        <option value='AM'>Amazonas</option>
-                        <option value='BA'>Bahia</option>
-                        <option value='CE'>Ceará</option>
-                        <option value='DF'>Distrito Federal</option>
-                        <option value='ES'>Espírito Santo</option>
-                        <option value='GO'>Goiás</option>
-                        <option value='MA'>Maranhão</option>
-                        <option value='MT'>Mato Grosso</option>
-                        <option value='MS'>Mato Grosso do Sul</option>
-                        <option value='MG'>Minas Gerais</option>
-                        <option value='PA'>Pará</option>
-                        <option value='PB'>Paraíba</option>
-                        <option value='PR'>Paraná</option>
-                        <option value='PE'>Pernambuco</option>
-                        <option value='PI'>Piauí</option>
-                        <option value='RJ'>Rio de Janeiro</option>
-                        <option value='RN'>Rio Grande do Norte</option>
-                        <option value='RS'>Rio Grande do Sul</option>
-                        <option value='RO'>Rondônia</option>
-                        <option value='RR'>Roraima</option>
-                        <option value='SC'>Santa Catarina</option>
-                        <option value='SP'>São Paulo</option>
-                        <option value='SE'>Sergipe</option>
-                        <option value='TO'>Tocantins</option>
-                      </Field>
-                    </ContentFormNew>
-                    
+                      <ContentFormNew className='form-control-group'>
+                        <label>Cidade</label>
+                        <Field
+                          required
+                          value={cidade}
+                          name='cidade'
+                          type='text'
+                          onChange={(text: any) => setCidade(text.target.value)}
+                        />
+                      </ContentFormNew>
 
-
-                    <ContentFormNew className='form-control-group'>
-                      <label>Nome do proprietário*</label>
-                      <Field 
-                      required
-                      value={nomeProprietario}
-                      name='cidade' 
-                      type='text'
-                      onChange={(text: any) => setNomeProprietario(text.target.value)}
-                       />
-                    </ContentFormNew>
-
-
-                    <ContentFormNew className='form-control-group'>
-                      <label>Sobrenome do proprietário*</label>
-                      <Field 
-                      required
-                      value={sobrenomeProprietario}
-                      name='cidade' 
-                      type='text'
-                      onChange={(text: any) => setSobreomeProprietario(text.target.value)}
-                       />
-                    </ContentFormNew>
-
-                    <ContentFormNew className='form-control-group'>
-                      <label>Email do proprietário*</label>
-                      <Field 
-                      required
-                      value={emailProprietario}
-                      name='cidade' 
-                      type='text'
-                      onChange={(text: any) => setEmailProprietario(text.target.value)}
-                       />
-                    </ContentFormNew>
-
-                    <ContentFormNew className='form-control-group'>
-                      <label>Celular do proprietário*</label>
-                      <Field 
-                      required
-                      value={celularProprietario}
-                      name='cidade' 
-                      type='text'
-                      onChange={(text: any) => setCelularProprietario(text.target.value)}
-                       />
-                    </ContentFormNew>
-
-
-
-                    <ContentFormNew className='form-control-group'>
-                      <label>Data de nascimento do proprietário*</label>
-                      <Field 
-                      required
-                      value={dataNascProprietario}
-                      name='cidade' 
-                      type='text'
-                      onChange={(text: any) => setDataNascProprietario(text.target.value)}
-                       />
-                    </ContentFormNew>
-
-
-                    
-
-
-                    <ContentFormNew className='form-control-group'>
-                      <label>CPF do proprietário*</label>
-                      <Field 
-                      required
-                      value={cpfProprietario}
-                      name='cidade' 
-                      type='text'
-                      onChange={(text: any) => setCpfProprietario(text.target.value)}
-                       />
-                    </ContentFormNew>
-
-
-
-
-                    <ContentFormNew className='form-control-group'>
-                      <label>Logradouro do proprietário*</label>
-                      <Field 
-                      required
-                      value={logradouroProprietario}
-                      name='cidade' 
-                      type='text'
-                      onChange={(text: any) => setLogradouroProprietario(text.target.value)}
-                       />
-                    </ContentFormNew>
-
-
-                    <ContentFormNew className='form-control-group'>
-                      <label>Número do proprietário*</label>
-                      <Field 
-                      required
-                      value={numeroProprietario}
-                      name='cidade' 
-                      type='text'
-                      onChange={(text: any) => setNumeroProprietario(text.target.value)}
-                       />
-                    </ContentFormNew>
-                    <ContentFormNew className='form-control-group'>
-                      <label>Cidade do proprietário*</label>
-                      <Field 
-                      required
-                      value={cidadeProprietario}
-                      name='cidade' 
-                      type='text'
-                      onChange={(text: any) => setCidadeProprietario(text.target.value)}
-                       />
-                    </ContentFormNew>
-
-                    <ContentFormNew className='form-control-group'>
-                      <label>Estado do proprietário*</label>
-                      <Field 
-                        required
-                        value={estadoProprietario}
-                        component='select' 
-                        name='uf'
-                        onChange={(text: any) => setEstadoProprietario(text.target.value)}
+                      <ContentFormNew className='form-control-group'>
+                        <label>Estado</label>
+                        <Field
+                          required
+                          value={estado}
+                          component='select'
+                          name='uf'
+                          onChange={(text: any) => setEstado(text.target.value)}
                         >
-                          <option value=''  hidden >Selecione o Estado</option>
+                          <option value=''>Selecione o Estado</option>
                           <option value='AC'>Acre</option>
                           <option value='AL'>Alagoas</option>
                           <option value='AP'>Amapá</option>
@@ -1216,263 +1421,79 @@ export default function PersonalData() {
                           <option value='SE'>Sergipe</option>
                           <option value='TO'>Tocantins</option>
                         </Field>
-                    </ContentFormNew>
-
-                    <ContentFormNew className='form-control-group'>
-                      <label>CEP do proprietário*</label>
-                      <Field 
-                      required
-                      value={cepProprietario}
-                      name='cidade' 
-                      type='text'
-                      onChange={(text: any) => setCepProprietario(text.target.value)}
-                       />
-                    </ContentFormNew>
-
-                    <ContentFormNew className='form-control-group'>
-                      <label>Bairro do proprietário*</label>
-                      <Field 
-                      required
-                      value={bairroProprietario}
-                      name='cidade' 
-                      type='text'
-                      onChange={(text: any) => setBairroProprietario(text.target.value)}
-                       />
-                    </ContentFormNew>
-
-
-                  </Form>
-                )}
-              />
-                    </ContentFormNew>
-                    {loading ? (
-              <img
-                width="40px"
-                style={{ margin: "auto" }}
-                height=""
-                src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
-                alt="Loading"
-              />
-            ) : false}
-                    </ContentFormNew>
-
-                    </ContentFormNew>
-                    <NewBtn>
-                      <button type="button" onClick={() => setShowModal1(false)}>Cancelar</button>
-                      <button type="submit" onSubmit={criarOuAtualizarEmpresa}>Adicionar</button>
-                    </NewBtn>
-                </ModalContent>
-              </div>
-          </Modal>
-        </ModalContainerVendedor>      
-
-        <ModalContainerVendedor>
-        <Modal
-          isOpen={showModal2}
-          onAfterOpen={afterOpenModal}
-          onRequestClose={closeModal}
-        >
-          <div>
-            <ModalFlex>
-              <AiOutlineClose onClick={closeModal} /> 
-            </ModalFlex>
-
-            <ModalContent>
-              <h3>
-              {logradouro ? 'Alterar ':'Adicionar '} 
-               endereço</h3>
-
-
-              <ContentFormNew>
-                <Formik
-                onSubmit={onSubmitInput}
-                validateOnMount
-                initialValues={{
-                  cep: '',
-                  logradouro: '',
-                  numero: '',
-                  complemento: '',
-                  bairro: '',
-                  cidade: '',
-                  uf: '',
-                }}
-                render={({ isValid, setFieldValue }) => (
-                  <Form>
-                    
-                    <ContentFormNew className='form-control-group'>
-                      <label>Cep</label>
-                      <Field
-                      required
-                      value={cep}
-                        name='cep' type='text'
-                        onBlur={(ev: any) => onBlurCep(ev, setFieldValue)}
-                        onChange={(text: any) => setCep(text.target.value)}
-                        />
-                        
-                    </ContentFormNew>
-
-                    <ContentFormNew className='form-control-group'>
-                      <label>Logradouro</label>
-                      <Field 
-                      required
-                      value={logradouro}
-                      name='logradouro'
-                      type='text'
-                      onChange={(text: any) => setLogradouro(text.target.value)} />
-                    </ContentFormNew>
-
-                    <ContentFormNew className='form-control-group'>
-                      <label>Número</label>
-                      <Field 
-                      required
-                      value={numero}
-                      name='numero' 
-                      type='text'
-                      onChange={(text: any) => setNumero(text.target.value)}
-                       />
-                    </ContentFormNew>
-
-                    <ContentFormNew className='form-control-group'>
-                      <label>Complemento</label>
-                      <Field 
-                      required
-                      value={complemento}
-                      name='complemento' 
-                      type='text'
-                      onChange={(text: any) => setComplemento(text.target.value)}
-                       />
-                    </ContentFormNew>
-
-                    <ContentFormNew className='form-control-group'>
-                      <label>Bairro</label>
-                      <Field 
-                      required
-                      value={bairro}
-                      name='bairro' 
-                      type='text'
-                      onChange={(text: any) => setBairro(text.target.value)}
-                       />
-                    </ContentFormNew>
-
-                    <ContentFormNew className='form-control-group'>
-                      <label>Cidade</label>
-                      <Field 
-                      required
-                      value={cidade}
-                      name='cidade' 
-                      type='text'
-                      onChange={(text: any) => setCidade(text.target.value)}
-                       />
-                    </ContentFormNew>
-
-                    <ContentFormNew className='form-control-group'>
-                      <label>Estado</label>
-                      <Field 
-                      required
-                      value={estado}
-                      component='select' 
-                      name='uf'
-                      onChange={(text: any) => setEstado(text.target.value)}
-                      >
-                        <option value=''>Selecione o Estado</option>
-                        <option value='AC'>Acre</option>
-                        <option value='AL'>Alagoas</option>
-                        <option value='AP'>Amapá</option>
-                        <option value='AM'>Amazonas</option>
-                        <option value='BA'>Bahia</option>
-                        <option value='CE'>Ceará</option>
-                        <option value='DF'>Distrito Federal</option>
-                        <option value='ES'>Espírito Santo</option>
-                        <option value='GO'>Goiás</option>
-                        <option value='MA'>Maranhão</option>
-                        <option value='MT'>Mato Grosso</option>
-                        <option value='MS'>Mato Grosso do Sul</option>
-                        <option value='MG'>Minas Gerais</option>
-                        <option value='PA'>Pará</option>
-                        <option value='PB'>Paraíba</option>
-                        <option value='PR'>Paraná</option>
-                        <option value='PE'>Pernambuco</option>
-                        <option value='PI'>Piauí</option>
-                        <option value='RJ'>Rio de Janeiro</option>
-                        <option value='RN'>Rio Grande do Norte</option>
-                        <option value='RS'>Rio Grande do Sul</option>
-                        <option value='RO'>Rondônia</option>
-                        <option value='RR'>Roraima</option>
-                        <option value='SC'>Santa Catarina</option>
-                        <option value='SP'>São Paulo</option>
-                        <option value='SE'>Sergipe</option>
-                        <option value='TO'>Tocantins</option>
-                      </Field>
-                    </ContentFormNew>
-                  </Form>
-                )}
-              />
+                      </ContentFormNew>
+                    </Form>
+                  )}
+                />
               </ContentFormNew>
               <ContentFormNew>
-                    {loading ? (
-              <img
-                width="40px"
-                style={{ margin: "auto" }}
-                height=""
-                src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
-                alt="Loading"
-              />
-            ) : false}
-                    </ContentFormNew>
-                    
-              <NewBtn>
-                <button type="button" onClick={messageCancel}>Cancelar</button>
-                <button type="submit" onClick={changePlace}>Adicionar</button>
-              </NewBtn>
+                {loading ? (
+                  <img
+                    width="40px"
+                    style={{ margin: "auto" }}
+                    height=""
+                    src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
+                    alt="Loading"
+                  />
+                ) : (
+                  <NewBtn>
+                    <button type="button" onClick={messageCancel}>Cancelar</button>
+                    <button type="submit" onClick={changePlace}>Adicionar</button>
+                  </NewBtn>
+                )}
+              </ContentFormNew>
+
+
             </ModalContent>
           </div>
         </Modal>
       </ModalContainerVendedor>
-      
- <ModalContainerVendedor>
- <Modal
-   isOpen={showModalResetSenha}
-   onAfterOpen={afterOpenModal}
-   onRequestClose={closeModalResetSenha}
- >
-   <div>
-     <ModalFlex>
-       <AiOutlineClose onClick={closeModalResetSenha} />
-     </ModalFlex>
 
-     <ModalContent>
-       <h3>Nova Senha</h3>
-       <ContentFormNew>
-         <label htmlFor="">Senha: </label>
-         <input
-           type="password"
-           onChange={(text) => setSenha(text.target.value)}
-         />
-       </ContentFormNew>
-       <ContentFormNew>
-                    {loading ? (
-              <img
-                width="40px"
-                style={{ margin: "auto" }}
-                height=""
-                src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
-                alt="Loading"
-              />
-            ) : false}
-                    </ContentFormNew>
-                    
-       <div className="buttonsNew">
-         <button type="button" onClick={closeModalResetSenha}>
-           Cancelar
-         </button>
-         <button type="button" onClick={resetSenha}>
-           Adicionar
-         </button>
-       </div>
-     </ModalContent>
-   </div>
- </Modal>
-</ModalContainerVendedor>
+      <ModalContainerVendedor>
+        <Modal
+          isOpen={showModalResetSenha}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModalResetSenha}
+        >
+          <div>
+            <ModalFlex>
+              <AiOutlineClose onClick={closeModalResetSenha} />
+            </ModalFlex>
+
+            <ModalContent>
+              <h3>Nova Senha</h3>
+              <ContentFormNew>
+                <label htmlFor="">Senha: </label>
+                <input
+                  type="password"
+                  onChange={(text) => setSenha(text.target.value)}
+                />
+              </ContentFormNew>
+              <ContentFormNew>
+                {loading ? (
+                  <img
+                    width="40px"
+                    style={{ margin: "auto" }}
+                    height=""
+                    src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
+                    alt="Loading"
+                  />
+                ) : (
+                  <div className="buttonsNew">
+                    <button type="button" onClick={closeModalResetSenha}>
+                      Cancelar
+                    </button>
+                    <button type="button" onClick={resetSenha}>
+                      Adicionar
+                    </button>
+                  </div>
+                )}
+              </ContentFormNew>
+
+            </ModalContent>
+          </div>
+        </Modal>
+      </ModalContainerVendedor>
 
 
 
