@@ -27,6 +27,23 @@ export const Container = styled.div`
         background: ${darken(0.06, '#58A4B0')};
       }
     }
+
+
+    button {
+      background: #58A4B0;
+      text-decoration: none;
+      color: #fff;
+      border: 0;
+      border-radius: 4px;
+      padding: 12px 20px;
+      font-weight: bold;
+      text-transform: uppercase;
+      transition: background 0.2s;
+
+      &:hover {
+        background: ${darken(0.06, '#58A4B0')};
+      }
+    }
   }
 `;
 
