@@ -183,6 +183,7 @@ const Header = (): JSX.Element => {
 
     }).catch((error) => {
       if (error.response) {
+        setLoading(false);
         toast.error(error.response.data);
       }
       else {
@@ -211,8 +212,21 @@ const Header = (): JSX.Element => {
         setLoading(false)
       } else {
         toast.error('Email não enviado com sucesso!');
+        setLoading(false);
+
       }
+    })
+    .catch((error) => {
+      if (error.response) {
+        setLoading(false);
+        toast.error(error.response.data);
+      }
+      else {
+        toast.error("Erro no servidor, tente mais tarde :(");
+      }
+      setLoading(false)
     });
+    ;
   }
 
   useEffect(() => {
