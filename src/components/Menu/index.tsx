@@ -7,14 +7,14 @@ import axios from "axios";
 
 export function Menu() {
   let role = localStorage.getItem("roles")?.replace(/"/g, "");
-  const [categorias = [], setCategorias] = useState<any[]>([]);
-  const [categoriasFixed = [], setCategoriasFixed] = useState<any[]>([]);
-  const [moveis, setMoveis ] = useState<any>();
+  const [categorias     , setCategorias       ] = useState<any[]>([]);
+  const [categoriasFixed, setCategoriasFixed  ] = useState<any[]>([]);
+  const [moveis         , setMoveis           ] = useState<any>();
   const [eletrodoméstico, setTeletrodoméstico ] = useState<any>();
-  const [materiais, setMateriais ] = useState<any>();
-  const [cama, setCama ] = useState<any>();
-  const [cursos, setCursos] = useState<any>();
-  const [modaInfantil, setModaInfantil] = useState<any>();
+  const [materiais      , setMateriais        ] = useState<any>();
+  const [cama           , setCama             ] = useState<any>();
+  const [cursos         , setCursos           ] = useState<any>();
+  const [modaInfantil   , setModaInfantil     ] = useState<any>();
 
   async function loadCategoriasFixed() {
     const categoriasResponseFixed = await axios.get(''+ip+':8157/api/categoria-aprovados-is-fixed');
@@ -71,11 +71,11 @@ export function Menu() {
             </button>
             <div className="dropdown-content">
               <div className="drop-grid">
+                <Link to="/contas">Contas a Receber</Link>
                 <Link to="/meus-produtos">Meus Produtos</Link>
+                <Link to="/perguntas">Perguntas</Link>
                 <Link to="/promocoes">Promoções</Link>
                 <Link to="/vendas">Vendas</Link>
-                <Link to="/perguntas">Perguntas</Link>
-                <Link to="/contas">Contas a Receber</Link>
                 {/* <Link to="/assinaturas">Planos</Link> */}
               </div>
             </div>
@@ -97,20 +97,20 @@ export function Menu() {
             <div className="dropdown-content">
               <div className="drop-grid">
                 {/*<Link to="/assinaturas">Assinaturas</Link>*/}
-                <Link to="/aprovar-usuarios">Aprovar Admin</Link>
-                <Link to="/aprovar-empresas">Aprovar Empresas</Link>
                 <Link to="/aprovar-categorias">Aprovar Categorias</Link>
+                <Link to="/aprovar-empresas">Aprovar Empresas</Link>
+                <Link to="/aprovar-usuarios">Aprovar Admin</Link>
                 <Link to="/consultar-produtos">Aprovar Produtos</Link>
-                <Link to="/empresas">Empresas</Link>
-                {/* <Link to="/assinaturas">Pagamentos</Link> */}
-                <Link to="/vendas">Vendas por Empresa</Link>
                 <Link to="/enviar-banner">Banners</Link>
+                <Link to="/contas">Contas a Receber</Link>
+                <Link to="/enviar-dados">Dados do rodapé</Link>
+                <Link to="/empresas">Empresas</Link>
                 <Link to="categorias-fixar" >Fixar categorias</Link>
                 <Link to="/perguntas">Perguntas</Link>
-                <Link to="/contas">Contas a Receber</Link>
                 <Link to="/produtos">Produtos</Link>
+                <Link to="/vendas">Vendas por Empresa</Link>
                 <Link to="/enviar-termos">Termos</Link>
-                <Link to="/enviar-dados">Dados do rodapé</Link>
+                {/* <Link to="/assinaturas">Pagamentos</Link> */}
               </div>
             </div>
           </div>
