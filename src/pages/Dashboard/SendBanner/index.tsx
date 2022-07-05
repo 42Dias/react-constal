@@ -17,6 +17,7 @@ import React from "react";
 
 import { toast } from "react-toastify";
 import { MdFileUpload } from "react-icons/md";
+import uploadImage from "../../../services/imagem/upload";
 
 export default function SendBanner() {
 
@@ -83,60 +84,16 @@ export default function SendBanner() {
    }
 
 
-   async function uploadImage(newImage: any, setImage: any) {
-    const formData = new FormData()
+   
 
-    console.log(newImage)
+  async function handleUpload(file: any) {
+    let allowedFiles = ["image/png", "image/jpeg", "image/webp", "image/gif", "application/pdf", "video/mp4"]
+    if(!allowedFiles.includes(file.type)) return toast.error("Arquivo inválido!");
 
-    formData.append('file', newImage)
+    let uploadedImage = await uploadImage(file)
+    setImage(uploadedImage)
 
-    let imageName = newImage.name
-    console.log(imageName)
-
-    let credentials = await api.get(`file/credentials`, {
-        params: {
-            filename: imageName,
-            storageId: 'produtoImagem1',
-        },
-    })
-    if (credentials.status != 200) {
-        toast.info('Imagem inválida, ou problemas com o servidor :(')
-        return
-    }
-
-    let credentialsData = credentials.data
-
-    let credencial = credentialsData.uploadCredentials.url
-
-    console.log(credentialsData)
-
-    let credentialCleaned = credencial.replace('"http://localhost:8157/api" ;localhost', '')
-    let downloadExtension = credentialsData.downloadUrl.replace('"http://localhost:8157/api" ;localhost', '')
-
-    console.log(credentialCleaned)
-    console.log(downloadExtension)
-
-    let ipLoad = `${ip}:8157/api${credentialCleaned}`
-
-    let upload = await axios.post(ipLoad, formData, {
-        headers: {
-            'Content-Type': 'multipart/form-data',
-        },
-    })
-    if (upload.status != 200) {
-        console.log(upload)
-        toast.info('Imagem inválida')
-        return
-    }
-
-    console.log(credencial)
-    toast.success('Imagem Válida!')
-
-    let pathToImage = `${ip}:8157/api${downloadExtension}`
-    console.log("pathToImage")
-    console.log(pathToImage)
-    setImage(pathToImage)
-}
+  }
 
 
   function updateImagemStatus(imagemStatus: any, imagem: any){
@@ -369,7 +326,7 @@ export default function SendBanner() {
                   //@ts-ignore
                   if (e?.target?.files[0].type.includes('image')) {
                     //@ts-ignore
-                    uploadImage(e?.target?.files[0], setImagemNova)
+                    handleUpload(e?.target?.files[0], setImagemNova)
                   }
                   else {
                     toast.error("Arquivo não suportado")
