@@ -82,12 +82,12 @@ export const Btn = styled.button`
 export const CardDatailsContent = styled.div`
   background: white;
   width: 100%;
-  height: 100px;
+  min-height: 100px;
   margin: 20px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 12px;
+  padding: 24px;
   border-radius: 5px;
 
   &.adress { 
