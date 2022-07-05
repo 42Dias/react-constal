@@ -9,6 +9,7 @@ import {
   ModalFlex,
   ModalContent,
   ContentFormNew,
+  FileContainer,
 } from "./styles";
 import { FiTrash2 } from "react-icons/fi";
 import prodone from "../../../assets/images/prodone.png";
@@ -40,6 +41,8 @@ import CurrencyInput from 'react-currency-masked-input'
 import { default as NumberFormat } from 'react-number-format';
 import { Link } from "react-router-dom";
 import moment from "moment";
+import uploadImage from "../../../services/imagem/upload";
+import { MdFileUpload } from "react-icons/md";
 
 export default function NewProd() {
   var uuid = require("uuid");
@@ -64,7 +67,12 @@ export default function NewProd() {
   const [prazo, setPrazo] = useState("");
   const [quantidade, setQuantidade] = useState<any>();
   const [frete, setFrete] = useState("");
-  const [imagem, setImagem] = useState("");
+
+
+  const [imagem, setImagem] = useState<any>("");
+  const [displayed, setDisplayed] = useState("");
+
+
   const [categoria, setCategoria] = useState<any>();
   const [statusProd, setStatusProd] = useState<any>();
   
@@ -86,7 +94,18 @@ export default function NewProd() {
 
   const [compararProd, setCompararProd] = useState<any>();
   const [porcentagem, setPorcentagem] = useState<any>("");
-  
+
+
+
+
+  async function handleUpload(file: any) {
+    let allowedFiles = ["image/png", "image/jpeg", "image/webp", "image/gif", "application/pdf", "video/mp4"]
+    if(!allowedFiles.includes(file.type)) return toast.error("Arquivo inválido!");
+
+    let uploadedImage = await uploadImage(file)
+    setImagem(uploadedImage)
+
+  }
 
   function openModal() {
     //setIsOpen(true);
@@ -747,21 +766,32 @@ export default function NewProd() {
                   />
                 </ContentFormNew>
 
-                <ContentFormNew>
-                  <label htmlFor="">URL da imagem</label>
+                <FileContainer>
+                   <div className="container">
+                     <label
+                        htmlFor="upload-xls"
+                        className="btn-info"
+                      >
+                        Selecione uma imagem
+                        <MdFileUpload/>
+                      </label>
+                     
+                                       <input
+                      // value={imagem}
+                      required
+                      type="file"
+                      placeholder="www.imagem/suaimagem.com"
+                      //@ts-ignore
+                      onChange={(e) => handleUpload(e?.target?.files[0])}
+                                       />
+                   </div>
+
                   <p
                       style={{margin: 'auto'}}
                       >
                         Imagem deve estar em 263 X 146 PX
                   </p>
-                  <input
-                    value={imagem}
-                    required
-                    type="text"
-                    placeholder="www.imagem/suaimagem.com"
-                    onChange={(text) => setImagem(text.target.value)}
-                  />
-                </ContentFormNew>
+                </FileContainer>
 
                 <ContentFormNew>
                   <label htmlFor="">Prazo de entrega</label>
@@ -840,8 +870,8 @@ export default function NewProd() {
                     src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
                     alt="Loading"
                   />
-                ) : false}
-                <div className="buttonsNew">
+                ) : (
+                  <div className="buttonsNew">
                   <button type="button" onClick={messageCancel}>
                     Cancelar
                   </button>
@@ -849,6 +879,8 @@ export default function NewProd() {
                     Adicionar
                   </button>
                 </div>
+                )}
+               
               </ModalContent>
             </div>
           </Modal>
@@ -972,19 +1004,34 @@ export default function NewProd() {
               </ContentFormNew>
 
               <ContentFormNew>
-                <label htmlFor="">URL da imagem</label>
-                <p
+              <FileContainer>
+                   <div className="container-file">
+                     <label
+                        htmlFor="upload-xls"
+                        className="btn-info"
+                      >
+                        Selecione uma imagem
+                        <MdFileUpload/>
+                      </label>
+                     
+                      <input
+                      // value={imagem}
+                      required
+                      type="file"
+                      id="upload-xls"
+                      name="upload-xls"
+                      placeholder="www.imagem/suaimagem.com"
+                      //@ts-ignore
+                      onChange={(e) => handleUpload(e?.target?.files[0])}
+                                       />
+                   </div>
+
+                  <p
                       style={{margin: 'auto'}}
                       >
                         Imagem deve estar em 263 X 146 PX
                   </p>
-                <input
-                  value={imagem}
-                  required
-                  type="text"
-                  placeholder="www.imagem/suaimagem.com"
-                  onChange={(text) => setImagem(text.target.value)}
-                />
+                </FileContainer>
               </ContentFormNew>
 
               {/* 
@@ -1068,8 +1115,8 @@ export default function NewProd() {
                   src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
                   alt="Loading"
                 />
-              ) : false}
-              <div className="buttonsNew">
+              ) : (
+                <div className="buttonsNew">
                 <button type="button" onClick={messageCancel}>
                   Cancelar
                 </button>
@@ -1077,6 +1124,8 @@ export default function NewProd() {
                   Adicionar
                 </button>
               </div>
+              )}
+             
             </ModalContent>
           </div>
         </Modal>
@@ -1191,8 +1240,8 @@ export default function NewProd() {
                   src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
                   alt="Loading"
                 />
-              ) : false}
-              <div className="buttonsNew">
+              ) : (
+                <div className="buttonsNew">
                 <button type="button" onClick={() => {
                     messageCancel()
                     closeModal()
@@ -1203,6 +1252,8 @@ export default function NewProd() {
                   Adicionar
                 </button>
               </div>
+              )}
+              
             </ModalContent>
           </div>
         </Modal>
@@ -1242,8 +1293,8 @@ export default function NewProd() {
                   src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
                   alt="Loading"
                 />
-              ) : false}
-              <div className="buttonsNew">
+              ) : (
+                <div className="buttonsNew">
                 <button type="button" onClick={
                   () => {
                     messageCancel()
@@ -1256,6 +1307,8 @@ export default function NewProd() {
                   Adicionar
                 </button>
               </div>
+              )}
+              
             </ModalContent>
           </div>
         </Modal>
