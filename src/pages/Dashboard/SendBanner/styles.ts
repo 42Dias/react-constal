@@ -80,7 +80,6 @@ export const CardDatails = styled.div`
   }
 
   p{
-    alighn-self: center;
   }
 
 
@@ -100,7 +99,6 @@ export const CardDatails = styled.div`
 
   .flex-container{
     display: flex;
-    alighn-items: center;
   }
 
   .upload-input{
