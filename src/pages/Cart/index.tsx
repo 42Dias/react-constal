@@ -6,18 +6,20 @@ import {
 } from "react-icons/md";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import { api, ip, role } from "../../services/api";
+import { api, id, ip, role } from "../../services/api";
 
 import { useCart } from "../../hooks/useCart";
 import { formatPrice } from "../../util/format";
 import { Container, ProductTable, Total, FooterContainer } from "./styles";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 // import { Product } from "../../types";
 
 const Cart = (): JSX.Element => {
   const { cart, removeProduct, updateProductAmount } = useCart();
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const [canClick, setCanClick] = useState(false);
 
   interface Product {
     id: string;
@@ -32,25 +34,12 @@ const Cart = (): JSX.Element => {
     subtotal: number;
   }
 
-  interface Carrinho {
-    price: number | bigint;
-    id: string;
-    nome: string;
-    descricao: string;
-    preco: number;
-    publicUrl: string;
-    isOferta: number;
-    precoOferta: any;
-    quantidade: number;
-    subtotal: number;
-    priceFormatted: string;
-    produto: {
-      fotos: string;
-      id: string;
-      nome: string;
-      preco: number;
-      quantidade: number;
-    };
+
+
+  function goToNextPageWithAuth(){
+    if(!canClick) return toast.error("Cadastre seu CPF e outros dados em meu perfil antes de poder comprar.")
+
+    window.location.hash.replace('/cart', '/pagar')
   }
 
   interface ProductFormatted extends Product {
@@ -107,8 +96,15 @@ const Cart = (): JSX.Element => {
           return response.data.rows;
         })
 
-      // console.log("cart");
-      // console.log(response);
+      
+      const isUserRegistered = await api.get(`pessoa-fisica-perfil`)
+      // ?filter%5BuserId%5D=${id}/`)
+      .then(response => {
+        setCanClick(!!response.data)
+      })
+
+
+
 
       setProducts(response);
       setLoading(false)
@@ -224,7 +220,7 @@ const Cart = (): JSX.Element => {
           <footer>
             {
               products.length > 0 ? (
-                <Link to="/pagar">Finalizar pedido</Link>
+                <button onClick={() => goToNextPageWithAuth()} >Finalizar pedido</button>
               ) : false
             }
             {/* {console.log(products.length)} */}
