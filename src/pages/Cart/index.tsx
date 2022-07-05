@@ -38,8 +38,8 @@ const Cart = (): JSX.Element => {
 
   function goToNextPageWithAuth(){
     if(!canClick) return toast.error("Cadastre seu CPF e outros dados em meu perfil antes de poder comprar.")
-
-    window.location.hash.replace('/cart', '/pagar')
+    
+    window.location.hash = window.location.hash.replace('/cart', '/pagar')
   }
 
   interface ProductFormatted extends Product {
