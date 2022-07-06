@@ -29,6 +29,7 @@ import { api, ip, role, status } from "../../../services/api";
 import { formatPrice } from "../../../util/format";
 import { Btn } from "../PersonalData/styles";
 import { toast } from "react-toastify";
+import uploadImage from "../../../services/imagem/upload";
 var uuid = require("uuid");
 
 
@@ -38,6 +39,18 @@ export default function Promotions() {
   const [imagemPromocional, setImagemPromocional] = useState<any>();
   // const [dataEncerramento, setDataEncerramento]   =  useState<any>();
   const [indexs, setIndexs]   =  useState<any>([]);
+
+
+
+  async function handleUpload(file: any) {
+    let allowedFiles = ["image/png", "image/jpeg", "image/webp", "image/gif", "application/pdf", "video/mp4"]
+    if(!allowedFiles.includes(file.type)) return toast.error("Arquivo inválido!");
+
+    let uploadedImage = await uploadImage(file)
+    setImagemPromocional(uploadedImage)
+
+  }
+
   
 
   function openModal() {
@@ -146,12 +159,12 @@ export default function Promotions() {
       <Menu />
       <div className="container">
         <ContentNew>
-          <h2>Promoções</h2>
+          <h2>Imagens Promocionais</h2>
         </ContentNew>
 
         <ContentNew>
           <NewBtnFeatured onClick={openModal}>
-            Adicionar Promoção
+            Adicionar Imagem Promocional
           </NewBtnFeatured>
         </ContentNew>
         
