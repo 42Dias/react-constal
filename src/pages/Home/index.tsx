@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { MdAddShoppingCart } from "react-icons/md";
-import { FiCheck } from "react-icons/fi";
+import { FiCheck, FiHeart } from "react-icons/fi";
 import SwiperCore, {
   Autoplay,Pagination,Navigation
 } from 'swiper';
@@ -223,9 +223,11 @@ const Home = (): JSX.Element => {
                         <Link to={`/produto/${product.id}`}>
                           <img src={product.imagemUrl || semImagem} alt={product.nome} />
                         </Link>
+                        <div className="favorites">
+                          <FiHeart />
+                        </div>
                         <strong>{product.nome}</strong>
                         <pre>
-                          
                           {
                             product.preco
                           }
@@ -272,6 +274,9 @@ const Home = (): JSX.Element => {
                   <Link to={`/produto/${product.id}`}>
                     <img src={product.imagemUrl ? product.imagemUrl : semImagem} alt={product.nome} />
                   </Link>
+                  <div className="favorites">
+                    <FiHeart />
+                  </div>
                   <strong>{product.nome}</strong>
                   <p>{product.preco}</p>
                   {
