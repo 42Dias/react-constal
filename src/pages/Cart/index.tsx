@@ -114,17 +114,23 @@ const Cart = (): JSX.Element => {
   }, []);
 
   function updateIncrement(index: number) {
-
     // atribuir o antigo array a uma variavel fazendo o destruct e atualizando ela
     let updatedProduct = [...products]
-    updatedProduct[index].quantidade++
-    handleProductIncrement(updatedProduct[index])
-    setProducts(updatedProduct)
 
+    if (updatedProduct[index].quantidade+1 <= updatedProduct[index].quantidadeNoEstoque){
+      updatedProduct[index].quantidade++
+      handleProductIncrement(updatedProduct[index])
+      setProducts(updatedProduct)
+    }
+    
+    else {
+      return toast.error("Quantidade Solicitada fora de Estoque!")
+    }
   }
 
   function updateDecrement(index: number) {
     let updatedProduct = [...products]
+
     updatedProduct[index].quantidade--
     handleProductDecrement(updatedProduct[index])
     setProducts(updatedProduct)
