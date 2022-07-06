@@ -158,12 +158,24 @@ export const SwiperStyles = styled.div`
 .swiper-slide {
   z-index: 1;
   width: 263px !important;
-  height: 380px !important;
+  min-height: 380px !important;
   background: #EDEDED;
   box-shadow: 0px 4px 33px -10px rgba(0, 0, 0, 0.15);
   margin-right: 30px;
   border-radius: 10px;
   position: relative;
+  transition: all .5s ;
+
+  &:hover{
+
+    min-height: 420px !important;
+
+    pre{
+      height: 35px;
+      transition: all .5s;
+      padding: 15px 15px;
+    }
+  }
 
   strong {
     font-size: 18px;
@@ -174,6 +186,18 @@ export const SwiperStyles = styled.div`
     overflow: hidden;
     height: 71px;
   }
+
+  pre{
+    transition: all .5s;
+    font: 14px 'Poppins',sans-serif;
+    text-decoration: line-through;
+    height: 0;
+    padding: 0;
+
+    } 
+
+
+  
 
   p { 
     font-size: 24px;
