@@ -165,6 +165,38 @@ export const SwiperStyles = styled.div`
   border-radius: 10px;
   position: relative;
   transition: all .5s ;
+  position: relative;
+
+
+  .favorites{
+    border: 2px solid white;
+    width:  36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    position: absolute;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.44);
+    right: 10px;
+    top: 10px;
+    transition: border .3s;
+
+    &:hover{
+      border: 2px solid #58A4B0;
+
+      svg{
+        color: #58A4B0
+      }
+    }
+
+    svg{
+      color: white;
+      font-size: 18px;
+      transition: color .15s;
+    }
+  }
 
   
 
