@@ -36,7 +36,6 @@ export default function Profile() {
   const [showModalEnd, setShowModalEnd] = React.useState(false);
   const [showModalResetSenha, setShowModalResetSenha] = React.useState(false);
   const [id, setId] = useState("");
-  // const [id, setId] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
@@ -64,7 +63,7 @@ export default function Profile() {
   const [newEstado, setNewEstado] = useState("");
   const [newBairro, setNewBairro] = useState("");
 
-  
+
   async function loadUser() {
     if (!token) {
       //window.location.reload()
@@ -106,11 +105,8 @@ export default function Profile() {
       const response = await api
         .get("pessoa-fisica-perfil")
         .then((response) => {
-          // // console.log("response");
-          // // console.log(response.data);
           return response.data;
         });
-      // console.log(response);
       localStorage.setItem("idPessoa", JSON.stringify(response.id));
       setEmail(response.user.email);
       setFullName(response.nome);
@@ -130,9 +126,7 @@ export default function Profile() {
           "https://www.camaragibe.pe.gov.br/wp-content/uploads/2019/04/default-user-male.png"
         );
       }
-      //// console.log("avatars");
-      //// console.log(imagemUser);
-      //// console.log(response);
+
     }
     //Perfil empresa
     else if (role === "empresa") {
@@ -158,10 +152,7 @@ export default function Profile() {
           "https://www.camaragibe.pe.gov.br/wp-content/uploads/2019/04/default-user-male.png"
         );
       }
-      //// console.log("avatars");
-      //// console.log(imagemUser);
-      //// console.log("response");
-      //// console.log(response.rows);
+
     }
     //Perfil Admin
     else {
@@ -182,8 +173,8 @@ export default function Profile() {
       setCEP(response.cep);
       setCidade(response.cidade);
       setEstado(response.estado);
-      //// console.log("response.avatars[0]");
-      //// console.log(response.avatars[0]);
+
+      
       if (
         response.avatars !== undefined &&
         response.avatars[0] !== undefined
@@ -267,7 +258,7 @@ export default function Profile() {
         password: password,
         nome: fullName,
         cpf: cpf,
-        phone: phone,
+        telefone: phone,
         logradouro: logradouro,
         bairro: bairro,
         cep: cep,
@@ -280,13 +271,13 @@ export default function Profile() {
       },
     };
     if (email) {
-      const updatePersonalData = await api.put('pessoa-fisica/' + idPessoa, data).then(
+      await api.put('pessoa-fisica/' + idPessoa, data).then(
         (data) => {
           // // console.log(data)
-          if(data.status == 200){
+          if (data.status == 200) {
             toast.info("Dados Alterados com sucesso!")
           }
-          else{
+          else {
             toast.info("Erro, algo deu errado :(")
           }
         }
@@ -334,13 +325,13 @@ export default function Profile() {
       }
     }
   }
-  function onSubmitInput (values: any, actions: any) {
+  function onSubmitInput(values: any, actions: any) {
     // // console.log(data)
     // Cadastro(data)
     // // console.log('SUBMIT', values)
   }
 
-  function onBlurCep (ev: any, setFieldValue: any) {
+  function onBlurCep(ev: any, setFieldValue: any) {
     const { value } = ev.target
 
     const cep = value?.replace(/[^0-9]/g, '')
@@ -359,22 +350,22 @@ export default function Profile() {
       })
   }
 
-  function formatarNumero(v: any){ //formatar cep
-    v=v.replace(/\D/g,""); //Remove tudo o que não é dígito
-    v=v.replace(/^(\d{2})(\d)/g,"($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
-    v=v.replace(/(\d)(\d{4})$/,"$1-$2"); //Coloca hífen entre o quarto e o quinto dígitos
+  function formatarNumero(v: any) { //formatar cep
+    v = v.replace(/\D/g, ""); //Remove tudo o que não é dígito
+    v = v.replace(/^(\d{2})(\d)/g, "($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
+    v = v.replace(/(\d)(\d{4})$/, "$1-$2"); //Coloca hífen entre o quarto e o quinto dígitos
     return v;
   }
-  function formatarCpf(v: any){
+  function formatarCpf(v: any) {
     return v.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")
   }
 
   useEffect(
     () => {
       let email = localStorage.getItem("email")?.replace(/"/g, "");
-      if(email && !role){
-              // @ts-ignore
-              document.location.reload(true);
+      if (email && !role) {
+        // @ts-ignore
+        document.location.reload(true);
       }
     }, []
   )
@@ -449,9 +440,9 @@ export default function Profile() {
                 >
                   Cancelar
                 </button>
-                <button 
+                <button
                   type="button"
-                 onClick={messageApprove}>
+                  onClick={messageApprove}>
                   Adicionar
                 </button>
               </div>
@@ -489,10 +480,10 @@ export default function Profile() {
           <h2>Endereço</h2>
           <CardDatailsContent className="adress">
             <ContentDetails>
-                <small>Endereço: {logradouro + ", " + newNumero}</small>
-                <small>Bairro: {bairro} </small>
-                <small>CEP: {cep} </small>
-                <small>Cidade: {cidade + " - " + estado}</small>
+              <small>Endereço: {logradouro + ", " + newNumero}</small>
+              <small>Bairro: {bairro} </small>
+              <small>CEP: {cep} </small>
+              <small>Cidade: {cidade + " - " + estado}</small>
             </ContentDetails>
 
             <button onClick={() => {
@@ -541,42 +532,45 @@ export default function Profile() {
 
               <ContentFormNew>
                 <label htmlFor="">CPF</label>
-                {/* <input
-                  type="text"
-                  placeholder="CPF"
-                  value={cpf}
-                  onChange={(text) => setCPF(text.target.value)}
-                /> */}
-                 <InputMask mask="999.999.999-99" 
-                      value={maskedCPF} 
+                <InputMask mask="999.999.999-99"
+                  value={maskedCPF}
 
-                      // 01.161.734/0001-15
-                      onChange={
-                        (e: any) => {
-                          let cpf = e.target.value
-                          // // console.log(
-                          //   cpf.replace(/\D/g, '')
-                          //   )
-                          setCPF(
-                            cpf.replace(/\D/g, '')
-                          )
-                          setMaskedCPF(e.target.value)
-                          // // console.log(maskedCPF)
-                        }
-                      }/>
+                  // 01.161.734/0001-15
+                  onChange={
+                    (e: any) => {
+                      let cpf = e.target.value
+                      // // console.log(
+                      //   cpf.replace(/\D/g, '')
+                      //   )
+                      setCPF(
+                        cpf.replace(/\D/g, '')
+                      )
+                      setMaskedCPF(e.target.value)
+                      // // console.log(maskedCPF)
+                    }
+                  } />
+              </ContentFormNew>
+              <ContentFormNew>
+                <label htmlFor="">Telefone</label>
+                <InputMask mask="(99) 99999-9999"
+                  type="text"
+                  placeholder="Seu telefone"
+                  value={phone}
+                  onChange={(e: any) => setPhone(e.target.value)}
+                />
               </ContentFormNew>
 
 
               {loading ? <img width="40px" style={{ margin: 'auto' }} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : (
 
-              <div className="buttonsNew">
-                <button type="button" onClick={messageCancel}>
-                  Cancelar
-                </button>
-                <button type="button" onClick={setNewData}>
-                  Adicionar
-                </button>
-              </div>
+                <div className="buttonsNew">
+                  <button type="button" onClick={messageCancel}>
+                    Cancelar
+                  </button>
+                  <button type="button" onClick={setNewData}>
+                    Adicionar
+                  </button>
+                </div>
               )}
             </ModalContent>
           </div>
@@ -595,7 +589,7 @@ export default function Profile() {
             </ModalFlex>
 
             <ModalContent
-            onSubmit={setNewData}
+              onSubmit={setNewData}
             >
               <h3>Alterar Endereço</h3>
               <Formik
@@ -612,81 +606,81 @@ export default function Profile() {
                 }}
                 render={({ isValid, setFieldValue }) => (
                   <Form>
-                    
+
                     <ContentFormNew className='form-control-group'>
                       <label>Cep*</label>
                       <InputMask
-                        mask="99999-999" 
+                        mask="99999-999"
                         required
                         value={cep}
                         name='cep' type='text'
                         onBlur={(ev: any) => onBlurCep(ev, setFieldValue)}
                         onChange={(text: any) => setCEP(text.target.value)}
-                        />
-                        
+                      />
+
                     </ContentFormNew>
 
                     <ContentFormNew className='form-control-group'>
                       <label>Logradouro*</label>
-                      <Field 
-                      required
-                      value={logradouro}
-                      name='logradouro'
-                      type='text'
-                      onChange={(text: any) => setLogradouro(text.target.value)} />
+                      <Field
+                        required
+                        value={logradouro}
+                        name='logradouro'
+                        type='text'
+                        onChange={(text: any) => setLogradouro(text.target.value)} />
                     </ContentFormNew>
 
                     <ContentFormNew className='form-control-group'>
                       <label>Número*</label>
-                      <Field 
-                      required
-                      value={newNumero}
-                      name='numero' 
-                      type='text'
-                      onChange={(text: any) => setNewNumero(text.target.value)}
-                       />
+                      <Field
+                        required
+                        value={newNumero}
+                        name='numero'
+                        type='text'
+                        onChange={(text: any) => setNewNumero(text.target.value)}
+                      />
                     </ContentFormNew>
 
                     <ContentFormNew className='form-control-group'>
                       <label>Complemento</label>
-                      <Field 
-                      value={newComplemento}
-                      name='complemento' 
-                      type='text'
-                      onChange={(text: any) => setNewComplemento(text.target.value)}
-                       />
+                      <Field
+                        value={newComplemento}
+                        name='complemento'
+                        type='text'
+                        onChange={(text: any) => setNewComplemento(text.target.value)}
+                      />
                     </ContentFormNew>
 
                     <ContentFormNew className='form-control-group'>
                       <label>Bairro*</label>
-                      <Field 
-                      required
-                      value={bairro}
-                      name='bairro' 
-                      type='text'
-                      onChange={(text: any) => setBairro(text.target.value)}
-                       />
+                      <Field
+                        required
+                        value={bairro}
+                        name='bairro'
+                        type='text'
+                        onChange={(text: any) => setBairro(text.target.value)}
+                      />
                     </ContentFormNew>
 
                     <ContentFormNew className='form-control-group'>
                       <label>Cidade*</label>
-                      <Field 
-                      required
-                      value={cidade}
-                      name='cidade' 
-                      type='text'
-                      onChange={(text: any) => setCidade(text.target.value)}
-                       />
+                      <Field
+                        required
+                        value={cidade}
+                        name='cidade'
+                        type='text'
+                        onChange={(text: any) => setCidade(text.target.value)}
+                      />
                     </ContentFormNew>
 
                     <ContentFormNew className='form-control-group'>
                       <label>Estado*</label>
-                      <Field 
-                      required
-                      value={estado}
-                      component='select' 
-                      name='uf'
-                      onChange={(text: any) => setEstado(text.target.value)}
+                      <Field
+                        required
+                        value={estado}
+                        component='select'
+                        name='uf'
+                        onChange={(text: any) => setEstado(text.target.value)}
                       >
                         <option value=''>Selecione o Estado</option>
                         <option value='AC'>Acre</option>
@@ -721,18 +715,18 @@ export default function Profile() {
                   </Form>
                 )}
               />
-             
+
               {loading ? <img width="40px" style={{ margin: 'auto' }} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : (
                 <div className="buttonsNew">
-                <button type="button" onClick={messageCancel}>
-                  Cancelar
-                </button>
-                <button 
-                 type="submit"
-                 onSubmit={setNewData}>
-                  Adicionar
-                </button>
-              </div>
+                  <button type="button" onClick={messageCancel}>
+                    Cancelar
+                  </button>
+                  <button
+                    type="submit"
+                    onSubmit={setNewData}>
+                    Adicionar
+                  </button>
+                </div>
               )}
             </ModalContent>
           </div>
@@ -767,14 +761,14 @@ export default function Profile() {
                   alt="Loading"
                 />
               ) : (
-              <div className="buttonsNew">
-                <button type="button" onClick={closeModalResetSenha}>
-                  Cancelar
-                </button>
-                <button type="button" onClick={resetSenha}>
-                  Adicionar
-                </button>
-              </div>
+                <div className="buttonsNew">
+                  <button type="button" onClick={closeModalResetSenha}>
+                    Cancelar
+                  </button>
+                  <button type="button" onClick={resetSenha}>
+                    Adicionar
+                  </button>
+                </div>
               )}
             </ModalContent>
           </div>
