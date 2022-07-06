@@ -766,32 +766,35 @@ export default function NewProd() {
                   />
                 </ContentFormNew>
 
-                <FileContainer>
-                   <div className="container">
-                     <label
-                        htmlFor="upload-xls"
-                        className="btn-info"
-                      >
-                        Selecione uma imagem
-                        <MdFileUpload/>
-                      </label>
-                     
-                                       <input
-                      // value={imagem}
-                      required
-                      type="file"
-                      placeholder="www.imagem/suaimagem.com"
-                      //@ts-ignore
-                      onChange={(e) => handleUpload(e?.target?.files[0])}
-                                       />
-                   </div>
-
-                  <p
-                      style={{margin: 'auto'}}
-                      >
-                        Imagem deve estar em 263 X 146 PX
-                  </p>
-                </FileContainer>
+                <ContentFormNew>
+                  <FileContainer>
+                     <div className="container-file">
+                       <label
+                          htmlFor="upload-xls"
+                          className="btn-info"
+                        >
+                          Selecione uma imagem
+                          <MdFileUpload/>
+                        </label>
+                  
+                      <input
+                        // value={imagem}
+                        // requiredz
+                        type="file"
+                        placeholder="www.imagem/suaimagem.com"
+                        id="upload-xls"
+                        name="upload-xls"
+                        //@ts-ignore
+                        onChange={(e) => handleUpload(e?.target?.files[0])}
+                                         />
+                     </div>
+                    <p
+                        style={{margin: 'auto'}}
+                        >
+                          Imagem deve estar em 263 X 146 PX
+                    </p>
+                  </FileContainer>
+                </ContentFormNew>
 
                 <ContentFormNew>
                   <label htmlFor="">Prazo de entrega</label>
