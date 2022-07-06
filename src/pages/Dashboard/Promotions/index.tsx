@@ -30,6 +30,8 @@ import { formatPrice } from "../../../util/format";
 import { Btn } from "../PersonalData/styles";
 import { toast } from "react-toastify";
 import uploadImage from "../../../services/imagem/upload";
+import { FileContainer } from "../NewProd/styles";
+import { MdFileUpload } from "react-icons/md";
 var uuid = require("uuid");
 
 
@@ -163,7 +165,7 @@ export default function Promotions() {
         </ContentNew>
 
         <ContentNew>
-          <NewBtnFeatured onClick={openModal}>
+          <NewBtnFeatured   onClick={openModal}>
             Adicionar Imagem Promocional
           </NewBtnFeatured>
         </ContentNew>
@@ -237,20 +239,36 @@ export default function Promotions() {
               ): 'selecione um produto'}
               
 
+
               <ContentFormNew>
-                <label htmlFor="">Imagem Promocional</label>
-                <h4
-                style={{margin: 'auto'}}
-                >
-                  Imagem promocional deve estar em 1440 X 417 PX
-                </h4>
-                <input
-                 required
-                 type="url"
-                 placeholder="https://www.suaImagem.com/imagem" 
-                 onChange={event => setImagemPromocional(event.target.value)}
-                />
-              </ContentFormNew>
+                  <FileContainer>
+                     <div className="container-file">
+                       <label
+                          htmlFor="upload-xls"
+                          className="btn-info"
+                        >
+                          Selecione uma imagem
+                          <MdFileUpload/>
+                        </label>
+                  
+                        <input
+                        // value={imagem}
+                        required
+                        placeholder="www.imagem/suaimagem.com"
+                        id="upload-xls"
+                        name="upload-xls"
+                        type="file"
+                        //@ts-ignore
+                        onChange={(e) => handleUpload(e?.target?.files[0])}
+                                         />
+                     </div>
+                    <p
+                        style={{margin: 'auto'}}
+                        >
+                          Imagem deve estar em 1440 X 417 PX
+                    </p>
+                  </FileContainer>
+                </ContentFormNew>
               
               {/* <ContentFormNew>
                 <label htmlFor="">Data de encerramento</label>
