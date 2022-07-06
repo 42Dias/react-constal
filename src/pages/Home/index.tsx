@@ -52,6 +52,29 @@ SwiperCore.use([Autoplay,Pagination,Navigation]);
 
 const Home = (): JSX.Element => {
 
+  
+  
+  function setFavoritos(favoritos: string[], produtoId: string){    
+      favoritos.push(produtoId)
+      localStorage.setItem("favorito", JSON.stringify(favoritos))
+      toast.info("Adicionado aos favoritos!")
+  }
+  
+  
+  function handleSetFavoritos(productId: string){
+    const favoritos: string[] = JSON.parse(localStorage.getItem("favorito") || "[]");
+
+    if(role == 'pessoa'){
+      setFavoritos(favoritos, productId)
+    }
+    else{
+      toast.error("Cadastre-se como cliente para habilitar os favoritos!")
+    }
+  }
+
+
+
+
   const [products = [], setProducts] = useState<ProductFormatted[]>([]);
   const [products2 = [], setProducts2] = useState<ProductFormatted[]>([]);
   const [promocoes = [], setPromocoes] = useState<ProductFormatted[]>([]);
@@ -223,7 +246,10 @@ const Home = (): JSX.Element => {
                         <Link to={`/produto/${product.id}`}>
                           <img src={product.imagemUrl || semImagem} alt={product.nome} />
                         </Link>
-                        <div className="favorites">
+                        <div
+                        onClick={() => handleSetFavoritos(product.id)}
+                        className="favorites"
+                        >
                           <FiHeart />
                         </div>
                         <strong>{product.nome}</strong>
@@ -274,7 +300,10 @@ const Home = (): JSX.Element => {
                   <Link to={`/produto/${product.id}`}>
                     <img src={product.imagemUrl ? product.imagemUrl : semImagem} alt={product.nome} />
                   </Link>
-                  <div className="favorites">
+                  <div
+                  onClick={() => handleSetFavoritos(product.id)}
+                  className="favorites"
+                  >
                     <FiHeart />
                   </div>
                   <strong>{product.nome}</strong>
