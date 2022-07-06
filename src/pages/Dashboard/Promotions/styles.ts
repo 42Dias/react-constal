@@ -202,7 +202,7 @@ export const ContentFormNew = styled.div`
     width: 466px;
     border-radius: 4px;
     border: 0;
-    background: #F2F2F2 !important;
+    background: #f2f2f2;
     padding: 0 5px;
     margin: 10px 0;
   }
@@ -220,11 +220,22 @@ export const ContentFormNew = styled.div`
   label {
     margin: 5px 0;
   }
+
+  input[type=file]::-webkit-file-upload-button {
+    visibility: hidden;
+    display: none;
+
+  }
+
+  input[type=file]::file-selector-button {
+    display: none;
+  }
 ` 
+
 export const NewBtnFeatured = styled.button`
   margin: 20px 0 !important;
-  width: 182px;
-  height: 33px;
+  width: 300px;
+  height: 50px;
 
   background: #58A4B0;
   border-radius: 5px;
