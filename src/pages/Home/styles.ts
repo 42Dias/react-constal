@@ -166,16 +166,7 @@ export const SwiperStyles = styled.div`
   position: relative;
   transition: all .5s ;
 
-  &:hover{
-
-    min-height: 420px !important;
-
-    pre{
-      height: 35px;
-      transition: all .5s;
-      padding: 15px 15px;
-    }
-  }
+  
 
   strong {
     font-size: 18px;
@@ -187,15 +178,7 @@ export const SwiperStyles = styled.div`
     height: 71px;
   }
 
-  pre{
-    transition: all .5s;
-    font: 14px 'Poppins',sans-serif;
-    text-decoration: line-through;
-    height: 0;
-    padding: 0;
-
-    } 
-
+  
 
   
 
@@ -257,6 +240,27 @@ export const SwiperStyles = styled.div`
     display: flex;
     flex-direction: column;
   }
+}
+
+.swiper-slide--promotion{
+  &:hover{
+  min-height: 420px !important;
+
+  pre{
+    height: 35px;
+    transition: all .5s;
+    padding: 15px 15px;
+  }
+  }
+  pre{
+  transition: all .5s;
+  font: 14px 'Poppins',sans-serif;
+  text-decoration: line-through;
+  height: 0;
+  padding: 0;
+} 
+
+
 }
 `
 
