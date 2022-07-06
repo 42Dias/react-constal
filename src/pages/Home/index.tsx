@@ -115,7 +115,7 @@ const Home = (): JSX.Element => {
   //     window.location.reload()
   //   }
   // }, []);
-  
+
   return (
     <>
       <Header />
@@ -137,29 +137,29 @@ const Home = (): JSX.Element => {
           {
 
             banners.map(
-              (banner, index ) => 
+              (banner, index) =>
               (
                 <SwiperSlide key={index}>
-                        {/* /produtos-promocao/:imagemId */}
-                        <img src={banner.imagemUrl}
-                        alt={banner.nome} />
-                    </SwiperSlide>
-              ) 
+                  {/* /produtos-promocao/:imagemId */}
+                  <img src={banner.imagemUrl}
+                    alt={banner.nome} />
+                </SwiperSlide>
+              )
             )
           }
           {
             promocoes.map(
               (promocao, index) => (
-                    <SwiperSlide key={index}>
-                      <Link 
-                      // href={`/produtos-promocao/${promocao.promocaoId}`} 
-                      to={`/produtos-promocao/${promocao.promocaoId}`}>
-                        {/* /produtos-promocao/:imagemId */}
-                        <img src={promocao.imagemPromocional}
-                        alt={promocao.precoOferta + " " + promocao.nome} />
-                    </Link>
-                    </SwiperSlide>
-              )             
+                <SwiperSlide key={index}>
+                  <Link
+                    // href={`/produtos-promocao/${promocao.promocaoId}`} 
+                    to={`/produtos-promocao/${promocao.promocaoId}`}>
+                    {/* /produtos-promocao/:imagemId */}
+                    <img src={promocao.imagemPromocional}
+                      alt={promocao.precoOferta + " " + promocao.nome} />
+                  </Link>
+                </SwiperSlide>
+              )
             )
           }
           {/* COMENTADO POR OPÇÃO DO CLIENTE, SUBIR LIMPO PARA O SERVIDOR DELE */}
@@ -206,57 +206,54 @@ const Home = (): JSX.Element => {
       <SwiperStyles>
         <div className="container">
           <h2>Ofertas e promoções</h2>
-          {/*products.forEach((p) => {
-            if (p.isOferta === 1 && prodId != p.id) {
-              productCounter.push(p);
-              prodId = p.id;
-              // console.log(p);
-            }
-
-            //// console.log(productCounter);
-            //// console.log(products.length);
-          })*/}
 
           {products2.length === 0 ? (
             <p>Nenhum produto em promoção</p>
           ) : (
             <Swiper
-            spaceBetween={30} centeredSlides={true}
-            //  autoplay={{ delay: 4000, disableOnInteraction: false, }}
-            pagination={{ clickable: true, }} 
+              spaceBetween={30} centeredSlides={true}
+              //  autoplay={{ delay: 4000, disableOnInteraction: false, }}
+              pagination={{ clickable: true, }}
             >
-              {products2.map((product) => (
-                <SwiperSlide>
-                  {(
-                    <li key={product.id}>
-                      <Link to={`/produto/${product.id}`}>
-                        <img src={product.imagemUrl || semImagem} alt={product.nome} />
-                      </Link>
-                      <strong>{product.nome}</strong>
-                      <p>{ formatPrice(product.precoOferta)}</p>
-                      {
-                      role == "pessoa" || !role ? (
-                      <button
-                        type="button"
-                        data-testid="add-product-button"
-                        onClick={() => handleAddProduct(product.id)}
-                      >
-                        <div data-testid="cart-product-quantity">
-                          <MdAddShoppingCart size={16} color="#FFF" />
-                          {product.quantidadeNoEstoque}
-                        </div>
-                        <span>ADICIONAR AO CARRINHO</span>
-                      </button>
-                        ):(
-                          <strong>
-                            QTD: {product.quantidadeNoEstoque}
-                          </strong>
-                        )
-                      }
-                    </li>
-                  )}
-                </SwiperSlide>
-              ))}
+              {
+                products2.map((product) => (
+                  <SwiperSlide className="swiper-slide--promotion">
+                    {(
+                      <li key={product.id}>
+                        <Link to={`/produto/${product.id}`}>
+                          <img src={product.imagemUrl || semImagem} alt={product.nome} />
+                        </Link>
+                        <strong>{product.nome}</strong>
+                        <pre>
+                          
+                          {
+                            product.preco
+                          }
+                        </pre>
+                        <p>{formatPrice(product.precoOferta)}</p>
+                        {
+                          role == "pessoa" || !role ? (
+                            <button
+                              type="button"
+                              data-testid="add-product-button"
+                              onClick={() => handleAddProduct(product.id)}
+                            >
+                              <div data-testid="cart-product-quantity">
+                                <MdAddShoppingCart size={16} color="#FFF" />
+                                {product.quantidadeNoEstoque}
+                              </div>
+                              <span>ADICIONAR AO CARRINHO</span>
+                            </button>
+                          ) : (
+                            <strong>
+                              QTD: {product.quantidadeNoEstoque}
+                            </strong>
+                          )
+                        }
+                      </li>
+                    )}
+                  </SwiperSlide>
+                ))}
             </Swiper>
           )}
         </div>
@@ -273,27 +270,27 @@ const Home = (): JSX.Element => {
               <SwiperSlide>
                 <li key={product.id}>
                   <Link to={`/produto/${product.id}`}>
-                    <img src={product.imagemUrl ? product.imagemUrl:semImagem} alt={product.nome} />
+                    <img src={product.imagemUrl ? product.imagemUrl : semImagem} alt={product.nome} />
                   </Link>
                   <strong>{product.nome}</strong>
                   <p>{product.preco}</p>
                   {
-                    role == "pessoa" || !role ?(
-                  <button
-                    type="button"
-                    data-testid="add-product-button"
-                    onClick={() => handleAddProduct(product.id)}
-                  >
-                    <div data-testid="cart-product-quantity">
-                      <MdAddShoppingCart size={16} color="#FFF" />
-                      {product.quantidadeNoEstoque}
-                    </div>
-                    <span>ADICIONAR AO CARRINHO</span>
-                  </button>
-                    ):(                   
-                    <strong>
-                      QTD: {product.quantidadeNoEstoque}
-                    </strong>
+                    role == "pessoa" || !role ? (
+                      <button
+                        type="button"
+                        data-testid="add-product-button"
+                        onClick={() => handleAddProduct(product.id)}
+                      >
+                        <div data-testid="cart-product-quantity">
+                          <MdAddShoppingCart size={16} color="#FFF" />
+                          {product.quantidadeNoEstoque}
+                        </div>
+                        <span>ADICIONAR AO CARRINHO</span>
+                      </button>
+                    ) : (
+                      <strong>
+                        QTD: {product.quantidadeNoEstoque}
+                      </strong>
                     )
                   }
                 </li>
@@ -301,7 +298,7 @@ const Home = (): JSX.Element => {
             ))}
           </Swiper>
         </div>
-      </SwiperStyles>      
+      </SwiperStyles>
       <Footer />
     </>
   );
