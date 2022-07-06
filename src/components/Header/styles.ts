@@ -280,10 +280,12 @@ export const IconsContainer = styled.div`
   display: flex;
   justify-content: center;
   position: absolute;
+
   
-  /*
-  right: calc(50% - 470px);
-  */
+  @media (min-width: 1200px) {
+    right: calc(50% - 470px);
+
+  }
 
   button {
     position: relative;
