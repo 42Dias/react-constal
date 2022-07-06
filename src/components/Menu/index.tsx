@@ -74,7 +74,7 @@ export function Menu() {
                 <Link to="/contas">Contas a Receber</Link>
                 <Link to="/meus-produtos">Meus Produtos</Link>
                 <Link to="/perguntas">Perguntas</Link>
-                <Link to="/promocoes">Promoções</Link>
+                <Link to="/promocoes">Imagens Promocionais</Link>
                 <Link to="/vendas">Vendas</Link>
                 {/* <Link to="/assinaturas">Planos</Link> */}
               </div>
