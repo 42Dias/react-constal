@@ -34,7 +34,7 @@ export const Container = styled.div`
     /* 0549c1 */
     /* border: 10px solid #f3f3f3; Light grey */
     border: 10px solid #c8c8c8; /* Light grey */
-    border-top: 10px solid #0549c1; /* Black */
+    border-top: 10px solid #58A4B0; /* Black */
     /* border-top: 10px solid #383636; Black */
     border-radius: 50%;
     
