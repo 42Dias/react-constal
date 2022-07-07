@@ -19,10 +19,10 @@ import {
   ProdCaracteristicas,
   Right
 } from "./styles";
-import prod from "../../assets/images/prodfav.png";
-import { AiFillStar, AiOutlineClose } from "react-icons/ai";
+
+
+import {  AiOutlineClose } from "react-icons/ai";
 import { FiPlus, FiMinus, FiHeart } from "react-icons/fi";
-import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import React from "react";
 import Header from "../../components/Header";
@@ -35,17 +35,8 @@ import { Btn } from "../Dashboard/PersonalData/styles";
 import { ContentFormNew, ModalContent } from "../Dashboard/NewProd/styles";
 import { useCart } from "../../hooks/useCart";
 import axios from "axios";
-import { totalmem } from "os";
+import LoadingLayer from "../../components/LoadingLayer";
 
-interface RepositoryItemProps {
-  repository: {
-    id: string;
-    name: string;
-    title: string;
-    price: string;
-    image: string;
-  };
-}
 export default function Produto() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [showModal1, setShowModal1] = React.useState(false);
@@ -54,15 +45,6 @@ export default function Produto() {
   const [counter, setCounter] = useState(1);
 
   function error() {
-    // toast("Não é possível adicionar menos que 1", {
-    //   position: "top-right",
-    //   autoClose: 5000,
-    //   hideProgressBar: false,
-    //   closeOnClick: true,
-    //   pauseOnHover: true,
-    //   draggable: true,
-    //   progress: undefined,
-    // });
     toast.error("Não é possível adicionar menos que 1")
   }
 
@@ -71,11 +53,7 @@ export default function Produto() {
 
 
   function setFavoritos(favoritos: string[], produtoId: string){    
-      // // console.log("favoritos")
-      // // console.log(favoritos)
-      // // console.log("produtoId")
-      // // console.log(produtoId)    
-      // // console.log(favoritos)
+
       favoritos.push(produtoId)
       localStorage.setItem("favorito", JSON.stringify(favoritos))
       toast.info("Adicionado aos favoritos!")
@@ -95,15 +73,12 @@ export default function Produto() {
     if (counter < 2 || counter == 0) {
       setCounter(1);
       error();
-      // // console.log("counter dentro que passou")
-      // // console.log(counter)
+
     } else {
       setCounter(counter - 1);
     }
   }
-  function openModal() {
-    setIsOpen(true);
-  }
+
 
   function afterOpenModal() {
     // references are now sync'd and can be accessed.
@@ -119,10 +94,12 @@ export default function Produto() {
     const hash = window.location.hash.replace(/#\/produto\//g, '');    
     return hash
   }
+
   const productId = getHash()
+
+
   function buildUrl(){
     const productId = getHash()
-//  `/tenant/:tenantId/produto/:id`
     const requisition = `/produto/${productId}`
     return requisition
   }
@@ -172,59 +149,82 @@ export default function Produto() {
   const [user , setUser]=useState<any>();
 
   
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   
-  const { addProduct, cart } = useCart();
+  const { addProduct } = useCart();
+
+   async function loadProduct() {
+    setLoading(true)
+
+    
+    const response = await axios.get(`${ip}:8157/api/find-produto-by-id/${productId}`)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((e) => {
+        toast.error("Ocorreu um erro")
+        setLoading(false)
+      }
+    );
+
+    setProdId(response.id)
+    setPublicUrl(response.publicUrl);
+    setCodigo(response.codigo);
+    setMarca(response.marca);
+    // setFotos(response.imagemUrl);
+    setDescricao(response.descricao);
+    setCaracteristicasTecnicas(response.caracteristicasTecnicas)
+    setEmpresaId(response.empresaId)
+    setEstoque(response.quantidadeNoEstoque)
+    setIsOferta(response.isOferta)
+    setPrecoOferta(response.precoOferta)
+    setProdutoEmpresaId(response.empresaId)
+    setNome(response.nome);
+
+    if (response.isOferta === true) {
+      setPreco(formatPrice(response.precoOferta));
+    }
+    
+    else {
+      setPreco(formatPrice(response.preco));
+    }
+
+    if(response.categoria){
+      setCategoria(response.categoria.nome);
+    }
+
+
+    await fetch(response.imagemUrl)
+      //                         vvvv
+      .then(response => response.blob())
+      .then(imageBlob => {
+          // Then create a local URL for that image and print it 
+          const imageObjectURL = URL.createObjectURL(imageBlob);
+          setFotos(imageObjectURL);
+      })
+      
+    window.scrollTo(0, 0); // values are x,y-offset
+    setLoading(false)
+
+  }
+
+
+  async function loadUser() {
+    
+    const user = await api.get("pessoa-fisica-perfil").then((user) => {
+      setUser(user.data)
+      return user.data;
+    });
+
+    setLogradouro(user.logradouro + ", " + user.numero);
+    setBairro(user.bairro);
+    setCEP(user.cep);
+    setCidade(user.cidade);
+    setEstado(user.estado);
+  }
 
 
   useEffect(() => {
-    async function loadProduct() {
-      const response = await axios.get(`${ip}:8157/api/find-produto-by-id/${productId}`)
-      // const response = await api.get(selectedProduct)
-      .then((response) => {
-        // console.log(response.data)
-        return response.data;
-      });
-
-      setProdId(response.id)
-
-      setNome(response.nome);
-
-      if (response.isOferta === true) {
-        setPreco(formatPrice(response.precoOferta));
-      } else {
-        setPreco(formatPrice(response.preco));
-      }
-      setPublicUrl(response.publicUrl);
-      setCodigo(response.codigo);
-      setMarca(response.marca);
-      setFotos(response.imagemUrl/*|| response.fotos[0].downloadUrl*/);
-      setDescricao(response.descricao);
-      setCaracteristicasTecnicas(response.caracteristicasTecnicas)
-      setEmpresaId(response.empresaId)
-      setEstoque(response.quantidadeNoEstoque)
-      setIsOferta(response.isOferta)
-      setPrecoOferta(response.precoOferta)
-      if(response.categoria){
-        setCategoria(response.categoria.nome);
-      }
-      setProdutoEmpresaId(response.empresaId)
-      // // console.log("response.empresaId")
-      // // console.log(response.empresaId)
-
-
-    }
-    async function loadUser() {
-      const user = await api.get("pessoa-fisica-perfil").then((user) => {
-        setUser(user.data)
-        return user.data;
-      });
-      setLogradouro(user.logradouro + ", " + user.numero);
-      setBairro(user.bairro);
-      setCEP(user.cep);
-      setCidade(user.cidade);
-      setEstado(user.estado);
-    }
     loadUser();
     loadProduct();
   }, []);
@@ -242,14 +242,6 @@ export default function Produto() {
         }
 
         const response = await api.post('comentario', data)
-
-        // // console.log(response.data)
-        
-        // let nwe = response.data
-
-        // // console.log("-------------------------------")
-        // // console.log("nwe")
-        // // console.log(nwe)
         
         loadComments()
         setComentario('')
@@ -334,8 +326,12 @@ export default function Produto() {
     
   return (
     <>
+      <LoadingLayer loading={loading} />
+      
       <Header />
       <Menu />
+      
+
       <div className="container">
         <ContainerProd>
           <img src={fotos} alt="" />
@@ -474,16 +470,16 @@ export default function Produto() {
             <div></div>
           ) : (
             <ProdSecondComents>
+            {loading ? (
+            <img
+              width="40px"
+              style={{ margin: "auto" }}
+              height=""
+              src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
+              alt="Loading"
+            />
+          ) : (
             <FormComents>
-              {loading ? (
-              <img
-                width="40px"
-                style={{ margin: "auto" }}
-                height=""
-                src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
-                alt="Loading"
-              />
-            ) : false}
               <h2>Tire a sua dúvida aqui</h2>
               <select name="" id="">
                 <option value="">Motivo da mensagem</option>
@@ -506,6 +502,8 @@ export default function Produto() {
                 }
               } />
             </FormComents>
+          )}
+            
           </ProdSecondComents>    
           )
         }
