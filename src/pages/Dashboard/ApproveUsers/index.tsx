@@ -7,6 +7,7 @@ import { api, ip, role, status } from "../../../services/api";
 import { Empresa } from "../../../types";
 import { toast } from "react-toastify";
 import React from "react";
+import Loading from "../../../components/Loading";
 
 export default function ApproveUsers() {
   const [empresas = [], setEmpresas] = useState<any[]>([]);
@@ -94,7 +95,7 @@ export default function ApproveUsers() {
         <CardDatails>
           <h2>Aprovar Admin</h2>
           
-          {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : (
+          {loading ? <Loading loading={loading}/> : (
             empresas.length === 0 ? (
               <p>Todas os admin ja foram aprovadas</p>
             ) : (

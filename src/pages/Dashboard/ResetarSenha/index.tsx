@@ -23,6 +23,7 @@ import {
 } from "./styles";
 import { toast } from "react-toastify";
 import axios from "axios";
+import Loading from "../../../components/Loading";
 
 export default function ResetarSenha() {
   const [showModal1, setShowModal1] = React.useState(false);
@@ -208,13 +209,7 @@ export default function ResetarSenha() {
                 />
               </ContentFormNew>
               {loading ? (
-                <img
-                  width="40px"
-                  style={{ margin: "auto" }}
-                  height=""
-                  src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
-                  alt="Loading"
-                />
+                <Loading loading={loading} />
               ) : (
                 <div className="buttonsNew">
                   <button type="button" onClick={closeModalResetSenha}>

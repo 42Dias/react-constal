@@ -34,6 +34,7 @@ import { Field, Form, Formik } from "formik";
 import { format } from "path";
 import { type } from "os";
 import integration from "../../../services/integration/integration";
+import Loading from "../../../components/Loading";
 
 
 export default function PersonalData() {
@@ -130,13 +131,13 @@ export default function PersonalData() {
   
 
   function formatarNumero(v: any){
-    v=v.replace(/\D/g,""); //Remove tudo o que não é dígito
-    v=v.replace(/^(\d{2})(\d)/g,"($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
-    v=v.replace(/(\d)(\d{4})$/,"$1-$2"); //Coloca hífen entre o quarto e o quinto dígitos
+    v=v?.replace(/\D/g,""); //Remove tudo o que não é dígito
+    v=v?.replace(/^(\d{2})(\d)/g,"($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
+    v=v?.replace(/(\d)(\d{4})$/,"$1-$2"); //Coloca hífen entre o quarto e o quinto dígitos
     return v;
 }
   function formatarCnpj(v: any){
-    return v.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5")
+    return v?.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5")
   }
 
     useEffect(
@@ -1262,13 +1263,7 @@ export default function PersonalData() {
                     />
                   </ContentFormNew>
                   {loading ? (
-                    <img
-                      width="40px"
-                      style={{ margin: "auto" }}
-                      height=""
-                      src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
-                      alt="Loading"
-                    />
+                     <Loading loading={loading}/> 
                   ) : (
                     <NewBtn>
                       <button type="button" onClick={() => setShowModal1(false)}>Cancelar</button>
@@ -1428,13 +1423,7 @@ export default function PersonalData() {
               </ContentFormNew>
               <ContentFormNew>
                 {loading ? (
-                  <img
-                    width="40px"
-                    style={{ margin: "auto" }}
-                    height=""
-                    src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
-                    alt="Loading"
-                  />
+                  <Loading loading={loading} />
                 ) : (
                   <NewBtn>
                     <button type="button" onClick={messageCancel}>Cancelar</button>
@@ -1471,13 +1460,7 @@ export default function PersonalData() {
               </ContentFormNew>
               <ContentFormNew>
                 {loading ? (
-                  <img
-                    width="40px"
-                    style={{ margin: "auto" }}
-                    height=""
-                    src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
-                    alt="Loading"
-                  />
+                  <Loading loading={loading} />
                 ) : (
                   <div className="buttonsNew">
                     <button type="button" onClick={closeModalResetSenha}>

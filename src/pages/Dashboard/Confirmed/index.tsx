@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { formatPrice } from "../../../util/format";
 import { Empresa } from "../../../types";
 import { SelectInput } from "../Vendas/styles";
+import Loading from "../../../components/Loading";
 
 
 {/* CONFIRMADOS */}
@@ -186,8 +187,7 @@ export default function Confirmed() {
 //               )
 //             )}
 //           </select>
-//           {loading ? <img width="40px" height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}
-//         </SelectInput>
+//           SelectInput>
 //           ) : (
 //             false
 //           )
@@ -211,7 +211,6 @@ export default function Confirmed() {
 //           }
           
 //         </MenuSell>
-//         {loading2 ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}
 //         {
 //           pedidosConfirmados.map(
 //             (pedidos) => (
@@ -392,7 +391,7 @@ return (
     {
           role == 'admin' ? (
             
-        loading ? <img width="40px" height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : (
+        loading ? <Loading loading={loading}/> : (
 
         <div>
           <SelectInput>
@@ -433,7 +432,7 @@ return (
           }
           
         </MenuSell>
-    {loading2 ? <img width="40px" style={{margin: '50px auto', display: 'flex'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}
+    {loading2 ?  <Loading loading={loading2}/>  : false}
     {
       pedidosConfirmados.map(
         (pedidos) => (

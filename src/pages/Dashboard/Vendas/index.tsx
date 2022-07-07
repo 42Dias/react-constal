@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { Toast } from "react-toastify/dist/components";
 import Products from "../../Products";
 import { formatPrice } from "../../../util/format";
+import Loading from "../../../components/Loading";
 
 
 export default function Vendas() {
@@ -192,7 +193,7 @@ export default function Vendas() {
         {
           role == 'admin' ? (
             
-        loading ? <img width="40px" height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : (
+        loading ? <Loading loading={loading}/>  : (
 
         <div>
           <SelectInput>
@@ -233,7 +234,7 @@ export default function Vendas() {
           }
           
         </MenuSell>
-        {loading2 ? <img width="40px" style={{margin: '50px auto', display: 'flex'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}
+        <Loading loading={loading2}/> 
         {
           pedidosPendentes.map(
             (pedidos) => (

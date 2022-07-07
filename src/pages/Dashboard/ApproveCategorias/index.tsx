@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Header from "../../../components/Header";
+import Loading from "../../../components/Loading";
 import { Menu } from "../../../components/Menu";
 import { api, role, ip, status } from "../../../services/api";
 import { CardDatails, CardDatailsContent, ContentDetails } from "./styles";
@@ -96,7 +97,7 @@ export default function ApproveCategorias() {
         <CardDatails>
           <h2>Aprovar Categorias</h2>
           
-          {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : (
+          {loading ? <Loading loading={loading}/> : (
             categoria.length === 0 ? (
               <p>Todas as categorias ja foram aprovadas</p>
             ) : (

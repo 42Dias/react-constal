@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { formatPrice } from "../../../util/format";
 import { Empresa } from "../../../types";
 import { SelectInput } from "../Vendas/styles";
+import Loading from "../../../components/Loading";
 
 export default function Denounced() {
   const [pedidos = [], setPedidos] = useState<any[]>([]);
@@ -183,8 +184,7 @@ export default function Denounced() {
 //               )
 //             )}
 //           </select>
-//           {loading ? <img width="40px" height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}
-//         </SelectInput>
+//          /SelectInput>
 //           ) : (
 //             false
 //           )
@@ -208,7 +208,6 @@ export default function Denounced() {
 //           }
           
 //         </MenuSell>
-//         {loading2 ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}
 //         {
 //           pedidosDenunciador.map(
 //             (pedidos) => (
@@ -389,7 +388,7 @@ return (
     {
           role == 'admin' ? (
             
-        loading ? <img width="40px" height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : (
+        loading ? <Loading loading={loading}/>  : (
 
         <div>
           <SelectInput>
@@ -430,7 +429,7 @@ return (
            }
           
          </MenuSell>
-    {loading2 ? <img width="40px" style={{margin: '50px auto', display: 'flex'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}
+    {loading2 ?  <Loading loading={loading2}/>  : false}
     {
       pedidosDenunciador.map(
         (pedidos) => (

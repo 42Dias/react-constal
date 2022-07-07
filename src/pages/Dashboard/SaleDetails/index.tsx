@@ -9,6 +9,7 @@ import { api, id, ip, role, status } from "../../../services/api";
 import { complement } from "polished";
 import { formatPrice } from "../../../util/format";
 import moment from "moment";
+import Loading from "../../../components/Loading";
 
 export default function SaleDetails() {
   const [response, setResponse]=useState<any[]>([]);
@@ -77,7 +78,9 @@ export default function SaleDetails() {
       <Menu />
       <div className="container">
           <h2>Detalhes da venda</h2>
-          {loading ? <img width="40px" style={{margin: '50px auto', display: 'flex'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}
+
+          <Loading loading={loading}/>
+          
           {response.map(
             (pedido) => (
             <>

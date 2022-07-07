@@ -32,6 +32,7 @@ import { toast } from "react-toastify";
 import uploadImage from "../../../services/imagem/upload";
 import { FileContainer } from "../NewProd/styles";
 import { MdFileUpload } from "react-icons/md";
+import Loading from "../../../components/Loading";
 var uuid = require("uuid");
 
 
@@ -280,13 +281,7 @@ export default function Promotions() {
                 />
               </ContentFormNew> */}
                 {loading ? (
-                  <img
-                    width="40px"
-                    style={{ margin: "auto" }}
-                    height=""
-                    src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
-                    alt="Loading"
-                  />
+                  <Loading loading={loading}/> 
                 ) : (
                 <div className="buttonsNew">
                   <button >Cancelar</button>

@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { api, ip, role, status } from "../../../services/api";
 import { Empresa } from "../../../types";
 import { SelectInput } from "../Vendas/styles";
+import Loading from "../../../components/Loading";
 
 export default function Companies() {
   const [empresas = [], setEmpresas] = useState<any[]>([]);
@@ -92,7 +93,7 @@ export default function Companies() {
       <div className="container">
         <CardDatails>
           <h2>Empresas</h2>
-          {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : (
+          {loading ? <Loading loading={loading}/> : (
           <SelectInput>
             <select
               value={filtro}

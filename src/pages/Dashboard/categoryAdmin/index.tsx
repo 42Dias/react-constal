@@ -17,6 +17,7 @@ import React from "react";
 
 import { toast } from "react-toastify";
 import { Container, FlexLink } from "../../../components/Menu/styles";
+import Loading from "../../../components/Loading";
 
 export default function Sendcategoria() {
 
@@ -268,13 +269,7 @@ export default function Sendcategoria() {
 
             
         {loading ? (
-            <img
-              width="40px"
-              style={{ margin: "auto" }}
-              height=""
-              src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
-              alt="Loading"
-            />
+           <Loading loading={loading}/>
           ) : (
             <input type="submit" value="Enviar"/>
           )}

@@ -43,6 +43,7 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 import uploadImage from "../../../services/imagem/upload";
 import { MdFileUpload } from "react-icons/md";
+import Loading from "../../../components/Loading";
 
 export default function NewProd() {
   var uuid = require("uuid");
@@ -563,13 +564,7 @@ export default function NewProd() {
       <div className="container">
         <ContentNew>
           <h2>Meus produtos</h2> {loading ? (
-            <img
-              width="40px"
-              style={{ margin: "auto" }}
-              height=""
-              src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
-              alt="Loading"
-            />
+             <Loading loading={loading}/> 
           ) : false}
           {status === 'active' ? <button onClick={
             () => {
@@ -866,13 +861,7 @@ export default function NewProd() {
                 </Btn>
                 </ContentFormNew>
                 {loading ? (
-                  <img
-                    width="40px"
-                    style={{ margin: "auto" }}
-                    height=""
-                    src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
-                    alt="Loading"
-                  />
+                   <Loading loading={loading}/> 
                 ) : (
                   <div className="buttonsNew">
                   <button type="button" onClick={messageCancel}>
@@ -1111,13 +1100,7 @@ export default function NewProd() {
                 </select>
               </ContentFormNew>
               {loading ? (
-                <img
-                  width="40px"
-                  style={{ margin: "auto" }}
-                  height=""
-                  src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
-                  alt="Loading"
-                />
+                <Loading loading={loading}/> 
               ) : (
                 <div className="buttonsNew">
                 <button type="button" onClick={messageCancel}>
@@ -1236,13 +1219,7 @@ export default function NewProd() {
               </ContentFormNew> 
 
               {loading ? (
-                <img
-                  width="40px"
-                  style={{ margin: "auto" }}
-                  height=""
-                  src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
-                  alt="Loading"
-                />
+                 <Loading loading={loading}/> 
               ) : (
                 <div className="buttonsNew">
                 <button type="button" onClick={() => {
@@ -1289,13 +1266,7 @@ export default function NewProd() {
                 />
               </ContentFormNew>
               {loading ? (
-                <img
-                  width="40px"
-                  style={{ margin: "auto" }}
-                  height=""
-                  src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
-                  alt="Loading"
-                />
+                <Loading loading={loading}/> 
               ) : (
                 <div className="buttonsNew">
                 <button type="button" onClick={

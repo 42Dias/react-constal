@@ -8,6 +8,7 @@ import { Empresa } from "../../../types";
 import { toast } from "react-toastify";
 import React from "react";
 import axios from "axios";
+import Loading from "../../../components/Loading";
 
 export default function ApproveEmpresas() {
   const [empresas = [], setEmpresas] = useState<any[]>([]);
@@ -112,7 +113,7 @@ export default function ApproveEmpresas() {
       <div className="container">
         <CardDatails>
           <h2>Aprovar Empresas</h2>
-          {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : (
+          {loading ? <Loading loading={loading}/> : (
             empresas.length === 0 ? (
               <p>Todas os admin ja foram aprovadas</p>
             ) : (

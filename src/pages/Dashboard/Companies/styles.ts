@@ -83,6 +83,7 @@ export const CardDatailsContent = styled.div`
 
   .flex-btn {
     display: flex;
+    padding: 0 12px;
   }
 
   .flex-btn a {
