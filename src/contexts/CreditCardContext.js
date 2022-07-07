@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useContext } from "react";
-import { id } from "../services/api";
+import { id, token } from "../services/api";
 import cartaoDelete from "../services/cartao/cartaoDelete";
 import cartaoLoadFilter from "../services/cartao/cartaoLoadFilter";
 import CreditCardService from "../services/CreditCardService";
@@ -12,6 +12,8 @@ export default function CreditCardProvider({ children }) {
 
   async function getCreditCards(){
     try {
+      if(!token) return;
+
       let response = await cartaoLoadFilter('user', id)
       setCreditCardList(response);
       return response
