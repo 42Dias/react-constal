@@ -1,19 +1,25 @@
 import axios from 'axios';
 
-export let token = localStorage.getItem("token")?.replace(/"/g, "");
-export let tenantId = localStorage.getItem("tenantId")?.replace(/"/g, "");
-export let role = localStorage.getItem("roles")?.replace(/"/g, "");
-export let id = localStorage.getItem("id")?.replace(/"/g, "");
-export let idPessoa = localStorage.getItem("idPessoa")?.replace(/"/g, "");
-export let status = localStorage.getItem("status")?.replace(/"/g, "");
-export let Email = localStorage.getItem("email")?.replace(/"/g, "");
-export const semImagem = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Item_sem_imagem.png/1024px-Item_sem_imagem.png.png"
-// export let ip = "http://localhost"; //teste local
-export let porta = "8157";
-//export let ip = "https://projetos.42dias.com.br";//servidor teste
- export let ip = "https://constalshop.com.br";//servidor
+export const token = localStorage.getItem("token")?.replace(/"/g, "");
+export const tenantId = localStorage.getItem("tenantId")?.replace(/"/g, "");
+export const role = localStorage.getItem("roles")?.replace(/"/g, "");
+export const id = localStorage.getItem("id")?.replace(/"/g, "");
+export const idPessoa = localStorage.getItem("idPessoa")?.replace(/"/g, "");
+export const status = localStorage.getItem("status")?.replace(/"/g, "");
+export const Email = localStorage.getItem("email")?.replace(/"/g, "");
 
-//export let ip =  "https://162.240.22.199"	
+export const getToken = () => {
+  const token = localStorage.getItem("token")?.replace(/"/g, "") 
+  return token
+}
+
+export const semImagem = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Item_sem_imagem.png/1024px-Item_sem_imagem.png.png"
+// export const ip = "http://localhost"; //teste local
+export const porta = "8157";
+//export const ip = "https://projetos.42dias.com.br";//servidor teste
+export const ip = "https://constalshop.com.br";//servidor
+
+//export const ip =  "https://162.240.22.199"	
 
 export const api = axios.create({
   baseURL: ip+':8157/api/tenant/'+tenantId +"/",
