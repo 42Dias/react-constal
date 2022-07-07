@@ -7,6 +7,7 @@ export const Container = styled.div`
   transition: all .5s;
   position: fixed;
   z-index: 9999999;
+  overflow: hidden;
   
   background-color: #f5f5f5;
   /* background-color: #0549c1; */
