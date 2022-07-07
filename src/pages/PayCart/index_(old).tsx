@@ -8,6 +8,7 @@ import { Menu } from "../../components/Menu";
 import { useEffect, useState } from "react";
 import { Btn } from "../Dashboard/PersonalData/styles";
 import { toast } from "react-toastify";
+import Loading from "../../components/Loading";
 
 let token = localStorage.getItem("token")?.replace(/"/g, "");
 const tenantId = "fa22705e-cf27-41d0-bebf-9a6ab52948c4";
@@ -230,7 +231,7 @@ export default function PayCart() {
           <div className="container">
             <Titleh2>Formas de pagamentos</Titleh2>
             <CenterPay>
-              <div>Carregando formas de pagamentos...{loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : 
+              <div>Carregando formas de pagamentos...{loading ? <Loading loading={loading}/>  : 
              false}</div>
               {/*<div className="input">
                 {/*<input type="checkbox" name="" id=""
@@ -282,14 +283,7 @@ export default function PayCart() {
               </div>*/}
             </CenterPay>
             <BtnFinish>
-            {/*loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : 
-              /*<Btn
-              onClick={
-                () => {
-                  makeMagic()
-                }
-              }
-            >Finalizar</Btn> false*/}
+            
             </BtnFinish>
           </div>
         <FooterContainer>

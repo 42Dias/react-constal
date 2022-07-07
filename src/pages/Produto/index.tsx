@@ -36,6 +36,7 @@ import { ContentFormNew, ModalContent } from "../Dashboard/NewProd/styles";
 import { useCart } from "../../hooks/useCart";
 import axios from "axios";
 import LoadingLayer from "../../components/LoadingLayer";
+import Loading from "../../components/Loading";
 
 export default function Produto() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -471,13 +472,7 @@ export default function Produto() {
           ) : (
             <ProdSecondComents>
             {loading ? (
-            <img
-              width="40px"
-              style={{ margin: "auto" }}
-              height=""
-              src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
-              alt="Loading"
-            />
+            <Loading loading={loading} />
           ) : (
             <FormComents>
               <h2>Tire a sua dúvida aqui</h2>
@@ -536,13 +531,7 @@ export default function Produto() {
 
               <ContentFormNew>
                 {loading ? (
-              <img
-                width="40px"
-                style={{ margin: "auto" }}
-                height=""
-                src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
-                alt="Loading"
-              />
+              <Loading loading={loading} />
             ) : <>
               <div className="buttonsNew">
                 <button type="button" onClick={

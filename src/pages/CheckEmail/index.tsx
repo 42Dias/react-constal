@@ -8,6 +8,7 @@ import axios from "axios";
 import { ip } from "../../services/api";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
+import Loading from "../../components/Loading";
 
 
 export default function CheckEmail() {
@@ -42,13 +43,7 @@ export default function CheckEmail() {
               <img src={check} alt="" />
               <h2>Email verificado com sucesso</h2>
               {loading ? (
-              <img
-                width="40px"
-                style={{ margin: "auto" }}
-                height=""
-                src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
-                alt="Loading"
-              />
+              <Loading loading={loading}/>
             ) :
               <Link to="/">Início</Link>}
             </CenterFinish>

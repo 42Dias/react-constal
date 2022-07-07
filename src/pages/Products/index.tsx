@@ -12,6 +12,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { Recommended, GridProdsFour, ProdContainerSingle } from "./styles";
 import useInfiniteScroll from '../../hooks/useInfiniteScroll'
 import { Menu } from "../../components/Menu";
+import Loading from "../../components/Loading";
 
 
 export default function Products() {
@@ -106,17 +107,7 @@ export default function Products() {
                 </ProdContainerSingle>}
       })}
         </GridProdsFour>
-        {loading ? (
-            <img
-              width="40px"
-              style={{    
-                margin: '0 auto',
-                display: 'flex' }}
-              height=""
-              src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
-              alt="Loading"
-            />
-          ) : false}
+        <Loading loading={loading} />
       </div>
       <Footer />
     </>

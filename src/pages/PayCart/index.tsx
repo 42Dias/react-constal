@@ -18,6 +18,7 @@ import QRCode from "react-qr-code";
 
 import handleCovertDate from "../../utils/handleCovertDate"
 import { setTimeout } from "timers";
+import Loading from "../../components/Loading";
 
 export default function PayCart() {
   const { getCreditCards, creditCardList, } = useCreditCard();
@@ -244,12 +245,7 @@ export default function PayCart() {
             <BtnFinish>
             {loading ?
             (
-              <img
-                width="40px"
-                style={{margin: 'auto'}}
-                height=""
-                src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'}
-                alt="Loading" /> 
+              <Loading loading={loading}/> 
               ) : (
               <Btn
               onClick={

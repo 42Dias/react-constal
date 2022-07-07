@@ -21,6 +21,7 @@ import { GridFooter, ModalEnter } from "../../components/Footer/styles";
 
 import logo from "../../assets/images/logo.png";
 import { FiX } from "react-icons/fi";
+import Loading from "../../components/Loading";
 
 
 export default function SendData() {
@@ -233,13 +234,7 @@ export default function SendData() {
           ):false}
         
         {loading ? (
-            <img
-              width="40px"
-              style={{ margin: "auto", display: "flex" }}
-              height=""
-              src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
-              alt="Loading"
-            />
+           <Loading loading={loading} />
           ) : (
             <BtnNewTest
             onClick={
@@ -487,13 +482,7 @@ export default function SendData() {
                           }} />
               </ContentFormNew>
               {loading ? (
-            <img
-              width="40px"
-              style={{ margin: "auto", display: "flex" }}
-              height=""
-              src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
-              alt="Loading"
-            />
+           <Loading loading={loading} />
           ) : (
               <NewBtn>
                     <button type="button" onClick={() => closeModal()}>Cancelar</button>

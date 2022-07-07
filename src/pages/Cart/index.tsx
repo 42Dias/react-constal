@@ -13,6 +13,7 @@ import { formatPrice } from "../../util/format";
 import { Container, ProductTable, Total, FooterContainer } from "./styles";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import Loading from "../../components/Loading";
 // import { Product } from "../../types";
 
 const Cart = (): JSX.Element => {
@@ -208,7 +209,7 @@ const Cart = (): JSX.Element => {
                       }</strong>
                   </td>
                   <td>
-                  {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : 
+                  {loading ? <Loading loading={loading}/> : 
                     <button
                       type="button"
                       data-testid="remove-product"
@@ -230,7 +231,7 @@ const Cart = (): JSX.Element => {
               ) : false
             }
             {/* {console.log(products.length)} */}
-            {loading ? <img width="40px" style={{margin: 'auto'}} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : false}
+            {loading ?< Loading loading={loading}/> : false}
             <Total>
               <span>TOTAL</span>
               <strong>{total}</strong>

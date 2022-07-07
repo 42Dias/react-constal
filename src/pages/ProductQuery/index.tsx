@@ -12,6 +12,7 @@ import { toast } from "react-toastify"
 import { ContentFormNew } from "../Profile/styles"
 import { SelectInput } from "../Dashboard/Vendas/styles"
 import { formatPrice } from "../../util/format"
+import Loading from "../../components/Loading"
 /*
 
 
@@ -182,7 +183,7 @@ function ProductQuery() {
          
           {
               role == 'admin' ? (
-              loading ? <img width="40px" height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> : (
+              loading ? <Loading loading={loading}/>  : (
                 <SelectInput>
                 <label htmlFor="">Selecionar Empresa: </label>
                 <select

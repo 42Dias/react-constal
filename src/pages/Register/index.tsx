@@ -13,6 +13,7 @@ import { ModalContainerVendedor, ModalContent, ModalFlex } from "../Produto/styl
 import { AiOutlineClose } from "react-icons/ai";
 import React from "react";
 import Modal from "react-modal";
+import Loading from "../../components/Loading";
 
 
 export default function Register() {
@@ -262,7 +263,7 @@ export default function Register() {
             </span>
           </Terms>
           <LinkContent>
-            {loading ? <img width="40px" style={{ margin: 'auto' }} height="" src={'https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'} alt="Loading" /> :
+            {loading ? <Loading loading={loading}/>  :
               <button type="submit">Cadastrar</button>}
           </LinkContent>
         </BoxRegister>
