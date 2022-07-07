@@ -31,8 +31,9 @@ import React, { useEffect, useState } from "react";
 
 import { useCart } from "../../hooks/useCart";
 import { toast } from "react-toastify";
-import { api, id, ip, role, tenantId, token } from "../../services/api";
+import { api, getToken, id, ip, role, tenantId, token } from "../../services/api";
 import axios from "axios";
+import Loading from "../Loading";
 
 
 
@@ -68,6 +69,7 @@ const Header = (): JSX.Element => {
   const [email, setUser] = useState("");
   const [password, setPassword] = useState("");
   const [cartSize, setCartSize] = useState<any>(0);
+  // const [loading, setLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [pesquisa, setPesquisa] = useState("");
 
@@ -125,6 +127,9 @@ const Header = (): JSX.Element => {
     }
   }
   async function loadUser(token: any) {
+    if(!token) return;
+    console.log(token)
+
     const response = await axios({
       method: "get",
       url: `${ip}:8157/api/auth/me`,
@@ -134,23 +139,25 @@ const Header = (): JSX.Element => {
         Authorization: "Bearer " + token,
       },
       timeout: 50000,
-    }).then((response) => {
+    })
+    .then((response) => {
       if (role == undefined && token) {
         // @ts-ignore
         document.location.reload(true);
       }
       return response.data;
-    });
-     // console.log(response);
-     // console.log(response.tenants[0].roles[0]);
+    })
+    .catch(
+      (e) => {
+        console.log('error', e)
+        logof()
+      }
+    )
 
     let setRole = response.tenants[0].roles
     const roleHelper = JSON.parse(setRole)
-     // console.log(roleHelper[0])
     localStorage.setItem("roles", JSON.stringify(roleHelper[0])); //saves client's data into localStorage:
-    // localStorage.setItem("roles", JSON.stringify(response.tenants[0].roles[0])); //saves client's data into localStorage:
 
-     // console.log(response.tenants[0].tenant.id);
     localStorage.setItem(
       "tenantId",
       JSON.stringify(response.tenants[0].tenant.id)
@@ -206,11 +213,14 @@ const Header = (): JSX.Element => {
     setLoading(true)
     axios.post(`${ip}:8157/api/cliente/trocarSenha`, {
       email: email
-    }).then((response) => {
+    })
+    .then((response) => {
       if (response.statusText == "OK") {
         toast.info('Email enviado com sucesso!');
         setLoading(false)
-      } else {
+      }
+      
+      else {
         toast.error('Email não enviado com sucesso!');
         setLoading(false);
 
@@ -230,7 +240,9 @@ const Header = (): JSX.Element => {
   }
 
   useEffect(() => {
-    loadUser(token);
+    const userStorageToken = getToken()
+    
+    loadUser(userStorageToken);
       async function loadCart() {
         const allCart: any = await api.get(`carrinho/`)
          // console.log("allCart")
@@ -242,13 +254,6 @@ const Header = (): JSX.Element => {
         loadCart()
         }
   }, [update]);
-
-
-  // useEffect(() => {
-  //   if(email && !tenantId){
-  //     window.location.reload()
-  //   }
-  // }, []);
 
   
 
@@ -473,20 +478,11 @@ const Header = (): JSX.Element => {
               Entrar
             </Link>*/}
             {loading ? (
-              <img
-                width="40px"
-                style={{ margin: "auto" }}
-                height=""
-                src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
-                alt="Loading"
-              />
+              <Loading loading={loading}/>
             ) : (
               <button className="btn-enter" onClick={
                 () => {
                   Login()
-                  // .then( 
-                  //   () => window.location.reload()
-                  // )
                 }
 
 
@@ -528,13 +524,7 @@ const Header = (): JSX.Element => {
             <input type="email" id="email" placeholder="Email" value={email}
               onChange={(text) => setUser(text.target.value)} />
             {loading ? (
-              <img
-                width="40px"
-                style={{ margin: "0 auto" }}
-                height=""
-                src={"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"}
-                alt="Loading"
-              />
+              <Loading loading={loading}/>
             ) :
               <button onClick={senEmail}>Verificar</button>}
           </PasswordContent>
