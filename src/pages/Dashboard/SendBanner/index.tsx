@@ -21,20 +21,16 @@ import uploadImage from "../../../services/imagem/upload";
 
 export default function SendBanner() {
 
-  const [imagens = [], setImagens] = useState<any[]>([]);
-
-  const [imagensDisplayed = [], setImagensDisplayed] = useState<any[]>([]);
-
-  const [imagensInativa = [], setImagensInativa] = useState<any[]>([]);
-  const [imagensAtiva = [], setImagensAtiva] = useState<any[]>([]);
-
-  const [promocoes = [], setPromocoes] = useState<any[]>([]);
+  const [imagens         , setImagens          ] = useState<any[]>([]);
+  const [imagensDisplayed, setImagensDisplayed ] = useState<any[]>([]);
+  const [imagensInativa  , setImagensInativa   ] = useState<any[]>([]);
+  const [imagensAtiva    , setImagensAtiva     ] = useState<any[]>([]);
+  const [promocoes       , setPromocoes        ] = useState<any[]>([]);
+  const [displyedStatus  , setDisplyedStatus    ] = useState<any[]>([]);
   
-  const [displyedStatus = [], setDisplyedStatus] = useState<any[]>([]);
-  
-  const [imagemNova, setImagemNova] = useState<any>();
-  const [name, setName] = useState<any>("");
-  const [image, setImage] = useState('');
+  const [imagemNova     , setImagemNova] = useState<any>();
+  const [name           , setName] = useState<any>("");
+  const [image          , setImage] = useState('');
   
   const [status, setStatus] = useState({
     type: '',
@@ -91,7 +87,7 @@ export default function SendBanner() {
     if(!allowedFiles.includes(file.type)) return toast.error("Arquivo inválido!");
 
     let uploadedImage = await uploadImage(file)
-    setImage(uploadedImage)
+    setImagemNova(uploadedImage)
 
   }
 
