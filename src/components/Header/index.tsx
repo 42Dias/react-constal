@@ -149,7 +149,8 @@ const Header = (): JSX.Element => {
     })
     .catch(
       (e) => {
-        console.log('error', e)
+        console.log('error', e.response)
+        if(e.response)
         logof()
       }
     )
@@ -329,6 +330,7 @@ const Header = (): JSX.Element => {
                       justifyContent: 'center'
                     }}
                     >
+                      {/* { getToken() &&  } */}
                       <button 
                         style={{
                           background : 'transparent',
