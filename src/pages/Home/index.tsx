@@ -234,9 +234,8 @@ const Home = (): JSX.Element => {
             <p>Nenhum produto em promoção</p>
           ) : (
             <Swiper
-              spaceBetween={30} centeredSlides={true}
-              //  autoplay={{ delay: 4000, disableOnInteraction: false, }}
-              pagination={{ clickable: true, }}
+            spaceBetween={50}
+            slidesPerView={3}
             >
               {
                 products2.map((product) => (

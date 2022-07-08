@@ -283,8 +283,10 @@ export const SwiperStyles = styled.div`
     transition: all .5s;
     padding: 15px 15px;
   }
+
   }
   pre{
+  overflow:visible
   transition: all .5s;
   font: 14px 'Poppins',sans-serif;
   text-decoration: line-through;
